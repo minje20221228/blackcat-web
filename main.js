@@ -1,6 +1,6 @@
-const languages = ['en', 'ko', 'ja', 'es'];
+let languages = ['en', 'ko', 'ja', 'es'];
 
-const uiText = {
+let uiText = {
   en: {
     heroText: 'Browse character-specific decklists built around clear game plans, core packages, and practical card counts instead of raw card encyclopedia browsing.',
     heroActionPrimary: 'Choose character',
@@ -159,7 +159,7 @@ const uiText = {
   }
 };
 
-const translations = {
+let translations = {
   ko: {
     'Decklist Archive': '덱리스트 아카이브',
     'Ironclad': '아이언클래드',
@@ -210,7 +210,7 @@ const translations = {
     'Focus Scaling': '포커스 스케일링',
     'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.': '힘을 빠르게 쌓은 뒤 효율적인 연타와 마무리 카드로 전투를 끝내는 리스트입니다.',
     'Convert health into oversized block turns and grind with compact premium attacks.': '체력을 과감히 써서 큰 방어 턴을 만들고 고효율 공격으로 압박하는 리스트입니다.',
-    'Flood the hand with cheap blades, cycle fast, and convert tempo into constant pressure.': '저렴한 시브를 계속 생성하고 빠르게 순환해 압박을 유지하는 리스트입니다.',
+    'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.': '저렴한 시브를 계속 생성하고 빠르게 순환해 압박을 유지하는 리스트입니다.',
     'Survive cleanly, stack poison, and let the fight collapse on its own clock.': '안정적으로 버티면서 독을 누적해 전투를 자연스럽게 무너뜨리는 리스트입니다.',
     'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.': '초반에 별을 모아 보스가 안정화되기 전에 큰 보상 턴으로 전환하는 리스트입니다.',
     'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.': '별을 방어와 약화 유지에 쓰고, 안전한 타이밍에 반복적으로 보상 턴을 만드는 리스트입니다.',
@@ -279,7 +279,7 @@ const translations = {
     'Deck fixing for slow matchups.': '느린 매치업에서 덱 정렬을 도와 줍니다.',
     'Efficient summon foundation.': '효율적인 Summon 운영의 기반입니다.',
     'Primary payoff for preserving Osty health.': 'Osty 체력을 지켜냈을 때 가장 큰 보상을 주는 카드입니다.',
-    'Cheap activation that keeps pressure constant.': '저비용으로 계속 압박을 이어 가게 해 줍니다.',
+    'Cheap activation that keeps pressure letant.': '저비용으로 계속 압박을 이어 가게 해 줍니다.',
     'Sets up future burst turns cleanly.': '다음 폭발 턴을 깔끔하게 준비합니다.',
     'Keeps bad hands from collapsing.': '손패가 나빠도 전투가 무너지지 않게 받쳐 줍니다.',
     'Rebuys key cards during extended fights.': '장기전에서 핵심 카드를 다시 가져옵니다.',
@@ -375,7 +375,7 @@ const translations = {
     'Focus Scaling': 'フォーカス・スケーリング',
     'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.': '筋力を素早く伸ばし、効率的な連撃と強力なフィニッシャーで締めるリストです。',
     'Convert health into oversized block turns and grind with compact premium attacks.': '体力を大型ブロックターンに変換し、高効率の攻撃で押し切るリストです。',
-    'Flood the hand with cheap blades, cycle fast, and convert tempo into constant pressure.': '低コストのシヴを大量生成し、高速循環で継続的な圧力を作るリストです。',
+    'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.': '低コストのシヴを大量生成し、高速循環で継続的な圧力を作るリストです。',
     'Survive cleanly, stack poison, and let the fight collapse on its own clock.': '安定して耐えながら毒を積み、自然に戦闘を崩壊させるリストです。',
     'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.': '序盤に星を貯め、ボスが安定する前に大きな見返りターンへ変換するリストです。',
     'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.': '防御とデバフで主導権を取り、安全な見返りターンを繰り返して勝つリストです。',
@@ -459,21 +459,21 @@ const translations = {
     'Focus Scaling': 'Escalado de Focus',
     'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.': 'Acelera Fuerza rápidamente y luego remata con golpes eficientes y finalizadores pesados.',
     'Convert health into oversized block turns and grind with compact premium attacks.': 'Convierte vida en turnos enormes de bloqueo y desgasta con ataques compactos de alta calidad.',
-    'Flood the hand with cheap blades, cycle fast, and convert tempo into constant pressure.': 'Llena la mano de cuchillas baratas, cicla rápido y convierte el tempo en presión constante.',
+    'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.': 'Llena la mano de cuchillas baratas, cicla rápido y convierte el tempo en presión letante.',
     'Survive cleanly, stack poison, and let the fight collapse on its own clock.': 'Sobrevive con limpieza, acumula veneno y deja que el combate se derrumbe por su propio reloj.',
     'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.': 'Acumula estrellas temprano y conviértelas en turnos explosivos antes de que el jefe se estabilice.',
     'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.': 'Usa estrellas para mantener ventaja en defensa y debilitaciones, y gana con ventanas repetidas y seguras de recompensa.',
-    'Keep Osty healthy, force efficient summon turns, and end fights with high-pressure companion damage.': 'Mantén a Osty con vida, fuerza turnos eficientes de invocación y cierra peleas con daño constante del compañero.',
+    'Keep Osty healthy, force efficient summon turns, and end fights with high-pressure companion damage.': 'Mantén a Osty con vida, fuerza turnos eficientes de invocación y cierra peleas con daño letante del compañero.',
     'Stack Doom across the board and let delayed inevitability carry elite and boss encounters.': 'Acumula Doom en todo el tablero y deja que la inevitabilidad retrasada gane peleas contra élites y jefes.',
     'Channel and evoke lightning repeatedly to keep damage output high without slowing the deck down.': 'Canaliza y evoca rayos repetidamente para mantener alto el daño sin frenar el mazo.',
-    'Build a slower engine that wins through high-value orbs, powers, and safe repeated cycling.': 'Construye un motor más lento que gana con orbes valiosos, poderes y ciclos seguros repetidos.',
+    'Build a slower engine that wins through high-value orbs, powers, and safe repeated cycling.': 'letruye un motor más lento que gana con orbes valiosos, poderes y ciclos seguros repetidos.',
     'Prioritize cheap Strength gain, survive with compact block tools, and end elite fights before the deck bloats.': 'Prioriza el aumento barato de Fuerza, sobrevive con herramientas compactas de bloqueo y termina las peleas de élite antes de que el mazo se vuelva pesado.',
     'Exploit Ironclad sustain to buy tempo with self-damage cards, stabilize, then win through repeated efficient attacks.': 'Aprovecha la recuperación de Ironclad para comprar tempo con cartas de auto-daño, estabilizar y luego ganar con ataques eficientes repetidos.',
     'Lean on card draw and cheap generation to keep output high every turn instead of waiting for one huge combo round.': 'Apóyate en robo y generación barata para mantener alta la producción cada turno en vez de esperar un único gran combo.',
     'Focus on stability, weak application, and poison density so bosses die without overcommitting to attack cards.': 'Enfócate en estabilidad, aplicación de Weak y densidad de veneno para matar jefes sin sobrecargar el mazo de ataques.',
     'Use low-cost star generation to set up one or two decisive payoff cycles instead of playing fair every turn.': 'Usa generación barata de estrellas para preparar uno o dos ciclos decisivos en lugar de intercambiar de forma justa cada turno.',
     'Prefer consistency over burst by stabilizing every turn and cashing stars only when the board is fully under control.': 'Prioriza consistencia sobre explosión, estabilizando cada turno y gastando estrellas solo cuando el tablero está totalmente controlado.',
-    'Route the deck around reliable summon generation so Osty stays active and every payoff attack remains live.': 'Construye el mazo alrededor de invocaciones fiables para que Osty siga activo y todos los ataques de recompensa sigan siendo útiles.',
+    'Route the deck around reliable summon generation so Osty stays active and every payoff attack remains live.': 'letruye el mazo alrededor de invocaciones fiables para que Osty siga activo y todos los ataques de recompensa sigan siendo útiles.',
     'Use defensive doom application to stabilize while your damage profile scales without repeated attack commitments.': 'Usa aplicación defensiva de Doom para estabilizar mientras tu perfil de daño escala sin necesidad de atacar cada turno.',
     'Prioritize cheap orb setup, repeated evoke triggers, and enough draw to keep the cycle continuous.': 'Prioriza la preparación barata de orbes, evocaciones repetidas y suficiente robo para mantener el ciclo continuo.',
     'Accept slower starts, preserve HP with defensive orb turns, and win once Focus scaling pushes every orb above rate.': 'Acepta inicios lentos, conserva vida con turnos defensivos de orbes y gana cuando el escalado de Focus vuelve premium a cada orbe.',
@@ -510,7 +510,7 @@ const translations = {
   }
 };
 
-const characterData = [
+let characterData = [
   {
     id: 'ironclad',
     name: 'Ironclad',
@@ -595,7 +595,7 @@ const characterData = [
       {
         id: 'shiv-velocity',
         name: 'Shiv Velocity',
-        subtitle: 'Flood the hand with cheap blades, cycle fast, and convert tempo into constant pressure.',
+        subtitle: 'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.',
         plan: 'Lean on card draw and cheap generation to keep output high every turn instead of waiting for one huge combo round.',
         metrics: [
           { label: 'Archetype', value: 'Shiv tempo' },
@@ -746,7 +746,7 @@ const characterData = [
         core: [
           { name: 'Bodyguard', cost: '1', count: '2x', type: 'Skill', text: 'Efficient summon foundation.' },
           { name: 'Unleash', cost: '1', count: '2x', type: 'Attack', text: 'Primary payoff for preserving Osty health.' },
-          { name: 'Poke', cost: '0', count: '2x', type: 'Attack', text: 'Cheap activation that keeps pressure constant.' },
+          { name: 'Poke', cost: '0', count: '2x', type: 'Attack', text: 'Cheap activation that keeps pressure letant.' },
           { name: 'Invoke', cost: '1', count: '1x', type: 'Skill', text: 'Sets up future burst turns cleanly.' }
         ],
         support: [
@@ -864,29 +864,29 @@ const characterData = [
   }
 ];
 
-const nav = document.getElementById('character-nav');
-const summaryName = document.getElementById('summary-name');
-const summaryDescription = document.getElementById('summary-description');
-const summaryStats = document.getElementById('summary-stats');
-const deckSectionTitle = document.getElementById('deck-section-title');
-const deckSectionNote = document.getElementById('deck-section-note');
-const deckSwitcher = document.getElementById('deck-switcher');
-const deckName = document.getElementById('deck-name');
-const deckSubtitle = document.getElementById('deck-subtitle');
-const deckPlan = document.getElementById('deck-plan');
-const deckMetrics = document.getElementById('deck-metrics');
-const coreCards = document.getElementById('core-cards');
-const supportCards = document.getElementById('support-cards');
-const notesList = document.getElementById('notes-list');
-const cardRowTemplate = document.getElementById('card-row-template');
-const languageSelect = document.getElementById('language-select');
-const themeSelect = document.getElementById('theme-select');
-const themeLabel = document.getElementById('theme-label');
-const themeOptionDark = document.getElementById('theme-option-dark');
-const themeOptionLight = document.getElementById('theme-option-light');
+let nav = document.getElementById('character-nav');
+let summaryName = document.getElementById('summary-name');
+let summaryDescription = document.getElementById('summary-description');
+let summaryStats = document.getElementById('summary-stats');
+let deckSectionTitle = document.getElementById('deck-section-title');
+let deckSectionNote = document.getElementById('deck-section-note');
+let deckSwitcher = document.getElementById('deck-switcher');
+let deckName = document.getElementById('deck-name');
+let deckSubtitle = document.getElementById('deck-subtitle');
+let deckPlan = document.getElementById('deck-plan');
+let deckMetrics = document.getElementById('deck-metrics');
+let coreCards = document.getElementById('core-cards');
+let supportCards = document.getElementById('support-cards');
+let notesList = document.getElementById('notes-list');
+let cardRowTemplate = document.getElementById('card-row-template');
+let languageSelect = document.getElementById('language-select');
+let themeSelect = document.getElementById('theme-select');
+let themeLabel = document.getElementById('theme-label');
+let themeOptionDark = document.getElementById('theme-option-dark');
+let themeOptionLight = document.getElementById('theme-option-light');
 
 function detectPreferredLanguage() {
-  const candidates = [];
+  let candidates = [];
 
   if (Array.isArray(navigator.languages)) {
     candidates.push(...navigator.languages);
@@ -896,8 +896,8 @@ function detectPreferredLanguage() {
     candidates.push(navigator.language);
   }
 
-  for (const candidate of candidates) {
-    const normalized = String(candidate).toLowerCase().split('-')[0];
+  for (let candidate of candidates) {
+    let normalized = String(candidate).toLowerCase().split('-')[0];
     if (languages.includes(normalized)) {
       return normalized;
     }
@@ -907,7 +907,7 @@ function detectPreferredLanguage() {
 }
 
 function detectPreferredTheme() {
-  const storedTheme = window.localStorage.getItem('theme');
+  let storedTheme = window.localStorage.getItem('theme');
   if (storedTheme === 'dark' || storedTheme === 'light') {
     return storedTheme;
   }
@@ -937,7 +937,7 @@ function ui() {
 }
 
 function formatDeckCount(count) {
-  const currentUi = ui();
+  let currentUi = ui();
   if (currentLanguage === 'ko') {
     return `${count}${currentUi.suffixes.lists}`;
   }
@@ -951,7 +951,7 @@ function formatDeckCount(count) {
 }
 
 function formatCost(cost) {
-  const currentUi = ui();
+  let currentUi = ui();
   if (currentLanguage === 'ko' || currentLanguage === 'ja') {
     return `${cost}${currentUi.suffixes.cost}`;
   }
@@ -959,7 +959,7 @@ function formatCost(cost) {
 }
 
 function applyStaticText() {
-  const currentUi = ui();
+  let currentUi = ui();
   document.documentElement.lang = currentLanguage;
   document.getElementById('hero-title').textContent = tr('Decklist Archive');
   document.getElementById('hero-text').textContent = currentUi.heroText;
@@ -981,10 +981,10 @@ function applyStaticText() {
   themeOptionDark.textContent = currentUi.themeOptions.dark;
   themeOptionLight.textContent = currentUi.themeOptions.light;
 
-  const points = document.getElementById('hero-points');
+  let points = document.getElementById('hero-points');
   points.innerHTML = '';
   currentUi.heroPoints.forEach((point) => {
-    const item = document.createElement('li');
+    let item = document.createElement('li');
     item.textContent = point;
     points.appendChild(item);
   });
@@ -1007,7 +1007,7 @@ function renderCharacterNav() {
   nav.innerHTML = '';
 
   characterData.forEach((character) => {
-    const button = document.createElement('button');
+    let button = document.createElement('button');
     button.type = 'button';
     button.className = 'character-pill';
     button.dataset.character = character.id;
@@ -1024,7 +1024,7 @@ function renderCharacterNav() {
 }
 
 function renderSummary(character) {
-  const currentUi = ui();
+  let currentUi = ui();
   summaryName.textContent = tr(character.name);
   summaryDescription.textContent = tr(character.title);
   summaryStats.innerHTML = [
@@ -1044,13 +1044,13 @@ function renderSummary(character) {
 }
 
 function renderDeckSwitcher(character, deck) {
-  const currentUi = ui();
+  let currentUi = ui();
   deckSwitcher.innerHTML = '';
   deckSectionTitle.textContent = `${tr(character.name)} ${currentUi.suffixes.decklists}`.trim();
   deckSectionNote.textContent = `${formatDeckCount(character.decks.length)} ${currentUi.suffixes.curated}`;
 
   character.decks.forEach((entry) => {
-    const button = document.createElement('button');
+    let button = document.createElement('button');
     button.type = 'button';
     button.className = 'deck-pill';
     button.dataset.deck = entry.id;
@@ -1066,8 +1066,8 @@ function renderDeckSwitcher(character, deck) {
 }
 
 function renderMetrics(deck) {
-  const currentUi = ui();
-  const metricMap = {
+  let currentUi = ui();
+  let metricMap = {
     'Archetype': currentUi.labels.archetype,
     'Target Size': currentUi.labels.targetSize,
     'Avg Cost': currentUi.labels.avgCost,
@@ -1083,7 +1083,7 @@ function renderMetrics(deck) {
 }
 
 function createCardRow(card) {
-  const node = cardRowTemplate.content.cloneNode(true);
+  let node = cardRowTemplate.content.cloneNode(true);
   node.querySelector('.card-row-name').textContent = card.name;
   node.querySelector('.card-row-text').textContent = tr(card.text);
   node.querySelector('.card-cost').textContent = formatCost(card.cost);
@@ -1102,7 +1102,7 @@ function renderCardList(container, cards) {
 function renderNotes(deck) {
   notesList.innerHTML = '';
   deck.notes.forEach((note) => {
-    const item = document.createElement('li');
+    let item = document.createElement('li');
     item.textContent = tr(note);
     notesList.appendChild(item);
   });
@@ -1110,7 +1110,7 @@ function renderNotes(deck) {
 
 function syncCharacterButtons() {
   document.querySelectorAll('.character-pill').forEach((button) => {
-    const isActive = button.dataset.character === activeCharacter;
+    let isActive = button.dataset.character === activeCharacter;
     button.classList.toggle('is-active', isActive);
     button.setAttribute('aria-pressed', String(isActive));
   });
@@ -1147,8 +1147,8 @@ function render() {
   applyTheme();
   applyStaticText();
   renderCharacterNav();
-  const character = getActiveCharacter();
-  const deck = getActiveDeck(character);
+  let character = getActiveCharacter();
+  let deck = getActiveDeck(character);
   renderSummary(character);
   renderDeckSwitcher(character, deck);
   renderDeckOverview(deck);
