@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slay the Spire 2 Card Atlas</title>
+  <title>Slay the Spire 2 Decklists</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,31 +14,31 @@
     <header class="hero" id="top">
       <div class="hero-copy">
         <p class="eyebrow">Slay the Spire 2</p>
-        <h1>Character Card Atlas</h1>
+        <h1>Decklist Archive</h1>
         <p class="hero-text">
-          Browse starter and signature cards for every playable character, with quick descriptions,
-          visuals, and deck identity notes in a layout that feels closer to a real game compendium.
+          Browse character-specific decklists built around clear game plans, core packages,
+          and practical card counts instead of raw card encyclopedia browsing.
         </p>
         <div class="hero-actions">
-          <a class="hero-link" href="#character-nav">Browse characters</a>
-          <a class="hero-link hero-link-secondary" href="#card-grid">Jump to cards</a>
+          <a class="hero-link" href="#character-nav">Choose character</a>
+          <a class="hero-link hero-link-secondary" href="#deck-section">Open decklists</a>
         </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">Compendium Focus</p>
+        <p class="panel-label">Current Build</p>
         <ul class="hero-points">
           <li>5 characters</li>
-          <li>31 cards</li>
-          <li>Starter decks plus signature picks</li>
+          <li>10 decklists</li>
+          <li>Core cards, counts, and plans</li>
         </ul>
         <p class="panel-note">
-          Card names and descriptions are compiled from community wiki snippets current as of March 25, 2026.
+          This page is organized as a fast reference for route planning and archetype selection.
         </p>
       </aside>
     </header>
 
     <main>
-      <section class="character-nav" id="character-nav" aria-label="Character filters"></section>
+      <section class="character-nav" id="character-nav" aria-label="Character selection"></section>
 
       <section class="character-summary" id="character-summary">
         <div class="summary-copy">
@@ -49,55 +49,65 @@
         <div class="summary-stats" id="summary-stats"></div>
       </section>
 
-      <section class="filter-panel" aria-label="Card search and filters">
-        <div class="filter-intro">
-          <p class="section-kicker">Find Cards</p>
-          <h2>Search the current character pool</h2>
-          <p class="section-note">Name and description search works together with cost and type filters.</p>
-        </div>
-        <div class="filter-controls">
-          <label class="filter-field filter-search" for="search-input">
-            <span class="filter-label">Search</span>
-            <input id="search-input" type="search" placeholder="Search by card name or effect">
-          </label>
-          <label class="filter-field" for="cost-filter">
-            <span class="filter-label">Cost</span>
-            <select id="cost-filter"></select>
-          </label>
-          <label class="filter-field" for="type-filter">
-            <span class="filter-label">Type</span>
-            <select id="type-filter"></select>
-          </label>
-          <button class="reset-filters" id="reset-filters" type="button">Reset filters</button>
-        </div>
-      </section>
-
-      <section class="section-head">
+      <section class="deck-toolbar" id="deck-section">
         <div>
-          <p class="section-kicker">Card Gallery</p>
-          <h2 id="gallery-title">Starter deck and signature cards</h2>
+          <p class="section-kicker">Decklists</p>
+          <h2 id="deck-section-title">Recommended decklists</h2>
+          <p class="section-note" id="deck-section-note"></p>
         </div>
-        <p class="section-note" id="gallery-note"></p>
+        <div class="deck-switcher" id="deck-switcher" aria-label="Deck selection"></div>
       </section>
 
-      <section class="card-grid" id="card-grid" aria-live="polite"></section>
+      <section class="deck-overview" id="deck-overview">
+        <div class="deck-intro">
+          <p class="section-kicker">Deck Plan</p>
+          <h2 id="deck-name"></h2>
+          <p class="deck-subtitle" id="deck-subtitle"></p>
+          <p class="deck-plan" id="deck-plan"></p>
+        </div>
+        <div class="deck-metrics" id="deck-metrics"></div>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel-block">
+          <div class="panel-head">
+            <p class="section-kicker">Core Cards</p>
+            <h3>Main package</h3>
+          </div>
+          <div class="card-list" id="core-cards"></div>
+        </article>
+
+        <article class="panel-block">
+          <div class="panel-head">
+            <p class="section-kicker">Support Cards</p>
+            <h3>Glue and scaling</h3>
+          </div>
+          <div class="card-list" id="support-cards"></div>
+        </article>
+      </section>
+
+      <section class="panel-block notes-block">
+        <div class="panel-head">
+          <p class="section-kicker">Piloting Notes</p>
+          <h3>How to play the list</h3>
+        </div>
+        <ul class="notes-list" id="notes-list"></ul>
+      </section>
     </main>
   </div>
 
-  <template id="card-template">
-    <article class="card-tile">
-      <div class="card-art-wrap">
-        <img class="card-art" alt="">
-        <span class="card-rarity"></span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta-row">
-          <p class="card-character"></p>
-          <span class="card-cost"></span>
+  <template id="card-row-template">
+    <article class="card-row">
+      <div class="card-row-main">
+        <div>
+          <p class="card-row-name"></p>
+          <p class="card-row-text"></p>
         </div>
-        <h3 class="card-name"></h3>
-        <div class="card-tags"></div>
-        <p class="card-description"></p>
+      </div>
+      <div class="card-row-meta">
+        <span class="card-pill card-cost"></span>
+        <span class="card-pill card-count"></span>
+        <span class="card-pill card-type"></span>
       </div>
     </article>
   </template>
