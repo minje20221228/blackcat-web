@@ -1,3 +1,201 @@
+const languages = ['en', 'ko', 'ja', 'es'];
+
+const uiText = {
+  en: {
+    heroText: 'Browse character-specific decklists built around clear game plans, core packages, and practical card counts instead of raw card encyclopedia browsing.',
+    heroActionPrimary: 'Choose character',
+    heroActionSecondary: 'Open decklists',
+    panelLabel: 'Current Build',
+    heroPoints: ['5 characters', '10 decklists', 'Core cards, counts, and plans'],
+    panelNote: 'This page is organized as a fast reference for route planning and archetype selection.',
+    summaryKicker: 'Selected Character',
+    decklistKicker: 'Decklists',
+    deckPlanKicker: 'Deck Plan',
+    coreKicker: 'Core Cards',
+    coreHeading: 'Main package',
+    supportKicker: 'Support Cards',
+    supportHeading: 'Glue and scaling',
+    notesKicker: 'Piloting Notes',
+    notesHeading: 'How to play the list',
+    languageLabel: 'Language',
+    labels: {
+      health: 'Health',
+      relic: 'Relic',
+      identity: 'Identity',
+      deckCount: 'Deck Count',
+      archetype: 'Archetype',
+      targetSize: 'Target Size',
+      avgCost: 'Avg Cost',
+      difficulty: 'Difficulty'
+    },
+    suffixes: {
+      lists: 'lists',
+      decklists: 'decklists',
+      curated: 'curated archetypes for route planning and pickups.',
+      cost: 'cost'
+    }
+  },
+  ko: {
+    heroText: '카드 도감이 아니라 캐릭터별 운영 플랜, 핵심 패키지, 실제 카드 수량 기준으로 정리한 슬더스2 덱리스트를 빠르게 확인할 수 있습니다.',
+    heroActionPrimary: '캐릭터 선택',
+    heroActionSecondary: '덱리스트 보기',
+    panelLabel: '현재 구성',
+    heroPoints: ['캐릭터 5종', '덱리스트 10개', '핵심 카드, 수량, 운영 플랜'],
+    panelNote: '이 페이지는 루트 선택과 카드 픽 판단을 빠르게 하기 위한 참조 화면입니다.',
+    summaryKicker: '선택한 캐릭터',
+    decklistKicker: '덱리스트',
+    deckPlanKicker: '덱 플랜',
+    coreKicker: '핵심 카드',
+    coreHeading: '메인 패키지',
+    supportKicker: '보조 카드',
+    supportHeading: '연결 파츠와 스케일링',
+    notesKicker: '운영 메모',
+    notesHeading: '플레이 가이드',
+    languageLabel: '언어',
+    labels: {
+      health: '체력',
+      relic: '시작 유물',
+      identity: '핵심 기믹',
+      deckCount: '덱 수',
+      archetype: '아키타입',
+      targetSize: '목표 덱 수',
+      avgCost: '평균 코스트',
+      difficulty: '난이도'
+    },
+    suffixes: {
+      lists: '개',
+      decklists: '덱리스트',
+      curated: '루트 설계와 카드 픽 기준으로 정리한 추천 아키타입입니다.',
+      cost: '코스트'
+    }
+  },
+  ja: {
+    heroText: 'カード図鑑ではなく、キャラクター別の運用方針、主要パッケージ、実用的な採用枚数を基準にした Slay the Spire 2 のデッキリストを確認できます。',
+    heroActionPrimary: 'キャラ選択',
+    heroActionSecondary: 'デッキを見る',
+    panelLabel: '現在の構成',
+    heroPoints: ['5キャラクター', '10デッキリスト', '主力カード、枚数、運用方針'],
+    panelNote: 'このページはルート判断とカード取得判断を素早く行うための参照用です。',
+    summaryKicker: '選択中のキャラクター',
+    decklistKicker: 'デッキリスト',
+    deckPlanKicker: 'デッキ方針',
+    coreKicker: '主力カード',
+    coreHeading: 'メインパッケージ',
+    supportKicker: '補助カード',
+    supportHeading: '接続札とスケーリング',
+    notesKicker: '運用メモ',
+    notesHeading: '回し方',
+    languageLabel: '言語',
+    labels: {
+      health: '体力',
+      relic: '開始レリック',
+      identity: '主要ギミック',
+      deckCount: 'デッキ数',
+      archetype: 'アーキタイプ',
+      targetSize: '目標枚数',
+      avgCost: '平均コスト',
+      difficulty: '難易度'
+    },
+    suffixes: {
+      lists: '個',
+      decklists: 'デッキリスト',
+      curated: 'ルート計画とカード取得の基準になる厳選アーキタイプです。',
+      cost: 'コスト'
+    }
+  },
+  es: {
+    heroText: 'Consulta listas de mazos de cada personaje centradas en planes claros, paquetes clave y cantidades prácticas de cartas, no solo en una enciclopedia de cartas.',
+    heroActionPrimary: 'Elegir personaje',
+    heroActionSecondary: 'Ver mazos',
+    panelLabel: 'Versión actual',
+    heroPoints: ['5 personajes', '10 decklists', 'Cartas clave, cantidades y plan'],
+    panelNote: 'Esta página está pensada como referencia rápida para decidir rutas y elecciones de cartas.',
+    summaryKicker: 'Personaje seleccionado',
+    decklistKicker: 'Decklists',
+    deckPlanKicker: 'Plan del mazo',
+    coreKicker: 'Cartas clave',
+    coreHeading: 'Paquete principal',
+    supportKicker: 'Cartas de apoyo',
+    supportHeading: 'Soporte y escalado',
+    notesKicker: 'Notas de uso',
+    notesHeading: 'Cómo jugar la lista',
+    languageLabel: 'Idioma',
+    labels: {
+      health: 'Vida',
+      relic: 'Reliquia',
+      identity: 'Identidad',
+      deckCount: 'Cantidad de mazos',
+      archetype: 'Arquetipo',
+      targetSize: 'Tamaño objetivo',
+      avgCost: 'Costo medio',
+      difficulty: 'Dificultad'
+    },
+    suffixes: {
+      lists: '',
+      decklists: 'decklists',
+      curated: 'arquetipos seleccionados para planear rutas y picks.',
+      cost: 'de costo'
+    }
+  }
+};
+
+const translations = {
+  ko: {
+    'Decklist Archive': '덱리스트 아카이브',
+    'Front-loaded damage and HP conversion decks that either snowball Strength or turn self-damage into massive defensive tempo.': '빠른 공격 압박과 체력 전환 운영을 통해 힘 스노우볼 또는 자해 기반 초과 방어 템포를 만드는 캐릭터입니다.',
+    'Flexible tempo decks built on discard smoothing, Shivs, and poison-based inevitability.': '드로우-버리기 안정화, 시브, 독 누적을 통해 유연한 템포를 만드는 캐릭터입니다.',
+    'Star-based scaling decks that either tempo into sweeping board control or build explosive late turns.': '별 자원을 쌓아 광역 제압을 만들거나 후반 폭발 턴을 설계하는 스케일링 캐릭터입니다.',
+    'Resource-routing decks that turn Osty, Summon, and Doom into either board control or burst finishing patterns.': 'Osty, Summon, Doom 자원을 배분해 제압 또는 폭딜 마무리 패턴을 만드는 캐릭터입니다.',
+    'Orb-centric lists that either compress lightning burst or generate scaling through long-form focus engines.': '오브 중심 운영으로 번개 폭딜을 압축하거나 Focus 엔진으로 장기 스케일링을 노리는 캐릭터입니다.',
+    'Strength Slam': '힘 슬램',
+    'Blood Fortress': '블러드 포트리스',
+    'Shiv Velocity': '시브 벨로시티',
+    'Poison Control': '독 컨트롤',
+    'Star Ramp': '스타 램프',
+    'Royal Control': '로열 컨트롤',
+    'Osty Beatdown': '오스티 비트다운',
+    'Doom Engine': '둠 엔진',
+    'Lightning Cycle': '라이트닝 사이클',
+    'Focus Scaling': '포커스 스케일링',
+    'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.': '힘을 빠르게 쌓은 뒤 효율적인 타격과 마무리 카드로 전투를 끝냅니다.',
+    'Convert health into oversized block turns and grind with compact premium attacks.': '체력을 과감히 써서 큰 방어 턴을 만들고 고효율 공격으로 압박합니다.',
+    'Flood the hand with cheap blades, cycle fast, and convert tempo into constant pressure.': '저렴한 시브를 계속 생성하고 빠르게 순환해 압박을 유지합니다.',
+    'Survive cleanly, stack poison, and let the fight collapse on its own clock.': '안정적으로 버티면서 독을 누적해 전투를 자연스럽게 무너뜨립니다.',
+    'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.': '초반에 별을 모아 보스가 안정화되기 전에 큰 보상 턴으로 전환합니다.',
+    'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.': '별을 방어와 약화 유지에 쓰고, 안전한 타이밍에 반복적으로 보상 턴을 만듭니다.',
+    'Keep Osty healthy, force efficient summon turns, and end fights with high-pressure companion damage.': 'Osty 체력을 지키며 효율적인 Summon 턴을 만들고 동료 딜로 전투를 끝냅니다.',
+    'Stack Doom across the board and let delayed inevitability carry elite and boss encounters.': '광역으로 Doom을 누적해 지연형 확정 피해로 엘리트와 보스를 압도합니다.',
+    'Channel and evoke lightning repeatedly to keep damage output high without slowing the deck down.': '번개 오브를 반복 생성·격발해 덱 속도를 유지하면서 화력을 냅니다.',
+    'Build a slower engine that wins through high-value orbs, powers, and safe repeated cycling.': '고가치 오브와 파워를 바탕으로 느리지만 안정적인 엔진을 굴립니다.'
+  },
+  ja: {
+    'Decklist Archive': 'デッキリストアーカイブ',
+    'Strength Slam': 'ストレングス・スラム',
+    'Blood Fortress': 'ブラッド・フォートレス',
+    'Shiv Velocity': 'シヴ・ベロシティ',
+    'Poison Control': 'ポイズン・コントロール',
+    'Star Ramp': 'スター・ランプ',
+    'Royal Control': 'ロイヤル・コントロール',
+    'Osty Beatdown': 'オスティ・ビートダウン',
+    'Doom Engine': 'ドゥーム・エンジン',
+    'Lightning Cycle': 'ライトニング・サイクル',
+    'Focus Scaling': 'フォーカス・スケーリング'
+  },
+  es: {
+    'Decklist Archive': 'Archivo de Decklists',
+    'Strength Slam': 'Golpe de Fuerza',
+    'Blood Fortress': 'Fortaleza de Sangre',
+    'Shiv Velocity': 'Velocidad de Shiv',
+    'Poison Control': 'Control de Veneno',
+    'Star Ramp': 'Rampa de Estrellas',
+    'Royal Control': 'Control Real',
+    'Osty Beatdown': 'Golpiza de Osty',
+    'Doom Engine': 'Motor de Doom',
+    'Lightning Cycle': 'Ciclo de Relámpagos',
+    'Focus Scaling': 'Escalado de Focus'
+  }
+};
+
 const characterData = [
   {
     id: 'ironclad',
@@ -367,9 +565,52 @@ const coreCards = document.getElementById('core-cards');
 const supportCards = document.getElementById('support-cards');
 const notesList = document.getElementById('notes-list');
 const cardRowTemplate = document.getElementById('card-row-template');
+const languageSelect = document.getElementById('language-select');
 
 let activeCharacter = characterData[0].id;
 let activeDeck = characterData[0].decks[0].id;
+let currentLanguage = 'en';
+
+function tr(text) {
+  if (currentLanguage === 'en') {
+    return text;
+  }
+
+  return translations[currentLanguage]?.[text] || text;
+}
+
+function ui() {
+  return uiText[currentLanguage] || uiText.en;
+}
+
+function applyStaticText() {
+  const currentUi = ui();
+  document.documentElement.lang = currentLanguage;
+  document.getElementById('hero-title').textContent = tr('Decklist Archive');
+  document.getElementById('hero-text').textContent = currentUi.heroText;
+  document.getElementById('hero-action-primary').textContent = currentUi.heroActionPrimary;
+  document.getElementById('hero-action-secondary').textContent = currentUi.heroActionSecondary;
+  document.getElementById('panel-label').textContent = currentUi.panelLabel;
+  document.getElementById('panel-note').textContent = currentUi.panelNote;
+  document.getElementById('summary-kicker').textContent = currentUi.summaryKicker;
+  document.getElementById('decklist-kicker').textContent = currentUi.decklistKicker;
+  document.getElementById('deck-plan-kicker').textContent = currentUi.deckPlanKicker;
+  document.getElementById('core-kicker').textContent = currentUi.coreKicker;
+  document.getElementById('core-heading').textContent = currentUi.coreHeading;
+  document.getElementById('support-kicker').textContent = currentUi.supportKicker;
+  document.getElementById('support-heading').textContent = currentUi.supportHeading;
+  document.getElementById('notes-kicker').textContent = currentUi.notesKicker;
+  document.getElementById('notes-heading').textContent = currentUi.notesHeading;
+  document.getElementById('language-label').textContent = currentUi.languageLabel;
+
+  const points = document.getElementById('hero-points');
+  points.innerHTML = '';
+  currentUi.heroPoints.forEach((point) => {
+    const item = document.createElement('li');
+    item.textContent = point;
+    points.appendChild(item);
+  });
+}
 
 function getActiveCharacter() {
   return characterData.find((character) => character.id === activeCharacter) || characterData[0];
@@ -387,7 +628,7 @@ function renderCharacterNav() {
     button.type = 'button';
     button.className = 'character-pill';
     button.dataset.character = character.id;
-    button.textContent = character.name;
+    button.textContent = tr(character.name);
     button.style.setProperty('--pill-accent', character.accent);
     button.addEventListener('click', () => {
       activeCharacter = character.id;
@@ -400,13 +641,14 @@ function renderCharacterNav() {
 }
 
 function renderSummary(character) {
-  summaryName.textContent = character.name;
-  summaryDescription.textContent = character.title;
+  const currentUi = ui();
+  summaryName.textContent = tr(character.name);
+  summaryDescription.textContent = tr(character.title);
   summaryStats.innerHTML = [
-    { label: 'Health', value: character.hp },
-    { label: 'Relic', value: character.relic },
-    { label: 'Identity', value: character.identity },
-    { label: 'Deck Count', value: `${character.decks.length} lists` }
+    { label: currentUi.labels.health, value: character.hp },
+    { label: currentUi.labels.relic, value: tr(character.relic) },
+    { label: currentUi.labels.identity, value: tr(character.identity) },
+    { label: currentUi.labels.deckCount, value: currentLanguage === 'ko' ? `${character.decks.length}${currentUi.suffixes.lists}` : `${character.decks.length} ${currentUi.suffixes.lists}`.trim() }
   ].map((item) => `
     <article class="stat-card">
       <p class="stat-label">${item.label}</p>
@@ -419,16 +661,17 @@ function renderSummary(character) {
 }
 
 function renderDeckSwitcher(character, deck) {
+  const currentUi = ui();
   deckSwitcher.innerHTML = '';
-  deckSectionTitle.textContent = `${character.name} decklists`;
-  deckSectionNote.textContent = `${character.decks.length} curated archetypes for route planning and pickups.`;
+  deckSectionTitle.textContent = `${tr(character.name)} ${currentUi.suffixes.decklists}`.trim();
+  deckSectionNote.textContent = `${character.decks.length} ${currentUi.suffixes.curated}`;
 
   character.decks.forEach((entry) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'deck-pill';
     button.dataset.deck = entry.id;
-    button.textContent = entry.name;
+    button.textContent = tr(entry.name);
     button.addEventListener('click', () => {
       activeDeck = entry.id;
       render();
@@ -440,21 +683,30 @@ function renderDeckSwitcher(character, deck) {
 }
 
 function renderMetrics(deck) {
+  const currentUi = ui();
+  const metricMap = {
+    'Archetype': currentUi.labels.archetype,
+    'Target Size': currentUi.labels.targetSize,
+    'Avg Cost': currentUi.labels.avgCost,
+    'Difficulty': currentUi.labels.difficulty
+  };
+
   deckMetrics.innerHTML = deck.metrics.map((metric) => `
     <article class="metric-card">
-      <p class="stat-label">${metric.label}</p>
-      <p class="metric-value">${metric.value}</p>
+      <p class="stat-label">${metricMap[metric.label] || metric.label}</p>
+      <p class="metric-value">${tr(metric.value)}</p>
     </article>
   `).join('');
 }
 
 function createCardRow(card) {
+  const currentUi = ui();
   const node = cardRowTemplate.content.cloneNode(true);
   node.querySelector('.card-row-name').textContent = card.name;
-  node.querySelector('.card-row-text').textContent = card.text;
-  node.querySelector('.card-cost').textContent = `${card.cost} cost`;
+  node.querySelector('.card-row-text').textContent = tr(card.text);
+  node.querySelector('.card-cost').textContent = currentLanguage === 'ko' ? `${card.cost}${currentUi.suffixes.cost}` : `${card.cost} ${currentUi.suffixes.cost}`;
   node.querySelector('.card-count').textContent = card.count;
-  node.querySelector('.card-type').textContent = card.type;
+  node.querySelector('.card-type').textContent = tr(card.type);
   return node;
 }
 
@@ -469,7 +721,7 @@ function renderNotes(deck) {
   notesList.innerHTML = '';
   deck.notes.forEach((note) => {
     const item = document.createElement('li');
-    item.textContent = note;
+    item.textContent = tr(note);
     notesList.appendChild(item);
   });
 }
@@ -483,23 +735,34 @@ function syncCharacterButtons() {
 }
 
 function renderDeckOverview(deck) {
-  deckName.textContent = deck.name;
-  deckSubtitle.textContent = deck.subtitle;
-  deckPlan.textContent = deck.plan;
+  deckName.textContent = tr(deck.name);
+  deckSubtitle.textContent = tr(deck.subtitle);
+  deckPlan.textContent = tr(deck.plan);
   renderMetrics(deck);
   renderCardList(coreCards, deck.core);
   renderCardList(supportCards, deck.support);
   renderNotes(deck);
 }
 
+function bindLanguageSwitcher() {
+  languageSelect.value = currentLanguage;
+  languageSelect.addEventListener('change', (event) => {
+    currentLanguage = languages.includes(event.target.value) ? event.target.value : 'en';
+    render();
+  });
+}
+
 function render() {
+  applyStaticText();
+  renderCharacterNav();
   const character = getActiveCharacter();
   const deck = getActiveDeck(character);
   renderSummary(character);
   renderDeckSwitcher(character, deck);
   renderDeckOverview(deck);
   syncCharacterButtons();
+  languageSelect.value = currentLanguage;
 }
 
-renderCharacterNav();
+bindLanguageSwitcher();
 render();

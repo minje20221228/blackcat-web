@@ -13,27 +13,29 @@
   <div class="page-shell">
     <header class="hero" id="top">
       <div class="hero-copy">
-        <p class="eyebrow">Slay the Spire 2</p>
-        <h1>Decklist Archive</h1>
-        <p class="hero-text">
-          Browse character-specific decklists built around clear game plans, core packages,
-          and practical card counts instead of raw card encyclopedia browsing.
-        </p>
+        <div class="hero-topbar">
+          <p class="eyebrow" id="hero-eyebrow">Slay the Spire 2</p>
+          <label class="language-switcher" for="language-select">
+            <span class="language-label" id="language-label">Language</span>
+            <select id="language-select">
+              <option value="en">English</option>
+              <option value="ko">한국어</option>
+              <option value="ja">日本語</option>
+              <option value="es">Español</option>
+            </select>
+          </label>
+        </div>
+        <h1 id="hero-title">Decklist Archive</h1>
+        <p class="hero-text" id="hero-text"></p>
         <div class="hero-actions">
-          <a class="hero-link" href="#character-nav">Choose character</a>
-          <a class="hero-link hero-link-secondary" href="#deck-section">Open decklists</a>
+          <a class="hero-link" href="#character-nav" id="hero-action-primary"></a>
+          <a class="hero-link hero-link-secondary" href="#deck-section" id="hero-action-secondary"></a>
         </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">Current Build</p>
-        <ul class="hero-points">
-          <li>5 characters</li>
-          <li>10 decklists</li>
-          <li>Core cards, counts, and plans</li>
-        </ul>
-        <p class="panel-note">
-          This page is organized as a fast reference for route planning and archetype selection.
-        </p>
+        <p class="panel-label" id="panel-label"></p>
+        <ul class="hero-points" id="hero-points"></ul>
+        <p class="panel-note" id="panel-note"></p>
       </aside>
     </header>
 
@@ -42,7 +44,7 @@
 
       <section class="character-summary" id="character-summary">
         <div class="summary-copy">
-          <p class="section-kicker">Selected Character</p>
+          <p class="section-kicker" id="summary-kicker"></p>
           <h2 id="summary-name"></h2>
           <p id="summary-description"></p>
         </div>
@@ -51,8 +53,8 @@
 
       <section class="deck-toolbar" id="deck-section">
         <div>
-          <p class="section-kicker">Decklists</p>
-          <h2 id="deck-section-title">Recommended decklists</h2>
+          <p class="section-kicker" id="decklist-kicker"></p>
+          <h2 id="deck-section-title"></h2>
           <p class="section-note" id="deck-section-note"></p>
         </div>
         <div class="deck-switcher" id="deck-switcher" aria-label="Deck selection"></div>
@@ -60,7 +62,7 @@
 
       <section class="deck-overview" id="deck-overview">
         <div class="deck-intro">
-          <p class="section-kicker">Deck Plan</p>
+          <p class="section-kicker" id="deck-plan-kicker"></p>
           <h2 id="deck-name"></h2>
           <p class="deck-subtitle" id="deck-subtitle"></p>
           <p class="deck-plan" id="deck-plan"></p>
@@ -71,16 +73,16 @@
       <section class="content-grid">
         <article class="panel-block">
           <div class="panel-head">
-            <p class="section-kicker">Core Cards</p>
-            <h3>Main package</h3>
+            <p class="section-kicker" id="core-kicker"></p>
+            <h3 id="core-heading"></h3>
           </div>
           <div class="card-list" id="core-cards"></div>
         </article>
 
         <article class="panel-block">
           <div class="panel-head">
-            <p class="section-kicker">Support Cards</p>
-            <h3>Glue and scaling</h3>
+            <p class="section-kicker" id="support-kicker"></p>
+            <h3 id="support-heading"></h3>
           </div>
           <div class="card-list" id="support-cards"></div>
         </article>
@@ -88,8 +90,8 @@
 
       <section class="panel-block notes-block">
         <div class="panel-head">
-          <p class="section-kicker">Piloting Notes</p>
-          <h3>How to play the list</h3>
+          <p class="section-kicker" id="notes-kicker"></p>
+          <h3 id="notes-heading"></h3>
         </div>
         <ul class="notes-list" id="notes-list"></ul>
       </section>
