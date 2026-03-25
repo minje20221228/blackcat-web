@@ -104,6 +104,62 @@
         </div>
         <ul class="notes-list" id="notes-list"></ul>
       </section>
+
+      <section class="community-grid">
+        <article class="panel-block submission-block">
+          <div class="panel-head">
+            <p class="section-kicker" id="submit-kicker"></p>
+            <h3 id="submit-heading"></h3>
+            <p class="section-note" id="submit-note"></p>
+          </div>
+          <form class="submission-form" id="submission-form">
+            <div class="form-grid">
+              <label class="field-group" for="submit-author">
+                <span class="field-label" id="label-author"></span>
+                <input id="submit-author" name="author" type="text" maxlength="40" required>
+              </label>
+              <label class="field-group" for="submit-character">
+                <span class="field-label" id="label-character"></span>
+                <select id="submit-character" name="character" required></select>
+              </label>
+              <label class="field-group field-group-wide" for="submit-title">
+                <span class="field-label" id="label-title"></span>
+                <input id="submit-title" name="title" type="text" maxlength="80" required>
+              </label>
+              <label class="field-group field-group-wide" for="submit-plan">
+                <span class="field-label" id="label-plan"></span>
+                <textarea id="submit-plan" name="plan" rows="4" maxlength="400" required></textarea>
+              </label>
+              <label class="field-group field-group-wide" for="submit-core">
+                <span class="field-label" id="label-core"></span>
+                <textarea id="submit-core" name="core" rows="4" maxlength="400"></textarea>
+              </label>
+              <label class="field-group field-group-wide" for="submit-support">
+                <span class="field-label" id="label-support"></span>
+                <textarea id="submit-support" name="support" rows="4" maxlength="400"></textarea>
+              </label>
+              <label class="field-group field-group-wide" for="submit-notes">
+                <span class="field-label" id="label-notes"></span>
+                <textarea id="submit-notes" name="notes" rows="4" maxlength="400"></textarea>
+              </label>
+            </div>
+            <div class="submission-actions">
+              <button class="submit-button" type="submit" id="submit-action"></button>
+              <p class="submission-status" id="submission-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel-block community-block">
+          <div class="panel-head">
+            <p class="section-kicker" id="community-kicker"></p>
+            <h3 id="community-heading"></h3>
+            <p class="section-note" id="community-note"></p>
+          </div>
+          <div class="community-list" id="community-list"></div>
+          <p class="community-empty" id="community-empty"></p>
+        </article>
+      </section>
     </main>
   </div>
 

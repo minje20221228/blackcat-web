@@ -23,6 +23,41 @@ let uiText = {
       dark: 'Dark',
       light: 'Light'
     },
+    community: {
+      submitKicker: 'Share a Deck',
+      submitHeading: 'Post your own decklist',
+      submitNote: 'Saved in this browser so people using this device can keep building a local deck archive.',
+      feedKicker: 'Community Decks',
+      feedHeading: 'Player submissions',
+      feedNote: 'Showing player-made decklists for the currently selected character.',
+      empty: 'No community decklists have been posted for this character yet.',
+      action: 'Post decklist',
+      success: 'Decklist posted successfully.',
+      metaBy: 'By',
+      metaOn: 'Posted',
+      sections: {
+        core: 'Core cards',
+        support: 'Support cards',
+        notes: 'Piloting notes'
+      },
+      fields: {
+        author: 'Author',
+        character: 'Character',
+        title: 'Deck title',
+        plan: 'Deck plan',
+        core: 'Core cards',
+        support: 'Support cards',
+        notes: 'Piloting notes'
+      },
+      placeholders: {
+        author: 'Name or handle',
+        title: 'Example: Zero-cost Shiv Climb',
+        plan: 'Explain the route, payoff, and how the deck is supposed to win.',
+        core: 'One card per line or comma-separated.',
+        support: 'Extra cards, relics, or pickups that support the plan.',
+        notes: 'Key mulligan notes, upgrade targets, and boss tips.'
+      }
+    },
     labels: {
       health: 'Health',
       relic: 'Relic',
@@ -61,6 +96,41 @@ let uiText = {
     themeOptions: {
       dark: '다크',
       light: '화이트'
+    },
+    community: {
+      submitKicker: '덱 공유',
+      submitHeading: '직접 덱리스트 올리기',
+      submitNote: '이 브라우저에 저장되므로 이 기기를 쓰는 사람들은 로컬 덱 아카이브를 계속 쌓을 수 있습니다.',
+      feedKicker: '커뮤니티 덱',
+      feedHeading: '유저 제출 덱리스트',
+      feedNote: '현재 선택한 캐릭터 기준으로 유저 덱리스트를 보여줍니다.',
+      empty: '이 캐릭터에는 아직 올라온 커뮤니티 덱리스트가 없습니다.',
+      action: '덱리스트 올리기',
+      success: '덱리스트가 등록되었습니다.',
+      metaBy: '작성자',
+      metaOn: '등록일',
+      sections: {
+        core: '핵심 카드',
+        support: '보조 카드',
+        notes: '운영 메모'
+      },
+      fields: {
+        author: '작성자',
+        character: '캐릭터',
+        title: '덱 제목',
+        plan: '덱 플랜',
+        core: '핵심 카드',
+        support: '보조 카드',
+        notes: '운영 메모'
+      },
+      placeholders: {
+        author: '닉네임 또는 이름',
+        title: '예: 0코 시브 등반',
+        plan: '루트, 핵심 보상, 승리 플랜을 설명해 주세요.',
+        core: '한 줄에 하나씩 또는 쉼표로 입력',
+        support: '플랜을 받쳐 주는 추가 카드, 유물, 픽',
+        notes: '멀리건, 강화 우선순위, 보스전 팁'
+      }
     },
     labels: {
       health: '체력',
@@ -101,6 +171,41 @@ let uiText = {
       dark: 'ダーク',
       light: 'ライト'
     },
+    community: {
+      submitKicker: 'デッキ共有',
+      submitHeading: '自分のデッキリストを投稿',
+      submitNote: 'このブラウザに保存されるため、この端末を使う人はローカルのデッキアーカイブを積み上げられます。',
+      feedKicker: 'コミュニティデッキ',
+      feedHeading: 'プレイヤー投稿',
+      feedNote: '現在選択中のキャラクター向けに投稿されたデッキを表示します。',
+      empty: 'このキャラクターにはまだコミュニティ投稿がありません。',
+      action: 'デッキを投稿',
+      success: 'デッキリストを投稿しました。',
+      metaBy: '投稿者',
+      metaOn: '投稿日',
+      sections: {
+        core: '主力カード',
+        support: '補助カード',
+        notes: '運用メモ'
+      },
+      fields: {
+        author: '投稿者名',
+        character: 'キャラクター',
+        title: 'デッキ名',
+        plan: 'デッキ方針',
+        core: '主力カード',
+        support: '補助カード',
+        notes: '運用メモ'
+      },
+      placeholders: {
+        author: '名前またはハンドルネーム',
+        title: '例: 0コストシヴ登頂',
+        plan: 'ルート、主な見返り、勝ち筋を説明してください。',
+        core: '1行に1枚、またはカンマ区切りで入力',
+        support: '方針を支える追加カード、レリック、ピック',
+        notes: 'マリガン、強化優先度、ボス戦のコツ'
+      }
+    },
     labels: {
       health: '体力',
       relic: '開始レリック',
@@ -139,6 +244,41 @@ let uiText = {
     themeOptions: {
       dark: 'Oscuro',
       light: 'Claro'
+    },
+    community: {
+      submitKicker: 'Compartir mazo',
+      submitHeading: 'Publica tu propio decklist',
+      submitNote: 'Se guarda en este navegador, así que las personas que usen este dispositivo pueden seguir ampliando un archivo local de mazos.',
+      feedKicker: 'Mazos de la comunidad',
+      feedHeading: 'Envíos de jugadores',
+      feedNote: 'Se muestran los decklists creados por jugadores para el personaje seleccionado.',
+      empty: 'Todavía no hay decklists de la comunidad para este personaje.',
+      action: 'Publicar decklist',
+      success: 'Decklist publicado correctamente.',
+      metaBy: 'Por',
+      metaOn: 'Publicado',
+      sections: {
+        core: 'Cartas clave',
+        support: 'Cartas de apoyo',
+        notes: 'Notas de uso'
+      },
+      fields: {
+        author: 'Autor',
+        character: 'Personaje',
+        title: 'Título del mazo',
+        plan: 'Plan del mazo',
+        core: 'Cartas clave',
+        support: 'Cartas de apoyo',
+        notes: 'Notas de uso'
+      },
+      placeholders: {
+        author: 'Nombre o alias',
+        title: 'Ejemplo: Shiv de costo cero',
+        plan: 'Explica la ruta, la recompensa principal y cómo gana el mazo.',
+        core: 'Una carta por línea o separadas por comas.',
+        support: 'Cartas extra, reliquias o picks que apoyan el plan.',
+        notes: 'Notas de mulligan, mejoras prioritarias y consejos contra jefes.'
+      }
     },
     labels: {
       health: 'Vida',
@@ -1028,6 +1168,31 @@ let themeSelect = document.getElementById('theme-select');
 let themeLabel = document.getElementById('theme-label');
 let themeOptionDark = document.getElementById('theme-option-dark');
 let themeOptionLight = document.getElementById('theme-option-light');
+let submitKicker = document.getElementById('submit-kicker');
+let submitHeading = document.getElementById('submit-heading');
+let submitNote = document.getElementById('submit-note');
+let communityKicker = document.getElementById('community-kicker');
+let communityHeading = document.getElementById('community-heading');
+let communityNote = document.getElementById('community-note');
+let communityList = document.getElementById('community-list');
+let communityEmpty = document.getElementById('community-empty');
+let submissionForm = document.getElementById('submission-form');
+let submissionCharacter = document.getElementById('submit-character');
+let submissionAuthor = document.getElementById('submit-author');
+let submissionTitle = document.getElementById('submit-title');
+let submissionPlan = document.getElementById('submit-plan');
+let submissionCore = document.getElementById('submit-core');
+let submissionSupport = document.getElementById('submit-support');
+let submissionNotes = document.getElementById('submit-notes');
+let submissionAction = document.getElementById('submit-action');
+let submissionStatus = document.getElementById('submission-status');
+let labelAuthor = document.getElementById('label-author');
+let labelCharacter = document.getElementById('label-character');
+let labelTitle = document.getElementById('label-title');
+let labelPlan = document.getElementById('label-plan');
+let labelCore = document.getElementById('label-core');
+let labelSupport = document.getElementById('label-support');
+let labelNotes = document.getElementById('label-notes');
 
 function detectPreferredLanguage() {
   let candidates = [];
@@ -1062,6 +1227,8 @@ function detectPreferredTheme() {
 
   return 'dark';
 }
+
+const COMMUNITY_STORAGE_KEY = 'blackcat-community-decks-v1';
 
 let activeCharacter = characterData[0].id;
 let activeDeck = characterData[0].decks[0].id;
@@ -1124,6 +1291,27 @@ function applyStaticText() {
   themeLabel.textContent = currentUi.themeLabel;
   themeOptionDark.textContent = currentUi.themeOptions.dark;
   themeOptionLight.textContent = currentUi.themeOptions.light;
+  submitKicker.textContent = currentUi.community.submitKicker;
+  submitHeading.textContent = currentUi.community.submitHeading;
+  submitNote.textContent = currentUi.community.submitNote;
+  communityKicker.textContent = currentUi.community.feedKicker;
+  communityHeading.textContent = currentUi.community.feedHeading;
+  communityNote.textContent = currentUi.community.feedNote;
+  communityEmpty.textContent = currentUi.community.empty;
+  submissionAction.textContent = currentUi.community.action;
+  labelAuthor.textContent = currentUi.community.fields.author;
+  labelCharacter.textContent = currentUi.community.fields.character;
+  labelTitle.textContent = currentUi.community.fields.title;
+  labelPlan.textContent = currentUi.community.fields.plan;
+  labelCore.textContent = currentUi.community.fields.core;
+  labelSupport.textContent = currentUi.community.fields.support;
+  labelNotes.textContent = currentUi.community.fields.notes;
+  submissionAuthor.placeholder = currentUi.community.placeholders.author;
+  submissionTitle.placeholder = currentUi.community.placeholders.title;
+  submissionPlan.placeholder = currentUi.community.placeholders.plan;
+  submissionCore.placeholder = currentUi.community.placeholders.core;
+  submissionSupport.placeholder = currentUi.community.placeholders.support;
+  submissionNotes.placeholder = currentUi.community.placeholders.notes;
 
   let points = document.getElementById('hero-points');
   points.innerHTML = '';
@@ -1137,6 +1325,46 @@ function applyStaticText() {
 function applyTheme() {
   document.documentElement.dataset.theme = currentTheme;
   themeSelect.value = currentTheme;
+}
+
+function getCommunityDecks() {
+  try {
+    let raw = window.localStorage.getItem(COMMUNITY_STORAGE_KEY);
+    let parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveCommunityDecks(decks) {
+  window.localStorage.setItem(COMMUNITY_STORAGE_KEY, JSON.stringify(decks));
+}
+
+function splitList(value) {
+  return String(value)
+    .split(/\n|,/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function getLocaleTag() {
+  let localeMap = {
+    en: 'en-US',
+    ko: 'ko-KR',
+    ja: 'ja-JP',
+    es: 'es-ES'
+  };
+
+  return localeMap[currentLanguage] || 'en-US';
+}
+
+function formatCommunityDate(timestamp) {
+  return new Date(timestamp).toLocaleDateString(getLocaleTag(), {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
 }
 
 function getActiveCharacter() {
@@ -1270,6 +1498,103 @@ function renderDeckOverview(deck) {
   renderNotes(deck);
 }
 
+function renderSubmissionCharacterOptions() {
+  let previousValue = submissionCharacter.value;
+  submissionCharacter.innerHTML = '';
+
+  characterData.forEach((character) => {
+    let option = document.createElement('option');
+    option.value = character.id;
+    option.textContent = tr(character.name);
+    submissionCharacter.appendChild(option);
+  });
+
+  submissionCharacter.value = previousValue && characterData.some((character) => character.id === previousValue)
+    ? previousValue
+    : activeCharacter;
+}
+
+function createCommunitySection(title, items, className) {
+  let currentUi = ui();
+  let section = document.createElement('section');
+  section.className = 'community-section';
+
+  let heading = document.createElement('h5');
+  heading.textContent = title;
+  section.appendChild(heading);
+
+  if (!items.length) {
+    return section;
+  }
+
+  if (className === 'community-notes') {
+    let list = document.createElement('ul');
+    list.className = className;
+    items.forEach((item) => {
+      let row = document.createElement('li');
+      row.textContent = item;
+      list.appendChild(row);
+    });
+    section.appendChild(list);
+    return section;
+  }
+
+  let chipWrap = document.createElement('div');
+  chipWrap.className = className;
+  items.forEach((item) => {
+    let chip = document.createElement('span');
+    chip.className = 'community-chip';
+    chip.textContent = item;
+    chipWrap.appendChild(chip);
+  });
+  section.appendChild(chipWrap);
+  return section;
+}
+
+function renderCommunityDecks(character) {
+  let currentUi = ui();
+  let decks = getCommunityDecks()
+    .filter((deck) => deck.characterId === character.id)
+    .sort((a, b) => b.createdAt - a.createdAt);
+
+  communityList.innerHTML = '';
+  communityEmpty.hidden = decks.length > 0;
+
+  decks.forEach((deck) => {
+    let card = document.createElement('article');
+    card.className = 'community-card';
+
+    let head = document.createElement('div');
+    head.className = 'community-card-head';
+
+    let titleWrap = document.createElement('div');
+    let title = document.createElement('h4');
+    title.textContent = deck.title;
+    let plan = document.createElement('p');
+    plan.className = 'community-plan';
+    plan.textContent = deck.plan;
+    titleWrap.appendChild(title);
+    titleWrap.appendChild(plan);
+
+    let meta = document.createElement('p');
+    meta.className = 'community-meta';
+    meta.textContent = `${currentUi.community.metaBy} ${deck.author} · ${currentUi.community.metaOn} ${formatCommunityDate(deck.createdAt)}`;
+
+    head.appendChild(titleWrap);
+    head.appendChild(meta);
+    card.appendChild(head);
+
+    let sections = document.createElement('div');
+    sections.className = 'community-sections';
+    sections.appendChild(createCommunitySection(currentUi.community.sections.core, deck.core, 'community-chips'));
+    sections.appendChild(createCommunitySection(currentUi.community.sections.support, deck.support, 'community-chips'));
+    sections.appendChild(createCommunitySection(currentUi.community.sections.notes, deck.notes, 'community-notes'));
+    card.appendChild(sections);
+
+    communityList.appendChild(card);
+  });
+}
+
 function bindLanguageSwitcher() {
   languageSelect.value = currentLanguage;
   languageSelect.addEventListener('change', (event) => {
@@ -1287,6 +1612,32 @@ function bindThemeSwitcher() {
   });
 }
 
+function bindSubmissionForm() {
+  submissionForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    let decks = getCommunityDecks();
+    decks.push({
+      id: `community-${Date.now()}`,
+      author: submissionAuthor.value.trim(),
+      characterId: submissionCharacter.value,
+      title: submissionTitle.value.trim(),
+      plan: submissionPlan.value.trim(),
+      core: splitList(submissionCore.value),
+      support: splitList(submissionSupport.value),
+      notes: splitList(submissionNotes.value),
+      createdAt: Date.now()
+    });
+
+    saveCommunityDecks(decks);
+    submissionStatus.textContent = ui().community.success;
+    activeCharacter = submissionCharacter.value;
+    activeDeck = getActiveCharacter().decks[0].id;
+    submissionForm.reset();
+    render();
+  });
+}
+
 function render() {
   applyTheme();
   applyStaticText();
@@ -1296,6 +1647,8 @@ function render() {
   renderSummary(character);
   renderDeckSwitcher(character, deck);
   renderDeckOverview(deck);
+  renderSubmissionCharacterOptions();
+  renderCommunityDecks(character);
   syncCharacterButtons();
   languageSelect.value = currentLanguage;
   themeSelect.value = currentTheme;
@@ -1303,4 +1656,5 @@ function render() {
 
 bindLanguageSwitcher();
 bindThemeSwitcher();
+bindSubmissionForm();
 render();
