@@ -1,4 +1,4 @@
-let characterData = [
+const characterData = [
   {
     id: 'ironclad',
     name: 'Ironclad',
@@ -102,14 +102,24 @@ let characterData = [
   }
 ];
 
-let nav = document.getElementById('character-nav');
-let summaryName = document.getElementById('summary-name');
-let summaryDescription = document.getElementById('summary-description');
-let summaryStats = document.getElementById('summary-stats');
-let galleryTitle = document.getElementById('gallery-title');
-let galleryNote = document.getElementById('gallery-note');
-let grid = document.getElementById('card-grid');
-let template = document.getElementById('card-template');
+const nav = document.getElementById('character-nav');
+const summaryName = document.getElementById('summary-name');
+const summaryDescription = document.getElementById('summary-description');
+const summaryStats = document.getElementById('summary-stats');
+const galleryTitle = document.getElementById('gallery-title');
+const galleryNote = document.getElementById('gallery-note');
+const grid = document.getElementById('card-grid');
+const template = document.getElementById('card-template');
+const searchInput = document.getElementById('search-input');
+const costFilter = document.getElementById('cost-filter');
+const typeFilter = document.getElementById('type-filter');
+const resetFiltersButton = document.getElementById('reset-filters');
+
+const filterState = {
+  query: '',
+  cost: 'all',
+  type: 'all'
+};
 
 let activeCharacter = characterData[0].id;
 
@@ -118,7 +128,7 @@ function buildImageUrl(filename) {
 }
 
 function buildFallbackArt(character, card) {
-  let svg = `
+  const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
       <defs>
         <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -139,11 +149,66 @@ function buildFallbackArt(character, card) {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
+function getActiveCharacter() {
+  return characterData.find((entry) => entry.id === activeCharacter) || characterData[0];
+}
+
+function getFilteredCards(character) {
+  const normalizedQuery = filterState.query.trim().toLowerCase();
+
+  return character.cards.filter((card) => {
+    const matchesQuery =
+      normalizedQuery === '' ||
+      card.name.toLowerCase().includes(normalizedQuery) ||
+      card.description.toLowerCase().includes(normalizedQuery);
+    const matchesCost = filterState.cost === 'all' || card.cost === filterState.cost;
+    const matchesType = filterState.type === 'all' || card.type === filterState.type;
+
+    return matchesQuery && matchesCost && matchesType;
+  });
+}
+
+function populateSelect(selectElement, values, allLabel) {
+  selectElement.innerHTML = '';
+
+  const allOption = document.createElement('option');
+  allOption.value = 'all';
+  allOption.textContent = allLabel;
+  selectElement.appendChild(allOption);
+
+  values.forEach((value) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = value;
+    selectElement.appendChild(option);
+  });
+}
+
+function syncFilterOptions(character) {
+  const costs = [...new Set(character.cards.map((card) => card.cost))].sort((a, b) => Number(a) - Number(b));
+  const types = [...new Set(character.cards.map((card) => card.type))].sort();
+
+  populateSelect(costFilter, costs, 'All costs');
+  populateSelect(typeFilter, types, 'All types');
+
+  if (!costs.includes(filterState.cost)) {
+    filterState.cost = 'all';
+  }
+
+  if (!types.includes(filterState.type)) {
+    filterState.type = 'all';
+  }
+
+  costFilter.value = filterState.cost;
+  typeFilter.value = filterState.type;
+  searchInput.value = filterState.query;
+}
+
 function renderNav() {
   nav.innerHTML = '';
 
   characterData.forEach((character) => {
-    let button = document.createElement('button');
+    const button = document.createElement('button');
     button.type = 'button';
     button.className = 'character-pill';
     button.dataset.character = character.id;
@@ -151,6 +216,7 @@ function renderNav() {
     button.style.setProperty('--pill-accent', character.accent);
     button.addEventListener('click', () => {
       activeCharacter = character.id;
+      syncFilterOptions(getActiveCharacter());
       render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -175,17 +241,31 @@ function renderSummary(character) {
 
   document.documentElement.style.setProperty('--accent-color', character.accent);
   document.documentElement.style.setProperty('--accent-panel', character.panel);
-  galleryTitle.textContent = `${character.name} card gallery`;
-  galleryNote.textContent = `${character.cards.length} cards shown across starter and signature picks.`;
 }
 
 function renderCards(character) {
+  const filteredCards = getFilteredCards(character);
   grid.innerHTML = '';
 
-  character.cards.forEach((card) => {
-    let node = template.content.cloneNode(true);
-    let article = node.querySelector('.card-tile');
-    let image = node.querySelector('.card-art');
+  galleryTitle.textContent = `${character.name} card gallery`;
+  galleryNote.textContent = `${filteredCards.length} of ${character.cards.length} cards shown.`;
+
+  if (filteredCards.length === 0) {
+    const emptyState = document.createElement('article');
+    emptyState.className = 'empty-state';
+    emptyState.innerHTML = `
+      <p class="section-kicker">No Matches</p>
+      <h3>No cards match the current filters.</h3>
+      <p class="section-note">Try clearing search text or widening cost and type filters.</p>
+    `;
+    grid.appendChild(emptyState);
+    return;
+  }
+
+  filteredCards.forEach((card) => {
+    const node = template.content.cloneNode(true);
+    const article = node.querySelector('.card-tile');
+    const image = node.querySelector('.card-art');
 
     article.style.setProperty('--card-accent', character.accent);
     image.src = buildImageUrl(card.image);
@@ -201,9 +281,9 @@ function renderCards(character) {
     node.querySelector('.card-name').textContent = card.name;
     node.querySelector('.card-description').textContent = card.description;
 
-    let tags = node.querySelector('.card-tags');
+    const tags = node.querySelector('.card-tags');
     [card.type, card.rarity].forEach((tag) => {
-      let span = document.createElement('span');
+      const span = document.createElement('span');
       span.className = 'card-tag';
       span.textContent = tag;
       tags.appendChild(span);
@@ -215,18 +295,45 @@ function renderCards(character) {
 
 function syncActivePill() {
   document.querySelectorAll('.character-pill').forEach((button) => {
-    let isActive = button.dataset.character === activeCharacter;
+    const isActive = button.dataset.character === activeCharacter;
     button.classList.toggle('is-active', isActive);
     button.setAttribute('aria-pressed', String(isActive));
   });
 }
 
+function bindFilterControls() {
+  searchInput.addEventListener('input', (event) => {
+    filterState.query = event.target.value;
+    render();
+  });
+
+  costFilter.addEventListener('change', (event) => {
+    filterState.cost = event.target.value;
+    render();
+  });
+
+  typeFilter.addEventListener('change', (event) => {
+    filterState.type = event.target.value;
+    render();
+  });
+
+  resetFiltersButton.addEventListener('click', () => {
+    filterState.query = '';
+    filterState.cost = 'all';
+    filterState.type = 'all';
+    syncFilterOptions(getActiveCharacter());
+    render();
+  });
+}
+
 function render() {
-  let character = characterData.find((entry) => entry.id === activeCharacter) || characterData[0];
+  const character = getActiveCharacter();
   renderSummary(character);
   renderCards(character);
   syncActivePill();
 }
 
 renderNav();
+syncFilterOptions(getActiveCharacter());
+bindFilterControls();
 render();

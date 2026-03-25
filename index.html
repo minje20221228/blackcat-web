@@ -49,6 +49,29 @@
         <div class="summary-stats" id="summary-stats"></div>
       </section>
 
+      <section class="filter-panel" aria-label="Card search and filters">
+        <div class="filter-intro">
+          <p class="section-kicker">Find Cards</p>
+          <h2>Search the current character pool</h2>
+          <p class="section-note">Name and description search works together with cost and type filters.</p>
+        </div>
+        <div class="filter-controls">
+          <label class="filter-field filter-search" for="search-input">
+            <span class="filter-label">Search</span>
+            <input id="search-input" type="search" placeholder="Search by card name or effect">
+          </label>
+          <label class="filter-field" for="cost-filter">
+            <span class="filter-label">Cost</span>
+            <select id="cost-filter"></select>
+          </label>
+          <label class="filter-field" for="type-filter">
+            <span class="filter-label">Type</span>
+            <select id="type-filter"></select>
+          </label>
+          <button class="reset-filters" id="reset-filters" type="button">Reset filters</button>
+        </div>
+      </section>
+
       <section class="section-head">
         <div>
           <p class="section-kicker">Card Gallery</p>
