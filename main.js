@@ -1,4 +1,4 @@
-const characterData = [
+let characterData = [
   {
     id: 'ironclad',
     name: 'Ironclad',
@@ -102,14 +102,14 @@ const characterData = [
   }
 ];
 
-const nav = document.getElementById('character-nav');
-const summaryName = document.getElementById('summary-name');
-const summaryDescription = document.getElementById('summary-description');
-const summaryStats = document.getElementById('summary-stats');
-const galleryTitle = document.getElementById('gallery-title');
-const galleryNote = document.getElementById('gallery-note');
-const grid = document.getElementById('card-grid');
-const template = document.getElementById('card-template');
+let nav = document.getElementById('character-nav');
+let summaryName = document.getElementById('summary-name');
+let summaryDescription = document.getElementById('summary-description');
+let summaryStats = document.getElementById('summary-stats');
+let galleryTitle = document.getElementById('gallery-title');
+let galleryNote = document.getElementById('gallery-note');
+let grid = document.getElementById('card-grid');
+let template = document.getElementById('card-template');
 
 let activeCharacter = characterData[0].id;
 
@@ -118,7 +118,7 @@ function buildImageUrl(filename) {
 }
 
 function buildFallbackArt(character, card) {
-  const svg = `
+  let svg = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
       <defs>
         <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -143,7 +143,7 @@ function renderNav() {
   nav.innerHTML = '';
 
   characterData.forEach((character) => {
-    const button = document.createElement('button');
+    let button = document.createElement('button');
     button.type = 'button';
     button.className = 'character-pill';
     button.dataset.character = character.id;
@@ -183,9 +183,9 @@ function renderCards(character) {
   grid.innerHTML = '';
 
   character.cards.forEach((card) => {
-    const node = template.content.cloneNode(true);
-    const article = node.querySelector('.card-tile');
-    const image = node.querySelector('.card-art');
+    let node = template.content.cloneNode(true);
+    let article = node.querySelector('.card-tile');
+    let image = node.querySelector('.card-art');
 
     article.style.setProperty('--card-accent', character.accent);
     image.src = buildImageUrl(card.image);
@@ -201,9 +201,9 @@ function renderCards(character) {
     node.querySelector('.card-name').textContent = card.name;
     node.querySelector('.card-description').textContent = card.description;
 
-    const tags = node.querySelector('.card-tags');
+    let tags = node.querySelector('.card-tags');
     [card.type, card.rarity].forEach((tag) => {
-      const span = document.createElement('span');
+      let span = document.createElement('span');
       span.className = 'card-tag';
       span.textContent = tag;
       tags.appendChild(span);
@@ -215,14 +215,14 @@ function renderCards(character) {
 
 function syncActivePill() {
   document.querySelectorAll('.character-pill').forEach((button) => {
-    const isActive = button.dataset.character === activeCharacter;
+    let isActive = button.dataset.character === activeCharacter;
     button.classList.toggle('is-active', isActive);
     button.setAttribute('aria-pressed', String(isActive));
   });
 }
 
 function render() {
-  const character = characterData.find((entry) => entry.id === activeCharacter) || characterData[0];
+  let character = characterData.find((entry) => entry.id === activeCharacter) || characterData[0];
   renderSummary(character);
   renderCards(character);
   syncActivePill();
