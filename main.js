@@ -18,6 +18,11 @@ const uiText = {
     notesKicker: 'Piloting Notes',
     notesHeading: 'How to play the list',
     languageLabel: 'Language',
+    themeLabel: 'Theme',
+    themeOptions: {
+      dark: 'Dark',
+      light: 'Light'
+    },
     labels: {
       health: 'Health',
       relic: 'Relic',
@@ -52,6 +57,11 @@ const uiText = {
     notesKicker: '운영 메모',
     notesHeading: '플레이 가이드',
     languageLabel: '언어',
+    themeLabel: '테마',
+    themeOptions: {
+      dark: '다크',
+      light: '화이트'
+    },
     labels: {
       health: '체력',
       relic: '시작 유물',
@@ -86,6 +96,11 @@ const uiText = {
     notesKicker: '運用メモ',
     notesHeading: '回し方',
     languageLabel: '言語',
+    themeLabel: 'テーマ',
+    themeOptions: {
+      dark: 'ダーク',
+      light: 'ライト'
+    },
     labels: {
       health: '体力',
       relic: '開始レリック',
@@ -120,6 +135,11 @@ const uiText = {
     notesKicker: 'Notas de uso',
     notesHeading: 'Cómo jugar la lista',
     languageLabel: 'Idioma',
+    themeLabel: 'Tema',
+    themeOptions: {
+      dark: 'Oscuro',
+      light: 'Claro'
+    },
     labels: {
       health: 'Vida',
       relic: 'Reliquia',
@@ -860,6 +880,10 @@ const supportCards = document.getElementById('support-cards');
 const notesList = document.getElementById('notes-list');
 const cardRowTemplate = document.getElementById('card-row-template');
 const languageSelect = document.getElementById('language-select');
+const themeSelect = document.getElementById('theme-select');
+const themeLabel = document.getElementById('theme-label');
+const themeOptionDark = document.getElementById('theme-option-dark');
+const themeOptionLight = document.getElementById('theme-option-light');
 
 function detectPreferredLanguage() {
   const candidates = [];
@@ -882,9 +906,23 @@ function detectPreferredLanguage() {
   return 'en';
 }
 
+function detectPreferredTheme() {
+  const storedTheme = window.localStorage.getItem('theme');
+  if (storedTheme === 'dark' || storedTheme === 'light') {
+    return storedTheme;
+  }
+
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    return 'light';
+  }
+
+  return 'dark';
+}
+
 let activeCharacter = characterData[0].id;
 let activeDeck = characterData[0].decks[0].id;
 let currentLanguage = detectPreferredLanguage();
+let currentTheme = detectPreferredTheme();
 
 function tr(text) {
   if (currentLanguage === 'en') {
@@ -939,6 +977,9 @@ function applyStaticText() {
   document.getElementById('notes-kicker').textContent = currentUi.notesKicker;
   document.getElementById('notes-heading').textContent = currentUi.notesHeading;
   document.getElementById('language-label').textContent = currentUi.languageLabel;
+  themeLabel.textContent = currentUi.themeLabel;
+  themeOptionDark.textContent = currentUi.themeOptions.dark;
+  themeOptionLight.textContent = currentUi.themeOptions.light;
 
   const points = document.getElementById('hero-points');
   points.innerHTML = '';
@@ -947,6 +988,11 @@ function applyStaticText() {
     item.textContent = point;
     points.appendChild(item);
   });
+}
+
+function applyTheme() {
+  document.documentElement.dataset.theme = currentTheme;
+  themeSelect.value = currentTheme;
 }
 
 function getActiveCharacter() {
@@ -1088,7 +1134,17 @@ function bindLanguageSwitcher() {
   });
 }
 
+function bindThemeSwitcher() {
+  applyTheme();
+  themeSelect.addEventListener('change', (event) => {
+    currentTheme = event.target.value === 'light' ? 'light' : 'dark';
+    window.localStorage.setItem('theme', currentTheme);
+    applyTheme();
+  });
+}
+
 function render() {
+  applyTheme();
   applyStaticText();
   renderCharacterNav();
   const character = getActiveCharacter();
@@ -1098,7 +1154,9 @@ function render() {
   renderDeckOverview(deck);
   syncCharacterButtons();
   languageSelect.value = currentLanguage;
+  themeSelect.value = currentTheme;
 }
 
 bindLanguageSwitcher();
+bindThemeSwitcher();
 render();
