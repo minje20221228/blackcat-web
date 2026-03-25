@@ -1,18 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slay the Spire 2 Meta</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slay the Spire 2 Card Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Slay the Spire 2 Meta</h1>
-    <div class="deck-container">
-        <card-display name="Strike" cost="1" type="Attack" description="Deal 6 damage."></card-display>
-        <card-display name="Defend" cost="1" type="Skill" description="Gain 5 Block."></card-display>
-        <card-display name="Bash" cost="2" type="Attack" description="Deal 8 damage. Apply 2 Vulnerable."></card-display>
-    </div>
-    <script src="main.js"></script>
+  <div class="page-shell">
+    <header class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">Slay the Spire 2</p>
+        <h1>Character Card Atlas</h1>
+        <p class="hero-text">
+          Browse starter and signature cards for every playable character, with quick descriptions,
+          visuals, and deck identity notes in a layout that feels closer to a real game compendium.
+        </p>
+        <div class="hero-actions">
+          <a class="hero-link" href="#character-nav">Browse characters</a>
+          <a class="hero-link hero-link-secondary" href="#card-grid">Jump to cards</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">Compendium Focus</p>
+        <ul class="hero-points">
+          <li>5 characters</li>
+          <li>31 cards</li>
+          <li>Starter decks plus signature picks</li>
+        </ul>
+        <p class="panel-note">
+          Card names and descriptions are compiled from community wiki snippets current as of March 25, 2026.
+        </p>
+      </aside>
+    </header>
+
+    <main>
+      <section class="character-nav" id="character-nav" aria-label="Character filters"></section>
+
+      <section class="character-summary" id="character-summary">
+        <div class="summary-copy">
+          <p class="section-kicker">Selected Character</p>
+          <h2 id="summary-name"></h2>
+          <p id="summary-description"></p>
+        </div>
+        <div class="summary-stats" id="summary-stats"></div>
+      </section>
+
+      <section class="section-head">
+        <div>
+          <p class="section-kicker">Card Gallery</p>
+          <h2 id="gallery-title">Starter deck and signature cards</h2>
+        </div>
+        <p class="section-note" id="gallery-note"></p>
+      </section>
+
+      <section class="card-grid" id="card-grid" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <template id="card-template">
+    <article class="card-tile">
+      <div class="card-art-wrap">
+        <img class="card-art" alt="">
+        <span class="card-rarity"></span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta-row">
+          <p class="card-character"></p>
+          <span class="card-cost"></span>
+        </div>
+        <h3 class="card-name"></h3>
+        <div class="card-tags"></div>
+        <p class="card-description"></p>
+      </div>
+    </article>
+  </template>
+
+  <script src="main.js"></script>
 </body>
 </html>
