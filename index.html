@@ -97,6 +97,16 @@
         </article>
       </section>
 
+      <section class="panel-block card-archive-block">
+        <div class="panel-head">
+          <p class="section-kicker" id="archive-kicker"></p>
+          <h3 id="archive-heading"></h3>
+          <p class="section-note" id="archive-note"></p>
+        </div>
+        <div class="card-archive-grid" id="card-archive-list"></div>
+        <p class="community-empty" id="card-archive-empty"></p>
+      </section>
+
       <section class="panel-block notes-block">
         <div class="panel-head">
           <p class="section-kicker" id="notes-kicker"></p>
@@ -148,6 +158,63 @@
               <p class="submission-status" id="submission-status" role="status" aria-live="polite"></p>
             </div>
           </form>
+
+          <div class="panel-head submission-subhead">
+            <p class="section-kicker" id="card-submit-kicker"></p>
+            <h3 id="card-submit-heading"></h3>
+            <p class="section-note" id="card-submit-note"></p>
+          </div>
+          <form class="submission-form" id="card-form">
+            <div class="form-grid">
+              <label class="field-group" for="card-character">
+                <span class="field-label" id="label-card-character"></span>
+                <select id="card-character" name="card-character" required></select>
+              </label>
+              <label class="field-group" for="card-deck">
+                <span class="field-label" id="label-card-deck"></span>
+                <select id="card-deck" name="card-deck" required></select>
+              </label>
+              <label class="field-group" for="card-name">
+                <span class="field-label" id="label-card-name"></span>
+                <input id="card-name" name="card-name" type="text" maxlength="60" required>
+              </label>
+              <label class="field-group" for="card-type">
+                <span class="field-label" id="label-card-type"></span>
+                <select id="card-type" name="card-type" required>
+                  <option value="Attack">Attack</option>
+                  <option value="Skill">Skill</option>
+                  <option value="Power">Power</option>
+                </select>
+              </label>
+              <label class="field-group" for="card-cost">
+                <span class="field-label" id="label-card-cost"></span>
+                <input id="card-cost" name="card-cost" type="text" maxlength="8" required>
+              </label>
+              <label class="field-group" for="card-count">
+                <span class="field-label" id="label-card-count"></span>
+                <input id="card-count" name="card-count" type="text" maxlength="12" value="1x" required>
+              </label>
+              <label class="field-group" for="card-role">
+                <span class="field-label" id="label-card-role"></span>
+                <select id="card-role" name="card-role" required>
+                  <option value="core">Core</option>
+                  <option value="support">Support</option>
+                </select>
+              </label>
+              <label class="field-group field-group-wide" for="card-image">
+                <span class="field-label" id="label-card-image"></span>
+                <input id="card-image" name="card-image" type="url" maxlength="500">
+              </label>
+              <label class="field-group field-group-wide" for="card-text">
+                <span class="field-label" id="label-card-text"></span>
+                <textarea id="card-text" name="card-text" rows="4" maxlength="300" required></textarea>
+              </label>
+            </div>
+            <div class="submission-actions">
+              <button class="submit-button" type="submit" id="card-action"></button>
+              <p class="submission-status" id="card-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
         </article>
 
         <article class="panel-block community-block">
@@ -166,6 +233,9 @@
   <template id="card-row-template">
     <article class="card-row">
       <div class="card-row-main">
+        <div class="card-row-art-wrap">
+          <img class="card-row-art" alt="">
+        </div>
         <div>
           <p class="card-row-name"></p>
           <p class="card-row-text"></p>

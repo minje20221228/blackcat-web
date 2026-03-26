@@ -230,7 +230,8 @@ h1 {
 .hero-actions,
 .character-nav,
 .deck-switcher,
-.card-row-meta {
+.card-row-meta,
+.card-row-main {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -380,6 +381,25 @@ h1 {
   align-items: start;
 }
 
+.card-row-main {
+  flex: 1 1 320px;
+  align-items: flex-start;
+}
+
+.card-row-art-wrap {
+  flex: 0 0 92px;
+}
+
+.card-row-art {
+  display: block;
+  width: 92px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+}
+
 .card-row-name {
   margin: 0 0 8px;
   font-weight: 800;
@@ -418,6 +438,53 @@ h1 {
   border: 1px solid var(--line);
 }
 
+.card-archive-block {
+  margin-bottom: 24px;
+}
+
+.card-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.archive-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.archive-card-image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+}
+
+.archive-card-name,
+.archive-card-text {
+  margin: 0;
+}
+
+.archive-card-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+}
+
+.archive-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.submission-subhead {
+  margin-top: 28px;
+}
 
 .community-grid {
   display: grid;
@@ -637,8 +704,14 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .card-row {
+  .card-row,
+  .card-row-main {
     flex-direction: column;
+  }
+
+  .card-row-art-wrap,
+  .card-row-art {
+    width: 100%;
   }
 
   h1 {

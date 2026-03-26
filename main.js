@@ -299,6 +299,141 @@ let uiText = {
   }
 };
 
+let cardUiText = {
+  en: {
+    archiveKicker: 'Card Archive',
+    archiveHeading: 'Deck card gallery',
+    archiveNote: 'Built-in cards and player-added cards for the current deck appear here with image previews.',
+    archiveEmpty: 'No cards have been added to this deck yet.',
+    submitKicker: 'Add a Card',
+    submitHeading: 'Post a custom card',
+    submitNote: 'Add a custom card with an optional image URL. It is saved in this browser and appears immediately in the selected deck.',
+    action: 'Add card',
+    success: 'Card added successfully.',
+    fields: {
+      character: 'Character',
+      deck: 'Deck',
+      name: 'Card name',
+      type: 'Card type',
+      cost: 'Cost',
+      count: 'Count',
+      role: 'Section',
+      image: 'Image URL',
+      text: 'Card text'
+    },
+    placeholders: {
+      name: 'Example: Phantom Volley',
+      cost: '1',
+      count: '1x',
+      image: 'https://example.com/card-art.png',
+      text: 'Describe what the card does and why people should add it.'
+    },
+    roles: {
+      core: 'Core',
+      support: 'Support'
+    }
+  },
+  ko: {
+    archiveKicker: '카드 아카이브',
+    archiveHeading: '현재 덱 카드 갤러리',
+    archiveNote: '기본 카드와 유저가 직접 추가한 카드가 이미지와 함께 여기에 표시됩니다.',
+    archiveEmpty: '아직 이 덱에 추가된 카드가 없습니다.',
+    submitKicker: '카드 추가',
+    submitHeading: '직접 카드 등록',
+    submitNote: '이미지 URL을 넣어 커스텀 카드를 추가할 수 있습니다. 이 브라우저에 저장되고 현재 선택한 덱에 바로 반영됩니다.',
+    action: '카드 추가',
+    success: '카드가 등록되었습니다.',
+    fields: {
+      character: '캐릭터',
+      deck: '덱',
+      name: '카드 이름',
+      type: '카드 타입',
+      cost: '코스트',
+      count: '매수',
+      role: '섹션',
+      image: '이미지 URL',
+      text: '카드 설명'
+    },
+    placeholders: {
+      name: '예: 팬텀 볼리',
+      cost: '1',
+      count: '1x',
+      image: 'https://example.com/card-art.png',
+      text: '카드 효과와 왜 넣는 카드인지 설명해 주세요.'
+    },
+    roles: {
+      core: '핵심',
+      support: '보조'
+    }
+  },
+  ja: {
+    archiveKicker: 'カードアーカイブ',
+    archiveHeading: '現在のデッキカードギャラリー',
+    archiveNote: '既存カードとプレイヤー追加カードを画像付きで表示します。',
+    archiveEmpty: 'このデッキにはまだカードが追加されていません。',
+    submitKicker: 'カード追加',
+    submitHeading: 'カスタムカードを投稿',
+    submitNote: '画像URL付きでカードを追加できます。このブラウザに保存され、選択中のデッキへすぐ反映されます。',
+    action: 'カードを追加',
+    success: 'カードを追加しました。',
+    fields: {
+      character: 'キャラクター',
+      deck: 'デッキ',
+      name: 'カード名',
+      type: 'カードタイプ',
+      cost: 'コスト',
+      count: '枚数',
+      role: 'セクション',
+      image: '画像URL',
+      text: 'カード説明'
+    },
+    placeholders: {
+      name: '例: ファントムボレー',
+      cost: '1',
+      count: '1x',
+      image: 'https://example.com/card-art.png',
+      text: '効果と採用理由を入力してください。'
+    },
+    roles: {
+      core: '主力',
+      support: '補助'
+    }
+  },
+  es: {
+    archiveKicker: 'Archivo de cartas',
+    archiveHeading: 'Galeria del mazo actual',
+    archiveNote: 'Las cartas base y las cartas creadas por jugadores aparecen aqui con imagen.',
+    archiveEmpty: 'Aun no hay cartas agregadas a este mazo.',
+    submitKicker: 'Agregar carta',
+    submitHeading: 'Publica una carta personalizada',
+    submitNote: 'Agrega una carta con URL de imagen opcional. Se guarda en este navegador y aparece de inmediato en el mazo seleccionado.',
+    action: 'Agregar carta',
+    success: 'Carta agregada correctamente.',
+    fields: {
+      character: 'Personaje',
+      deck: 'Mazo',
+      name: 'Nombre de la carta',
+      type: 'Tipo de carta',
+      cost: 'Costo',
+      count: 'Cantidad',
+      role: 'Seccion',
+      image: 'URL de imagen',
+      text: 'Texto de la carta'
+    },
+    placeholders: {
+      name: 'Ejemplo: Phantom Volley',
+      cost: '1',
+      count: '1x',
+      image: 'https://example.com/card-art.png',
+      text: 'Describe que hace la carta y por que vale la pena agregarla.'
+    },
+    roles: {
+      core: 'Clave',
+      support: 'Apoyo'
+    }
+  }
+};
+
 let translations = {
   ko: {
     'Decklist Archive': '덱리스트 아카이브',
@@ -1193,6 +1328,35 @@ let labelPlan = document.getElementById('label-plan');
 let labelCore = document.getElementById('label-core');
 let labelSupport = document.getElementById('label-support');
 let labelNotes = document.getElementById('label-notes');
+let archiveKicker = document.getElementById('archive-kicker');
+let archiveHeading = document.getElementById('archive-heading');
+let archiveNote = document.getElementById('archive-note');
+let cardArchiveList = document.getElementById('card-archive-list');
+let cardArchiveEmpty = document.getElementById('card-archive-empty');
+let cardForm = document.getElementById('card-form');
+let cardCharacter = document.getElementById('card-character');
+let cardDeck = document.getElementById('card-deck');
+let cardName = document.getElementById('card-name');
+let cardType = document.getElementById('card-type');
+let cardCost = document.getElementById('card-cost');
+let cardCount = document.getElementById('card-count');
+let cardRole = document.getElementById('card-role');
+let cardImage = document.getElementById('card-image');
+let cardText = document.getElementById('card-text');
+let cardAction = document.getElementById('card-action');
+let cardStatus = document.getElementById('card-status');
+let cardSubmitKicker = document.getElementById('card-submit-kicker');
+let cardSubmitHeading = document.getElementById('card-submit-heading');
+let cardSubmitNote = document.getElementById('card-submit-note');
+let labelCardCharacter = document.getElementById('label-card-character');
+let labelCardDeck = document.getElementById('label-card-deck');
+let labelCardName = document.getElementById('label-card-name');
+let labelCardType = document.getElementById('label-card-type');
+let labelCardCost = document.getElementById('label-card-cost');
+let labelCardCount = document.getElementById('label-card-count');
+let labelCardRole = document.getElementById('label-card-role');
+let labelCardImage = document.getElementById('label-card-image');
+let labelCardText = document.getElementById('label-card-text');
 
 function detectPreferredLanguage() {
   let candidates = [];
@@ -1229,6 +1393,7 @@ function detectPreferredTheme() {
 }
 
 const COMMUNITY_STORAGE_KEY = 'blackcat-community-decks-v1';
+const CUSTOM_CARD_STORAGE_KEY = 'blackcat-custom-cards-v1';
 
 let activeCharacter = characterData[0].id;
 let activeDeck = characterData[0].decks[0].id;
@@ -1245,6 +1410,10 @@ function tr(text) {
 
 function ui() {
   return uiText[currentLanguage] || uiText.en;
+}
+
+function cardUi() {
+  return cardUiText[currentLanguage] || cardUiText.en;
 }
 
 function formatDeckCount(count) {
@@ -1313,6 +1482,30 @@ function applyStaticText() {
   submissionSupport.placeholder = currentUi.community.placeholders.support;
   submissionNotes.placeholder = currentUi.community.placeholders.notes;
 
+  let currentCardUi = cardUi();
+  archiveKicker.textContent = currentCardUi.archiveKicker;
+  archiveHeading.textContent = currentCardUi.archiveHeading;
+  archiveNote.textContent = currentCardUi.archiveNote;
+  cardArchiveEmpty.textContent = currentCardUi.archiveEmpty;
+  cardSubmitKicker.textContent = currentCardUi.submitKicker;
+  cardSubmitHeading.textContent = currentCardUi.submitHeading;
+  cardSubmitNote.textContent = currentCardUi.submitNote;
+  cardAction.textContent = currentCardUi.action;
+  labelCardCharacter.textContent = currentCardUi.fields.character;
+  labelCardDeck.textContent = currentCardUi.fields.deck;
+  labelCardName.textContent = currentCardUi.fields.name;
+  labelCardType.textContent = currentCardUi.fields.type;
+  labelCardCost.textContent = currentCardUi.fields.cost;
+  labelCardCount.textContent = currentCardUi.fields.count;
+  labelCardRole.textContent = currentCardUi.fields.role;
+  labelCardImage.textContent = currentCardUi.fields.image;
+  labelCardText.textContent = currentCardUi.fields.text;
+  cardName.placeholder = currentCardUi.placeholders.name;
+  cardCost.placeholder = currentCardUi.placeholders.cost;
+  cardCount.placeholder = currentCardUi.placeholders.count;
+  cardImage.placeholder = currentCardUi.placeholders.image;
+  cardText.placeholder = currentCardUi.placeholders.text;
+
   let points = document.getElementById('hero-points');
   points.innerHTML = '';
   currentUi.heroPoints.forEach((point) => {
@@ -1341,6 +1534,20 @@ function saveCommunityDecks(decks) {
   window.localStorage.setItem(COMMUNITY_STORAGE_KEY, JSON.stringify(decks));
 }
 
+function getCustomCards() {
+  try {
+    let raw = window.localStorage.getItem(CUSTOM_CARD_STORAGE_KEY);
+    let parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveCustomCards(cards) {
+  window.localStorage.setItem(CUSTOM_CARD_STORAGE_KEY, JSON.stringify(cards));
+}
+
 function splitList(value) {
   return String(value)
     .split(/\n|,/)
@@ -1365,6 +1572,72 @@ function formatCommunityDate(timestamp) {
     month: 'short',
     day: 'numeric'
   });
+}
+
+function sanitizeSvgText(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function makeCardImage(card, accent) {
+  if (card.image) {
+    return card.image;
+  }
+
+  let typeLabel = sanitizeSvgText(tr(card.type));
+  let nameLabel = sanitizeSvgText(tr(card.name));
+  let costLabel = sanitizeSvgText(card.cost);
+  let art = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 480">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="${accent}" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#11151b" />
+        </linearGradient>
+      </defs>
+      <rect width="360" height="480" rx="28" fill="url(#bg)" />
+      <rect x="20" y="20" width="320" height="440" rx="22" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" />
+      <circle cx="74" cy="72" r="34" fill="rgba(255,255,255,0.16)" />
+      <text x="74" y="84" text-anchor="middle" font-family="Verdana, sans-serif" font-size="34" fill="#f8f0e0" font-weight="700">${costLabel}</text>
+      <text x="32" y="140" font-family="Georgia, serif" font-size="32" fill="#fff7e8" font-weight="700">${nameLabel}</text>
+      <text x="32" y="186" font-family="Verdana, sans-serif" font-size="18" fill="rgba(255,247,232,0.78)">${typeLabel}</text>
+      <rect x="32" y="214" width="296" height="188" rx="18" fill="rgba(0,0,0,0.18)" stroke="rgba(255,255,255,0.08)" />
+      <path d="M56 358c44-72 98-116 162-132 28-8 56-10 86-8-36 22-68 52-92 92-18 30-30 62-38 92-44-6-82-22-118-44z" fill="rgba(255,255,255,0.12)" />
+      <text x="32" y="436" font-family="Verdana, sans-serif" font-size="16" fill="rgba(255,247,232,0.72)">Black Cat Custom Archive</text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(art)}`;
+}
+
+function normalizeCard(card, accent, role) {
+  return {
+    ...card,
+    role: card.role || role,
+    image: makeCardImage(card, accent)
+  };
+}
+
+function getDeckCards(deck, character) {
+  let customCards = getCustomCards().filter((card) => card.characterId === character.id && card.deckId === deck.id);
+  let builtInCore = deck.core.map((card) => normalizeCard(card, character.accent, 'core'));
+  let builtInSupport = deck.support.map((card) => normalizeCard(card, character.accent, 'support'));
+  let customCore = customCards
+    .filter((card) => card.role === 'core')
+    .map((card) => normalizeCard(card, character.accent, 'core'));
+  let customSupport = customCards
+    .filter((card) => card.role === 'support')
+    .map((card) => normalizeCard(card, character.accent, 'support'));
+
+  return {
+    core: [...builtInCore, ...customCore],
+    support: [...builtInSupport, ...customSupport],
+    archive: [...builtInCore, ...builtInSupport, ...customCore, ...customSupport]
+  };
 }
 
 function getActiveCharacter() {
@@ -1456,6 +1729,8 @@ function renderMetrics(deck) {
 
 function createCardRow(card) {
   let node = cardRowTemplate.content.cloneNode(true);
+  node.querySelector('.card-row-art').src = card.image;
+  node.querySelector('.card-row-art').alt = tr(card.name);
   node.querySelector('.card-row-name').textContent = tr(card.name);
   node.querySelector('.card-row-text').textContent = tr(card.text);
   node.querySelector('.card-cost').textContent = formatCost(card.cost);
@@ -1488,13 +1763,54 @@ function syncCharacterButtons() {
   });
 }
 
-function renderDeckOverview(deck) {
+function renderCardArchive(cards) {
+  let currentCardUi = cardUi();
+  cardArchiveList.innerHTML = '';
+  cardArchiveEmpty.hidden = cards.length > 0;
+
+  cards.forEach((card) => {
+    let article = document.createElement('article');
+    article.className = 'archive-card';
+
+    let image = document.createElement('img');
+    image.className = 'archive-card-image';
+    image.src = card.image;
+    image.alt = tr(card.name);
+
+    let title = document.createElement('p');
+    title.className = 'archive-card-name';
+    title.textContent = tr(card.name);
+
+    let textNode = document.createElement('p');
+    textNode.className = 'archive-card-text';
+    textNode.textContent = tr(card.text);
+
+    let meta = document.createElement('div');
+    meta.className = 'archive-card-meta';
+    [formatCost(card.cost), card.count, tr(card.type), currentCardUi.roles[card.role] || currentCardUi.roles.support].forEach((value) => {
+      let pill = document.createElement('span');
+      pill.className = 'card-pill';
+      pill.textContent = value;
+      meta.appendChild(pill);
+    });
+
+    article.appendChild(image);
+    article.appendChild(title);
+    article.appendChild(textNode);
+    article.appendChild(meta);
+    cardArchiveList.appendChild(article);
+  });
+}
+
+function renderDeckOverview(deck, character) {
+  let cards = getDeckCards(deck, character);
   deckName.textContent = tr(deck.name);
   deckSubtitle.textContent = tr(deck.subtitle);
   deckPlan.textContent = tr(deck.plan);
   renderMetrics(deck);
-  renderCardList(coreCards, deck.core);
-  renderCardList(supportCards, deck.support);
+  renderCardList(coreCards, cards.core);
+  renderCardList(supportCards, cards.support);
+  renderCardArchive(cards.archive);
   renderNotes(deck);
 }
 
@@ -1512,6 +1828,52 @@ function renderSubmissionCharacterOptions() {
   submissionCharacter.value = previousValue && characterData.some((character) => character.id === previousValue)
     ? previousValue
     : activeCharacter;
+}
+
+function renderCardCharacterOptions() {
+  let previousCharacter = cardCharacter.value;
+  cardCharacter.innerHTML = '';
+
+  characterData.forEach((character) => {
+    let option = document.createElement('option');
+    option.value = character.id;
+    option.textContent = tr(character.name);
+    cardCharacter.appendChild(option);
+  });
+
+  cardCharacter.value = previousCharacter && characterData.some((character) => character.id === previousCharacter)
+    ? previousCharacter
+    : activeCharacter;
+
+  renderCardDeckOptions();
+}
+
+function renderCardDeckOptions() {
+  let selectedCharacter = characterData.find((character) => character.id === cardCharacter.value) || getActiveCharacter();
+  let previousDeck = cardDeck.value;
+  cardDeck.innerHTML = '';
+
+  selectedCharacter.decks.forEach((deck) => {
+    let option = document.createElement('option');
+    option.value = deck.id;
+    option.textContent = tr(deck.name);
+    cardDeck.appendChild(option);
+  });
+
+  cardDeck.value = previousDeck && selectedCharacter.decks.some((deck) => deck.id === previousDeck)
+    ? previousDeck
+    : selectedCharacter.decks[0].id;
+}
+
+function applyCardFormLabels() {
+  let currentCardUi = cardUi();
+  cardType.innerHTML = ['Attack', 'Skill', 'Power'].map((type) => `
+    <option value="${type}">${tr(type)}</option>
+  `).join('');
+  cardRole.innerHTML = `
+    <option value="core">${currentCardUi.roles.core}</option>
+    <option value="support">${currentCardUi.roles.support}</option>
+  `;
 }
 
 function createCommunitySection(title, items, className) {
@@ -1612,6 +1974,12 @@ function bindThemeSwitcher() {
   });
 }
 
+function bindCardFormControls() {
+  cardCharacter.addEventListener('change', () => {
+    renderCardDeckOptions();
+  });
+}
+
 function bindSubmissionForm() {
   submissionForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -1636,18 +2004,50 @@ function bindSubmissionForm() {
     submissionForm.reset();
     render();
   });
+
+  cardForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    let cards = getCustomCards();
+    cards.push({
+      id: `custom-card-${Date.now()}`,
+      characterId: cardCharacter.value,
+      deckId: cardDeck.value,
+      role: cardRole.value === 'core' ? 'core' : 'support',
+      name: cardName.value.trim(),
+      type: cardType.value,
+      cost: cardCost.value.trim(),
+      count: cardCount.value.trim(),
+      text: cardText.value.trim(),
+      image: cardImage.value.trim(),
+      createdAt: Date.now()
+    });
+
+    saveCustomCards(cards);
+    cardStatus.textContent = cardUi().success;
+    activeCharacter = cardCharacter.value;
+    activeDeck = cardDeck.value;
+    cardForm.reset();
+    cardCount.value = '1x';
+    render();
+  });
 }
 
 function render() {
   applyTheme();
   applyStaticText();
+  applyCardFormLabels();
   renderCharacterNav();
   let character = getActiveCharacter();
   let deck = getActiveDeck(character);
   renderSummary(character);
   renderDeckSwitcher(character, deck);
-  renderDeckOverview(deck);
+  renderDeckOverview(deck, character);
   renderSubmissionCharacterOptions();
+  renderCardCharacterOptions();
+  cardCharacter.value = activeCharacter;
+  renderCardDeckOptions();
+  cardDeck.value = deck.id;
   renderCommunityDecks(character);
   syncCharacterButtons();
   languageSelect.value = currentLanguage;
@@ -1656,5 +2056,6 @@ function render() {
 
 bindLanguageSwitcher();
 bindThemeSwitcher();
+bindCardFormControls();
 bindSubmissionForm();
 render();
