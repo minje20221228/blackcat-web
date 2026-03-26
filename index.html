@@ -1,254 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slay the Spire 2 Decklists</title>
+  <title>Slay the Spire 2 Build Lab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page-shell">
-    <header class="hero" id="top">
+  <div class="app-shell">
+    <header class="hero">
       <div class="hero-copy">
-        <div class="hero-topbar">
-          <p class="eyebrow" id="hero-eyebrow">Slay the Spire 2</p>
-          <div class="hero-controls">
-            <label class="language-switcher" for="theme-select">
-              <span class="language-label" id="theme-label">Theme</span>
-              <select id="theme-select">
-                <option value="dark" id="theme-option-dark">Dark</option>
-                <option value="light" id="theme-option-light">Light</option>
-              </select>
-            </label>
-            <label class="language-switcher" for="language-select">
-              <span class="language-label" id="language-label">Language</span>
-              <select id="language-select">
-                <option value="en">English</option>
-                <option value="ko">한국어</option>
-                <option value="ja">日本語</option>
-                <option value="es">Español</option>
-              </select>
-            </label>
-          </div>
-        </div>
-        <h1 id="hero-title">Decklist Archive</h1>
-        <p class="hero-text" id="hero-text"></p>
-        <div class="hero-actions">
-          <a class="hero-link" href="#character-nav" id="hero-action-primary"></a>
-          <a class="hero-link hero-link-secondary" href="#deck-section" id="hero-action-secondary"></a>
-        </div>
+        <p class="eyebrow">Slay the Spire 2</p>
+        <h1 id="hero-title">Build Lab</h1>
+              </div>
+      <div class="hero-controls">
+        <label class="control" for="sort-select">
+          <span id="sort-label">정렬</span>
+          <select id="sort-select">
+            <option value="latest">최신순</option>
+            <option value="popular">인기순</option>
+          </select>
+        </label>
+        <label class="control" for="theme-select">
+          <span id="theme-label">테마</span>
+          <select id="theme-select">
+            <option value="dark" id="theme-option-dark">Dark</option>
+            <option value="light" id="theme-option-light">Light</option>
+          </select>
+        </label>
+        <label class="control" for="language-select">
+          <span id="language-label">언어</span>
+          <select id="language-select">
+            <option value="en">English</option>
+            <option value="ko">한국어</option>
+            <option value="ja">日本語</option>
+            <option value="es">Español</option>
+          </select>
+        </label>
+
       </div>
-      <aside class="hero-panel">
-        <p class="panel-label" id="panel-label"></p>
-        <ul class="hero-points" id="hero-points"></ul>
-        <p class="panel-note" id="panel-note"></p>
-      </aside>
     </header>
 
-    <main>
-      <section class="character-nav" id="character-nav" aria-label="Character selection"></section>
-
-      <section class="character-summary" id="character-summary">
-        <div class="summary-copy">
-          <p class="section-kicker" id="summary-kicker"></p>
-          <h2 id="summary-name"></h2>
-          <p id="summary-description"></p>
-        </div>
-        <div class="summary-stats" id="summary-stats"></div>
-      </section>
-
-      <section class="deck-toolbar" id="deck-section">
-        <div>
-          <p class="section-kicker" id="decklist-kicker"></p>
-          <h2 id="deck-section-title"></h2>
-          <p class="section-note" id="deck-section-note"></p>
-        </div>
-        <div class="deck-switcher" id="deck-switcher" aria-label="Deck selection"></div>
-      </section>
-
-      <section class="deck-overview" id="deck-overview">
-        <div class="deck-intro">
-          <p class="section-kicker" id="deck-plan-kicker"></p>
-          <h2 id="deck-name"></h2>
-          <p class="deck-subtitle" id="deck-subtitle"></p>
-          <p class="deck-plan" id="deck-plan"></p>
-        </div>
-        <div class="deck-metrics" id="deck-metrics"></div>
-      </section>
-
-      <section class="content-grid">
-        <article class="panel-block">
-          <div class="panel-head">
-            <p class="section-kicker" id="core-kicker"></p>
-            <h3 id="core-heading"></h3>
-          </div>
-          <div class="card-list" id="core-cards"></div>
-        </article>
-
-        <article class="panel-block">
-          <div class="panel-head">
-            <p class="section-kicker" id="support-kicker"></p>
-            <h3 id="support-heading"></h3>
-          </div>
-          <div class="card-list" id="support-cards"></div>
-        </article>
-      </section>
-
-      <section class="panel-block card-archive-block">
+    <main class="layout">
+      <aside class="sidebar panel">
         <div class="panel-head">
-          <p class="section-kicker" id="archive-kicker"></p>
-          <h3 id="archive-heading"></h3>
-          <p class="section-note" id="archive-note"></p>
+          <p class="section-kicker" id="character-kicker"></p>
+          <h2 id="character-heading"></h2>
         </div>
-        <div class="card-archive-grid" id="card-archive-list"></div>
-        <p class="community-empty" id="card-archive-empty"></p>
-      </section>
+        <div class="character-tabs" id="character-tabs" aria-label="Character selection"></div>
+        <div class="character-summary" id="character-summary"></div>
+      </aside>
 
-      <section class="panel-block notes-block">
-        <div class="panel-head">
-          <p class="section-kicker" id="notes-kicker"></p>
-          <h3 id="notes-heading"></h3>
+      <section class="content">
+        <div class="panel build-panel">
+          <div class="panel-head build-head">
+            <div>
+              <p class="section-kicker" id="buildlist-kicker"></p>
+              <h2 id="buildlist-heading"></h2>
+            </div>
+          </div>
+          <div class="build-list" id="build-list"></div>
         </div>
-        <ul class="notes-list" id="notes-list"></ul>
-      </section>
 
-      <section class="community-grid">
-        <article class="panel-block submission-block">
-          <div class="panel-head">
-            <p class="section-kicker" id="submit-kicker"></p>
-            <h3 id="submit-heading"></h3>
-            <p class="section-note" id="submit-note"></p>
+        <div class="panel workspace-panel">
+          <div class="workspace-head">
+            <div>
+              <p class="section-kicker" id="builder-kicker"></p>
+              <h2 id="builder-heading"></h2>
+            </div>
+            <div class="workspace-actions">
+              <div class="action-row">
+                <button class="action-button" id="new-build-button" type="button"></button>
+                <button class="action-button" id="duplicate-build-button" type="button"></button>
+                <button class="action-button action-button-primary" id="save-build-button" type="button"></button>
+                <button class="action-button action-button-danger" id="delete-build-button" type="button"></button>
+              </div>
+              <p class="status-text" id="build-status" role="status" aria-live="polite"></p>
+            </div>
           </div>
-          <form class="submission-form" id="submission-form">
-            <div class="form-grid">
-              <label class="field-group" for="submit-author">
-                <span class="field-label" id="label-author"></span>
-                <input id="submit-author" name="author" type="text" maxlength="40" required>
-              </label>
-              <label class="field-group" for="submit-character">
-                <span class="field-label" id="label-character"></span>
-                <select id="submit-character" name="character" required></select>
-              </label>
-              <label class="field-group field-group-wide" for="submit-title">
-                <span class="field-label" id="label-title"></span>
-                <input id="submit-title" name="title" type="text" maxlength="80" required>
-              </label>
-              <label class="field-group field-group-wide" for="submit-plan">
-                <span class="field-label" id="label-plan"></span>
-                <textarea id="submit-plan" name="plan" rows="4" maxlength="400" required></textarea>
-              </label>
-              <label class="field-group field-group-wide" for="submit-core">
-                <span class="field-label" id="label-core"></span>
-                <textarea id="submit-core" name="core" rows="4" maxlength="400"></textarea>
-              </label>
-              <label class="field-group field-group-wide" for="submit-support">
-                <span class="field-label" id="label-support"></span>
-                <textarea id="submit-support" name="support" rows="4" maxlength="400"></textarea>
-              </label>
-              <label class="field-group field-group-wide" for="submit-notes">
-                <span class="field-label" id="label-notes"></span>
-                <textarea id="submit-notes" name="notes" rows="4" maxlength="400"></textarea>
-              </label>
-            </div>
-            <div class="submission-actions">
-              <button class="submit-button" type="submit" id="submit-action"></button>
-              <p class="submission-status" id="submission-status" role="status" aria-live="polite"></p>
-            </div>
-          </form>
 
-          <div class="panel-head submission-subhead">
-            <p class="section-kicker" id="card-submit-kicker"></p>
-            <h3 id="card-submit-heading"></h3>
-            <p class="section-note" id="card-submit-note"></p>
-          </div>
-          <form class="submission-form" id="card-form">
-            <div class="form-grid">
-              <label class="field-group" for="card-character">
-                <span class="field-label" id="label-card-character"></span>
-                <select id="card-character" name="card-character" required></select>
-              </label>
-              <label class="field-group" for="card-deck">
-                <span class="field-label" id="label-card-deck"></span>
-                <select id="card-deck" name="card-deck" required></select>
-              </label>
-              <label class="field-group" for="card-name">
-                <span class="field-label" id="label-card-name"></span>
-                <input id="card-name" name="card-name" type="text" maxlength="60" required>
-              </label>
-              <label class="field-group" for="card-type">
-                <span class="field-label" id="label-card-type"></span>
-                <select id="card-type" name="card-type" required>
-                  <option value="Attack">Attack</option>
-                  <option value="Skill">Skill</option>
-                  <option value="Power">Power</option>
-                </select>
-              </label>
-              <label class="field-group" for="card-cost">
-                <span class="field-label" id="label-card-cost"></span>
-                <input id="card-cost" name="card-cost" type="text" maxlength="8" required>
-              </label>
-              <label class="field-group" for="card-count">
-                <span class="field-label" id="label-card-count"></span>
-                <input id="card-count" name="card-count" type="text" maxlength="12" value="1x" required>
-              </label>
-              <label class="field-group" for="card-role">
-                <span class="field-label" id="label-card-role"></span>
-                <select id="card-role" name="card-role" required>
-                  <option value="core">Core</option>
-                  <option value="support">Support</option>
-                </select>
-              </label>
-              <label class="field-group field-group-wide" for="card-image">
-                <span class="field-label" id="label-card-image"></span>
-                <input id="card-image" name="card-image" type="url" maxlength="500">
-              </label>
-              <label class="field-group field-group-wide" for="card-text">
-                <span class="field-label" id="label-card-text"></span>
-                <textarea id="card-text" name="card-text" rows="4" maxlength="300" required></textarea>
-              </label>
-            </div>
-            <div class="submission-actions">
-              <button class="submit-button" type="submit" id="card-action"></button>
-              <p class="submission-status" id="card-status" role="status" aria-live="polite"></p>
-            </div>
-          </form>
-        </article>
+          <div class="builder-grid">
+            <section class="detail-block editor-block">
+              <div class="panel-head">
+                <p class="section-kicker" id="editor-kicker"></p>
+                <h3 id="editor-heading"></h3>
+              </div>
 
-        <article class="panel-block community-block">
-          <div class="panel-head">
-            <p class="section-kicker" id="community-kicker"></p>
-            <h3 id="community-heading"></h3>
-            <p class="section-note" id="community-note"></p>
+              <div class="form-grid">
+                <label class="field-group field-group-wide" for="build-title-input">
+                  <span class="field-label" id="field-title-label"></span>
+                  <input id="build-title-input" class="text-input" type="text" maxlength="80">
+                </label>
+                <label class="field-group" for="build-author-input">
+                  <span class="field-label" id="field-author-label"></span>
+                  <input id="build-author-input" class="text-input" type="text" maxlength="40">
+                </label>
+                <label class="field-group" for="build-character-select">
+                  <span class="field-label" id="field-character-label"></span>
+                  <select id="build-character-select" class="text-input"></select>
+                </label>
+                <label class="field-group field-group-wide" for="build-summary-input">
+                  <span class="field-label" id="field-summary-label"></span>
+                  <textarea id="build-summary-input" class="text-area" rows="3" maxlength="220"></textarea>
+                </label>
+                <label class="field-group field-group-wide" for="build-notes-input">
+                  <span class="field-label" id="field-notes-label"></span>
+                  <textarea id="build-notes-input" class="text-area" rows="4" maxlength="420"></textarea>
+                </label>
+              </div>
+
+              <div class="selected-cards" id="selected-cards"></div>
+            </section>
+
+            <section class="detail-block library-block">
+              <div class="panel-head library-head">
+                <div>
+                  <p class="section-kicker" id="library-kicker"></p>
+                  <h3 id="library-heading"></h3>
+                </div>
+              </div>
+
+              <div class="filter-grid">
+                <label class="field-group field-group-wide" for="card-search-input">
+                  <span class="field-label" id="field-search-label"></span>
+                  <input id="card-search-input" class="text-input" type="search" maxlength="80">
+                </label>
+                <label class="field-group" for="type-filter-select">
+                  <span class="field-label" id="field-type-label"></span>
+                  <select id="type-filter-select" class="text-input"></select>
+                </label>
+                <label class="field-group" for="rarity-filter-select">
+                  <span class="field-label" id="field-rarity-label"></span>
+                  <select id="rarity-filter-select" class="text-input"></select>
+                </label>
+                <label class="field-group" for="cost-filter-select">
+                  <span class="field-label" id="field-cost-label"></span>
+                  <select id="cost-filter-select" class="text-input"></select>
+                </label>
+                <label class="field-group" for="library-sort-select">
+                  <span class="field-label" id="field-library-sort-label"></span>
+                  <select id="library-sort-select" class="text-input"></select>
+                </label>
+              </div>
+
+              <div class="library-list" id="library-list"></div>
+            </section>
           </div>
-          <div class="community-list" id="community-list"></div>
-          <p class="community-empty" id="community-empty"></p>
-        </article>
+        </div>
       </section>
     </main>
   </div>
 
-  <template id="card-row-template">
-    <article class="card-row">
-      <div class="card-row-main">
-        <div class="card-row-art-wrap">
-          <img class="card-row-art" alt="">
-        </div>
-        <div>
-          <p class="card-row-name"></p>
-          <p class="card-row-text"></p>
-        </div>
-      </div>
-      <div class="card-row-meta">
-        <span class="card-pill card-cost"></span>
-        <span class="card-pill card-count"></span>
-        <span class="card-pill card-type"></span>
-      </div>
-    </article>
-  </template>
-
+  <script src="cards-data.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

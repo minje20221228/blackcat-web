@@ -1,1580 +1,737 @@
+let PLAYABLE_CHARACTERS = ['Ironclad', 'Silent', 'Regent', 'Necrobinder', 'Defect'];
+let STORAGE_KEY = 'sts2-build-lab-builds-v1';
+let PINNED_KEY = 'sts2-build-lab-pins-v1';
 let languages = ['en', 'ko', 'ja', 'es'];
+
+let CHARACTER_INFO = {
+  Ironclad: {
+    hp: 80,
+    relic: 'Burning Blood',
+    identity: 'Strength, self-damage, Exhaust',
+    summary: 'Frontloaded damage shells that pivot between Strength scaling, self-damage payoffs, and exhaust control.'
+  },
+  Silent: {
+    hp: 70,
+    relic: 'Ring of the Snake',
+    identity: 'Discard, Shiv, Poison',
+    summary: 'Flexible tempo builds with discard smoothing, Sly payoffs, Shiv bursts, and poison inevitability.'
+  },
+  Regent: {
+    hp: 72,
+    relic: 'Divine Right',
+    identity: 'Stars, control, payoff turns',
+    summary: 'Star-heavy setups that alternate between efficient board control and explosive payoff turns.'
+  },
+  Necrobinder: {
+    hp: 68,
+    relic: 'Bound Phylactery',
+    identity: 'Summon, Doom, Osty, Souls',
+    summary: 'Summon routing, Doom thresholds, and soul management create highly technical grindy kill patterns.'
+  },
+  Defect: {
+    hp: 75,
+    relic: 'Cracked Core',
+    identity: 'Orbs, Focus, Evoke',
+    summary: 'Orb cycling and Focus engines enable either quick Lightning tempo or slow inevitability.'
+  }
+};
+
+let localizedTerms = {
+  characters: {
+    Ironclad: { en: 'Ironclad', ko: '아이언클래드', ja: 'アイアンクラッド', es: 'Ironclad' },
+    Silent: { en: 'Silent', ko: '사일런트', ja: 'サイレント', es: 'Silent' },
+    Regent: { en: 'Regent', ko: '리젠트', ja: 'リージェント', es: 'Regent' },
+    Necrobinder: { en: 'Necrobinder', ko: '네크로바인더', ja: 'ネクロバインダー', es: 'Necrobinder' },
+    Defect: { en: 'Defect', ko: '디펙트', ja: 'ディフェクト', es: 'Defect' },
+    Colorless: { en: 'Colorless', ko: '무색', ja: '無色', es: 'Incolora' }
+  },
+  relics: {
+    'Burning Blood': { en: 'Burning Blood', ko: '불타는 피', ja: '燃える血', es: 'Sangre Ardiente' },
+    'Ring of the Snake': { en: 'Ring of the Snake', ko: '뱀의 반지', ja: '蛇の指輪', es: 'Anillo de la Serpiente' },
+    'Divine Right': { en: 'Divine Right', ko: '신성한 권리', ja: '神授の権利', es: 'Derecho Divino' },
+    'Bound Phylactery': { en: 'Bound Phylactery', ko: '속박된 성물함', ja: '縛られたフィラクテリー', es: 'Filacteria Ligada' },
+    'Cracked Core': { en: 'Cracked Core', ko: '금 간 코어', ja: 'ひび割れたコア', es: 'Nucleo Agrietado' }
+  },
+  identities: {
+    'Strength, self-damage, Exhaust': { en: 'Strength, self-damage, Exhaust', ko: '힘, 자해, 소진', ja: '筋力、自傷、廃棄', es: 'Fuerza, autodaño, Agotamiento' },
+    'Discard, Shiv, Poison': { en: 'Discard, Shiv, Poison', ko: '버리기, 쉬브, 독', ja: '捨て札、シヴ、毒', es: 'Descartar, Shiv, Veneno' },
+    'Stars, control, payoff turns': { en: 'Stars, control, payoff turns', ko: '별, 제어, 폭발 턴', ja: '星、制圧、決めターン', es: 'Estrellas, control, turnos de remate' },
+    'Summon, Doom, Osty, Souls': { en: 'Summon, Doom, Osty, Souls', ko: '소환, 둠, 오스티, 영혼', ja: '召喚、ドゥーム、オスティ、魂', es: 'Invocar, Doom, Osty, Almas' },
+    'Orbs, Focus, Evoke': { en: 'Orbs, Focus, Evoke', ko: '오브, 집중, 개방', ja: 'オーブ、集中、喚起', es: 'Orbes, Concentracion, Evocar' }
+  },
+  types: {
+    Attack: { en: 'Attack', ko: '공격', ja: '攻撃', es: 'Ataque' },
+    Skill: { en: 'Skill', ko: '스킬', ja: 'スキル', es: 'Habilidad' },
+    Power: { en: 'Power', ko: '파워', ja: 'パワー', es: 'Poder' },
+    Status: { en: 'Status', ko: '상태', ja: '状態', es: 'Estado' },
+    Curse: { en: 'Curse', ko: '저주', ja: '呪い', es: 'Maldicion' }
+  },
+  rarities: {
+    Starter: { en: 'Starter', ko: '시작', ja: 'スターター', es: 'Inicial' },
+    Common: { en: 'Common', ko: '일반', ja: 'コモン', es: 'Comun' },
+    Uncommon: { en: 'Uncommon', ko: '언커먼', ja: 'アンコモン', es: 'Poco comun' },
+    Rare: { en: 'Rare', ko: '레어', ja: 'レア', es: 'Rara' },
+    Special: { en: 'Special', ko: '특수', ja: '特殊', es: 'Especial' }
+  }
+};
 
 let uiText = {
   en: {
-    heroText: 'Browse character-specific decklists built around clear game plans, core packages, and practical card counts instead of raw card encyclopedia browsing.',
-    heroActionPrimary: 'Choose character',
-    heroActionSecondary: 'Open decklists',
-    panelLabel: 'Current Build',
-    heroPoints: ['5 characters', '10 decklists', 'Core cards, counts, and plans'],
-    panelNote: 'This page is organized as a fast reference for route planning and archetype selection.',
-    summaryKicker: 'Selected Character',
-    decklistKicker: 'Decklists',
-    deckPlanKicker: 'Deck Plan',
-    coreKicker: 'Core Cards',
-    coreHeading: 'Main package',
-    supportKicker: 'Support Cards',
-    supportHeading: 'Glue and scaling',
-    notesKicker: 'Piloting Notes',
-    notesHeading: 'How to play the list',
-    languageLabel: 'Language',
+    heroTitle: 'Build Lab',
+    heroText: '',
+    sortLabel: 'Sort',
+    sortOptions: { latest: 'Latest', popular: 'Pinned' },
     themeLabel: 'Theme',
-    themeOptions: {
-      dark: 'Dark',
-      light: 'Light'
+    languageLabel: 'Language',
+    themeOptions: { dark: 'Dark', light: 'Light' },
+    librarySortOptions: { name: 'Name', cost: 'Cost', rarity: 'Rarity', type: 'Type' },
+    characterKicker: 'Characters',
+    characterHeading: 'Choose a character',
+    buildlistKicker: 'Build List',
+    buildlistHeading: 'Starter and saved builds',
+    buildlistNote: '',
+    builderKicker: 'Builder',
+    builderHeading: 'Create and save a build',
+    builderNote: '',
+    editorKicker: 'Deck Sheet',
+    editorHeading: 'Selected cards',
+    libraryKicker: 'Library',
+    libraryHeading: 'All available cards',
+    libraryNote: '',
+    fields: {
+      title: 'Build title',
+      author: 'Author',
+      character: 'Character',
+      summary: 'Summary',
+      notes: 'Notes',
+      search: 'Search cards',
+      type: 'Type',
+      rarity: 'Rarity',
+      cost: 'Cost',
+      librarySort: 'Library Sort'
     },
-    community: {
-      submitKicker: 'Share a Deck',
-      submitHeading: 'Post your own decklist',
-      submitNote: 'Saved in this browser so people using this device can keep building a local deck archive.',
-      feedKicker: 'Community Decks',
-      feedHeading: 'Player submissions',
-      feedNote: 'Showing player-made decklists for the currently selected character.',
-      empty: 'No community decklists have been posted for this character yet.',
-      action: 'Post decklist',
-      success: 'Decklist posted successfully.',
-      metaBy: 'By',
-      metaOn: 'Posted',
-      sections: {
-        core: 'Core cards',
-        support: 'Support cards',
-        notes: 'Piloting notes'
-      },
-      fields: {
-        author: 'Author',
-        character: 'Character',
-        title: 'Deck title',
-        plan: 'Deck plan',
-        core: 'Core cards',
-        support: 'Support cards',
-        notes: 'Piloting notes'
-      },
-      placeholders: {
-        author: 'Name or handle',
-        title: 'Example: Zero-cost Shiv Climb',
-        plan: 'Explain the route, payoff, and how the deck is supposed to win.',
-        core: 'One card per line or comma-separated.',
-        support: 'Extra cards, relics, or pickups that support the plan.',
-        notes: 'Key mulligan notes, upgrade targets, and boss tips.'
-      }
+    placeholders: {
+      title: 'Example: Zero-cost Sly Tempo',
+      author: 'Name or handle',
+      summary: 'How does this build win and what is it trying to assemble?',
+      notes: 'Route notes, upgrade priorities, elite targets, risky inclusions.',
+      search: 'Search by card name or text'
+    },
+    buttons: {
+      newBuild: 'New build',
+      duplicateBuild: 'Duplicate',
+      saveBuild: 'Save build',
+      deleteBuild: 'Delete',
+      addBase: 'Add base',
+      addUpgraded: 'Add +',
+      remove: 'Remove',
+      upgrade: 'Toggle +',
+      pin: 'Pin',
+      unpin: 'Unpin',
+      source: 'Source'
     },
     labels: {
-      health: 'Health',
+      hp: 'Health',
       relic: 'Relic',
       identity: 'Identity',
-      deckCount: 'Deck Count',
-      archetype: 'Archetype',
-      targetSize: 'Target Size',
+      builds: 'Builds',
+      cards: 'Cards',
+      cardCount: 'Card Count',
+      uniqueCards: 'Unique Cards',
       avgCost: 'Avg Cost',
-      difficulty: 'Difficulty'
+      upgraded: 'Upgraded',
+      updated: 'Updated',
+      pinned: 'Pinned',
+      sample: 'Starter',
+      custom: 'Custom',
+      all: 'All'
     },
-    suffixes: {
-      lists: 'lists',
-      decklists: 'decklists',
-      curated: 'curated archetypes for route planning and pickups.',
-      cost: 'cost'
-    }
+    empty: {
+      builds: 'No builds yet for this character. Save one from the editor to populate the list.',
+      selected: 'No cards selected yet. Add cards from the library on the right.',
+      library: 'No cards matched the current filters.'
+    },
+    status: {
+      saved: 'Build saved.',
+      deleted: 'Build deleted.',
+      needCards: 'Add at least one card before saving.',
+      reset: 'Started a new empty build.',
+      duplicated: 'Build duplicated into the editor.',
+      loaded: 'Build loaded into the editor.'
+    },
   },
   ko: {
-    heroText: '카드 도감이 아니라 캐릭터별 운영 플랜, 핵심 패키지, 실제 카드 수량 기준으로 정리한 슬더스2 덱리스트를 빠르게 확인할 수 있습니다.',
-    heroActionPrimary: '캐릭터 선택',
-    heroActionSecondary: '덱리스트 보기',
-    panelLabel: '현재 구성',
-    heroPoints: ['캐릭터 5종', '덱리스트 10개', '핵심 카드, 수량, 운영 플랜'],
-    panelNote: '이 페이지는 루트 선택과 카드 픽 판단을 빠르게 하기 위한 참조 화면입니다.',
-    summaryKicker: '선택한 캐릭터',
-    decklistKicker: '덱리스트',
-    deckPlanKicker: '덱 플랜',
-    coreKicker: '핵심 카드',
-    coreHeading: '메인 패키지',
-    supportKicker: '보조 카드',
-    supportHeading: '연결 파츠와 스케일링',
-    notesKicker: '운영 메모',
-    notesHeading: '플레이 가이드',
-    languageLabel: '언어',
+    heroTitle: '빌드 랩',
+    sortLabel: '정렬',
+    sortOptions: { latest: '최신순', popular: '고정순' },
     themeLabel: '테마',
-    themeOptions: {
-      dark: '다크',
-      light: '화이트'
+    languageLabel: '언어',
+    themeOptions: { dark: '다크', light: '라이트' },
+    librarySortOptions: { name: '이름순', cost: '코스트순', rarity: '희귀도순', type: '타입순' },
+    characterKicker: '캐릭터',
+    characterHeading: '캐릭터 선택',
+    buildlistKicker: '빌드 목록',
+    buildlistHeading: '기본 빌드와 저장 빌드',
+    buildlistNote: '',
+    builderKicker: '빌드 편집기',
+    builderHeading: '직접 빌드 만들기',
+    builderNote: '',
+    editorKicker: '덱 시트',
+    editorHeading: '선택한 카드',
+    libraryKicker: '카드 라이브러리',
+    libraryHeading: '사용 가능한 전체 카드',
+    libraryNote: '',
+    fields: {
+      title: '빌드 제목',
+      author: '작성자',
+      character: '캐릭터',
+      summary: '요약',
+      notes: '운영 메모',
+      search: '카드 검색',
+      type: '타입',
+      rarity: '희귀도',
+      cost: '코스트',
+      librarySort: '라이브러리 정렬'
     },
-    community: {
-      submitKicker: '덱 공유',
-      submitHeading: '직접 덱리스트 올리기',
-      submitNote: '이 브라우저에 저장되므로 이 기기를 쓰는 사람들은 로컬 덱 아카이브를 계속 쌓을 수 있습니다.',
-      feedKicker: '커뮤니티 덱',
-      feedHeading: '유저 제출 덱리스트',
-      feedNote: '현재 선택한 캐릭터 기준으로 유저 덱리스트를 보여줍니다.',
-      empty: '이 캐릭터에는 아직 올라온 커뮤니티 덱리스트가 없습니다.',
-      action: '덱리스트 올리기',
-      success: '덱리스트가 등록되었습니다.',
-      metaBy: '작성자',
-      metaOn: '등록일',
-      sections: {
-        core: '핵심 카드',
-        support: '보조 카드',
-        notes: '운영 메모'
-      },
-      fields: {
-        author: '작성자',
-        character: '캐릭터',
-        title: '덱 제목',
-        plan: '덱 플랜',
-        core: '핵심 카드',
-        support: '보조 카드',
-        notes: '운영 메모'
-      },
-      placeholders: {
-        author: '닉네임 또는 이름',
-        title: '예: 0코 시브 등반',
-        plan: '루트, 핵심 보상, 승리 플랜을 설명해 주세요.',
-        core: '한 줄에 하나씩 또는 쉼표로 입력',
-        support: '플랜을 받쳐 주는 추가 카드, 유물, 픽',
-        notes: '멀리건, 강화 우선순위, 보스전 팁'
-      }
+    placeholders: {
+      title: '예: 0코 슬라이 템포',
+      author: '닉네임 또는 이름',
+      summary: '이 빌드가 무엇을 모으고 어떻게 이기는지 적어 주세요.',
+      notes: '루트, 강화 우선순위, 엘리트 기준, 위험 카드 등을 적어 주세요.',
+      search: '카드 이름이나 텍스트 검색'
+    },
+    buttons: {
+      newBuild: '새 빌드',
+      duplicateBuild: '복제',
+      saveBuild: '저장',
+      deleteBuild: '삭제',
+      addBase: '기본 추가',
+      addUpgraded: '+ 추가',
+      remove: '제거',
+      upgrade: '+ 전환',
+      pin: '고정',
+      unpin: '고정 해제',
+      source: '출처'
     },
     labels: {
-      health: '체력',
+      hp: '체력',
       relic: '시작 유물',
       identity: '핵심 기믹',
-      deckCount: '덱 수',
-      archetype: '아키타입',
-      targetSize: '목표 덱 수',
+      builds: '빌드 수',
+      cards: '카드 수',
+      cardCount: '총 카드 수',
+      uniqueCards: '고유 카드 수',
       avgCost: '평균 코스트',
-      difficulty: '난이도'
+      upgraded: '업그레이드',
+      updated: '업데이트',
+      pinned: '고정',
+      sample: '기본',
+      custom: '사용자',
+      all: '전체'
     },
-    suffixes: {
-      lists: '개',
-      decklists: '덱리스트',
-      curated: '루트 설계와 카드 픽 기준으로 정리한 추천 아키타입입니다.',
-      cost: '코스트'
-    }
-  },
-  ja: {
-    heroText: 'カード図鑑ではなく、キャラクター別の運用方針、主要パッケージ、実用的な採用枚数を基準にした Slay the Spire 2 のデッキリストを確認できます。',
-    heroActionPrimary: 'キャラ選択',
-    heroActionSecondary: 'デッキを見る',
-    panelLabel: '現在の構成',
-    heroPoints: ['5キャラクター', '10デッキリスト', '主力カード、枚数、運用方針'],
-    panelNote: 'このページはルート判断とカード取得判断を素早く行うための参照用です。',
-    summaryKicker: '選択中のキャラクター',
-    decklistKicker: 'デッキリスト',
-    deckPlanKicker: 'デッキ方針',
-    coreKicker: '主力カード',
-    coreHeading: 'メインパッケージ',
-    supportKicker: '補助カード',
-    supportHeading: '接続札とスケーリング',
-    notesKicker: '運用メモ',
-    notesHeading: '回し方',
-    languageLabel: '言語',
-    themeLabel: 'テーマ',
-    themeOptions: {
-      dark: 'ダーク',
-      light: 'ライト'
+    empty: {
+      builds: '이 캐릭터에는 아직 저장된 빌드가 없습니다. 오른쪽 편집기에서 저장하면 목록에 추가됩니다.',
+      selected: '아직 선택된 카드가 없습니다. 오른쪽 라이브러리에서 카드를 추가해 주세요.',
+      library: '현재 필터에 맞는 카드가 없습니다.'
     },
-    community: {
-      submitKicker: 'デッキ共有',
-      submitHeading: '自分のデッキリストを投稿',
-      submitNote: 'このブラウザに保存されるため、この端末を使う人はローカルのデッキアーカイブを積み上げられます。',
-      feedKicker: 'コミュニティデッキ',
-      feedHeading: 'プレイヤー投稿',
-      feedNote: '現在選択中のキャラクター向けに投稿されたデッキを表示します。',
-      empty: 'このキャラクターにはまだコミュニティ投稿がありません。',
-      action: 'デッキを投稿',
-      success: 'デッキリストを投稿しました。',
-      metaBy: '投稿者',
-      metaOn: '投稿日',
-      sections: {
-        core: '主力カード',
-        support: '補助カード',
-        notes: '運用メモ'
-      },
-      fields: {
-        author: '投稿者名',
-        character: 'キャラクター',
-        title: 'デッキ名',
-        plan: 'デッキ方針',
-        core: '主力カード',
-        support: '補助カード',
-        notes: '運用メモ'
-      },
-      placeholders: {
-        author: '名前またはハンドルネーム',
-        title: '例: 0コストシヴ登頂',
-        plan: 'ルート、主な見返り、勝ち筋を説明してください。',
-        core: '1行に1枚、またはカンマ区切りで入力',
-        support: '方針を支える追加カード、レリック、ピック',
-        notes: 'マリガン、強化優先度、ボス戦のコツ'
-      }
+    status: {
+      saved: '빌드를 저장했습니다.',
+      deleted: '빌드를 삭제했습니다.',
+      needCards: '카드를 1장 이상 추가한 뒤 저장해 주세요.',
+      reset: '새 빈 빌드를 시작했습니다.',
+      duplicated: '현재 빌드를 복제해 편집기로 가져왔습니다.',
+      loaded: '빌드를 편집기로 불러왔습니다.'
     },
-    labels: {
-      health: '体力',
-      relic: '開始レリック',
-      identity: '主要ギミック',
-      deckCount: 'デッキ数',
-      archetype: 'アーキタイプ',
-      targetSize: '目標枚数',
-      avgCost: '平均コスト',
-      difficulty: '難易度'
-    },
-    suffixes: {
-      lists: '個',
-      decklists: 'デッキリスト',
-      curated: 'ルート計画とカード取得の基準になる厳選アーキタイプです。',
-      cost: 'コスト'
-    }
-  },
-  es: {
-    heroText: 'Consulta listas de mazos de cada personaje centradas en planes claros, paquetes clave y cantidades prácticas de cartas, no solo en una enciclopedia de cartas.',
-    heroActionPrimary: 'Elegir personaje',
-    heroActionSecondary: 'Ver mazos',
-    panelLabel: 'Versión actual',
-    heroPoints: ['5 personajes', '10 decklists', 'Cartas clave, cantidades y plan'],
-    panelNote: 'Esta página está pensada como referencia rápida para decidir rutas y elecciones de cartas.',
-    summaryKicker: 'Personaje seleccionado',
-    decklistKicker: 'Decklists',
-    deckPlanKicker: 'Plan del mazo',
-    coreKicker: 'Cartas clave',
-    coreHeading: 'Paquete principal',
-    supportKicker: 'Cartas de apoyo',
-    supportHeading: 'Soporte y escalado',
-    notesKicker: 'Notas de uso',
-    notesHeading: 'Cómo jugar la lista',
-    languageLabel: 'Idioma',
-    themeLabel: 'Tema',
-    themeOptions: {
-      dark: 'Oscuro',
-      light: 'Claro'
-    },
-    community: {
-      submitKicker: 'Compartir mazo',
-      submitHeading: 'Publica tu propio decklist',
-      submitNote: 'Se guarda en este navegador, así que las personas que usen este dispositivo pueden seguir ampliando un archivo local de mazos.',
-      feedKicker: 'Mazos de la comunidad',
-      feedHeading: 'Envíos de jugadores',
-      feedNote: 'Se muestran los decklists creados por jugadores para el personaje seleccionado.',
-      empty: 'Todavía no hay decklists de la comunidad para este personaje.',
-      action: 'Publicar decklist',
-      success: 'Decklist publicado correctamente.',
-      metaBy: 'Por',
-      metaOn: 'Publicado',
-      sections: {
-        core: 'Cartas clave',
-        support: 'Cartas de apoyo',
-        notes: 'Notas de uso'
-      },
-      fields: {
-        author: 'Autor',
-        character: 'Personaje',
-        title: 'Título del mazo',
-        plan: 'Plan del mazo',
-        core: 'Cartas clave',
-        support: 'Cartas de apoyo',
-        notes: 'Notas de uso'
-      },
-      placeholders: {
-        author: 'Nombre o alias',
-        title: 'Ejemplo: Shiv de costo cero',
-        plan: 'Explica la ruta, la recompensa principal y cómo gana el mazo.',
-        core: 'Una carta por línea o separadas por comas.',
-        support: 'Cartas extra, reliquias o picks que apoyan el plan.',
-        notes: 'Notas de mulligan, mejoras prioritarias y consejos contra jefes.'
-      }
-    },
-    labels: {
-      health: 'Vida',
-      relic: 'Reliquia',
-      identity: 'Identidad',
-      deckCount: 'Cantidad de mazos',
-      archetype: 'Arquetipo',
-      targetSize: 'Tamaño objetivo',
-      avgCost: 'Costo medio',
-      difficulty: 'Dificultad'
-    },
-    suffixes: {
-      lists: '',
-      decklists: 'decklists',
-      curated: 'arquetipos seleccionados para planear rutas y picks.',
-      cost: 'de costo'
-    }
   }
 };
 
-let cardUiText = {
-  en: {
-    archiveKicker: 'Card Archive',
-    archiveHeading: 'Deck card gallery',
-    archiveNote: 'Built-in cards and player-added cards for the current deck appear here with image previews.',
-    archiveEmpty: 'No cards have been added to this deck yet.',
-    submitKicker: 'Add a Card',
-    submitHeading: 'Post a custom card',
-    submitNote: 'Add a custom card with an optional image URL. It is saved in this browser and appears immediately in the selected deck.',
-    action: 'Add card',
-    success: 'Card added successfully.',
-    fields: {
-      character: 'Character',
-      deck: 'Deck',
-      name: 'Card name',
-      type: 'Card type',
-      cost: 'Cost',
-      count: 'Count',
-      role: 'Section',
-      image: 'Image URL',
-      text: 'Card text'
-    },
-    placeholders: {
-      name: 'Example: Phantom Volley',
-      cost: '1',
-      count: '1x',
-      image: 'https://example.com/card-art.png',
-      text: 'Describe what the card does and why people should add it.'
-    },
-    roles: {
-      core: 'Core',
-      support: 'Support'
-    }
-  },
-  ko: {
-    archiveKicker: '카드 아카이브',
-    archiveHeading: '현재 덱 카드 갤러리',
-    archiveNote: '기본 카드와 유저가 직접 추가한 카드가 이미지와 함께 여기에 표시됩니다.',
-    archiveEmpty: '아직 이 덱에 추가된 카드가 없습니다.',
-    submitKicker: '카드 추가',
-    submitHeading: '직접 카드 등록',
-    submitNote: '이미지 URL을 넣어 커스텀 카드를 추가할 수 있습니다. 이 브라우저에 저장되고 현재 선택한 덱에 바로 반영됩니다.',
-    action: '카드 추가',
-    success: '카드가 등록되었습니다.',
-    fields: {
-      character: '캐릭터',
-      deck: '덱',
-      name: '카드 이름',
-      type: '카드 타입',
-      cost: '코스트',
-      count: '매수',
-      role: '섹션',
-      image: '이미지 URL',
-      text: '카드 설명'
-    },
-    placeholders: {
-      name: '예: 팬텀 볼리',
-      cost: '1',
-      count: '1x',
-      image: 'https://example.com/card-art.png',
-      text: '카드 효과와 왜 넣는 카드인지 설명해 주세요.'
-    },
-    roles: {
-      core: '핵심',
-      support: '보조'
-    }
-  },
-  ja: {
-    archiveKicker: 'カードアーカイブ',
-    archiveHeading: '現在のデッキカードギャラリー',
-    archiveNote: '既存カードとプレイヤー追加カードを画像付きで表示します。',
-    archiveEmpty: 'このデッキにはまだカードが追加されていません。',
-    submitKicker: 'カード追加',
-    submitHeading: 'カスタムカードを投稿',
-    submitNote: '画像URL付きでカードを追加できます。このブラウザに保存され、選択中のデッキへすぐ反映されます。',
-    action: 'カードを追加',
-    success: 'カードを追加しました。',
-    fields: {
-      character: 'キャラクター',
-      deck: 'デッキ',
-      name: 'カード名',
-      type: 'カードタイプ',
-      cost: 'コスト',
-      count: '枚数',
-      role: 'セクション',
-      image: '画像URL',
-      text: 'カード説明'
-    },
-    placeholders: {
-      name: '例: ファントムボレー',
-      cost: '1',
-      count: '1x',
-      image: 'https://example.com/card-art.png',
-      text: '効果と採用理由を入力してください。'
-    },
-    roles: {
-      core: '主力',
-      support: '補助'
-    }
-  },
-  es: {
-    archiveKicker: 'Archivo de cartas',
-    archiveHeading: 'Galeria del mazo actual',
-    archiveNote: 'Las cartas base y las cartas creadas por jugadores aparecen aqui con imagen.',
-    archiveEmpty: 'Aun no hay cartas agregadas a este mazo.',
-    submitKicker: 'Agregar carta',
-    submitHeading: 'Publica una carta personalizada',
-    submitNote: 'Agrega una carta con URL de imagen opcional. Se guarda en este navegador y aparece de inmediato en el mazo seleccionado.',
-    action: 'Agregar carta',
-    success: 'Carta agregada correctamente.',
-    fields: {
-      character: 'Personaje',
-      deck: 'Mazo',
-      name: 'Nombre de la carta',
-      type: 'Tipo de carta',
-      cost: 'Costo',
-      count: 'Cantidad',
-      role: 'Seccion',
-      image: 'URL de imagen',
-      text: 'Texto de la carta'
-    },
-    placeholders: {
-      name: 'Ejemplo: Phantom Volley',
-      cost: '1',
-      count: '1x',
-      image: 'https://example.com/card-art.png',
-      text: 'Describe que hace la carta y por que vale la pena agregarla.'
-    },
-    roles: {
-      core: 'Clave',
-      support: 'Apoyo'
-    }
-  }
+let refs = {
+  heroTitle: document.getElementById('hero-title'),  sortLabel: document.getElementById('sort-label'),
+  sortSelect: document.getElementById('sort-select'),
+  themeLabel: document.getElementById('theme-label'),
+  themeSelect: document.getElementById('theme-select'),
+  themeOptionDark: document.getElementById('theme-option-dark'),
+  themeOptionLight: document.getElementById('theme-option-light'),
+  languageLabel: document.getElementById('language-label'),
+  languageSelect: document.getElementById('language-select'),
+  characterKicker: document.getElementById('character-kicker'),
+  characterHeading: document.getElementById('character-heading'),
+  characterTabs: document.getElementById('character-tabs'),
+  characterSummary: document.getElementById('character-summary'),
+  buildlistKicker: document.getElementById('buildlist-kicker'),
+  buildlistHeading: document.getElementById('buildlist-heading'),  buildList: document.getElementById('build-list'),
+  builderKicker: document.getElementById('builder-kicker'),
+  builderHeading: document.getElementById('builder-heading'),  editorKicker: document.getElementById('editor-kicker'),
+  editorHeading: document.getElementById('editor-heading'),
+  libraryKicker: document.getElementById('library-kicker'),
+  libraryHeading: document.getElementById('library-heading'),  buildStatus: document.getElementById('build-status'),  selectedCards: document.getElementById('selected-cards'),
+  libraryList: document.getElementById('library-list'),
+  buildTitleInput: document.getElementById('build-title-input'),
+  buildAuthorInput: document.getElementById('build-author-input'),
+  buildCharacterSelect: document.getElementById('build-character-select'),
+  buildSummaryInput: document.getElementById('build-summary-input'),
+  buildNotesInput: document.getElementById('build-notes-input'),
+  cardSearchInput: document.getElementById('card-search-input'),
+  typeFilterSelect: document.getElementById('type-filter-select'),
+  rarityFilterSelect: document.getElementById('rarity-filter-select'),
+  costFilterSelect: document.getElementById('cost-filter-select'),
+  librarySortSelect: document.getElementById('library-sort-select'),
+  newBuildButton: document.getElementById('new-build-button'),
+  duplicateBuildButton: document.getElementById('duplicate-build-button'),
+  saveBuildButton: document.getElementById('save-build-button'),
+  deleteBuildButton: document.getElementById('delete-build-button'),
+  fieldTitleLabel: document.getElementById('field-title-label'),
+  fieldAuthorLabel: document.getElementById('field-author-label'),
+  fieldCharacterLabel: document.getElementById('field-character-label'),
+  fieldSummaryLabel: document.getElementById('field-summary-label'),
+  fieldNotesLabel: document.getElementById('field-notes-label'),
+  fieldSearchLabel: document.getElementById('field-search-label'),
+  fieldTypeLabel: document.getElementById('field-type-label'),
+  fieldRarityLabel: document.getElementById('field-rarity-label'),
+  fieldCostLabel: document.getElementById('field-cost-label'),
+  fieldLibrarySortLabel: document.getElementById('field-library-sort-label')
 };
 
-let translations = {
-  ko: {
-    'Decklist Archive': '덱리스트 아카이브',
-    'Ironclad': '아이언클래드',
-    'Silent': '사일런트',
-    'Regent': '리젠트',
-    'Necrobinder': '네크로바인더',
-    'Defect': '디펙트',
-    'Attack': '공격',
-    'Skill': '스킬',
-    'Power': '파워',
-    'Strength burst': '힘 폭발',
-    'HP conversion': '체력 전환',
-    'Shiv tempo': '시브 템포',
-    'Poison control': '독 컨트롤',
-    'Resource ramp': '자원 램프',
-    'Control': '컨트롤',
-    'Companion pressure': '동료 압박',
-    'Doom control': '둠 컨트롤',
-    'Lightning tempo': '번개 템포',
-    'Scaling engine': '스케일링 엔진',
-    'Low': '낮음',
-    'Medium': '보통',
-    'High': '높음',
-    'Burning Blood': '버닝 블러드',
-    'Ring of the Snake': '링 오브 더 스네이크',
-    'Divine Right': '디바인 라이트',
-    'Bound Phylactery': '바운드 필랙터리',
-    'Cracked Core': '크랙드 코어',
-    'Strength, self-damage, Exhaust': '힘, 자해, 소멸',
-    'Discard, Shiv, Poison': '버리기, 시브, 독',
-    'Stars, control, payoff turns': '별, 제어, 보상 턴',
-    'Summon, Doom, Osty, souls': '소환, 둠, 오스티, 영혼',
-    'Orbs, Focus, Evoke': '오브, 포커스, 격발',
-    'Front-loaded damage and HP conversion decks that either snowball Strength or turn self-damage into massive defensive tempo.': '빠른 공격 압박과 체력 전환 운영을 통해 힘 스노우볼 또는 자해 기반 초과 방어 템포를 만드는 캐릭터입니다.',
-    'Flexible tempo decks built on discard smoothing, Shivs, and poison-based inevitability.': '드로우-버리기 안정화, 시브, 독 누적을 통해 유연한 템포를 만드는 캐릭터입니다.',
-    'Star-based scaling decks that either tempo into sweeping board control or build explosive late turns.': '별 자원을 쌓아 광역 제압을 만들거나 후반 폭발 턴을 설계하는 스케일링 캐릭터입니다.',
-    'Resource-routing decks that turn Osty, Summon, and Doom into either board control or burst finishing patterns.': 'Osty, Summon, Doom 자원을 배분해 제압 또는 폭딜 마무리 패턴을 만드는 캐릭터입니다.',
-    'Orb-centric lists that either compress lightning burst or generate scaling through long-form focus engines.': '오브 중심 운영으로 번개 폭딜을 압축하거나 Focus 엔진으로 장기 스케일링을 노리는 캐릭터입니다.',
-    'Strength Slam': '힘 슬램',
-    'Blood Fortress': '블러드 포트리스',
-    'Shiv Velocity': '시브 벨로시티',
-    'Poison Control': '독 컨트롤',
-    'Star Ramp': '스타 램프',
-    'Royal Control': '로열 컨트롤',
-    'Osty Beatdown': '오스티 비트다운',
-    'Doom Engine': '둠 엔진',
-    'Lightning Cycle': '라이트닝 사이클',
-    'Focus Scaling': '포커스 스케일링',
-    'Bash': '강타',
-    'Anger': '분노',
-    'Armaments': '무장',
-    'Inflame': '발화',
-    'Heavy Blade': '중량 검',
-    'Defend': '방어',
-    'Blood Wall': '혈벽',
-    'Shrug It Off': '어깨 으쓱',
-    'Pommel Strike': '손잡이 치기',
-    'Body Slam': '몸통 박치기',
-    'True Grit': '진정한 투지',
-    'Second Wind': '세컨드 윈드',
-    'Blade Dance': '칼날 춤',
-    'Cloak and Dagger': '망토와 단검',
-    'Neutralize': '무력화',
-    'Accuracy': '정확성',
-    'Acrobatics': '곡예',
-    'Backflip': '백플립',
-    'Survivor': '생존자',
-    'Finisher': '피니셔',
-    'Deadly Poison': '치명적인 독',
-    'Catalyst': '촉매',
-    'Noxious Fumes': '유독 가스',
-    'Venerate': '숭배',
-    'Glow': '광휘',
-    'Gather Light': '빛 모으기',
-    'Astral Pulse': '성계 파동',
-    'Falling Star': '낙성',
-    'Strike': '타격',
-    'Nova Burst': '노바 버스트',
-    'Sanctum': '성소',
-    'Stargaze': '별 응시',
-    'Bodyguard': '보디가드',
-    'Unleash': '해방',
-    'Poke': '찌르기',
-    'Invoke': '불러내기',
-    'Graveblast': '무덤 폭발',
-    'Negative Pulse': '부정 파동',
-    'Soul Ward': '영혼 수호',
-    'Hex Feast': '헥스 피스트',
-    'Zap': '전기 충격',
-    'Dualcast': '이중 시전',
-    'Thunder': '천둥',
-    'Ball Lightning': '번개 구체',
-    'White Noise': '화이트 노이즈',
-    'Coolheaded': '냉정',
-    'Defragment': '디프래그먼트',
-    'Adaptive Strike': '적응형 타격',
-    'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.': '힘을 빠르게 쌓은 뒤 효율적인 연타와 마무리 카드로 전투를 끝내는 리스트입니다.',
-    'Convert health into oversized block turns and grind with compact premium attacks.': '체력을 과감히 써서 큰 방어 턴을 만들고 고효율 공격으로 압박하는 리스트입니다.',
-    'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.': '저렴한 시브를 계속 생성하고 빠르게 순환해 압박을 유지하는 리스트입니다.',
-    'Survive cleanly, stack poison, and let the fight collapse on its own clock.': '안정적으로 버티면서 독을 누적해 전투를 자연스럽게 무너뜨리는 리스트입니다.',
-    'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.': '초반에 별을 모아 보스가 안정화되기 전에 큰 보상 턴으로 전환하는 리스트입니다.',
-    'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.': '별을 방어와 약화 유지에 쓰고, 안전한 타이밍에 반복적으로 보상 턴을 만드는 리스트입니다.',
-    'Keep Osty healthy, force efficient summon turns, and end fights with high-pressure companion damage.': 'Osty 체력을 지키며 효율적인 Summon 턴을 만들고 동료 딜로 전투를 끝내는 리스트입니다.',
-    'Stack Doom across the board and let delayed inevitability carry elite and boss encounters.': '광역으로 Doom을 누적해 지연형 확정 피해로 엘리트와 보스를 압도하는 리스트입니다.',
-    'Channel and evoke lightning repeatedly to keep damage output high without slowing the deck down.': '번개 오브를 반복 생성·격발해 덱 속도를 유지하면서 화력을 내는 리스트입니다.',
-    'Build a slower engine that wins through high-value orbs, powers, and safe repeated cycling.': '고가치 오브와 파워를 바탕으로 느리지만 안정적인 엔진을 굴리는 리스트입니다.',
-    'Prioritize cheap Strength gain, survive with compact block tools, and end elite fights before the deck bloats.': '저렴한 힘 증가 카드를 우선 확보하고, 작은 방어 패키지로 버티면서 덱이 무거워지기 전에 엘리트 전투를 끝냅니다.',
-    'Exploit Ironclad sustain to buy tempo with self-damage cards, stabilize, then win through repeated efficient attacks.': '아이언클래드의 회복 능력을 활용해 자해 카드로 템포를 사고, 안정화한 뒤 효율 좋은 공격을 반복해 승리합니다.',
-    'Lean on card draw and cheap generation to keep output high every turn instead of waiting for one huge combo round.': '한 번의 큰 콤보 턴을 기다리기보다 드로우와 저비용 생성 카드로 매 턴 출력이 떨어지지 않게 유지합니다.',
-    'Focus on stability, weak application, and poison density so bosses die without overcommitting to attack cards.': '안정성, 약화 부여, 독 밀도를 우선해 공격 카드에 과투자하지 않고도 보스를 잡는 방향으로 운영합니다.',
-    'Use low-cost star generation to set up one or two decisive payoff cycles instead of playing fair every turn.': '매 턴 정직하게 교환하기보다 저비용 별 수급으로 한두 번의 결정적인 보상 턴을 만드는 데 집중합니다.',
-    'Prefer consistency over burst by stabilizing every turn and cashing stars only when the board is fully under control.': '폭발력보다 안정성을 우선해 매 턴 전장을 정리하고, 상황이 완전히 통제됐을 때만 별 자원을 사용합니다.',
-    'Route the deck around reliable summon generation so Osty stays active and every payoff attack remains live.': '안정적인 Summon 수급을 중심으로 덱을 구성해 Osty가 항상 살아 있게 만들고, 모든 보상 공격이 유효하게 돌아가도록 합니다.',
-    'Use defensive doom application to stabilize while your damage profile scales without repeated attack commitments.': '방어를 겸한 Doom 부여로 전장을 안정화하면서, 매턴 공격을 강요받지 않아도 피해량이 계속 누적되게 만듭니다.',
-    'Prioritize cheap orb setup, repeated evoke triggers, and enough draw to keep the cycle continuous.': '저비용 오브 전개, 반복 격발, 충분한 드로우를 우선해 오브 순환이 끊기지 않도록 합니다.',
-    'Accept slower starts, preserve HP with defensive orb turns, and win once Focus scaling pushes every orb above rate.': '느린 출발을 감수하고 방어형 오브 턴으로 체력을 지키며, Focus 스케일링으로 모든 오브 효율이 기준 이상이 되면 승리합니다.',
-    'Applies Vulnerable to set up all follow-up damage.': '후속 공격이 모두 강해지도록 Vulnerable을 거는 카드입니다.',
-    'Free damage that multiplies pressure once Strength is online.': '힘이 붙은 뒤 압박을 폭발적으로 늘려 주는 무료 딜 카드입니다.',
-    'Smooth early turns and upgrades your premium hits mid-combat.': '초반 턴을 안정화하고 전투 중 핵심 카드를 강화합니다.',
-    'Primary scaling anchor for every damage line.': '모든 딜 라인의 중심이 되는 핵심 스케일링 카드입니다.',
-    'Main finisher once Strength stacks begin to matter.': '힘이 쌓이기 시작하면 주된 마무리 수단이 됩니다.',
-    'Keep only enough block to survive elite turns.': '엘리트의 강한 턴을 넘길 정도의 방어만 남깁니다.',
-    'Efficient defensive spike that fits the HP-trading plan.': '체력 교환 플랜과 잘 맞는 고효율 순간 방어 카드입니다.',
-    'Compact block plus draw to find your Strength cards.': '작은 방어와 드로우를 동시에 제공해 힘 카드 접근성을 높입니다.',
-    'Bridge card that keeps damage flowing while cycling.': '순환을 유지하면서도 딜 템포를 끊지 않는 연결 카드입니다.',
-    'The deck exists to abuse this efficiency.': '이 덱은 이 카드의 효율을 극대화하기 위해 존재합니다.',
-    'Vulnerable makes your compact finishers matter.': 'Vulnerable 덕분에 가벼운 마무리 카드도 위력이 크게 올라갑니다.',
-    'Upgrades key defense cards and keeps scaling clean.': '핵심 방어 카드를 강화하고 성장 곡선을 매끄럽게 만듭니다.',
-    'Turns oversized block turns directly into lethal damage.': '과하게 쌓은 방어를 그대로 치명타로 바꿉니다.',
-    'Retained only until premium block density is online.': '상위 방어 카드 밀도가 확보될 때까지만 유지하는 카드입니다.',
-    'Lets you trim junk during combat while blocking.': '방어하면서 전투 중 잡카드를 정리할 수 있습니다.',
-    'Keeps block and card flow stable.': '방어와 카드 순환을 함께 안정화합니다.',
-    'Punishes dead hands and spikes defense when needed.': '손패가 꼬였을 때도 가치를 내며 필요 시 방어를 크게 끌어올립니다.',
-    'Primary blade generation and payoff enabler.': '시브 생성의 중심이며 보상 카드들을 작동시키는 핵심 파츠입니다.',
-    'Block plus Shiv keeps every turn efficient.': '방어와 시브를 함께 제공해 매 턴 효율을 유지합니다.',
-    'Cheap control that helps protect aggressive hands.': '공격적인 손패를 지켜 주는 저비용 제어 카드입니다.',
-    'Turns your generated blades into real scaling damage.': '생성된 시브를 실제 스케일링 딜로 바꿉니다.',
-    'Finds generators and smooths dead hands.': '생성 카드를 찾고 꼬인 손패를 정리합니다.',
-    'Adds draw without dropping defense.': '방어를 포기하지 않고 드로우를 보충합니다.',
-    'Reliable early defense plus discard outlet.': '안정적인 초반 방어와 버리기 수단을 동시에 제공합니다.',
-    'Converts wide turns into boss damage.': '손패가 넓게 펼쳐진 턴을 보스 딜로 바꿔 줍니다.',
-    'Cheap Weak buys time for poison ticks.': '저렴한 Weak 부여로 독이 쌓일 시간을 벌어 줍니다.',
-    'Stable block anchor for long fights.': '장기전에서 방어의 중심이 되는 카드입니다.',
-    'Main poison source.': '주요 독 누적 수단입니다.',
-    'Closes bosses once poison count is established.': '독이 충분히 쌓인 뒤 보스를 마무리합니다.',
-    'Defense plus draw makes setup cleaner.': '방어와 드로우를 함께 제공해 세팅 과정을 매끄럽게 합니다.',
-    'Finds poison payoffs on demand.': '필요한 타이밍에 독 보상 카드를 찾아 줍니다.',
-    'Bridges aggressive hallway fights.': '공격적인 일반 전투 구간을 무난하게 이어 줍니다.',
-    'Passive scaling for long elite and boss combats.': '엘리트와 보스 장기전에서 수동적으로 성장합니다.',
-    'Main star gain engine.': '별 수급의 핵심 엔진입니다.',
-    'Cheap setup that keeps hands moving.': '손패 흐름을 유지해 주는 저비용 세팅 카드입니다.',
-    'Block plus star gain fixes tempo loss.': '방어와 별 수급을 함께 해결해 템포 손실을 줄입니다.',
-    'Wide payoff for built star turns.': '별을 모은 턴에 광역 보상을 제공합니다.',
-    'Universal setup through Weak and Vulnerable.': 'Weak과 Vulnerable을 동시에 걸어 어떤 전투에서도 세팅 역할을 합니다.',
-    'Retained until premium defensive cards arrive.': '상위 방어 카드가 올 때까지 임시로 유지합니다.',
-    'Temporary damage floor while assembling payoffs.': '보상 카드를 모으는 동안 최소 딜을 책임집니다.',
-    'Single-target closer once stars are banked.': '별 자원이 모이면 단일 적 마무리 카드가 됩니다.',
-    'Debuff glue for every difficult target.': '까다로운 적 상대로 모든 운영을 이어 주는 약화 카드입니다.',
-    'Defensive tempo plus star progression.': '방어 템포와 별 진행도를 동시에 올립니다.',
-    'Keeps the resource engine online.': '자원 엔진이 끊기지 않게 유지합니다.',
-    'Main board reset tool.': '전장을 정리하는 주력 카드입니다.',
-    'Stable fallback block.': '안정적인 기본 방어 수단입니다.',
-    'Low-risk card flow.': '리스크가 적은 카드 순환 도구입니다.',
-    'Long-fight durability and scaling.': '장기전에서 생존력과 성장성을 동시에 제공합니다.',
-    'Deck fixing for slow matchups.': '느린 매치업에서 덱 정렬을 도와 줍니다.',
-    'Efficient summon foundation.': '효율적인 Summon 운영의 기반입니다.',
-    'Primary payoff for preserving Osty health.': 'Osty 체력을 지켜냈을 때 가장 큰 보상을 주는 카드입니다.',
-    'Cheap activation that keeps pressure letant.': '저비용으로 계속 압박을 이어 가게 해 줍니다.',
-    'Sets up future burst turns cleanly.': '다음 폭발 턴을 깔끔하게 준비합니다.',
-    'Keeps bad hands from collapsing.': '손패가 나빠도 전투가 무너지지 않게 받쳐 줍니다.',
-    'Rebuys key cards during extended fights.': '장기전에서 핵심 카드를 다시 가져옵니다.',
-    'Buys time against multi-enemy boards.': '다수 적 전투에서 시간을 벌어 줍니다.',
-    'Temporary filler until stronger payoffs replace it.': '더 강한 보상 카드가 오기 전까지 쓰는 임시 카드입니다.',
-    'Main AOE doom application and block card.': '광역 Doom 부여와 방어를 동시에 맡는 핵심 카드입니다.',
-    'Supports resource-heavy control turns.': '자원을 많이 쓰는 제어 턴을 보조합니다.',
-    'Maintains summon baseline for stability.': '안정적인 운영을 위해 최소 Summon 라인을 유지합니다.',
-    'Loops premium control cards.': '고급 제어 카드를 반복해서 사용하게 해 줍니다.',
-    'Needed until doom density fully carries combat.': 'Doom 밀도가 전투를 스스로 끌고 갈 수 있을 때까지 필요한 카드입니다.',
-    'Cheap interaction for awkward turns.': '애매한 턴을 넘기게 해 주는 저비용 상호작용 카드입니다.',
-    'Adds extra insurance in elite fights.': '엘리트 전투에서 추가 안정성을 제공합니다.',
-    'Converts built doom states into a hard close.': '쌓아 둔 Doom 상태를 확실한 마무리로 바꿉니다.',
-    'Main reliable orb setup.': '안정적으로 오브를 전개하는 핵심 카드입니다.',
-    'Best early payoff for every lightning line.': '모든 번개 라인의 초반 최고 보상 카드입니다.',
-    'Turns evoke chains into real board damage.': '연속 격발을 실제 전장 화력으로 전환합니다.',
-    'Tempo attack that keeps the orb engine advancing.': '오브 엔진을 유지하면서 딜 템포도 확보하는 공격 카드입니다.',
-    'Hold only enough block for rough turns.': '위험한 턴을 넘길 만큼의 방어만 유지합니다.',
-    'High-value random power access.': '가치 높은 랜덤 파워 접근 수단입니다.',
-    'Supports draw and orb rotation.': '드로우와 오브 순환을 함께 보조합니다.',
-    'Temporary filler until more orb cards appear.': '더 좋은 오브 카드가 나올 때까지 임시로 쓰는 카드입니다.',
-    'Reliable early orb presence.': '초반에 안정적으로 오브를 유지하게 해 줍니다.',
-    'Finds powers that accelerate scaling.': '스케일링을 앞당기는 파워를 찾아 줍니다.',
-    'Adds lightning payoff density.': '번개 보상 카드 밀도를 높여 줍니다.',
-    'Main Focus growth source.': 'Focus 성장을 책임지는 핵심 카드입니다.',
-    'Still useful after Focus is established.': 'Focus가 갖춰진 뒤에도 계속 가치가 있습니다.',
-    'Carry block until powers take over.': '파워 엔진이 완성될 때까지 방어를 책임집니다.',
-    'Draw plus frost stabilizes setup turns.': '드로우와 서리 오브로 세팅 턴을 안정화합니다.',
-    'Single-slot finisher for longer boss fights.': '긴 보스전에서 한 장으로 마무리 역할을 맡습니다.',
-    'Remove basic Strikes before trimming Anger; Anger scales far harder with Strength.': '기본 Strike를 먼저 제거하고 Anger는 나중에 줄이세요. 힘이 붙으면 Anger의 성장폭이 훨씬 큽니다.',
-    'Use Bash on targets that must die immediately instead of spending it on weak hallway fights.': '약한 일반 전투에 Bash를 쓰기보다 즉시 정리해야 하는 대상에게 아껴 쓰세요.',
-    'Do not over-defend. This list wins by shortening fights, not by blocking forever.': '과하게 방어하지 마세요. 이 리스트는 오래 버티는 것이 아니라 전투를 짧게 끝내며 이깁니다.',
-    'Treat HP as a resource, but leave enough margin for elite burst windows.': '체력을 자원처럼 쓰되, 엘리트 폭딜 턴을 견딜 여유는 반드시 남기세요.',
-    'Body Slam becomes worth duplicating only after your block package is consistent.': 'Body Slam 복사는 방어 패키지가 안정된 뒤에야 가치가 생깁니다.',
-    'This list rewards card removal heavily because every weak draw hurts your conversion turns.': '이 리스트는 카드 제거 효율이 매우 높습니다. 약한 카드 한 장이 전환 턴 전체를 망칠 수 있기 때문입니다.',
-    'Do not keep too many reactive skills or the deck stops snowballing.': '반응형 스킬을 너무 많이 남기면 덱의 스노우볼이 끊깁니다.',
-    'Accuracy matters more than a second Finisher if your Shiv generation is already dense.': '시브 생성이 충분하다면 두 번째 Finisher보다 Accuracy 쪽이 더 중요합니다.',
-    'Discard aggressively when it helps preserve cheap velocity turns.': '저비용 템포 턴을 살릴 수 있다면 과감하게 버리기를 사용하세요.',
-    'This list wins by surviving efficiently, not by racing early damage.': '이 리스트는 초반 딜 레이스가 아니라 효율적으로 버티면서 이깁니다.',
-    'Catalyst is best treated as a finisher, not a card you force on curve.': 'Catalyst는 억지로 곡선대로 내는 카드가 아니라 마무리 카드로 쓰는 편이 좋습니다.',
-    'Keep deck size controlled so poison sources appear early.': '독 카드가 초반에 잘 잡히도록 덱 크기를 통제하세요.',
-    'Hands with early Venerate and Glow are often keeps even if damage looks low.': '초반 Venerate와 Glow가 잡힌 손패는 딜이 낮아 보여도 유지할 가치가 높습니다.',
-    'Do not spend stars inefficiently on hallway fights that are already won.': '이미 이긴 일반 전투에 별 자원을 비효율적으로 쓰지 마세요.',
-    'Remove starter Strikes aggressively because they dilute your payoff turns.': '보상 턴 밀도를 해치므로 시작 Strike는 적극적으로 제거하는 편이 좋습니다.',
-    'You do not need to rush payoffs; you need to survive cleanly until they are decisive.': '보상 카드를 서두를 필요는 없습니다. 결정적일 때까지 안정적으로 버티는 게 더 중요합니다.',
-    'Debuff sequencing matters more than raw damage in elite combats.': '엘리트 전투에서는 단순 화력보다 디버프 순서가 더 중요합니다.',
-    'This list improves sharply with card quality upgrades over raw duplication.': '무작정 복사하기보다 카드 질을 올릴수록 성능이 크게 좋아집니다.',
-    'Protecting Osty is usually worth more than squeezing one extra weak attack into the turn.': '약한 공격 한 장을 더 넣는 것보다 Osty를 지키는 편이 대부분 더 가치 있습니다.',
-    'Do not overload on narrow payoffs if your summon density is not high enough.': 'Summon 밀도가 부족한데도 좁은 보상 카드만 과하게 넣지 마세요.',
-    'The deck feels best when every draw either summons, protects, or cashes out Osty damage.': '모든 드로우가 소환, 보호, 혹은 Osty 피해 전환 중 하나를 수행할 때 덱이 가장 잘 돌아갑니다.',
-    'This list is slow by design; the goal is to make every enemy turn worse than yours.': '이 리스트는 의도적으로 느립니다. 목표는 적의 모든 턴을 내 턴보다 더 나쁘게 만드는 것입니다.',
-    'Graveblast becomes premium once your discard contains the exact control piece you need.': '버린 카드 더미에 필요한 제어 카드가 들어가기 시작하면 Graveblast의 가치가 급상승합니다.',
-    'Avoid unnecessary attacks that do not contribute to Doom pressure or survival.': 'Doom 압박이나 생존에 기여하지 않는 공격은 최대한 줄이세요.',
-    'Dualcast is best spent on meaningful evokes, not just because it is available.': 'Dualcast는 그냥 낼 수 있어서 쓰는 카드가 아니라, 의미 있는 격발이 가능한 순간에 써야 합니다.',
-    'Thunder becomes a premium pickup once evoke count is already dense.': '격발 빈도가 충분히 높아진 뒤에는 Thunder가 최상급 픽이 됩니다.',
-    'Keep the list tight so Zap and Ball Lightning appear consistently.': 'Zap과 Ball Lightning이 꾸준히 잡히도록 덱을 얇게 유지하세요.',
-    'This list is strongest when it stops adding mediocre attacks and fully commits to engine quality.': '애매한 공격 카드를 더 넣지 않고 엔진 품질에 집중할 때 가장 강해집니다.',
-    'White Noise is more valuable when the power pool is already dense with hits.': '좋은 파워 풀이 충분히 형성된 뒤 White Noise의 가치가 더 올라갑니다.',
-    'Focus decks want patient routing and card removal just as much as raw pickups.': 'Focus 덱은 카드 픽 못지않게 신중한 루트 선택과 카드 제거가 중요합니다.'
-  },
-  ja: {
-    'Ironclad': 'アイアンクラッド',
-    'Silent': 'サイレント',
-    'Regent': 'リージェント',
-    'Necrobinder': 'ネクロバインダー',
-    'Defect': 'ディフェクト',
-    'Attack': 'アタック',
-    'Skill': 'スキル',
-    'Power': 'パワー',
-    'Strength burst': '筋力バースト',
-    'HP conversion': 'HP変換',
-    'Shiv tempo': 'シヴテンポ',
-    'Poison control': '毒コントロール',
-    'Resource ramp': 'リソース加速',
-    'Control': 'コントロール',
-    'Companion pressure': '相棒圧力',
-    'Doom control': 'ドゥームコントロール',
-    'Lightning tempo': 'ライトニングテンポ',
-    'Scaling engine': 'スケーリングエンジン',
-    'Low': '低',
-    'Medium': '中',
-    'High': '高',
-    'Decklist Archive': 'デッキリストアーカイブ',
-    'Strength Slam': 'ストレングス・スラム',
-    'Blood Fortress': 'ブラッド・フォートレス',
-    'Shiv Velocity': 'シヴ・ベロシティ',
-    'Poison Control': 'ポイズン・コントロール',
-    'Star Ramp': 'スター・ランプ',
-    'Royal Control': 'ロイヤル・コントロール',
-    'Osty Beatdown': 'オスティ・ビートダウン',
-    'Doom Engine': 'ドゥーム・エンジン',
-    'Lightning Cycle': 'ライトニング・サイクル',
-    'Focus Scaling': 'フォーカス・スケーリング',
-    'Bash': 'バッシュ',
-    'Anger': '怒り',
-    'Armaments': '武装',
-    'Inflame': '発火',
-    'Heavy Blade': 'ヘビーブレード',
-    'Defend': '防御',
-    'Blood Wall': 'ブラッド・ウォール',
-    'Shrug It Off': '受け流し',
-    'Pommel Strike': 'ポンメルストライク',
-    'Body Slam': 'ボディスラム',
-    'True Grit': '不屈の闘志',
-    'Second Wind': 'セカンドウィンド',
-    'Blade Dance': 'ブレードダンス',
-    'Cloak and Dagger': 'クローク・アンド・ダガー',
-    'Neutralize': '無力化',
-    'Accuracy': '正確性',
-    'Acrobatics': 'アクロバット',
-    'Backflip': 'バク転',
-    'Survivor': 'サバイバー',
-    'Finisher': 'フィニッシャー',
-    'Deadly Poison': '致死毒',
-    'Catalyst': '触媒',
-    'Noxious Fumes': '有毒ガス',
-    'Venerate': '崇敬',
-    'Glow': '輝き',
-    'Gather Light': '光を集める',
-    'Astral Pulse': 'アストラルパルス',
-    'Falling Star': '流星',
-    'Strike': 'ストライク',
-    'Nova Burst': 'ノヴァバースト',
-    'Sanctum': 'サンクタム',
-    'Stargaze': 'スターゲイズ',
-    'Bodyguard': 'ボディガード',
-    'Unleash': '解き放つ',
-    'Poke': '小突き',
-    'Invoke': '召喚',
-    'Graveblast': 'グレイブブラスト',
-    'Negative Pulse': 'ネガティブパルス',
-    'Soul Ward': 'ソウルウォード',
-    'Hex Feast': 'ヘックス・フィースト',
-    'Zap': 'ザップ',
-    'Dualcast': 'デュアルキャスト',
-    'Thunder': 'サンダー',
-    'Ball Lightning': 'ボールライトニング',
-    'White Noise': 'ホワイトノイズ',
-    'Coolheaded': 'クールヘッド',
-    'Defragment': 'デフラグメント',
-    'Adaptive Strike': 'アダプティブストライク',
-    'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.': '筋力を素早く伸ばし、効率的な連撃と強力なフィニッシャーで締めるリストです。',
-    'Convert health into oversized block turns and grind with compact premium attacks.': '体力を大型ブロックターンに変換し、高効率の攻撃で押し切るリストです。',
-    'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.': '低コストのシヴを大量生成し、高速循環で継続的な圧力を作るリストです。',
-    'Survive cleanly, stack poison, and let the fight collapse on its own clock.': '安定して耐えながら毒を積み、自然に戦闘を崩壊させるリストです。',
-    'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.': '序盤に星を貯め、ボスが安定する前に大きな見返りターンへ変換するリストです。',
-    'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.': '防御とデバフで主導権を取り、安全な見返りターンを繰り返して勝つリストです。',
-    'Keep Osty healthy, force efficient summon turns, and end fights with high-pressure companion damage.': 'Ostyの体力を守りつつ効率的な召喚ターンを作り、相棒の高圧力ダメージで締めるリストです。',
-    'Stack Doom across the board and let delayed inevitability carry elite and boss encounters.': '盤面全体にDoomを積み、遅延型の確定火力でエリートやボス戦を押し切るリストです。',
-    'Channel and evoke lightning repeatedly to keep damage output high without slowing the deck down.': 'ライトニングを何度も生成・解放し、デッキ速度を落とさず高火力を維持するリストです。',
-    'Build a slower engine that wins through high-value orbs, powers, and safe repeated cycling.': '高価値のオーブとパワー、安定した循環で勝つ遅めのエンジン型リストです。',
-    'Prioritize cheap Strength gain, survive with compact block tools, and end elite fights before the deck bloats.': '低コストの筋力獲得を優先し、小さな防御パッケージで耐えつつ、デッキが重くなる前にエリート戦を終わらせます。',
-    'Exploit Ironclad sustain to buy tempo with self-damage cards, stabilize, then win through repeated efficient attacks.': 'アイアンクラッドの回復力を活かし、自傷カードでテンポを買い、安定後は高効率の攻撃を繰り返して勝ちます。',
-    'Lean on card draw and cheap generation to keep output high every turn instead of waiting for one huge combo round.': '一度の大コンボを待つのではなく、ドローと低コスト生成で毎ターンの出力を高く保ちます。',
-    'Focus on stability, weak application, and poison density so bosses die without overcommitting to attack cards.': '安定性、弱体付与、毒密度を重視し、攻撃カードに寄せすぎずにボスを倒します。',
-    'Use low-cost star generation to set up one or two decisive payoff cycles instead of playing fair every turn.': '毎ターン正面から交換するより、低コストの星生成で決定的な見返りターンを一、二度作ることに集中します。',
-    'Prefer consistency over burst by stabilizing every turn and cashing stars only when the board is fully under control.': '爆発力より安定性を優先し、毎ターン盤面を整え、完全に制御できた時だけ星を使います。',
-    'Route the deck around reliable summon generation so Osty stays active and every payoff attack remains live.': '安定した召喚供給を軸に組み、Ostyを常に稼働させて見返り攻撃を腐らせない構成にします。',
-    'Use defensive doom application to stabilize while your damage profile scales without repeated attack commitments.': '防御を兼ねたDoom付与で安定しつつ、毎ターン攻撃を重ねなくても火力が伸びる形にします。',
-    'Prioritize cheap orb setup, repeated evoke triggers, and enough draw to keep the cycle continuous.': '低コストのオーブ展開、連続解放、十分なドローを優先し、循環が止まらないようにします。',
-    'Accept slower starts, preserve HP with defensive orb turns, and win once Focus scaling pushes every orb above rate.': '遅い立ち上がりを受け入れ、防御的なオーブターンでHPを守り、Focus成長でオーブ効率が十分に上がったら勝ち切ります。',
-    'Remove basic Strikes before trimming Anger; Anger scales far harder with Strength.': 'Angerを削る前に基本Strikeを除去してください。筋力が乗るとAngerの伸び幅ははるかに大きくなります。',
-    'Use Bash on targets that must die immediately instead of spending it on weak hallway fights.': '弱い通常戦で使うより、即座に倒す必要がある相手にBashを使ってください。',
-    'Do not over-defend. This list wins by shortening fights, not by blocking forever.': '過剰防御は不要です。このリストは延々と守るのではなく、戦闘を短くして勝ちます。',
-    'Treat HP as a resource, but leave enough margin for elite burst windows.': 'HPは資源として扱いますが、エリートの強いターンを耐える余裕は残してください。',
-    'Body Slam becomes worth duplicating only after your block package is consistent.': 'Body Slamを増やす価値が出るのは、防御パッケージが安定してからです。',
-    'This list rewards card removal heavily because every weak draw hurts your conversion turns.': '弱い1枚のドローが変換ターンを崩すため、このリストはカード除去の恩恵が非常に大きいです。',
-    'Do not keep too many reactive skills or the deck stops snowballing.': '反応型スキルを残しすぎると、デッキの伸びが止まります。',
-    'Accuracy matters more than a second Finisher if your Shiv generation is already dense.': 'シヴ生成が十分なら、2枚目のFinisherよりAccuracyの方が重要です。',
-    'Discard aggressively when it helps preserve cheap velocity turns.': '低コストの加速ターンを守れるなら、積極的に捨てて構いません。',
-    'This list wins by surviving efficiently, not by racing early damage.': 'このリストは序盤火力レースではなく、効率よく耐えながら勝ちます。',
-    'Catalyst is best treated as a finisher, not a card you force on curve.': 'Catalystは無理にカーブで打つカードではなく、フィニッシャーとして扱うべきです。',
-    'Keep deck size controlled so poison sources appear early.': '毒カードが早く引けるようにデッキ枚数を抑えてください。',
-    'Hands with early Venerate and Glow are often keeps even if damage looks low.': '序盤のVenerateとGlowがある手札は、火力が低く見えても保持する価値があります。',
-    'Do not spend stars inefficiently on hallway fights that are already won.': 'すでに勝っている通常戦で星を無駄遣いしないでください。',
-    'Remove starter Strikes aggressively because they dilute your payoff turns.': '見返りターンの密度を下げるため、初期Strikeは積極的に除去した方が良いです。',
-    'You do not need to rush payoffs; you need to survive cleanly until they are decisive.': '見返りカードを急ぐ必要はありません。決定打になるまで丁寧に生き残ることが重要です。',
-    'Debuff sequencing matters more than raw damage in elite combats.': 'エリート戦では単純な火力よりデバフの順序が重要です。',
-    'This list improves sharply with card quality upgrades over raw duplication.': '単純な複製より、カード品質を上げる方が大きく強化されます。',
-    'Protecting Osty is usually worth more than squeezing one extra weak attack into the turn.': '弱い攻撃を1枚追加するより、Ostyを守る方がほとんどの場合価値があります。',
-    'Do not overload on narrow payoffs if your summon density is not high enough.': '召喚密度が足りないのに限定的な見返りカードを増やしすぎないでください。',
-    'The deck feels best when every draw either summons, protects, or cashes out Osty damage.': 'すべてのドローが召喚、防御、またはOstyダメージの回収のどれかを担う時、このデッキは最も滑らかに回ります。',
-    'This list is slow by design; the goal is to make every enemy turn worse than yours.': 'このリストは意図的に遅い構成で、相手のすべてのターンをこちらより悪いものにするのが目的です。',
-    'Graveblast becomes premium once your discard contains the exact control piece you need.': '必要な制御札が捨て札に入るようになると、Graveblastは一気に最上位の価値になります。',
-    'Avoid unnecessary attacks that do not contribute to Doom pressure or survival.': 'Doom圧や生存に寄与しない不要な攻撃は避けてください。',
-    'Dualcast is best spent on meaningful evokes, not just because it is available.': 'Dualcastは使えるから使うのではなく、意味のある解放ができる時に使うべきです。',
-    'Thunder becomes a premium pickup once evoke count is already dense.': '解放回数が十分に多くなれば、Thunderは最優先級のピックになります。',
-    'Keep the list tight so Zap and Ball Lightning appear consistently.': 'ZapとBall Lightningが安定して来るように、デッキは引き締めてください。',
-    'This list is strongest when it stops adding mediocre attacks and fully commits to engine quality.': '半端な攻撃を増やすのをやめ、エンジン品質に集中した時に最も強くなります。',
-    'White Noise is more valuable when the power pool is already dense with hits.': '当たりのパワーが増えるほど、White Noiseの価値は上がります。',
-    'Focus decks want patient routing and card removal just as much as raw pickups.': 'Focusデッキは新規取得だけでなく、慎重なルート選択とカード除去も同じくらい重要です。'
-  },
-  es: {
-    'Ironclad': 'Ironclad',
-    'Silent': 'Silent',
-    'Regent': 'Regent',
-    'Necrobinder': 'Necrobinder',
-    'Defect': 'Defect',
-    'Attack': 'Ataque',
-    'Skill': 'Habilidad',
-    'Power': 'Poder',
-    'Strength burst': 'Ráfaga de Fuerza',
-    'HP conversion': 'Conversión de vida',
-    'Shiv tempo': 'Tempo de Shiv',
-    'Poison control': 'Control de veneno',
-    'Resource ramp': 'Aceleración de recursos',
-    'Control': 'Control',
-    'Companion pressure': 'Presión del compañero',
-    'Doom control': 'Control de Doom',
-    'Lightning tempo': 'Tempo de rayos',
-    'Scaling engine': 'Motor de escalado',
-    'Low': 'Baja',
-    'Medium': 'Media',
-    'High': 'Alta',
-    'Decklist Archive': 'Archivo de Decklists',
-    'Strength Slam': 'Golpe de Fuerza',
-    'Blood Fortress': 'Fortaleza de Sangre',
-    'Shiv Velocity': 'Velocidad de Shiv',
-    'Poison Control': 'Control de Veneno',
-    'Star Ramp': 'Rampa de Estrellas',
-    'Royal Control': 'Control Real',
-    'Osty Beatdown': 'Golpiza de Osty',
-    'Doom Engine': 'Motor de Doom',
-    'Lightning Cycle': 'Ciclo de Relámpagos',
-    'Focus Scaling': 'Escalado de Focus',
-    'Bash': 'Golpe Aplastante',
-    'Anger': 'Ira',
-    'Armaments': 'Armamentos',
-    'Inflame': 'Enardecer',
-    'Heavy Blade': 'Espada Pesada',
-    'Defend': 'Defender',
-    'Blood Wall': 'Muro de Sangre',
-    'Shrug It Off': 'Quitarse de Encima',
-    'Pommel Strike': 'Golpe de Pomo',
-    'Body Slam': 'Golpe Corporal',
-    'True Grit': 'Temple Verdadero',
-    'Second Wind': 'Segundo Aliento',
-    'Blade Dance': 'Danza de Cuchillas',
-    'Cloak and Dagger': 'Capa y Daga',
-    'Neutralize': 'Neutralizar',
-    'Accuracy': 'Precisión',
-    'Acrobatics': 'Acrobacias',
-    'Backflip': 'Voltereta',
-    'Survivor': 'Superviviente',
-    'Finisher': 'Rematador',
-    'Deadly Poison': 'Veneno Mortal',
-    'Catalyst': 'Catalizador',
-    'Noxious Fumes': 'Humos Nocivos',
-    'Venerate': 'Venerar',
-    'Glow': 'Brillo',
-    'Gather Light': 'Reunir Luz',
-    'Astral Pulse': 'Pulso Astral',
-    'Falling Star': 'Estrella Fugaz',
-    'Strike': 'Golpe',
-    'Nova Burst': 'Explosión Nova',
-    'Sanctum': 'Santuario',
-    'Stargaze': 'Contemplar Estrellas',
-    'Bodyguard': 'Guardaespaldas',
-    'Unleash': 'Desatar',
-    'Poke': 'Pinchazo',
-    'Invoke': 'Invocar',
-    'Graveblast': 'Explosión Fúnebre',
-    'Negative Pulse': 'Pulso Negativo',
-    'Soul Ward': 'Resguardo del Alma',
-    'Hex Feast': 'Festín Maldito',
-    'Zap': 'Chispa',
-    'Dualcast': 'Lanzamiento Doble',
-    'Thunder': 'Trueno',
-    'Ball Lightning': 'Esfera de Rayos',
-    'White Noise': 'Ruido Blanco',
-    'Coolheaded': 'Sangre Fría',
-    'Defragment': 'Desfragmentar',
-    'Adaptive Strike': 'Golpe Adaptativo',
-    'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.': 'Acelera Fuerza rápidamente y luego remata con golpes eficientes y finalizadores pesados.',
-    'Convert health into oversized block turns and grind with compact premium attacks.': 'Convierte vida en turnos enormes de bloqueo y desgasta con ataques compactos de alta calidad.',
-    'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.': 'Llena la mano de cuchillas baratas, cicla rápido y convierte el tempo en presión letante.',
-    'Survive cleanly, stack poison, and let the fight collapse on its own clock.': 'Sobrevive con limpieza, acumula veneno y deja que el combate se derrumbe por su propio reloj.',
-    'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.': 'Acumula estrellas temprano y conviértelas en turnos explosivos antes de que el jefe se estabilice.',
-    'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.': 'Usa estrellas para mantener ventaja en defensa y debilitaciones, y gana con ventanas repetidas y seguras de recompensa.',
-    'Keep Osty healthy, force efficient summon turns, and end fights with high-pressure companion damage.': 'Mantén a Osty con vida, fuerza turnos eficientes de invocación y cierra peleas con daño letante del compañero.',
-    'Stack Doom across the board and let delayed inevitability carry elite and boss encounters.': 'Acumula Doom en todo el tablero y deja que la inevitabilidad retrasada gane peleas contra élites y jefes.',
-    'Channel and evoke lightning repeatedly to keep damage output high without slowing the deck down.': 'Canaliza y evoca rayos repetidamente para mantener alto el daño sin frenar el mazo.',
-    'Build a slower engine that wins through high-value orbs, powers, and safe repeated cycling.': 'letruye un motor más lento que gana con orbes valiosos, poderes y ciclos seguros repetidos.',
-    'Prioritize cheap Strength gain, survive with compact block tools, and end elite fights before the deck bloats.': 'Prioriza el aumento barato de Fuerza, sobrevive con herramientas compactas de bloqueo y termina las peleas de élite antes de que el mazo se vuelva pesado.',
-    'Exploit Ironclad sustain to buy tempo with self-damage cards, stabilize, then win through repeated efficient attacks.': 'Aprovecha la recuperación de Ironclad para comprar tempo con cartas de auto-daño, estabilizar y luego ganar con ataques eficientes repetidos.',
-    'Lean on card draw and cheap generation to keep output high every turn instead of waiting for one huge combo round.': 'Apóyate en robo y generación barata para mantener alta la producción cada turno en vez de esperar un único gran combo.',
-    'Focus on stability, weak application, and poison density so bosses die without overcommitting to attack cards.': 'Enfócate en estabilidad, aplicación de Weak y densidad de veneno para matar jefes sin sobrecargar el mazo de ataques.',
-    'Use low-cost star generation to set up one or two decisive payoff cycles instead of playing fair every turn.': 'Usa generación barata de estrellas para preparar uno o dos ciclos decisivos en lugar de intercambiar de forma justa cada turno.',
-    'Prefer consistency over burst by stabilizing every turn and cashing stars only when the board is fully under control.': 'Prioriza consistencia sobre explosión, estabilizando cada turno y gastando estrellas solo cuando el tablero está totalmente controlado.',
-    'Route the deck around reliable summon generation so Osty stays active and every payoff attack remains live.': 'letruye el mazo alrededor de invocaciones fiables para que Osty siga activo y todos los ataques de recompensa sigan siendo útiles.',
-    'Use defensive doom application to stabilize while your damage profile scales without repeated attack commitments.': 'Usa aplicación defensiva de Doom para estabilizar mientras tu perfil de daño escala sin necesidad de atacar cada turno.',
-    'Prioritize cheap orb setup, repeated evoke triggers, and enough draw to keep the cycle continuous.': 'Prioriza la preparación barata de orbes, evocaciones repetidas y suficiente robo para mantener el ciclo continuo.',
-    'Accept slower starts, preserve HP with defensive orb turns, and win once Focus scaling pushes every orb above rate.': 'Acepta inicios lentos, conserva vida con turnos defensivos de orbes y gana cuando el escalado de Focus vuelve premium a cada orbe.',
-    'Remove basic Strikes before trimming Anger; Anger scales far harder with Strength.': 'Quita primero los Strikes básicos antes de recortar Anger; Anger escala mucho mejor con Fuerza.',
-    'Use Bash on targets that must die immediately instead of spending it on weak hallway fights.': 'Usa Bash en objetivos que deban morir ya, no en peleas fáciles del mapa.',
-    'Do not over-defend. This list wins by shortening fights, not by blocking forever.': 'No te sobredefiendas. Esta lista gana acortando combates, no bloqueando para siempre.',
-    'Treat HP as a resource, but leave enough margin for elite burst windows.': 'Trata la vida como un recurso, pero deja suficiente margen para los picos de daño de élites.',
-    'Body Slam becomes worth duplicating only after your block package is consistent.': 'Body Slam solo vale la pena duplicarlo cuando tu paquete defensivo ya es consistente.',
-    'This list rewards card removal heavily because every weak draw hurts your conversion turns.': 'Esta lista premia mucho la eliminación de cartas porque cada robo débil arruina tus turnos de conversión.',
-    'Do not keep too many reactive skills or the deck stops snowballing.': 'No mantengas demasiadas habilidades reactivas o el mazo dejará de escalar.',
-    'Accuracy matters more than a second Finisher if your Shiv generation is already dense.': 'Accuracy importa más que un segundo Finisher si tu generación de Shiv ya es alta.',
-    'Discard aggressively when it helps preserve cheap velocity turns.': 'Descarta de forma agresiva cuando eso ayude a conservar turnos rápidos y baratos.',
-    'This list wins by surviving efficiently, not by racing early damage.': 'Esta lista gana sobreviviendo con eficiencia, no compitiendo en daño temprano.',
-    'Catalyst is best treated as a finisher, not a card you force on curve.': 'Catalyst funciona mejor como finalizador, no como carta que debas jugar siempre en curva.',
-    'Keep deck size controlled so poison sources appear early.': 'Mantén el tamaño del mazo controlado para que las fuentes de veneno aparezcan pronto.',
-    'Hands with early Venerate and Glow are often keeps even if damage looks low.': 'Las manos con Venerate y Glow temprano suelen ser buenas aunque parezca que hacen poco daño.',
-    'Do not spend stars inefficiently on hallway fights that are already won.': 'No gastes estrellas de forma ineficiente en peleas de pasillo que ya están ganadas.',
-    'Remove starter Strikes aggressively because they dilute your payoff turns.': 'Quita los Strikes iniciales con agresividad porque diluyen tus turnos de recompensa.',
-    'You do not need to rush payoffs; you need to survive cleanly until they are decisive.': 'No necesitas apresurar tus recompensas; necesitas sobrevivir con limpieza hasta que sean decisivas.',
-    'Debuff sequencing matters more than raw damage in elite combats.': 'En combates contra élites importa más el orden de los debuffs que el daño bruto.',
-    'This list improves sharply with card quality upgrades over raw duplication.': 'Esta lista mejora mucho más con calidad de cartas que con duplicaciones sin criterio.',
-    'Protecting Osty is usually worth more than squeezing one extra weak attack into the turn.': 'Proteger a Osty suele valer más que meter un ataque débil extra en el turno.',
-    'Do not overload on narrow payoffs if your summon density is not high enough.': 'No te llenes de recompensas demasiado específicas si tu densidad de invocaciones todavía es baja.',
-    'The deck feels best when every draw either summons, protects, or cashes out Osty damage.': 'El mazo funciona mejor cuando cada robo invoca, protege o convierte el daño de Osty en valor.',
-    'This list is slow by design; the goal is to make every enemy turn worse than yours.': 'Esta lista es lenta por diseño; la meta es hacer que cada turno del enemigo sea peor que el tuyo.',
-    'Graveblast becomes premium once your discard contains the exact control piece you need.': 'Graveblast se vuelve premium cuando tu descarte ya contiene la pieza exacta de control que necesitas.',
-    'Avoid unnecessary attacks that do not contribute to Doom pressure or survival.': 'Evita ataques innecesarios que no aporten presión de Doom ni supervivencia.',
-    'Dualcast is best spent on meaningful evokes, not just because it is available.': 'Dualcast se aprovecha mejor en evocaciones realmente valiosas, no solo porque esté disponible.',
-    'Thunder becomes a premium pickup once evoke count is already dense.': 'Thunder se vuelve una elección premium cuando ya tienes muchas evocaciones.',
-    'Keep the list tight so Zap and Ball Lightning appear consistently.': 'Mantén la lista ajustada para que Zap y Ball Lightning aparezcan de forma consistente.',
-    'This list is strongest when it stops adding mediocre attacks and fully commits to engine quality.': 'Esta lista es más fuerte cuando deja de añadir ataques mediocres y se compromete del todo con la calidad del motor.',
-    'White Noise is more valuable when the power pool is already dense with hits.': 'White Noise vale más cuando tu conjunto de poderes ya tiene muchas buenas opciones.',
-    'Focus decks want patient routing and card removal just as much as raw pickups.': 'Los mazos de Focus necesitan tanto rutas pacientes y eliminación de cartas como nuevas adquisiciones.'
+let allCards = (window.STS2_CARDS_DATA || []).map((card) => ({
+  ...card,
+  imageUrl: card.image ? `https://sts2.wiki${card.image}` : '',
+  portraitImageUrl: card.portraitUrl ? `https://sts2.wiki${card.portraitUrl}` : ''
+})).sort((a, b) => {
+  if (a.character !== b.character) {
+    return a.character.localeCompare(b.character);
   }
+  if ((a.sortCost ?? 999) !== (b.sortCost ?? 999)) {
+    return (a.sortCost ?? 999) - (b.sortCost ?? 999);
+  }
+  return a.name.localeCompare(b.name);
+});
+
+let cardMap = new Map(allCards.map((card) => [card.id, card]));
+
+let state = {
+  currentLanguage: detectPreferredLanguage(),
+  currentTheme: detectPreferredTheme(),
+  currentSort: 'latest',
+  activeCharacter: PLAYABLE_CHARACTERS[0],
+  activeBuildId: null,
+  savedBuilds: loadSavedBuilds(),
+  pinnedIds: loadPinnedIds(),
+  filters: {
+    search: '',
+    type: 'all',
+    rarity: 'all',
+    cost: 'all',
+    librarySort: 'name'
+  },
+  draft: createEmptyBuild(PLAYABLE_CHARACTERS[0])
 };
-
-let characterData = [
-  {
-    id: 'ironclad',
-    name: 'Ironclad',
-    title: 'Front-loaded damage and HP conversion decks that either snowball Strength or turn self-damage into massive defensive tempo.',
-    hp: '80 HP',
-    relic: 'Burning Blood',
-    identity: 'Strength, self-damage, Exhaust',
-    accent: '#d86a4c',
-    panel: 'linear-gradient(135deg, rgba(216,106,76,0.95), rgba(76,20,18,0.92))',
-    decks: [
-      {
-        id: 'strength-slam',
-        name: 'Strength Slam',
-        subtitle: 'Scale Strength quickly, then cash out with efficient multi-hit and heavy finishers.',
-        plan: 'Prioritize cheap Strength gain, survive with compact block tools, and end elite fights before the deck bloats.',
-        metrics: [
-          { label: 'Archetype', value: 'Strength burst' },
-          { label: 'Target Size', value: '14 cards' },
-          { label: 'Avg Cost', value: '1.1' },
-          { label: 'Difficulty', value: 'Low' }
-        ],
-        core: [
-          { name: 'Bash', cost: '2', count: '1x', type: 'Attack', text: 'Applies Vulnerable to set up all follow-up damage.' },
-          { name: 'Anger', cost: '0', count: '2x', type: 'Attack', text: 'Free damage that multiplies pressure once Strength is online.' },
-          { name: 'Armaments', cost: '1', count: '1x', type: 'Skill', text: 'Smooth early turns and upgrades your premium hits mid-combat.' },
-          { name: 'Inflame', cost: '1', count: '2x', type: 'Power', text: 'Primary scaling anchor for every damage line.' },
-          { name: 'Heavy Blade', cost: '2', count: '1x', type: 'Attack', text: 'Main finisher once Strength stacks begin to matter.' }
-        ],
-        support: [
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Keep only enough block to survive elite turns.' },
-          { name: 'Blood Wall', cost: '1', count: '1x', type: 'Skill', text: 'Efficient defensive spike that fits the HP-trading plan.' },
-          { name: 'Shrug It Off', cost: '1', count: '1x', type: 'Skill', text: 'Compact block plus draw to find your Strength cards.' },
-          { name: 'Pommel Strike', cost: '1', count: '1x', type: 'Attack', text: 'Bridge card that keeps damage flowing while cycling.' }
-        ],
-        notes: [
-          'Remove basic Strikes before trimming Anger; Anger scales far harder with Strength.',
-          'Use Bash on targets that must die immediately instead of spending it on weak hallway fights.',
-          'Do not over-defend. This list wins by shortening fights, not by blocking forever.'
-        ]
-      },
-      {
-        id: 'blood-fortress',
-        name: 'Blood Fortress',
-        subtitle: 'Convert health into oversized block turns and grind with compact premium attacks.',
-        plan: 'Exploit Ironclad sustain to buy tempo with self-damage cards, stabilize, then win through repeated efficient attacks.',
-        metrics: [
-          { label: 'Archetype', value: 'HP conversion' },
-          { label: 'Target Size', value: '15 cards' },
-          { label: 'Avg Cost', value: '1.0' },
-          { label: 'Difficulty', value: 'Medium' }
-        ],
-        core: [
-          { name: 'Blood Wall', cost: '1', count: '2x', type: 'Skill', text: 'The deck exists to abuse this efficiency.' },
-          { name: 'Bash', cost: '2', count: '1x', type: 'Attack', text: 'Vulnerable makes your compact finishers matter.' },
-          { name: 'Armaments', cost: '1', count: '1x', type: 'Skill', text: 'Upgrades key defense cards and keeps scaling clean.' },
-          { name: 'Body Slam', cost: '1', count: '2x', type: 'Attack', text: 'Turns oversized block turns directly into lethal damage.' }
-        ],
-        support: [
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Retained only until premium block density is online.' },
-          { name: 'True Grit', cost: '1', count: '1x', type: 'Skill', text: 'Lets you trim junk during combat while blocking.' },
-          { name: 'Shrug It Off', cost: '1', count: '2x', type: 'Skill', text: 'Keeps block and card flow stable.' },
-          { name: 'Second Wind', cost: '1', count: '1x', type: 'Skill', text: 'Punishes dead hands and spikes defense when needed.' }
-        ],
-        notes: [
-          'Treat HP as a resource, but leave enough margin for elite burst windows.',
-          'Body Slam becomes worth duplicating only after your block package is consistent.',
-          'This list rewards card removal heavily because every weak draw hurts your conversion turns.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'silent',
-    name: 'Silent',
-    title: 'Flexible tempo decks built on discard smoothing, Shivs, and poison-based inevitability.',
-    hp: '70 HP',
-    relic: 'Ring of the Snake',
-    identity: 'Discard, Shiv, Poison',
-    accent: '#6ec17e',
-    panel: 'linear-gradient(135deg, rgba(54,137,86,0.95), rgba(10,50,35,0.92))',
-    decks: [
-      {
-        id: 'shiv-velocity',
-        name: 'Shiv Velocity',
-        subtitle: 'Flood the hand with cheap blades, cycle fast, and convert tempo into letant pressure.',
-        plan: 'Lean on card draw and cheap generation to keep output high every turn instead of waiting for one huge combo round.',
-        metrics: [
-          { label: 'Archetype', value: 'Shiv tempo' },
-          { label: 'Target Size', value: '15 cards' },
-          { label: 'Avg Cost', value: '0.8' },
-          { label: 'Difficulty', value: 'Medium' }
-        ],
-        core: [
-          { name: 'Blade Dance', cost: '1', count: '2x', type: 'Skill', text: 'Primary blade generation and payoff enabler.' },
-          { name: 'Cloak and Dagger', cost: '1', count: '2x', type: 'Skill', text: 'Block plus Shiv keeps every turn efficient.' },
-          { name: 'Neutralize', cost: '0', count: '1x', type: 'Attack', text: 'Cheap control that helps protect aggressive hands.' },
-          { name: 'Accuracy', cost: '1', count: '1x', type: 'Power', text: 'Turns your generated blades into real scaling damage.' }
-        ],
-        support: [
-          { name: 'Acrobatics', cost: '1', count: '2x', type: 'Skill', text: 'Finds generators and smooths dead hands.' },
-          { name: 'Backflip', cost: '1', count: '1x', type: 'Skill', text: 'Adds draw without dropping defense.' },
-          { name: 'Survivor', cost: '1', count: '1x', type: 'Skill', text: 'Reliable early defense plus discard outlet.' },
-          { name: 'Finisher', cost: '1', count: '1x', type: 'Attack', text: 'Converts wide turns into boss damage.' }
-        ],
-        notes: [
-          'Do not keep too many reactive skills or the deck stops snowballing.',
-          'Accuracy matters more than a second Finisher if your Shiv generation is already dense.',
-          'Discard aggressively when it helps preserve cheap velocity turns.'
-        ]
-      },
-      {
-        id: 'poison-control',
-        name: 'Poison Control',
-        subtitle: 'Survive cleanly, stack poison, and let the fight collapse on its own clock.',
-        plan: 'Focus on stability, weak application, and poison density so bosses die without overcommitting to attack cards.',
-        metrics: [
-          { label: 'Archetype', value: 'Poison control' },
-          { label: 'Target Size', value: '16 cards' },
-          { label: 'Avg Cost', value: '1.0' },
-          { label: 'Difficulty', value: 'Low' }
-        ],
-        core: [
-          { name: 'Neutralize', cost: '0', count: '1x', type: 'Attack', text: 'Cheap Weak buys time for poison ticks.' },
-          { name: 'Survivor', cost: '1', count: '1x', type: 'Skill', text: 'Stable block anchor for long fights.' },
-          { name: 'Deadly Poison', cost: '1', count: '2x', type: 'Skill', text: 'Main poison source.' },
-          { name: 'Catalyst', cost: '1', count: '1x', type: 'Skill', text: 'Closes bosses once poison count is established.' }
-        ],
-        support: [
-          { name: 'Backflip', cost: '1', count: '2x', type: 'Skill', text: 'Defense plus draw makes setup cleaner.' },
-          { name: 'Acrobatics', cost: '1', count: '1x', type: 'Skill', text: 'Finds poison payoffs on demand.' },
-          { name: 'Cloak and Dagger', cost: '1', count: '1x', type: 'Skill', text: 'Bridges aggressive hallway fights.' },
-          { name: 'Noxious Fumes', cost: '1', count: '1x', type: 'Power', text: 'Passive scaling for long elite and boss combats.' }
-        ],
-        notes: [
-          'This list wins by surviving efficiently, not by racing early damage.',
-          'Catalyst is best treated as a finisher, not a card you force on curve.',
-          'Keep deck size controlled so poison sources appear early.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'regent',
-    name: 'Regent',
-    title: 'Star-based scaling decks that either tempo into sweeping board control or build explosive late turns.',
-    hp: '75 HP',
-    relic: 'Divine Right',
-    identity: 'Stars, control, payoff turns',
-    accent: '#ffbf49',
-    panel: 'linear-gradient(135deg, rgba(255,191,73,0.95), rgba(97,54,11,0.92))',
-    decks: [
-      {
-        id: 'star-ramp',
-        name: 'Star Ramp',
-        subtitle: 'Accumulate stars early and convert them into oversized payoff turns before bosses stabilize.',
-        plan: 'Use low-cost star generation to set up one or two decisive payoff cycles instead of playing fair every turn.',
-        metrics: [
-          { label: 'Archetype', value: 'Resource ramp' },
-          { label: 'Target Size', value: '14 cards' },
-          { label: 'Avg Cost', value: '1.0' },
-          { label: 'Difficulty', value: 'Medium' }
-        ],
-        core: [
-          { name: 'Venerate', cost: '1', count: '2x', type: 'Skill', text: 'Main star gain engine.' },
-          { name: 'Glow', cost: '0', count: '2x', type: 'Skill', text: 'Cheap setup that keeps hands moving.' },
-          { name: 'Gather Light', cost: '1', count: '2x', type: 'Skill', text: 'Block plus star gain fixes tempo loss.' },
-          { name: 'Astral Pulse', cost: '2', count: '1x', type: 'Attack', text: 'Wide payoff for built star turns.' }
-        ],
-        support: [
-          { name: 'Falling Star', cost: '1', count: '1x', type: 'Attack', text: 'Universal setup through Weak and Vulnerable.' },
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Retained until premium defensive cards arrive.' },
-          { name: 'Strike', cost: '1', count: '2x', type: 'Attack', text: 'Temporary damage floor while assembling payoffs.' },
-          { name: 'Nova Burst', cost: '2', count: '1x', type: 'Attack', text: 'Single-target closer once stars are banked.' }
-        ],
-        notes: [
-          'Hands with early Venerate and Glow are often keeps even if damage looks low.',
-          'Do not spend stars inefficiently on hallway fights that are already won.',
-          'Remove starter Strikes aggressively because they dilute your payoff turns.'
-        ]
-      },
-      {
-        id: 'royal-control',
-        name: 'Royal Control',
-        subtitle: 'Use stars to stay ahead on defense and debuffs, then win through safe repeated payoff windows.',
-        plan: 'Prefer consistency over burst by stabilizing every turn and cashing stars only when the board is fully under control.',
-        metrics: [
-          { label: 'Archetype', value: 'Control' },
-          { label: 'Target Size', value: '16 cards' },
-          { label: 'Avg Cost', value: '1.1' },
-          { label: 'Difficulty', value: 'High' }
-        ],
-        core: [
-          { name: 'Falling Star', cost: '1', count: '1x', type: 'Attack', text: 'Debuff glue for every difficult target.' },
-          { name: 'Gather Light', cost: '1', count: '2x', type: 'Skill', text: 'Defensive tempo plus star progression.' },
-          { name: 'Venerate', cost: '1', count: '1x', type: 'Skill', text: 'Keeps the resource engine online.' },
-          { name: 'Astral Pulse', cost: '2', count: '1x', type: 'Attack', text: 'Main board reset tool.' }
-        ],
-        support: [
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Stable fallback block.' },
-          { name: 'Glow', cost: '0', count: '1x', type: 'Skill', text: 'Low-risk card flow.' },
-          { name: 'Sanctum', cost: '1', count: '1x', type: 'Power', text: 'Long-fight durability and scaling.' },
-          { name: 'Stargaze', cost: '1', count: '1x', type: 'Skill', text: 'Deck fixing for slow matchups.' }
-        ],
-        notes: [
-          'You do not need to rush payoffs; you need to survive cleanly until they are decisive.',
-          'Debuff sequencing matters more than raw damage in elite combats.',
-          'This list improves sharply with card quality upgrades over raw duplication.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'necrobinder',
-    name: 'Necrobinder',
-    title: 'Resource-routing decks that turn Osty, Summon, and Doom into either board control or burst finishing patterns.',
-    hp: '66 HP',
-    relic: 'Bound Phylactery',
-    identity: 'Summon, Doom, Osty, souls',
-    accent: '#b58cff',
-    panel: 'linear-gradient(135deg, rgba(135,104,205,0.95), rgba(39,16,72,0.94))',
-    decks: [
-      {
-        id: 'osty-beatdown',
-        name: 'Osty Beatdown',
-        subtitle: 'Keep Osty healthy, force efficient summon turns, and end fights with high-pressure companion damage.',
-        plan: 'Route the deck around reliable summon generation so Osty stays active and every payoff attack remains live.',
-        metrics: [
-          { label: 'Archetype', value: 'Companion pressure' },
-          { label: 'Target Size', value: '15 cards' },
-          { label: 'Avg Cost', value: '0.9' },
-          { label: 'Difficulty', value: 'Medium' }
-        ],
-        core: [
-          { name: 'Bodyguard', cost: '1', count: '2x', type: 'Skill', text: 'Efficient summon foundation.' },
-          { name: 'Unleash', cost: '1', count: '2x', type: 'Attack', text: 'Primary payoff for preserving Osty health.' },
-          { name: 'Poke', cost: '0', count: '2x', type: 'Attack', text: 'Cheap activation that keeps pressure letant.' },
-          { name: 'Invoke', cost: '1', count: '1x', type: 'Skill', text: 'Sets up future burst turns cleanly.' }
-        ],
-        support: [
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Keeps bad hands from collapsing.' },
-          { name: 'Graveblast', cost: '1', count: '1x', type: 'Attack', text: 'Rebuys key cards during extended fights.' },
-          { name: 'Negative Pulse', cost: '1', count: '1x', type: 'Skill', text: 'Buys time against multi-enemy boards.' },
-          { name: 'Strike', cost: '1', count: '1x', type: 'Attack', text: 'Temporary filler until stronger payoffs replace it.' }
-        ],
-        notes: [
-          'Protecting Osty is usually worth more than squeezing one extra weak attack into the turn.',
-          'Do not overload on narrow payoffs if your summon density is not high enough.',
-          'The deck feels best when every draw either summons, protects, or cashes out Osty damage.'
-        ]
-      },
-      {
-        id: 'doom-engine',
-        name: 'Doom Engine',
-        subtitle: 'Stack Doom across the board and let delayed inevitability carry elite and boss encounters.',
-        plan: 'Use defensive doom application to stabilize while your damage profile scales without repeated attack commitments.',
-        metrics: [
-          { label: 'Archetype', value: 'Doom control' },
-          { label: 'Target Size', value: '16 cards' },
-          { label: 'Avg Cost', value: '1.0' },
-          { label: 'Difficulty', value: 'High' }
-        ],
-        core: [
-          { name: 'Negative Pulse', cost: '1', count: '2x', type: 'Skill', text: 'Main AOE doom application and block card.' },
-          { name: 'Invoke', cost: '1', count: '1x', type: 'Skill', text: 'Supports resource-heavy control turns.' },
-          { name: 'Bodyguard', cost: '1', count: '1x', type: 'Skill', text: 'Maintains summon baseline for stability.' },
-          { name: 'Graveblast', cost: '1', count: '2x', type: 'Attack', text: 'Loops premium control cards.' }
-        ],
-        support: [
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Needed until doom density fully carries combat.' },
-          { name: 'Poke', cost: '0', count: '1x', type: 'Attack', text: 'Cheap interaction for awkward turns.' },
-          { name: 'Soul Ward', cost: '1', count: '1x', type: 'Skill', text: 'Adds extra insurance in elite fights.' },
-          { name: 'Hex Feast', cost: '2', count: '1x', type: 'Attack', text: 'Converts built doom states into a hard close.' }
-        ],
-        notes: [
-          'This list is slow by design; the goal is to make every enemy turn worse than yours.',
-          'Graveblast becomes premium once your discard contains the exact control piece you need.',
-          'Avoid unnecessary attacks that do not contribute to Doom pressure or survival.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'defect',
-    name: 'Defect',
-    title: 'Orb-centric lists that either compress lightning burst or generate scaling through long-form focus engines.',
-    hp: '70 HP',
-    relic: 'Cracked Core',
-    identity: 'Orbs, Focus, Evoke',
-    accent: '#66baff',
-    panel: 'linear-gradient(135deg, rgba(93,165,255,0.95), rgba(13,42,94,0.94))',
-    decks: [
-      {
-        id: 'lightning-cycle',
-        name: 'Lightning Cycle',
-        subtitle: 'Channel and evoke lightning repeatedly to keep damage output high without slowing the deck down.',
-        plan: 'Prioritize cheap orb setup, repeated evoke triggers, and enough draw to keep the cycle continuous.',
-        metrics: [
-          { label: 'Archetype', value: 'Lightning tempo' },
-          { label: 'Target Size', value: '15 cards' },
-          { label: 'Avg Cost', value: '1.0' },
-          { label: 'Difficulty', value: 'Low' }
-        ],
-        core: [
-          { name: 'Zap', cost: '1', count: '2x', type: 'Skill', text: 'Main reliable orb setup.' },
-          { name: 'Dualcast', cost: '1', count: '2x', type: 'Skill', text: 'Best early payoff for every lightning line.' },
-          { name: 'Thunder', cost: '1', count: '1x', type: 'Power', text: 'Turns evoke chains into real board damage.' },
-          { name: 'Ball Lightning', cost: '1', count: '2x', type: 'Attack', text: 'Tempo attack that keeps the orb engine advancing.' }
-        ],
-        support: [
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Hold only enough block for rough turns.' },
-          { name: 'White Noise', cost: '1', count: '1x', type: 'Skill', text: 'High-value random power access.' },
-          { name: 'Coolheaded', cost: '1', count: '1x', type: 'Skill', text: 'Supports draw and orb rotation.' },
-          { name: 'Strike', cost: '1', count: '1x', type: 'Attack', text: 'Temporary filler until more orb cards appear.' }
-        ],
-        notes: [
-          'Dualcast is best spent on meaningful evokes, not just because it is available.',
-          'Thunder becomes a premium pickup once evoke count is already dense.',
-          'Keep the list tight so Zap and Ball Lightning appear consistently.'
-        ]
-      },
-      {
-        id: 'focus-scaling',
-        name: 'Focus Scaling',
-        subtitle: 'Build a slower engine that wins through high-value orbs, powers, and safe repeated cycling.',
-        plan: 'Accept slower starts, preserve HP with defensive orb turns, and win once Focus scaling pushes every orb above rate.',
-        metrics: [
-          { label: 'Archetype', value: 'Scaling engine' },
-          { label: 'Target Size', value: '16 cards' },
-          { label: 'Avg Cost', value: '1.1' },
-          { label: 'Difficulty', value: 'Medium' }
-        ],
-        core: [
-          { name: 'Zap', cost: '1', count: '1x', type: 'Skill', text: 'Reliable early orb presence.' },
-          { name: 'White Noise', cost: '1', count: '2x', type: 'Skill', text: 'Finds powers that accelerate scaling.' },
-          { name: 'Thunder', cost: '1', count: '1x', type: 'Power', text: 'Adds lightning payoff density.' },
-          { name: 'Defragment', cost: '1', count: '2x', type: 'Power', text: 'Main Focus growth source.' }
-        ],
-        support: [
-          { name: 'Dualcast', cost: '1', count: '1x', type: 'Skill', text: 'Still useful after Focus is established.' },
-          { name: 'Defend', cost: '1', count: '2x', type: 'Skill', text: 'Carry block until powers take over.' },
-          { name: 'Coolheaded', cost: '1', count: '2x', type: 'Skill', text: 'Draw plus frost stabilizes setup turns.' },
-          { name: 'Adaptive Strike', cost: '2', count: '1x', type: 'Attack', text: 'Single-slot finisher for longer boss fights.' }
-        ],
-        notes: [
-          'This list is strongest when it stops adding mediocre attacks and fully commits to engine quality.',
-          'White Noise is more valuable when the power pool is already dense with hits.',
-          'Focus decks want patient routing and card removal just as much as raw pickups.'
-        ]
-      }
-    ]
-  }
-];
-
-let nav = document.getElementById('character-nav');
-let summaryName = document.getElementById('summary-name');
-let summaryDescription = document.getElementById('summary-description');
-let summaryStats = document.getElementById('summary-stats');
-let deckSectionTitle = document.getElementById('deck-section-title');
-let deckSectionNote = document.getElementById('deck-section-note');
-let deckSwitcher = document.getElementById('deck-switcher');
-let deckName = document.getElementById('deck-name');
-let deckSubtitle = document.getElementById('deck-subtitle');
-let deckPlan = document.getElementById('deck-plan');
-let deckMetrics = document.getElementById('deck-metrics');
-let coreCards = document.getElementById('core-cards');
-let supportCards = document.getElementById('support-cards');
-let notesList = document.getElementById('notes-list');
-let cardRowTemplate = document.getElementById('card-row-template');
-let languageSelect = document.getElementById('language-select');
-let themeSelect = document.getElementById('theme-select');
-let themeLabel = document.getElementById('theme-label');
-let themeOptionDark = document.getElementById('theme-option-dark');
-let themeOptionLight = document.getElementById('theme-option-light');
-let submitKicker = document.getElementById('submit-kicker');
-let submitHeading = document.getElementById('submit-heading');
-let submitNote = document.getElementById('submit-note');
-let communityKicker = document.getElementById('community-kicker');
-let communityHeading = document.getElementById('community-heading');
-let communityNote = document.getElementById('community-note');
-let communityList = document.getElementById('community-list');
-let communityEmpty = document.getElementById('community-empty');
-let submissionForm = document.getElementById('submission-form');
-let submissionCharacter = document.getElementById('submit-character');
-let submissionAuthor = document.getElementById('submit-author');
-let submissionTitle = document.getElementById('submit-title');
-let submissionPlan = document.getElementById('submit-plan');
-let submissionCore = document.getElementById('submit-core');
-let submissionSupport = document.getElementById('submit-support');
-let submissionNotes = document.getElementById('submit-notes');
-let submissionAction = document.getElementById('submit-action');
-let submissionStatus = document.getElementById('submission-status');
-let labelAuthor = document.getElementById('label-author');
-let labelCharacter = document.getElementById('label-character');
-let labelTitle = document.getElementById('label-title');
-let labelPlan = document.getElementById('label-plan');
-let labelCore = document.getElementById('label-core');
-let labelSupport = document.getElementById('label-support');
-let labelNotes = document.getElementById('label-notes');
-let archiveKicker = document.getElementById('archive-kicker');
-let archiveHeading = document.getElementById('archive-heading');
-let archiveNote = document.getElementById('archive-note');
-let cardArchiveList = document.getElementById('card-archive-list');
-let cardArchiveEmpty = document.getElementById('card-archive-empty');
-let cardForm = document.getElementById('card-form');
-let cardCharacter = document.getElementById('card-character');
-let cardDeck = document.getElementById('card-deck');
-let cardName = document.getElementById('card-name');
-let cardType = document.getElementById('card-type');
-let cardCost = document.getElementById('card-cost');
-let cardCount = document.getElementById('card-count');
-let cardRole = document.getElementById('card-role');
-let cardImage = document.getElementById('card-image');
-let cardText = document.getElementById('card-text');
-let cardAction = document.getElementById('card-action');
-let cardStatus = document.getElementById('card-status');
-let cardSubmitKicker = document.getElementById('card-submit-kicker');
-let cardSubmitHeading = document.getElementById('card-submit-heading');
-let cardSubmitNote = document.getElementById('card-submit-note');
-let labelCardCharacter = document.getElementById('label-card-character');
-let labelCardDeck = document.getElementById('label-card-deck');
-let labelCardName = document.getElementById('label-card-name');
-let labelCardType = document.getElementById('label-card-type');
-let labelCardCost = document.getElementById('label-card-cost');
-let labelCardCount = document.getElementById('label-card-count');
-let labelCardRole = document.getElementById('label-card-role');
-let labelCardImage = document.getElementById('label-card-image');
-let labelCardText = document.getElementById('label-card-text');
 
 function detectPreferredLanguage() {
-  let candidates = [];
-
-  if (Array.isArray(navigator.languages)) {
-    candidates.push(...navigator.languages);
-  }
-
-  if (navigator.language) {
-    candidates.push(navigator.language);
-  }
-
-  for (let candidate of candidates) {
-    let normalized = String(candidate).toLowerCase().split('-')[0];
-    if (languages.includes(normalized)) {
-      return normalized;
-    }
-  }
-
-  return 'en';
+  let browserLanguage = (navigator.language || 'en').toLowerCase().split('-')[0];
+  return languages.includes(browserLanguage) ? browserLanguage : 'ko';
 }
 
 function detectPreferredTheme() {
-  let storedTheme = window.localStorage.getItem('theme');
-  if (storedTheme === 'dark' || storedTheme === 'light') {
-    return storedTheme;
+  let stored = window.localStorage.getItem('theme');
+  if (stored === 'light' || stored === 'dark') {
+    return stored;
   }
-
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'light';
-  }
-
   return 'dark';
 }
 
-const COMMUNITY_STORAGE_KEY = 'blackcat-community-decks-v1';
-const CUSTOM_CARD_STORAGE_KEY = 'blackcat-custom-cards-v1';
-
-let activeCharacter = characterData[0].id;
-let activeDeck = characterData[0].decks[0].id;
-let currentLanguage = detectPreferredLanguage();
-let currentTheme = detectPreferredTheme();
-
-function tr(text) {
-  if (currentLanguage === 'en') {
-    return text;
-  }
-
-  return translations[currentLanguage]?.[text] || text;
-}
-
 function ui() {
-  return uiText[currentLanguage] || uiText.en;
+  return uiText[state.currentLanguage] || uiText.en;
 }
 
-function cardUi() {
-  return cardUiText[currentLanguage] || cardUiText.en;
+function getLocalizedTerm(group, value) {
+  let entry = localizedTerms[group]?.[value];
+  return entry?.[state.currentLanguage] || entry?.en || value;
 }
 
-function formatDeckCount(count) {
-  let currentUi = ui();
-  if (currentLanguage === 'ko') {
-    return `${count}${currentUi.suffixes.lists}`;
-  }
-  if (currentLanguage === 'ja') {
-    return `${count}${currentUi.suffixes.lists}`;
-  }
-  if (currentLanguage === 'es' && currentUi.suffixes.lists === '') {
-    return String(count);
-  }
-  return `${count} ${currentUi.suffixes.lists}`.trim();
+function getCharacterLabel(character) {
+  return getLocalizedTerm('characters', character);
 }
 
-function formatCost(cost) {
-  let currentUi = ui();
-  if (currentLanguage === 'ko' || currentLanguage === 'ja') {
-    return `${cost}${currentUi.suffixes.cost}`;
-  }
-  return `${cost} ${currentUi.suffixes.cost}`;
+function getRelicLabel(relic) {
+  return getLocalizedTerm('relics', relic);
 }
 
-function applyStaticText() {
-  let currentUi = ui();
-  document.documentElement.lang = currentLanguage;
-  document.getElementById('hero-title').textContent = tr('Decklist Archive');
-  document.getElementById('hero-text').textContent = currentUi.heroText;
-  document.getElementById('hero-action-primary').textContent = currentUi.heroActionPrimary;
-  document.getElementById('hero-action-secondary').textContent = currentUi.heroActionSecondary;
-  document.getElementById('panel-label').textContent = currentUi.panelLabel;
-  document.getElementById('panel-note').textContent = currentUi.panelNote;
-  document.getElementById('summary-kicker').textContent = currentUi.summaryKicker;
-  document.getElementById('decklist-kicker').textContent = currentUi.decklistKicker;
-  document.getElementById('deck-plan-kicker').textContent = currentUi.deckPlanKicker;
-  document.getElementById('core-kicker').textContent = currentUi.coreKicker;
-  document.getElementById('core-heading').textContent = currentUi.coreHeading;
-  document.getElementById('support-kicker').textContent = currentUi.supportKicker;
-  document.getElementById('support-heading').textContent = currentUi.supportHeading;
-  document.getElementById('notes-kicker').textContent = currentUi.notesKicker;
-  document.getElementById('notes-heading').textContent = currentUi.notesHeading;
-  document.getElementById('language-label').textContent = currentUi.languageLabel;
-  themeLabel.textContent = currentUi.themeLabel;
-  themeOptionDark.textContent = currentUi.themeOptions.dark;
-  themeOptionLight.textContent = currentUi.themeOptions.light;
-  submitKicker.textContent = currentUi.community.submitKicker;
-  submitHeading.textContent = currentUi.community.submitHeading;
-  submitNote.textContent = currentUi.community.submitNote;
-  communityKicker.textContent = currentUi.community.feedKicker;
-  communityHeading.textContent = currentUi.community.feedHeading;
-  communityNote.textContent = currentUi.community.feedNote;
-  communityEmpty.textContent = currentUi.community.empty;
-  submissionAction.textContent = currentUi.community.action;
-  labelAuthor.textContent = currentUi.community.fields.author;
-  labelCharacter.textContent = currentUi.community.fields.character;
-  labelTitle.textContent = currentUi.community.fields.title;
-  labelPlan.textContent = currentUi.community.fields.plan;
-  labelCore.textContent = currentUi.community.fields.core;
-  labelSupport.textContent = currentUi.community.fields.support;
-  labelNotes.textContent = currentUi.community.fields.notes;
-  submissionAuthor.placeholder = currentUi.community.placeholders.author;
-  submissionTitle.placeholder = currentUi.community.placeholders.title;
-  submissionPlan.placeholder = currentUi.community.placeholders.plan;
-  submissionCore.placeholder = currentUi.community.placeholders.core;
-  submissionSupport.placeholder = currentUi.community.placeholders.support;
-  submissionNotes.placeholder = currentUi.community.placeholders.notes;
-
-  let currentCardUi = cardUi();
-  archiveKicker.textContent = currentCardUi.archiveKicker;
-  archiveHeading.textContent = currentCardUi.archiveHeading;
-  archiveNote.textContent = currentCardUi.archiveNote;
-  cardArchiveEmpty.textContent = currentCardUi.archiveEmpty;
-  cardSubmitKicker.textContent = currentCardUi.submitKicker;
-  cardSubmitHeading.textContent = currentCardUi.submitHeading;
-  cardSubmitNote.textContent = currentCardUi.submitNote;
-  cardAction.textContent = currentCardUi.action;
-  labelCardCharacter.textContent = currentCardUi.fields.character;
-  labelCardDeck.textContent = currentCardUi.fields.deck;
-  labelCardName.textContent = currentCardUi.fields.name;
-  labelCardType.textContent = currentCardUi.fields.type;
-  labelCardCost.textContent = currentCardUi.fields.cost;
-  labelCardCount.textContent = currentCardUi.fields.count;
-  labelCardRole.textContent = currentCardUi.fields.role;
-  labelCardImage.textContent = currentCardUi.fields.image;
-  labelCardText.textContent = currentCardUi.fields.text;
-  cardName.placeholder = currentCardUi.placeholders.name;
-  cardCost.placeholder = currentCardUi.placeholders.cost;
-  cardCount.placeholder = currentCardUi.placeholders.count;
-  cardImage.placeholder = currentCardUi.placeholders.image;
-  cardText.placeholder = currentCardUi.placeholders.text;
-
-  let points = document.getElementById('hero-points');
-  points.innerHTML = '';
-  currentUi.heroPoints.forEach((point) => {
-    let item = document.createElement('li');
-    item.textContent = point;
-    points.appendChild(item);
-  });
+function getIdentityLabel(identity) {
+  return getLocalizedTerm('identities', identity);
 }
 
-function applyTheme() {
-  document.documentElement.dataset.theme = currentTheme;
-  themeSelect.value = currentTheme;
+function getTypeLabel(type) {
+  return getLocalizedTerm('types', type);
 }
 
-function getCommunityDecks() {
-  try {
-    let raw = window.localStorage.getItem(COMMUNITY_STORAGE_KEY);
-    let parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    return [];
-  }
+function getRarityLabel(rarity) {
+  return getLocalizedTerm('rarities', rarity);
 }
 
-function saveCommunityDecks(decks) {
-  window.localStorage.setItem(COMMUNITY_STORAGE_KEY, JSON.stringify(decks));
+function getCardName(card, upgraded = false) {
+  return upgraded ? card.upgradedName || `${card.name}+` : card.name;
 }
 
-function getCustomCards() {
-  try {
-    let raw = window.localStorage.getItem(CUSTOM_CARD_STORAGE_KEY);
-    let parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    return [];
-  }
+function getCardText(card, upgraded = false) {
+  return upgraded ? card.upgradedDescription || card.description : card.description;
 }
 
-function saveCustomCards(cards) {
-  window.localStorage.setItem(CUSTOM_CARD_STORAGE_KEY, JSON.stringify(cards));
-}
-
-function splitList(value) {
-  return String(value)
-    .split(/\n|,/)
-    .map((item) => item.trim())
-    .filter(Boolean);
+function getCardSearchText(card) {
+  return [
+    card.name,
+    card.upgradedName,
+    card.description,
+    card.upgradedDescription,
+    getCharacterLabel(card.character),
+    getTypeLabel(card.type),
+    getRarityLabel(card.rarity)
+  ].filter(Boolean).join(' ').toLowerCase();
 }
 
 function getLocaleTag() {
-  let localeMap = {
+  return {
     en: 'en-US',
     ko: 'ko-KR',
     ja: 'ja-JP',
     es: 'es-ES'
-  };
-
-  return localeMap[currentLanguage] || 'en-US';
+  }[state.currentLanguage] || 'en-US';
 }
 
-function formatCommunityDate(timestamp) {
-  return new Date(timestamp).toLocaleDateString(getLocaleTag(), {
+function applyTheme() {
+  document.documentElement.dataset.theme = state.currentTheme;
+}
+
+function createId() {
+  return `build-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function createEmptyBuild(character) {
+  return {
+    id: createId(),
+    character,
+    title: '',
+    author: '',
+    summary: '',
+    notes: '',
+    cards: [],
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    isSample: false
+  };
+}
+
+function loadSavedBuilds() {
+  try {
+    let raw = window.localStorage.getItem(STORAGE_KEY);
+    let parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function persistSavedBuilds() {
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.savedBuilds));
+}
+
+function loadPinnedIds() {
+  try {
+    let raw = window.localStorage.getItem(PINNED_KEY);
+    let parsed = raw ? JSON.parse(raw) : [];
+    return new Set(Array.isArray(parsed) ? parsed : []);
+  } catch (error) {
+    return new Set();
+  }
+}
+
+function persistPinnedIds() {
+  window.localStorage.setItem(PINNED_KEY, JSON.stringify([...state.pinnedIds]));
+}
+
+function starterCardsForCharacter(character) {
+  return allCards
+    .filter((card) => card.character === character && ['Starter', 'Common', 'Uncommon'].includes(card.rarity) && ['Attack', 'Skill', 'Power'].includes(card.type))
+    .slice(0, 10)
+    .map((card) => ({ cardId: card.id, quantity: 1, upgraded: false }));
+}
+
+function createSampleBuilds() {
+  return PLAYABLE_CHARACTERS.map((character) => ({
+    id: `sample-${character.toLowerCase()}`,
+    character,
+    title: `${character} Starter Shell`,
+    author: 'Build Lab',
+    summary: `Starter shell generated from the current ${character} card pool. Use it as a base and branch from there.`,
+    notes: `Sample shell generated from the full STS2 card list on ${formatDate(Date.UTC(2026, 2, 26))}. Replace filler cards, tune upgrades, and add Colorless flex slots.`,
+    cards: starterCardsForCharacter(character),
+    createdAt: Date.UTC(2026, 2, 26),
+    updatedAt: Date.UTC(2026, 2, 26),
+    isSample: true
+  }));
+}
+
+let sampleBuilds = createSampleBuilds();
+
+function formatDate(timestamp) {
+  return new Intl.DateTimeFormat(getLocaleTag(), {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
+  }).format(timestamp);
+}
+
+function formatNumber(value) {
+  return new Intl.NumberFormat(getLocaleTag(), { maximumFractionDigits: 1 }).format(value);
+}
+
+function availableCardsForCharacter(character) {
+  return allCards.filter((card) => card.character === character || card.character === 'Colorless');
+}
+
+function buildCards(build) {
+  return build.cards
+    .map((entry) => {
+      let card = cardMap.get(entry.cardId);
+      if (!card) {
+        return null;
+      }
+      return { ...entry, card };
+    })
+    .filter(Boolean);
+}
+
+function summarizeBuild(build) {
+  let cards = buildCards(build);
+  let cardCount = cards.reduce((sum, entry) => sum + entry.quantity, 0);
+  let uniqueCards = cards.length;
+  let upgraded = cards.filter((entry) => entry.upgraded).length;
+  let numericCards = cards.filter((entry) => Number.isFinite(entry.card.sortCost));
+  let weightedCost = numericCards.reduce((sum, entry) => sum + entry.card.sortCost * entry.quantity, 0);
+  let weightedCount = numericCards.reduce((sum, entry) => sum + entry.quantity, 0);
+  let avgCost = weightedCount ? weightedCost / weightedCount : 0;
+  return { cardCount, uniqueCards, upgraded, avgCost };
+}
+
+function getAllBuilds() {
+  return [...sampleBuilds, ...state.savedBuilds];
+}
+
+function getBuildById(id) {
+  return getAllBuilds().find((build) => build.id === id) || null;
+}
+
+function buildsForActiveCharacter() {
+  let builds = getAllBuilds().filter((build) => build.character === state.activeCharacter);
+  let sorted = [...builds].sort((a, b) => {
+    if (state.currentSort === 'popular') {
+      let pinDiff = Number(state.pinnedIds.has(b.id)) - Number(state.pinnedIds.has(a.id));
+      if (pinDiff) {
+        return pinDiff;
+      }
+      return summarizeBuild(b).cardCount - summarizeBuild(a).cardCount || b.updatedAt - a.updatedAt;
+    }
+    return b.updatedAt - a.updatedAt;
+  });
+  return sorted;
+}
+
+function ensureActiveBuild() {
+  let builds = buildsForActiveCharacter();
+  if (!builds.length) {
+    state.activeBuildId = null;
+    if (state.draft.character !== state.activeCharacter) {
+      state.draft = createEmptyBuild(state.activeCharacter);
+    }
+    return;
+  }
+
+  if (state.activeBuildId && !builds.some((build) => build.id === state.activeBuildId)) {
+    state.activeBuildId = null;
+  }
+}
+
+function resetDraft(character = state.activeCharacter) {
+  state.activeBuildId = null;
+  state.draft = createEmptyBuild(character);
+  showStatus(ui().status.reset);
+  render();
+}
+
+function loadBuildIntoDraft(buildId) {
+  let build = getBuildById(buildId);
+  if (!build) {
+    return;
+  }
+  state.activeBuildId = build.id;
+  state.draft = clone(build);
+  state.draft.character = build.character;
+  showStatus(ui().status.loaded);
+  render();
+}
+
+function saveCurrentBuild() {
+  if (!state.draft.cards.length) {
+    showStatus(ui().status.needCards);
+    return;
+  }
+
+  let now = Date.now();
+  let draft = clone(state.draft);
+  draft.character = state.activeCharacter;
+  draft.updatedAt = now;
+  draft.title = draft.title.trim() || `${getCharacterLabel(state.activeCharacter)} ${ui().labels.custom} Build`;
+  draft.author = draft.author.trim() || 'Local Player';
+  draft.summary = draft.summary.trim() || 'Custom build saved in this browser.';
+  draft.notes = draft.notes.trim();
+  draft.isSample = false;
+
+  let isEditableExisting = state.activeBuildId && !String(state.activeBuildId).startsWith('sample-') && state.savedBuilds.some((build) => build.id === state.activeBuildId);
+
+  if (isEditableExisting) {
+    draft.id = state.activeBuildId;
+    draft.createdAt = state.savedBuilds.find((build) => build.id === state.activeBuildId)?.createdAt || now;
+    state.savedBuilds = state.savedBuilds.map((build) => build.id === draft.id ? draft : build);
+  } else {
+    draft.id = createId();
+    draft.createdAt = now;
+    state.savedBuilds.unshift(draft);
+    state.activeBuildId = draft.id;
+  }
+
+  state.draft = clone(draft);
+  persistSavedBuilds();
+  showStatus(ui().status.saved);
+  render();
+}
+
+function duplicateCurrentBuild() {
+  let duplicate = clone(state.draft);
+  duplicate.id = createId();
+  duplicate.title = duplicate.title ? `${duplicate.title} Copy` : `${getCharacterLabel(state.activeCharacter)} Copy`;
+  duplicate.createdAt = Date.now();
+  duplicate.updatedAt = Date.now();
+  duplicate.isSample = false;
+  state.activeBuildId = null;
+  state.draft = duplicate;
+  showStatus(ui().status.duplicated);
+  render();
+}
+
+function deleteCurrentBuild() {
+  if (!state.activeBuildId || String(state.activeBuildId).startsWith('sample-')) {
+    resetDraft(state.activeCharacter);
+    return;
+  }
+
+  state.savedBuilds = state.savedBuilds.filter((build) => build.id !== state.activeBuildId);
+  state.pinnedIds.delete(state.activeBuildId);
+  persistSavedBuilds();
+  persistPinnedIds();
+  state.activeBuildId = null;
+  state.draft = createEmptyBuild(state.activeCharacter);
+  showStatus(ui().status.deleted);
+  render();
+}
+
+function togglePinned(buildId) {
+  if (state.pinnedIds.has(buildId)) {
+    state.pinnedIds.delete(buildId);
+  } else {
+    state.pinnedIds.add(buildId);
+  }
+  persistPinnedIds();
+  renderBuildList();
+}
+
+function updateDraftField(field, value) {
+  state.draft[field] = value;
+}
+
+function addCardToDraft(cardId, upgraded) {
+  let existing = state.draft.cards.find((entry) => entry.cardId === cardId && entry.upgraded === upgraded);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    state.draft.cards.push({ cardId, quantity: 1, upgraded: Boolean(upgraded) });
+  }
+  state.draft.updatedAt = Date.now();
+  renderEditor();
+}
+
+function adjustCardQuantity(cardId, upgraded, delta) {
+  let entry = state.draft.cards.find((item) => item.cardId === cardId && item.upgraded === upgraded);
+  if (!entry) {
+    return;
+  }
+  entry.quantity += delta;
+  if (entry.quantity <= 0) {
+    state.draft.cards = state.draft.cards.filter((item) => !(item.cardId === cardId && item.upgraded === upgraded));
+  }
+  state.draft.updatedAt = Date.now();
+  renderEditor();
+}
+
+function removeCard(cardId, upgraded) {
+  state.draft.cards = state.draft.cards.filter((item) => !(item.cardId === cardId && item.upgraded === upgraded));
+  state.draft.updatedAt = Date.now();
+  renderEditor();
+}
+
+function toggleUpgrade(cardId, upgraded) {
+  let entry = state.draft.cards.find((item) => item.cardId === cardId && item.upgraded === upgraded);
+  if (!entry) {
+    return;
+  }
+  let target = state.draft.cards.find((item) => item.cardId === cardId && item.upgraded !== upgraded);
+  if (target) {
+    target.quantity += entry.quantity;
+    removeCard(cardId, upgraded);
+    return;
+  }
+  entry.upgraded = !entry.upgraded;
+  state.draft.updatedAt = Date.now();
+  renderEditor();
+}
+
+function filteredCards() {
+  let cards = availableCardsForCharacter(state.activeCharacter).filter((card) => {
+    let search = state.filters.search.trim().toLowerCase();
+    let textMatch = !search || getCardSearchText(card).includes(search);
+    let typeMatch = state.filters.type === 'all' || card.type === state.filters.type;
+    let rarityMatch = state.filters.rarity === 'all' || card.rarity === state.filters.rarity;
+    let costMatch = state.filters.cost === 'all' || String(card.cost) === state.filters.cost;
+    return textMatch && typeMatch && rarityMatch && costMatch;
+  });
+
+  return cards.sort((a, b) => {
+    if (state.filters.librarySort === 'cost') {
+      return (a.sortCost ?? 999) - (b.sortCost ?? 999) || getCardName(a).localeCompare(getCardName(b), getLocaleTag());
+    }
+    if (state.filters.librarySort === 'rarity') {
+      return getRarityLabel(a.rarity).localeCompare(getRarityLabel(b.rarity), getLocaleTag()) || getCardName(a).localeCompare(getCardName(b), getLocaleTag());
+    }
+    if (state.filters.librarySort === 'type') {
+      return getTypeLabel(a.type).localeCompare(getTypeLabel(b.type), getLocaleTag()) || getCardName(a).localeCompare(getCardName(b), getLocaleTag());
+    }
+    return getCardName(a).localeCompare(getCardName(b), getLocaleTag());
   });
 }
 
-function sanitizeSvgText(value) {
+function showStatus(message) {
+  refs.buildStatus.textContent = message;
+}
+
+function optionList(values, allLabel, labelForValue = (value) => value) {
+  return [`<option value="all">${escapeHtml(allLabel)}</option>`]
+    .concat(values.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(labelForValue(value))}</option>`))
+    .join('');
+}
+
+function escapeHtml(value) {
   return String(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -1583,479 +740,382 @@ function sanitizeSvgText(value) {
     .replace(/'/g, '&#39;');
 }
 
-function makeCardImage(card, accent) {
-  if (card.image) {
-    return card.image;
+function renderStaticText() {
+  let currentUi = ui();
+  document.documentElement.lang = state.currentLanguage;
+  document.title = `Slay the Spire 2 ${currentUi.heroTitle}`;
+  refs.heroTitle.textContent = currentUi.heroTitle;
+  refs.sortLabel.textContent = currentUi.sortLabel;
+  refs.themeLabel.textContent = currentUi.themeLabel;
+  refs.languageLabel.textContent = currentUi.languageLabel;
+  refs.themeOptionDark.textContent = currentUi.themeOptions.dark;
+  refs.themeOptionLight.textContent = currentUi.themeOptions.light;
+  refs.sortSelect.innerHTML = `
+    <option value="latest">${currentUi.sortOptions.latest}</option>
+    <option value="popular">${currentUi.sortOptions.popular}</option>
+  `;
+  refs.characterKicker.textContent = currentUi.characterKicker;
+  refs.characterHeading.textContent = currentUi.characterHeading;
+  refs.buildlistKicker.textContent = currentUi.buildlistKicker;
+  refs.buildlistHeading.textContent = currentUi.buildlistHeading;
+  refs.builderKicker.textContent = currentUi.builderKicker;
+  refs.builderHeading.textContent = currentUi.builderHeading;
+  refs.editorKicker.textContent = currentUi.editorKicker;
+  refs.editorHeading.textContent = currentUi.editorHeading;
+  refs.libraryKicker.textContent = currentUi.libraryKicker;
+  refs.libraryHeading.textContent = currentUi.libraryHeading;
+  refs.newBuildButton.textContent = currentUi.buttons.newBuild;
+  refs.duplicateBuildButton.textContent = currentUi.buttons.duplicateBuild;
+  refs.saveBuildButton.textContent = currentUi.buttons.saveBuild;
+  refs.deleteBuildButton.textContent = currentUi.buttons.deleteBuild;
+  refs.fieldTitleLabel.textContent = currentUi.fields.title;
+  refs.fieldAuthorLabel.textContent = currentUi.fields.author;
+  refs.fieldCharacterLabel.textContent = currentUi.fields.character;
+  refs.fieldSummaryLabel.textContent = currentUi.fields.summary;
+  refs.fieldNotesLabel.textContent = currentUi.fields.notes;
+  refs.fieldSearchLabel.textContent = currentUi.fields.search;
+  refs.fieldTypeLabel.textContent = currentUi.fields.type;
+  refs.fieldRarityLabel.textContent = currentUi.fields.rarity;
+  refs.fieldCostLabel.textContent = currentUi.fields.cost;
+  refs.fieldLibrarySortLabel.textContent = currentUi.fields.librarySort;
+  refs.buildTitleInput.placeholder = currentUi.placeholders.title;
+  refs.buildAuthorInput.placeholder = currentUi.placeholders.author;
+  refs.buildSummaryInput.placeholder = currentUi.placeholders.summary;
+  refs.buildNotesInput.placeholder = currentUi.placeholders.notes;
+  refs.cardSearchInput.placeholder = currentUi.placeholders.search;
+
+}
+
+function renderCharacterTabs() {
+  refs.characterTabs.innerHTML = '';
+  PLAYABLE_CHARACTERS.forEach((character) => {
+    let button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'character-tab';
+    button.dataset.character = character;
+    button.innerHTML = `<strong>${escapeHtml(getCharacterLabel(character))}</strong>`;
+    if (character === state.activeCharacter) {
+      button.classList.add('is-active');
+    }
+    refs.characterTabs.appendChild(button);
+  });
+}
+
+function renderCharacterSummary() {
+  let info = CHARACTER_INFO[state.activeCharacter];
+  refs.characterSummary.innerHTML = '';
+
+  [
+    { label: ui().labels.hp, value: info.hp },
+    { label: ui().labels.relic, value: getRelicLabel(info.relic) },
+    { label: ui().labels.identity, value: getIdentityLabel(info.identity) }
+  ].forEach((item) => {
+    let card = document.createElement('article');
+    card.className = 'summary-card';
+    card.innerHTML = `
+      <span class="summary-label">${item.label}</span>
+      <p class="summary-value">${item.value}</p>
+    `;
+    refs.characterSummary.appendChild(card);
+  });
+}
+
+function renderBuildList() {
+  let builds = buildsForActiveCharacter();
+  refs.buildList.innerHTML = '';
+
+  if (!builds.length) {
+    refs.buildList.innerHTML = `<div class="empty-state">${ui().empty.builds}</div>`;
+    return;
   }
 
-  let typeLabel = sanitizeSvgText(tr(card.type));
-  let nameLabel = sanitizeSvgText(tr(card.name));
-  let costLabel = sanitizeSvgText(card.cost);
-  let art = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 480">
-      <defs>
-        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="${accent}" stop-opacity="0.95" />
-          <stop offset="100%" stop-color="#11151b" />
-        </linearGradient>
-      </defs>
-      <rect width="360" height="480" rx="28" fill="url(#bg)" />
-      <rect x="20" y="20" width="320" height="440" rx="22" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" />
-      <circle cx="74" cy="72" r="34" fill="rgba(255,255,255,0.16)" />
-      <text x="74" y="84" text-anchor="middle" font-family="Verdana, sans-serif" font-size="34" fill="#f8f0e0" font-weight="700">${costLabel}</text>
-      <text x="32" y="140" font-family="Georgia, serif" font-size="32" fill="#fff7e8" font-weight="700">${nameLabel}</text>
-      <text x="32" y="186" font-family="Verdana, sans-serif" font-size="18" fill="rgba(255,247,232,0.78)">${typeLabel}</text>
-      <rect x="32" y="214" width="296" height="188" rx="18" fill="rgba(0,0,0,0.18)" stroke="rgba(255,255,255,0.08)" />
-      <path d="M56 358c44-72 98-116 162-132 28-8 56-10 86-8-36 22-68 52-92 92-18 30-30 62-38 92-44-6-82-22-118-44z" fill="rgba(255,255,255,0.12)" />
-      <text x="32" y="436" font-family="Verdana, sans-serif" font-size="16" fill="rgba(255,247,232,0.72)">Black Cat Custom Archive</text>
-    </svg>
+  builds.forEach((build, index) => {
+    let article = document.createElement('article');
+    article.className = 'build-card';
+    article.dataset.buildId = build.id;
+    if (build.id === state.activeBuildId) {
+      article.classList.add('is-active');
+    }
+
+    article.innerHTML = `
+      <div>
+        <p class="section-kicker">${build.isSample ? ui().labels.sample : ui().labels.custom}</p>
+        <h3 class="build-title">${escapeHtml(build.title)}</h3>
+      </div>
+      <div>
+        <div class="build-card-actions">
+          <button class="pill-button" type="button" data-pin-build="${build.id}">${state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin}</button>
+        </div>
+        <div class="build-rank">${String(index + 1).padStart(2, '0')}</div>
+      </div>
+    `;
+
+    refs.buildList.appendChild(article);
+  });
+}
+
+function renderEditorFields() {
+  refs.buildTitleInput.value = state.draft.title;
+  refs.buildAuthorInput.value = state.draft.author;
+  refs.buildSummaryInput.value = state.draft.summary;
+  refs.buildNotesInput.value = state.draft.notes;
+  refs.buildCharacterSelect.innerHTML = PLAYABLE_CHARACTERS.map((character) => `<option value="${character}">${escapeHtml(getCharacterLabel(character))}</option>`).join('');
+  refs.buildCharacterSelect.value = state.activeCharacter;
+  refs.deleteBuildButton.disabled = !state.activeBuildId || String(state.activeBuildId).startsWith('sample-');
+}
+
+function renderSelectedCards() {
+  let items = buildCards(state.draft);
+  refs.selectedCards.innerHTML = '';
+
+  if (!items.length) {
+    refs.selectedCards.innerHTML = `<div class="empty-state">${ui().empty.selected}</div>`;
+    return;
+  }
+
+  items.sort((a, b) => (a.card.sortCost ?? 999) - (b.card.sortCost ?? 999) || getCardName(a.card).localeCompare(getCardName(b.card), getLocaleTag()));
+
+  items.forEach((entry) => {
+    let text = getCardText(entry.card, entry.upgraded);
+    let card = document.createElement('article');
+    card.className = 'selected-card';
+    card.innerHTML = `
+      <div class="selected-card-head">
+        <div>
+          <p class="selected-card-name">${escapeHtml(getCardName(entry.card, entry.upgraded))}</p>
+          <div class="card-meta">
+            <span class="build-meta">${escapeHtml(getTypeLabel(entry.card.type))}</span>
+            <span class="build-meta">${escapeHtml(getRarityLabel(entry.card.rarity))}</span>
+            <span class="build-meta">${entry.card.cost}</span>
+          </div>
+        </div>
+        <span class="stat-chip">x${entry.quantity}</span>
+      </div>
+      <p class="selected-card-text">${escapeHtml(text)}</p>
+      <div class="selected-card-controls">
+        <button class="pill-button" type="button" data-adjust-card="${entry.card.id}" data-upgraded="${entry.upgraded}" data-delta="-1">-1</button>
+        <button class="pill-button" type="button" data-adjust-card="${entry.card.id}" data-upgraded="${entry.upgraded}" data-delta="1">+1</button>
+        <button class="pill-button" type="button" data-toggle-upgrade="${entry.card.id}" data-upgraded="${entry.upgraded}">${ui().buttons.upgrade}</button>
+        <button class="pill-button" type="button" data-remove-card="${entry.card.id}" data-upgraded="${entry.upgraded}">${ui().buttons.remove}</button>
+      </div>
+    `;
+    refs.selectedCards.appendChild(card);
+  });
+}
+
+function renderFilters() {
+  let cards = availableCardsForCharacter(state.activeCharacter);
+  let types = [...new Set(cards.map((card) => card.type))].sort((a, b) => getTypeLabel(a).localeCompare(getTypeLabel(b), getLocaleTag()));
+  let rarities = [...new Set(cards.map((card) => card.rarity))].sort((a, b) => getRarityLabel(a).localeCompare(getRarityLabel(b), getLocaleTag()));
+  let costs = [...new Set(cards.map((card) => String(card.cost)))].sort((a, b) => {
+    let aNum = Number(a);
+    let bNum = Number(b);
+    if (Number.isFinite(aNum) && Number.isFinite(bNum)) {
+      return aNum - bNum;
+    }
+    return a.localeCompare(b);
+  });
+
+  refs.typeFilterSelect.innerHTML = optionList(types, ui().labels.all, getTypeLabel);
+  refs.rarityFilterSelect.innerHTML = optionList(rarities, ui().labels.all, getRarityLabel);
+  refs.costFilterSelect.innerHTML = optionList(costs, ui().labels.all);
+  refs.librarySortSelect.innerHTML = `
+    <option value="name">${ui().librarySortOptions.name}</option>
+    <option value="cost">${ui().librarySortOptions.cost}</option>
+    <option value="rarity">${ui().librarySortOptions.rarity}</option>
+    <option value="type">${ui().librarySortOptions.type}</option>
   `;
-
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(art)}`;
+  refs.cardSearchInput.value = state.filters.search;
+  refs.typeFilterSelect.value = state.filters.type;
+  refs.rarityFilterSelect.value = state.filters.rarity;
+  refs.costFilterSelect.value = state.filters.cost;
+  refs.librarySortSelect.value = state.filters.librarySort;
 }
 
-function normalizeCard(card, accent, role) {
-  return {
-    ...card,
-    role: card.role || role,
-    image: makeCardImage(card, accent)
-  };
-}
+function renderLibrary() {
+  renderFilters();
+  let cards = filteredCards();
+  refs.libraryList.innerHTML = '';
 
-function getDeckCards(deck, character) {
-  let customCards = getCustomCards().filter((card) => card.characterId === character.id && card.deckId === deck.id);
-  let builtInCore = deck.core.map((card) => normalizeCard(card, character.accent, 'core'));
-  let builtInSupport = deck.support.map((card) => normalizeCard(card, character.accent, 'support'));
-  let customCore = customCards
-    .filter((card) => card.role === 'core')
-    .map((card) => normalizeCard(card, character.accent, 'core'));
-  let customSupport = customCards
-    .filter((card) => card.role === 'support')
-    .map((card) => normalizeCard(card, character.accent, 'support'));
-
-  return {
-    core: [...builtInCore, ...customCore],
-    support: [...builtInSupport, ...customSupport],
-    archive: [...builtInCore, ...builtInSupport, ...customCore, ...customSupport]
-  };
-}
-
-function getActiveCharacter() {
-  return characterData.find((character) => character.id === activeCharacter) || characterData[0];
-}
-
-function getActiveDeck(character) {
-  return character.decks.find((deck) => deck.id === activeDeck) || character.decks[0];
-}
-
-function renderCharacterNav() {
-  nav.innerHTML = '';
-
-  characterData.forEach((character) => {
-    let button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'character-pill';
-    button.dataset.character = character.id;
-    button.textContent = tr(character.name);
-    button.style.setProperty('--pill-accent', character.accent);
-    button.addEventListener('click', () => {
-      activeCharacter = character.id;
-      activeDeck = character.decks[0].id;
-      render();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    nav.appendChild(button);
-  });
-}
-
-function renderSummary(character) {
-  let currentUi = ui();
-  summaryName.textContent = tr(character.name);
-  summaryDescription.textContent = tr(character.title);
-  summaryStats.innerHTML = [
-    { label: currentUi.labels.health, value: character.hp },
-    { label: currentUi.labels.relic, value: tr(character.relic) },
-    { label: currentUi.labels.identity, value: tr(character.identity) },
-    { label: currentUi.labels.deckCount, value: formatDeckCount(character.decks.length) }
-  ].map((item) => `
-    <article class="stat-card">
-      <p class="stat-label">${item.label}</p>
-      <p class="stat-value">${item.value}</p>
-    </article>
-  `).join('');
-
-  document.documentElement.style.setProperty('--accent-color', character.accent);
-  document.documentElement.style.setProperty('--accent-panel', character.panel);
-}
-
-function renderDeckSwitcher(character, deck) {
-  let currentUi = ui();
-  deckSwitcher.innerHTML = '';
-  deckSectionTitle.textContent = `${tr(character.name)} ${currentUi.suffixes.decklists}`.trim();
-  deckSectionNote.textContent = `${formatDeckCount(character.decks.length)} ${currentUi.suffixes.curated}`;
-
-  character.decks.forEach((entry) => {
-    let button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'deck-pill';
-    button.dataset.deck = entry.id;
-    button.textContent = tr(entry.name);
-    button.addEventListener('click', () => {
-      activeDeck = entry.id;
-      render();
-    });
-    button.classList.toggle('is-active', entry.id === deck.id);
-    button.setAttribute('aria-pressed', String(entry.id === deck.id));
-    deckSwitcher.appendChild(button);
-  });
-}
-
-function renderMetrics(deck) {
-  let currentUi = ui();
-  let metricMap = {
-    'Archetype': currentUi.labels.archetype,
-    'Target Size': currentUi.labels.targetSize,
-    'Avg Cost': currentUi.labels.avgCost,
-    'Difficulty': currentUi.labels.difficulty
-  };
-
-  deckMetrics.innerHTML = deck.metrics.map((metric) => `
-    <article class="metric-card">
-      <p class="stat-label">${metricMap[metric.label] || metric.label}</p>
-      <p class="metric-value">${tr(metric.value)}</p>
-    </article>
-  `).join('');
-}
-
-function createCardRow(card) {
-  let node = cardRowTemplate.content.cloneNode(true);
-  node.querySelector('.card-row-art').src = card.image;
-  node.querySelector('.card-row-art').alt = tr(card.name);
-  node.querySelector('.card-row-name').textContent = tr(card.name);
-  node.querySelector('.card-row-text').textContent = tr(card.text);
-  node.querySelector('.card-cost').textContent = formatCost(card.cost);
-  node.querySelector('.card-count').textContent = card.count;
-  node.querySelector('.card-type').textContent = tr(card.type);
-  return node;
-}
-
-function renderCardList(container, cards) {
-  container.innerHTML = '';
-  cards.forEach((card) => {
-    container.appendChild(createCardRow(card));
-  });
-}
-
-function renderNotes(deck) {
-  notesList.innerHTML = '';
-  deck.notes.forEach((note) => {
-    let item = document.createElement('li');
-    item.textContent = tr(note);
-    notesList.appendChild(item);
-  });
-}
-
-function syncCharacterButtons() {
-  document.querySelectorAll('.character-pill').forEach((button) => {
-    let isActive = button.dataset.character === activeCharacter;
-    button.classList.toggle('is-active', isActive);
-    button.setAttribute('aria-pressed', String(isActive));
-  });
-}
-
-function renderCardArchive(cards) {
-  let currentCardUi = cardUi();
-  cardArchiveList.innerHTML = '';
-  cardArchiveEmpty.hidden = cards.length > 0;
+  if (!cards.length) {
+    refs.libraryList.innerHTML = `<div class="empty-state">${ui().empty.library}</div>`;
+    return;
+  }
 
   cards.forEach((card) => {
     let article = document.createElement('article');
-    article.className = 'archive-card';
-
-    let image = document.createElement('img');
-    image.className = 'archive-card-image';
-    image.src = card.image;
-    image.alt = tr(card.name);
-
-    let title = document.createElement('p');
-    title.className = 'archive-card-name';
-    title.textContent = tr(card.name);
-
-    let textNode = document.createElement('p');
-    textNode.className = 'archive-card-text';
-    textNode.textContent = tr(card.text);
-
-    let meta = document.createElement('div');
-    meta.className = 'archive-card-meta';
-    [formatCost(card.cost), card.count, tr(card.type), currentCardUi.roles[card.role] || currentCardUi.roles.support].forEach((value) => {
-      let pill = document.createElement('span');
-      pill.className = 'card-pill';
-      pill.textContent = value;
-      meta.appendChild(pill);
-    });
-
-    article.appendChild(image);
-    article.appendChild(title);
-    article.appendChild(textNode);
-    article.appendChild(meta);
-    cardArchiveList.appendChild(article);
+    article.className = 'library-card';
+    article.innerHTML = `
+      <div class="library-card-main">
+        <img class="library-thumb" src="${escapeHtml(card.portraitImageUrl || card.imageUrl)}" alt="${escapeHtml(getCardName(card))}">
+        <div>
+          <div class="library-card-head">
+            <div>
+              <p class="library-card-name">${escapeHtml(getCardName(card))}</p>
+              <div class="card-meta">
+                <span class="build-meta">${escapeHtml(getCharacterLabel(card.character))}</span>
+                <span class="build-meta">${escapeHtml(getTypeLabel(card.type))}</span>
+                <span class="build-meta">${escapeHtml(getRarityLabel(card.rarity))}</span>
+                <span class="build-meta">${card.cost}</span>
+              </div>
+            </div>
+          </div>
+          <p class="library-card-text">${escapeHtml(getCardText(card))}</p>
+          <div class="library-card-actions">
+            <button class="pill-button pill-button-primary" type="button" data-add-card="${card.id}" data-upgraded="false">${ui().buttons.addBase}</button>
+            <button class="pill-button" type="button" data-add-card="${card.id}" data-upgraded="true">${ui().buttons.addUpgraded}</button>
+            <a class="pill-button" href="${escapeHtml(card.sourceUrl)}" target="_blank" rel="noreferrer">${ui().buttons.source}</a>
+          </div>
+        </div>
+      </div>
+    `;
+    refs.libraryList.appendChild(article);
   });
 }
 
-function renderDeckOverview(deck, character) {
-  let cards = getDeckCards(deck, character);
-  deckName.textContent = tr(deck.name);
-  deckSubtitle.textContent = tr(deck.subtitle);
-  deckPlan.textContent = tr(deck.plan);
-  renderMetrics(deck);
-  renderCardList(coreCards, cards.core);
-  renderCardList(supportCards, cards.support);
-  renderCardArchive(cards.archive);
-  renderNotes(deck);
-}
-
-function renderSubmissionCharacterOptions() {
-  let previousValue = submissionCharacter.value;
-  submissionCharacter.innerHTML = '';
-
-  characterData.forEach((character) => {
-    let option = document.createElement('option');
-    option.value = character.id;
-    option.textContent = tr(character.name);
-    submissionCharacter.appendChild(option);
-  });
-
-  submissionCharacter.value = previousValue && characterData.some((character) => character.id === previousValue)
-    ? previousValue
-    : activeCharacter;
-}
-
-function renderCardCharacterOptions() {
-  let previousCharacter = cardCharacter.value;
-  cardCharacter.innerHTML = '';
-
-  characterData.forEach((character) => {
-    let option = document.createElement('option');
-    option.value = character.id;
-    option.textContent = tr(character.name);
-    cardCharacter.appendChild(option);
-  });
-
-  cardCharacter.value = previousCharacter && characterData.some((character) => character.id === previousCharacter)
-    ? previousCharacter
-    : activeCharacter;
-
-  renderCardDeckOptions();
-}
-
-function renderCardDeckOptions() {
-  let selectedCharacter = characterData.find((character) => character.id === cardCharacter.value) || getActiveCharacter();
-  let previousDeck = cardDeck.value;
-  cardDeck.innerHTML = '';
-
-  selectedCharacter.decks.forEach((deck) => {
-    let option = document.createElement('option');
-    option.value = deck.id;
-    option.textContent = tr(deck.name);
-    cardDeck.appendChild(option);
-  });
-
-  cardDeck.value = previousDeck && selectedCharacter.decks.some((deck) => deck.id === previousDeck)
-    ? previousDeck
-    : selectedCharacter.decks[0].id;
-}
-
-function applyCardFormLabels() {
-  let currentCardUi = cardUi();
-  cardType.innerHTML = ['Attack', 'Skill', 'Power'].map((type) => `
-    <option value="${type}">${tr(type)}</option>
-  `).join('');
-  cardRole.innerHTML = `
-    <option value="core">${currentCardUi.roles.core}</option>
-    <option value="support">${currentCardUi.roles.support}</option>
-  `;
-}
-
-function createCommunitySection(title, items, className) {
-  let currentUi = ui();
-  let section = document.createElement('section');
-  section.className = 'community-section';
-
-  let heading = document.createElement('h5');
-  heading.textContent = title;
-  section.appendChild(heading);
-
-  if (!items.length) {
-    return section;
-  }
-
-  if (className === 'community-notes') {
-    let list = document.createElement('ul');
-    list.className = className;
-    items.forEach((item) => {
-      let row = document.createElement('li');
-      row.textContent = item;
-      list.appendChild(row);
-    });
-    section.appendChild(list);
-    return section;
-  }
-
-  let chipWrap = document.createElement('div');
-  chipWrap.className = className;
-  items.forEach((item) => {
-    let chip = document.createElement('span');
-    chip.className = 'community-chip';
-    chip.textContent = item;
-    chipWrap.appendChild(chip);
-  });
-  section.appendChild(chipWrap);
-  return section;
-}
-
-function renderCommunityDecks(character) {
-  let currentUi = ui();
-  let decks = getCommunityDecks()
-    .filter((deck) => deck.characterId === character.id)
-    .sort((a, b) => b.createdAt - a.createdAt);
-
-  communityList.innerHTML = '';
-  communityEmpty.hidden = decks.length > 0;
-
-  decks.forEach((deck) => {
-    let card = document.createElement('article');
-    card.className = 'community-card';
-
-    let head = document.createElement('div');
-    head.className = 'community-card-head';
-
-    let titleWrap = document.createElement('div');
-    let title = document.createElement('h4');
-    title.textContent = deck.title;
-    let plan = document.createElement('p');
-    plan.className = 'community-plan';
-    plan.textContent = deck.plan;
-    titleWrap.appendChild(title);
-    titleWrap.appendChild(plan);
-
-    let meta = document.createElement('p');
-    meta.className = 'community-meta';
-    meta.textContent = `${currentUi.community.metaBy} ${deck.author} · ${currentUi.community.metaOn} ${formatCommunityDate(deck.createdAt)}`;
-
-    head.appendChild(titleWrap);
-    head.appendChild(meta);
-    card.appendChild(head);
-
-    let sections = document.createElement('div');
-    sections.className = 'community-sections';
-    sections.appendChild(createCommunitySection(currentUi.community.sections.core, deck.core, 'community-chips'));
-    sections.appendChild(createCommunitySection(currentUi.community.sections.support, deck.support, 'community-chips'));
-    sections.appendChild(createCommunitySection(currentUi.community.sections.notes, deck.notes, 'community-notes'));
-    card.appendChild(sections);
-
-    communityList.appendChild(card);
-  });
-}
-
-function bindLanguageSwitcher() {
-  languageSelect.value = currentLanguage;
-  languageSelect.addEventListener('change', (event) => {
-    currentLanguage = languages.includes(event.target.value) ? event.target.value : 'en';
-    render();
-  });
-}
-
-function bindThemeSwitcher() {
-  applyTheme();
-  themeSelect.addEventListener('change', (event) => {
-    currentTheme = event.target.value === 'light' ? 'light' : 'dark';
-    window.localStorage.setItem('theme', currentTheme);
-    applyTheme();
-  });
-}
-
-function bindCardFormControls() {
-  cardCharacter.addEventListener('change', () => {
-    renderCardDeckOptions();
-  });
-}
-
-function bindSubmissionForm() {
-  submissionForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    let decks = getCommunityDecks();
-    decks.push({
-      id: `community-${Date.now()}`,
-      author: submissionAuthor.value.trim(),
-      characterId: submissionCharacter.value,
-      title: submissionTitle.value.trim(),
-      plan: submissionPlan.value.trim(),
-      core: splitList(submissionCore.value),
-      support: splitList(submissionSupport.value),
-      notes: splitList(submissionNotes.value),
-      createdAt: Date.now()
-    });
-
-    saveCommunityDecks(decks);
-    submissionStatus.textContent = ui().community.success;
-    activeCharacter = submissionCharacter.value;
-    activeDeck = getActiveCharacter().decks[0].id;
-    submissionForm.reset();
-    render();
-  });
-
-  cardForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    let cards = getCustomCards();
-    cards.push({
-      id: `custom-card-${Date.now()}`,
-      characterId: cardCharacter.value,
-      deckId: cardDeck.value,
-      role: cardRole.value === 'core' ? 'core' : 'support',
-      name: cardName.value.trim(),
-      type: cardType.value,
-      cost: cardCost.value.trim(),
-      count: cardCount.value.trim(),
-      text: cardText.value.trim(),
-      image: cardImage.value.trim(),
-      createdAt: Date.now()
-    });
-
-    saveCustomCards(cards);
-    cardStatus.textContent = cardUi().success;
-    activeCharacter = cardCharacter.value;
-    activeDeck = cardDeck.value;
-    cardForm.reset();
-    cardCount.value = '1x';
-    render();
-  });
+function renderEditor() {
+  renderEditorFields();
+  renderSelectedCards();
+  renderLibrary();
 }
 
 function render() {
+  ensureActiveBuild();
   applyTheme();
-  applyStaticText();
-  applyCardFormLabels();
-  renderCharacterNav();
-  let character = getActiveCharacter();
-  let deck = getActiveDeck(character);
-  renderSummary(character);
-  renderDeckSwitcher(character, deck);
-  renderDeckOverview(deck, character);
-  renderSubmissionCharacterOptions();
-  renderCardCharacterOptions();
-  cardCharacter.value = activeCharacter;
-  renderCardDeckOptions();
-  cardDeck.value = deck.id;
-  renderCommunityDecks(character);
-  syncCharacterButtons();
-  languageSelect.value = currentLanguage;
-  themeSelect.value = currentTheme;
+  renderStaticText();
+  refs.languageSelect.value = state.currentLanguage;
+  refs.themeSelect.value = state.currentTheme;
+  refs.sortSelect.value = state.currentSort;
+  renderCharacterTabs();
+  renderCharacterSummary();
+  renderBuildList();
+  renderEditor();
 }
 
-bindLanguageSwitcher();
-bindThemeSwitcher();
-bindCardFormControls();
-bindSubmissionForm();
+refs.languageSelect.addEventListener('change', (event) => {
+  state.currentLanguage = languages.includes(event.target.value) ? event.target.value : 'en';
+  render();
+});
+
+refs.themeSelect.addEventListener('change', (event) => {
+  state.currentTheme = event.target.value === 'light' ? 'light' : 'dark';
+  window.localStorage.setItem('theme', state.currentTheme);
+  applyTheme();
+});
+
+refs.sortSelect.addEventListener('change', (event) => {
+  state.currentSort = event.target.value === 'popular' ? 'popular' : 'latest';
+  renderBuildList();
+});
+
+refs.characterTabs.addEventListener('click', (event) => {
+  let button = event.target.closest('[data-character]');
+  if (!button) {
+    return;
+  }
+  state.activeCharacter = button.dataset.character;
+  state.filters = { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' };
+  state.activeBuildId = null;
+  state.draft = createEmptyBuild(state.activeCharacter);
+  render();
+});
+
+refs.buildList.addEventListener('click', (event) => {
+  let pinButton = event.target.closest('[data-pin-build]');
+  if (pinButton) {
+    event.stopPropagation();
+    togglePinned(pinButton.dataset.pinBuild);
+    return;
+  }
+
+  let buildCard = event.target.closest('[data-build-id]');
+  if (!buildCard) {
+    return;
+  }
+  loadBuildIntoDraft(buildCard.dataset.buildId);
+});
+
+refs.newBuildButton.addEventListener('click', () => {
+  resetDraft(state.activeCharacter);
+});
+
+refs.duplicateBuildButton.addEventListener('click', () => {
+  duplicateCurrentBuild();
+});
+
+refs.saveBuildButton.addEventListener('click', () => {
+  saveCurrentBuild();
+});
+
+refs.deleteBuildButton.addEventListener('click', () => {
+  deleteCurrentBuild();
+});
+
+refs.buildTitleInput.addEventListener('input', (event) => updateDraftField('title', event.target.value));
+refs.buildAuthorInput.addEventListener('input', (event) => updateDraftField('author', event.target.value));
+refs.buildSummaryInput.addEventListener('input', (event) => updateDraftField('summary', event.target.value));
+refs.buildNotesInput.addEventListener('input', (event) => updateDraftField('notes', event.target.value));
+refs.buildCharacterSelect.addEventListener('change', (event) => {
+  state.activeCharacter = event.target.value;
+  state.activeBuildId = null;
+  state.draft.character = event.target.value;
+  state.draft.cards = state.draft.cards.filter((entry) => {
+    let card = cardMap.get(entry.cardId);
+    return card && (card.character === state.activeCharacter || card.character === 'Colorless');
+  });
+  render();
+});
+
+refs.cardSearchInput.addEventListener('input', (event) => {
+  state.filters.search = event.target.value;
+  renderLibrary();
+});
+
+refs.typeFilterSelect.addEventListener('change', (event) => {
+  state.filters.type = event.target.value;
+  renderLibrary();
+});
+
+refs.rarityFilterSelect.addEventListener('change', (event) => {
+  state.filters.rarity = event.target.value;
+  renderLibrary();
+});
+
+refs.costFilterSelect.addEventListener('change', (event) => {
+  state.filters.cost = event.target.value;
+  renderLibrary();
+});
+
+refs.librarySortSelect.addEventListener('change', (event) => {
+  state.filters.librarySort = event.target.value;
+  renderLibrary();
+});
+
+refs.libraryList.addEventListener('click', (event) => {
+  let button = event.target.closest('[data-add-card]');
+  if (!button) {
+    return;
+  }
+  addCardToDraft(button.dataset.addCard, button.dataset.upgraded === 'true');
+});
+
+refs.selectedCards.addEventListener('click', (event) => {
+  let adjust = event.target.closest('[data-adjust-card]');
+  if (adjust) {
+    adjustCardQuantity(adjust.dataset.adjustCard, adjust.dataset.upgraded === 'true', Number(adjust.dataset.delta));
+    return;
+  }
+
+  let remove = event.target.closest('[data-remove-card]');
+  if (remove) {
+    removeCard(remove.dataset.removeCard, remove.dataset.upgraded === 'true');
+    return;
+  }
+
+  let upgrade = event.target.closest('[data-toggle-upgrade]');
+  if (upgrade) {
+    toggleUpgrade(upgrade.dataset.toggleUpgrade, upgrade.dataset.upgraded === 'true');
+  }
+});
+
 render();
