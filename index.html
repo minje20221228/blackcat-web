@@ -14,147 +14,177 @@
     <header class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Slay the Spire 2</p>
-        <h1 id="hero-title">Build Lab</h1>
-              </div>
+        <div class="title-row">
+          <h1 id="hero-title">Build Lab</h1>
+          <nav class="view-nav" id="view-nav" aria-label="Primary navigation">
+            <button class="nav-button" type="button" data-view="cards" id="nav-cards"></button>
+            <button class="nav-button" type="button" data-view="relics" id="nav-relics"></button>
+            <button class="nav-button" type="button" data-view="builds" id="nav-builds"></button>
+          </nav>
+        </div>
+      </div>
       <div class="hero-controls">
-        <label class="control" for="sort-select">
-          <span id="sort-label">정렬</span>
-          <select id="sort-select">
-            <option value="latest">최신순</option>
-            <option value="popular">인기순</option>
-          </select>
-        </label>
-        <label class="control" for="theme-select">
-          <span id="theme-label">테마</span>
-          <select id="theme-select">
-            <option value="dark" id="theme-option-dark">Dark</option>
-            <option value="light" id="theme-option-light">Light</option>
-          </select>
-        </label>
-        <label class="control" for="language-select">
-          <span id="language-label">언어</span>
-          <select id="language-select">
-            <option value="en">English</option>
-            <option value="ko">한국어</option>
-            <option value="ja">日本語</option>
-            <option value="es">Español</option>
-          </select>
-        </label>
-
+        <div class="utility-controls">
+          <div class="theme-toggle" role="group" aria-labelledby="theme-toggle-label">
+            <span class="visually-hidden" id="theme-toggle-label">Theme</span>
+            <button class="icon-control theme-mode-button" id="theme-light-button" type="button" data-theme="light" aria-label="White mode">화이트모드</button>
+            <button class="icon-control theme-mode-button" id="theme-dark-button" type="button" data-theme="dark" aria-label="Dark mode">다크모드</button>
+          </div>
+          <div class="utility-menu">
+            <button class="icon-control" id="language-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="language-menu">🌐</button>
+            <div class="floating-menu" id="language-menu" hidden></div>
+          </div>
+        </div>
       </div>
     </header>
 
     <main class="layout">
       <aside class="sidebar panel">
         <div class="panel-head">
-          <p class="section-kicker" id="character-kicker"></p>
-          <h2 id="character-heading"></h2>
+          <div>
+            <p class="section-kicker" id="character-kicker"></p>
+            <h2 id="character-heading"></h2>
+          </div>
         </div>
         <div class="character-tabs" id="character-tabs" aria-label="Character selection"></div>
         <div class="character-summary" id="character-summary"></div>
       </aside>
 
       <section class="content">
-        <div class="panel build-panel">
-          <div class="panel-head build-head">
+        <section class="panel content-panel" id="cards-panel" data-panel="cards">
+          <div class="workspace-head">
+            <div>
+              <p class="section-kicker" id="library-kicker"></p>
+              <h2 id="library-heading"></h2>
+            </div>
+          </div>
+          <div class="filter-grid">
+            <label class="field-group field-group-wide" for="card-search-input">
+              <span class="field-label" id="field-search-label"></span>
+              <input id="card-search-input" class="text-input" type="search" maxlength="80">
+            </label>
+            <label class="field-group" for="type-filter-select">
+              <span class="field-label" id="field-type-label"></span>
+              <select id="type-filter-select" class="text-input"></select>
+            </label>
+            <label class="field-group" for="rarity-filter-select">
+              <span class="field-label" id="field-rarity-label"></span>
+              <select id="rarity-filter-select" class="text-input"></select>
+            </label>
+            <label class="field-group" for="cost-filter-select">
+              <span class="field-label" id="field-cost-label"></span>
+              <select id="cost-filter-select" class="text-input"></select>
+            </label>
+            <label class="field-group" for="library-sort-select">
+              <span class="field-label" id="field-library-sort-label"></span>
+              <select id="library-sort-select" class="text-input"></select>
+            </label>
+          </div>
+          <div class="library-list" id="library-list"></div>
+        </section>
+
+        <section class="panel content-panel" id="relics-panel" data-panel="relics" hidden>
+          <div class="workspace-head">
+            <div>
+              <p class="section-kicker" id="relics-kicker"></p>
+              <h2 id="relics-heading"></h2>
+            </div>
+          </div>
+          <div class="relics-grid" id="relics-grid"></div>
+        </section>
+
+        <section class="panel content-panel" id="builds-panel" data-panel="builds" hidden>
+          <div class="workspace-head">
             <div>
               <p class="section-kicker" id="buildlist-kicker"></p>
               <h2 id="buildlist-heading"></h2>
             </div>
-          </div>
-          <div class="build-list" id="build-list"></div>
-        </div>
-
-        <div class="panel workspace-panel">
-          <div class="workspace-head">
-            <div>
-              <p class="section-kicker" id="builder-kicker"></p>
-              <h2 id="builder-heading"></h2>
-            </div>
             <div class="workspace-actions">
               <div class="action-row">
-                <button class="action-button" id="new-build-button" type="button"></button>
-                <button class="action-button" id="duplicate-build-button" type="button"></button>
-                <button class="action-button action-button-primary" id="save-build-button" type="button"></button>
-                <button class="action-button action-button-danger" id="delete-build-button" type="button"></button>
+                <label class="control control-compact" for="sort-select">
+                  <span id="sort-label"></span>
+                  <select id="sort-select">
+                    <option value="latest">Latest</option>
+                    <option value="popular">Pinned</option>
+                  </select>
+                </label>
+                <button class="action-button action-button-primary" id="new-build-button" type="button"></button>
               </div>
               <p class="status-text" id="build-status" role="status" aria-live="polite"></p>
             </div>
           </div>
+          <div class="build-list" id="build-list"></div>
 
-          <div class="builder-grid">
-            <section class="detail-block editor-block">
-              <div class="panel-head">
-                <p class="section-kicker" id="editor-kicker"></p>
-                <h3 id="editor-heading"></h3>
+          <div class="panel builder-panel" id="builder-panel" hidden>
+            <div class="workspace-head">
+              <div>
+                <p class="section-kicker" id="builder-kicker"></p>
+                <h2 id="builder-heading"></h2>
               </div>
-
-              <div class="form-grid">
-                <label class="field-group field-group-wide" for="build-title-input">
-                  <span class="field-label" id="field-title-label"></span>
-                  <input id="build-title-input" class="text-input" type="text" maxlength="80">
-                </label>
-                <label class="field-group" for="build-author-input">
-                  <span class="field-label" id="field-author-label"></span>
-                  <input id="build-author-input" class="text-input" type="text" maxlength="40">
-                </label>
-                <label class="field-group" for="build-character-select">
-                  <span class="field-label" id="field-character-label"></span>
-                  <select id="build-character-select" class="text-input"></select>
-                </label>
-                <label class="field-group field-group-wide" for="build-summary-input">
-                  <span class="field-label" id="field-summary-label"></span>
-                  <textarea id="build-summary-input" class="text-area" rows="3" maxlength="220"></textarea>
-                </label>
-                <label class="field-group field-group-wide" for="build-notes-input">
-                  <span class="field-label" id="field-notes-label"></span>
-                  <textarea id="build-notes-input" class="text-area" rows="4" maxlength="420"></textarea>
-                </label>
-              </div>
-
-              <div class="selected-cards" id="selected-cards"></div>
-            </section>
-
-            <section class="detail-block library-block">
-              <div class="panel-head library-head">
-                <div>
-                  <p class="section-kicker" id="library-kicker"></p>
-                  <h3 id="library-heading"></h3>
+              <div class="workspace-actions">
+                <div class="action-row">
+                  <button class="action-button" id="duplicate-build-button" type="button"></button>
+                  <button class="action-button action-button-primary" id="save-build-button" type="button"></button>
+                  <button class="action-button action-button-danger" id="delete-build-button" type="button"></button>
                 </div>
               </div>
+            </div>
 
-              <div class="filter-grid">
-                <label class="field-group field-group-wide" for="card-search-input">
-                  <span class="field-label" id="field-search-label"></span>
-                  <input id="card-search-input" class="text-input" type="search" maxlength="80">
-                </label>
-                <label class="field-group" for="type-filter-select">
-                  <span class="field-label" id="field-type-label"></span>
-                  <select id="type-filter-select" class="text-input"></select>
-                </label>
-                <label class="field-group" for="rarity-filter-select">
-                  <span class="field-label" id="field-rarity-label"></span>
-                  <select id="rarity-filter-select" class="text-input"></select>
-                </label>
-                <label class="field-group" for="cost-filter-select">
-                  <span class="field-label" id="field-cost-label"></span>
-                  <select id="cost-filter-select" class="text-input"></select>
-                </label>
-                <label class="field-group" for="library-sort-select">
-                  <span class="field-label" id="field-library-sort-label"></span>
-                  <select id="library-sort-select" class="text-input"></select>
-                </label>
-              </div>
+            <div class="builder-grid">
+              <section class="detail-block editor-block">
+                <div class="panel-head">
+                  <div>
+                    <p class="section-kicker" id="editor-kicker"></p>
+                    <h3 id="editor-heading"></h3>
+                  </div>
+                </div>
 
-              <div class="library-list" id="library-list"></div>
-            </section>
+                <div class="form-grid">
+                  <label class="field-group field-group-wide" for="build-title-input">
+                    <span class="field-label" id="field-title-label"></span>
+                    <input id="build-title-input" class="text-input" type="text" maxlength="80">
+                  </label>
+                  <label class="field-group" for="build-author-input">
+                    <span class="field-label" id="field-author-label"></span>
+                    <input id="build-author-input" class="text-input" type="text" maxlength="40">
+                  </label>
+                  <label class="field-group" for="build-character-select">
+                    <span class="field-label" id="field-character-label"></span>
+                    <select id="build-character-select" class="text-input"></select>
+                  </label>
+                  <label class="field-group field-group-wide" for="build-summary-input">
+                    <span class="field-label" id="field-summary-label"></span>
+                    <textarea id="build-summary-input" class="text-area" rows="3" maxlength="220"></textarea>
+                  </label>
+                  <label class="field-group field-group-wide" for="build-notes-input">
+                    <span class="field-label" id="field-notes-label"></span>
+                    <textarea id="build-notes-input" class="text-area" rows="4" maxlength="420"></textarea>
+                  </label>
+                </div>
+
+                <div class="selected-cards" id="selected-cards"></div>
+              </section>
+
+              <section class="detail-block picker-block">
+                <div class="panel-head">
+                  <div>
+                    <p class="section-kicker" id="picker-kicker"></p>
+                    <h3 id="picker-heading"></h3>
+                  </div>
+                </div>
+                <p class="section-note" id="picker-note"></p>
+                <div class="editor-library-list" id="editor-library-list"></div>
+              </section>
+            </div>
           </div>
-        </div>
+        </section>
       </section>
     </main>
   </div>
 
   <script src="cards-data.js"></script>
+  <script src="ironclad-localization.js"></script>
+  <script src="silent-localization.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
