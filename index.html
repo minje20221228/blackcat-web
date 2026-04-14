@@ -6,7 +6,7 @@
   <title>Slay the Spire 2 Build Lab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Maru+Buri:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,6 +16,7 @@
         <p class="eyebrow">Slay the Spire 2</p>
         <div class="title-row">
           <h1 id="hero-title">Build Lab</h1>
+          <p class="hero-lead" id="hero-lead">카드, 유물, 빌드를 한 화면에서 빠르게 찾고 바로 조합할 수 있는 STS2 정리 사이트.</p>
           <nav class="view-nav" id="view-nav" aria-label="Primary navigation">
             <button class="nav-button" type="button" data-view="cards" id="nav-cards"></button>
             <button class="nav-button" type="button" data-view="relics" id="nav-relics"></button>
@@ -108,6 +109,7 @@
                     <option value="popular">Pinned</option>
                   </select>
                 </label>
+                <input id="build-search-input" class="text-input build-search-input" type="search" maxlength="80">
                 <button class="action-button action-button-primary" id="new-build-button" type="button"></button>
               </div>
               <p class="status-text" id="build-status" role="status" aria-live="polite"></p>
@@ -173,6 +175,28 @@
                   </div>
                 </div>
                 <p class="section-note" id="picker-note"></p>
+                <div class="filter-grid editor-filter-grid">
+                  <label class="field-group field-group-wide" for="editor-card-search-input">
+                    <span class="field-label" id="editor-field-search-label"></span>
+                    <input id="editor-card-search-input" class="text-input" type="search" maxlength="80">
+                  </label>
+                  <label class="field-group" for="editor-type-filter-select">
+                    <span class="field-label" id="editor-field-type-label"></span>
+                    <select id="editor-type-filter-select" class="text-input"></select>
+                  </label>
+                  <label class="field-group" for="editor-rarity-filter-select">
+                    <span class="field-label" id="editor-field-rarity-label"></span>
+                    <select id="editor-rarity-filter-select" class="text-input"></select>
+                  </label>
+                  <label class="field-group" for="editor-cost-filter-select">
+                    <span class="field-label" id="editor-field-cost-label"></span>
+                    <select id="editor-cost-filter-select" class="text-input"></select>
+                  </label>
+                  <label class="field-group" for="editor-library-sort-select">
+                    <span class="field-label" id="editor-field-library-sort-label"></span>
+                    <select id="editor-library-sort-select" class="text-input"></select>
+                  </label>
+                </div>
                 <div class="editor-library-list" id="editor-library-list"></div>
               </section>
             </div>
@@ -185,6 +209,10 @@
   <script src="cards-data.js"></script>
   <script src="ironclad-localization.js"></script>
   <script src="silent-localization.js"></script>
+  <script src="regent-localization.js"></script>
+  <script src="necrobinder-localization.js"></script>
+  <script src="defect-localization.js"></script>
+  <script src="relics-data.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
