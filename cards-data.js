@@ -2931,7 +2931,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/ball_lightning.png",
     "koName": "번개 구체",
     "koUpgradedName": "번개 구체+",
-    "koDescription": "피해 7을 줍니다. 번개 오브를 1번 채널링합니다.",
+    "koDescription": "피해 7을 줍니다. 번개 오브를 1번 영창합니다.",
     "koUpgradedDescription": "피해 10을 줍니다. 번개 1개를 영창합니다.",
     "opggId": "BallLightning",
     "opggDynamicVars": [
@@ -2966,8 +2966,8 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/barrage.png",
     "koName": "일제 사격",
     "koUpgradedName": "일제 사격+",
-    "koDescription": "채널링한 오브 1개당 피해 5를 줍니다.",
-    "koUpgradedDescription": "채널링한 오브 1개당 피해 7을 줍니다.",
+    "koDescription": "영창한 오브 1개당 피해 5를 줍니다.",
+    "koUpgradedDescription": "영창한 오브 1개당 피해 7을 줍니다.",
     "opggId": "Barrage",
     "opggDynamicVars": [
       {
@@ -3355,7 +3355,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/chill.png",
     "koName": "오한",
     "koUpgradedName": "오한+",
-    "koDescription": "적 하나당 냉기 오브를 1번 채널링합니다.",
+    "koDescription": "적 하나당 냉기 오브를 1번 영창합니다.",
     "koUpgradedDescription": "적 1체당 냉기 1개를 영창합니다.",
     "opggId": "Chill",
     "opggDynamicVars": [],
@@ -3425,7 +3425,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/cold_snap.png",
     "koName": "꽃샘추위",
     "koUpgradedName": "꽃샘추위+",
-    "koDescription": "피해 6을 줍니다. 냉기 오브를 1번 채널링합니다.",
+    "koDescription": "피해 6을 줍니다. 냉기 오브를 1번 영창합니다.",
     "koUpgradedDescription": "피해 9을 줍니다. 냉기 1개를 영창합니다.",
     "opggId": "ColdSnap",
     "opggDynamicVars": [
@@ -3495,8 +3495,8 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/compile_driver.png",
     "koName": "컴파일 드라이버",
     "koUpgradedName": "컴파일 드라이버+",
-    "koDescription": "피해 7을 줍니다. 채널링한 오브 종류마다 카드를 1장 뽑습니다.",
-    "koUpgradedDescription": "피해 10을 줍니다. 채널링한 오브 종류마다 카드를 1장 뽑습니다.",
+    "koDescription": "피해 7을 줍니다. 영창한 오브 종류마다 카드를 1장 뽑습니다.",
+    "koUpgradedDescription": "피해 10을 줍니다. 영창한 오브 종류마다 카드를 1장 뽑습니다.",
     "opggId": "CompileDriver",
     "opggDynamicVars": [
       {
@@ -3542,7 +3542,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/consuming_shadow.png",
     "koName": "그림자 소모",
     "koUpgradedName": "그림자 소모+",
-    "koDescription": "암흑 오브를 2번 채널링합니다. 내 턴 종료 시, 가장 왼쪽의 구체를 발현합니다.",
+    "koDescription": "암흑 오브를 2번 영창합니다. 내 턴 종료 시, 가장 왼쪽의 구체를 발현합니다.",
     "koUpgradedDescription": "어둠 3개를 영창합니다. 턴 종료 시 가장 왼쪽 구체를 발동합니다.",
     "opggId": "ConsumingShadow",
     "opggDynamicVars": [
@@ -3616,7 +3616,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/coolheaded.png",
     "koName": "냉정함",
     "koUpgradedName": "냉정함+",
-    "koDescription": "냉기 오브를 1번 채널링합니다. 카드를 1장 뽑습니다.",
+    "koDescription": "냉기 오브를 1번 영창합니다. 카드를 1장 뽑습니다.",
     "koUpgradedDescription": "냉기 1개를 영창합니다. 카드를 2장 뽑습니다.",
     "opggId": "Coolheaded",
     "opggDynamicVars": [
@@ -3683,7 +3683,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/darkness.png",
     "koName": "어둠",
     "koUpgradedName": "어둠+",
-    "koDescription": "암흑 오브를 1번 채널링합니다. 모든 암흑 구체의 지속 효과를 발동시킵니다.",
+    "koDescription": "암흑 오브를 1번 영창합니다. 모든 암흑 구체의 지속 효과를 발동시킵니다.",
     "koUpgradedDescription": "어둠 1개를 영창합니다. 모든 어둠 구체의 지속 효과를 두 번 발동합니다.",
     "opggId": "Darkness",
     "opggDynamicVars": [],
@@ -4110,7 +4110,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/fusion.png",
     "koName": "융합",
     "koUpgradedName": "융합+",
-    "koDescription": "플라즈마 오브를 1번 채널링합니다.",
+    "koDescription": "플라즈마 오브를 1번 영창합니다.",
     "koUpgradedDescription": "비용이 2에서 1로 감소합니다.",
     "opggId": "Fusion",
     "opggDynamicVars": [],
@@ -4179,7 +4179,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/glacier.png",
     "koName": "빙하",
     "koUpgradedName": "빙하+",
-    "koDescription": "방어도 6을 얻습니다. 냉기 오브를 2번 채널링합니다.",
+    "koDescription": "방어도 6을 얻습니다. 냉기 오브를 2번 영창합니다.",
     "koUpgradedDescription": "방어도 9를 얻습니다. 냉기 2개를 영창합니다.",
     "opggId": "Glacier",
     "opggDynamicVars": [
@@ -4214,7 +4214,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/glasswork.png",
     "koName": "유리 공예",
     "koUpgradedName": "유리 공예+",
-    "koDescription": "방어도 5를 얻습니다. 유리 오브를 1번 채널링합니다.",
+    "koDescription": "방어도 5를 얻습니다. 유리 오브를 1번 영창합니다.",
     "koUpgradedDescription": "방어도 8을 얻습니다. 유리 1개를 영창합니다.",
     "opggId": "Glasswork",
     "opggDynamicVars": [
@@ -4523,7 +4523,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/ice_lance.png",
     "koName": "얼음 창",
     "koUpgradedName": "얼음 창+",
-    "koDescription": "피해 19를 줍니다. 냉기 오브를 3번 채널링합니다.",
+    "koDescription": "피해 19를 줍니다. 냉기 오브를 3번 영창합니다.",
     "koUpgradedDescription": "피해 24을 줍니다. 냉기 3개를 영창합니다.",
     "opggId": "IceLance",
     "opggDynamicVars": [
@@ -4661,7 +4661,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/lightning_rod.png",
     "koName": "피뢰침",
     "koUpgradedName": "피뢰침+",
-    "koDescription": "방어도 4를 얻습니다. 다음, 번개 오브를 1번 채널링합니다.",
+    "koDescription": "방어도 4를 얻습니다. 다음, 번개 오브를 1번 영창합니다.",
     "koUpgradedDescription": "방어도 7을 얻습니다. 다음 2턴 시작 시 번개 1개를 영창합니다.",
     "opggId": "LightningRod",
     "opggDynamicVars": [
@@ -4770,7 +4770,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/meteor_strike.png",
     "koName": "유성 타격",
     "koUpgradedName": "유성 타격+",
-    "koDescription": "피해 24를 줍니다. 플라즈마 오브를 3번 채널링합니다.",
+    "koDescription": "피해 24를 줍니다. 플라즈마 오브를 3번 영창합니다.",
     "koUpgradedDescription": "피해 30을 줍니다. 플라즈마 3개를 영창합니다.",
     "opggId": "MeteorStrike",
     "opggDynamicVars": [
@@ -4905,8 +4905,8 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/null.png",
     "koName": "Null",
     "koUpgradedName": "Null+",
-    "koDescription": "피해 10을 줍니다. 약화 2를 부여합니다. 암흑 오브를 1번 채널링합니다.",
-    "koUpgradedDescription": "피해 13을 줍니다. 약화 3을 부여합니다. 암흑 오브를 1번 채널링합니다.",
+    "koDescription": "피해 10을 줍니다. 약화 2를 부여합니다. 암흑 오브를 1번 영창합니다.",
+    "koUpgradedDescription": "피해 13을 줍니다. 약화 3을 부여합니다. 암흑 오브를 1번 영창합니다.",
     "opggId": "Null",
     "opggDynamicVars": [
       {
@@ -5012,7 +5012,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/rainbow.png",
     "koName": "무지개",
     "koUpgradedName": "무지개+",
-    "koDescription": "번개 오브를 1번 채널링합니다. 냉기 오브를 1번 채널링합니다. 암흑 오브를 1번 채널링합니다.",
+    "koDescription": "번개 오브를 1번 영창합니다. 냉기 오브를 1번 영창합니다. 암흑 오브를 1번 영창합니다.",
     "koUpgradedDescription": "번개 1개를 영창합니다. 냉기 1개를 영창합니다. 어둠 1개를 영창합니다.",
     "opggId": "Rainbow",
     "opggDynamicVars": [],
@@ -5077,7 +5077,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/refract.png",
     "koName": "굴절",
     "koUpgradedName": "굴절+",
-    "koDescription": "피해 9만큼 2번 줍니다. 유리 오브를 2번 채널링합니다.",
+    "koDescription": "피해 9만큼 2번 줍니다. 유리 오브를 2번 영창합니다.",
     "koUpgradedDescription": "피해 12를 두 번 줍니다. 유리 2개를 영창합니다.",
     "opggId": "Refract",
     "opggDynamicVars": [
@@ -5232,7 +5232,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/shadow_shield.png",
     "koName": "그림자 방패",
     "koUpgradedName": "그림자 방패+",
-    "koDescription": "방어도 11을 얻습니다. 암흑 오브를 1번 채널링합니다.",
+    "koDescription": "방어도 11을 얻습니다. 암흑 오브를 1번 영창합니다.",
     "koUpgradedDescription": "방어도 15를 얻습니다. 어둠 1개를 영창합니다.",
     "opggId": "ShadowShield",
     "opggDynamicVars": [
@@ -5406,7 +5406,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/spinner.png",
     "koName": "스피너",
     "koUpgradedName": "스피너+",
-    "koDescription": "내 턴 시작 시, 유리 오브를 1번 채널링합니다.",
+    "koDescription": "내 턴 시작 시, 유리 오브를 1번 영창합니다.",
     "koUpgradedDescription": "유리 1개를 영창합니다. 내 턴 시작 시 유리 1개를 영창합니다.",
     "opggId": "Spinner",
     "opggDynamicVars": [
@@ -5439,7 +5439,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/storm.png",
     "koName": "폭풍",
     "koUpgradedName": "폭풍+",
-    "koDescription": "파워 카드를 사용할 때마다, 번개 오브를 1번 채널링합니다.",
+    "koDescription": "파워 카드를 사용할 때마다, 번개 오브를 1번 영창합니다.",
     "koUpgradedDescription": "파워를 플레이할 때마다 번개 2개를 영창합니다.",
     "opggId": "Storm",
     "opggDynamicVars": [
@@ -5650,8 +5650,8 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/synchronize.png",
     "koName": "동기화",
     "koUpgradedName": "동기화+",
-    "koDescription": "채널링한 오브 종류마다 이번 턴 동안 집중 2를 얻습니다.",
-    "koUpgradedDescription": "채널링한 오브 종류마다 이번 턴 동안 집중 2를 얻습니다.",
+    "koDescription": "영창한 오브 종류마다 이번 턴 동안 집중 2를 얻습니다.",
+    "koUpgradedDescription": "영창한 오브 종류마다 이번 턴 동안 집중 2를 얻습니다.",
     "opggId": "Synchronize",
     "opggDynamicVars": [
       {
@@ -5924,8 +5924,8 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/voltaic.png",
     "koName": "동전기",
     "koUpgradedName": "동전기+",
-    "koDescription": "이번 전투 동안 채널링한 번개 오브 수만큼 번개 오브를 채널링합니다.",
-    "koUpgradedDescription": "이번 전투 동안 채널링한 번개 오브 수만큼 번개 오브를 채널링합니다.",
+    "koDescription": "이번 전투 동안 영창한 번개 오브 수만큼 번개 오브를 영창합니다.",
+    "koUpgradedDescription": "이번 전투 동안 영창한 번개 오브 수만큼 번개 오브를 영창합니다.",
     "opggId": "Voltaic",
     "opggDynamicVars": [
       {
@@ -5995,7 +5995,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/zap.png",
     "koName": "파지직",
     "koUpgradedName": "파지직+",
-    "koDescription": "번개 오브를 1번 채널링합니다.",
+    "koDescription": "번개 오브를 1번 영창합니다.",
     "koUpgradedDescription": "비용이 1에서 0으로 감소합니다.",
     "opggId": "Zap",
     "opggDynamicVars": [],

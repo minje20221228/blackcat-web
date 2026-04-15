@@ -1,37 +1,37 @@
 :root {
-  --bg-accent: radial-gradient(circle at top left, rgba(214, 121, 67, 0.18), transparent 28%),
-    radial-gradient(circle at 80% 0%, rgba(246, 222, 181, 0.42), transparent 26%),
-    linear-gradient(180deg, #f7efe2 0%, #efe2ce 48%, #e5d4bb 100%);
-  --panel: rgba(255, 251, 245, 0.88);
-  --panel-strong: rgba(255, 248, 240, 0.96);
-  --surface: rgba(109, 72, 41, 0.06);
-  --surface-strong: rgba(109, 72, 41, 0.12);
-  --line: rgba(101, 66, 37, 0.12);
-  --text: #342114;
-  --muted: #725644;
-  --text-strong: #20120a;
-  --accent: #b65f33;
-  --accent-strong: #8a4422;
-  --danger: #a54942;
-  --shadow: 0 24px 60px rgba(94, 62, 37, 0.12);
+  --bg-accent: radial-gradient(circle at top left, rgba(135, 154, 176, 0.16), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(182, 164, 120, 0.12), transparent 24%),
+    linear-gradient(180deg, #171a1f 0%, #12161b 44%, #0e1216 100%);
+  --panel: rgba(26, 31, 38, 0.9);
+  --panel-strong: rgba(30, 35, 42, 0.96);
+  --surface: rgba(202, 214, 230, 0.06);
+  --surface-strong: rgba(202, 214, 230, 0.12);
+  --line: rgba(182, 195, 210, 0.14);
+  --text: #d7dee7;
+  --muted: #9eaab7;
+  --text-strong: #f3f6fa;
+  --accent: #c89b6d;
+  --accent-strong: #e1b88b;
+  --danger: #d98882;
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
 }
 
 :root[data-theme='light'] {
-  --bg-accent: radial-gradient(circle at top left, rgba(214, 121, 67, 0.18), transparent 28%),
-    radial-gradient(circle at 80% 0%, rgba(246, 222, 181, 0.42), transparent 26%),
-    linear-gradient(180deg, #f7efe2 0%, #efe2ce 48%, #e5d4bb 100%);
-  --panel: rgba(255, 251, 245, 0.88);
-  --panel-strong: rgba(255, 248, 240, 0.96);
-  --surface: rgba(109, 72, 41, 0.06);
-  --surface-strong: rgba(109, 72, 41, 0.12);
-  --line: rgba(101, 66, 37, 0.12);
+  --bg-accent: radial-gradient(circle at top left, rgba(214, 121, 67, 0.14), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgba(246, 222, 181, 0.26), transparent 24%),
+    linear-gradient(180deg, #f3ede2 0%, #ece3d4 48%, #e3d6c3 100%);
+  --panel: rgba(250, 247, 241, 0.88);
+  --panel-strong: rgba(252, 248, 242, 0.95);
+  --surface: rgba(109, 72, 41, 0.05);
+  --surface-strong: rgba(109, 72, 41, 0.1);
+  --line: rgba(101, 66, 37, 0.11);
   --text: #342114;
-  --muted: #725644;
+  --muted: #6f5a4a;
   --text-strong: #20120a;
-  --accent: #b65f33;
-  --accent-strong: #8a4422;
-  --danger: #a54942;
-  --shadow: 0 24px 60px rgba(94, 62, 37, 0.12);
+  --accent: #b67a52;
+  --accent-strong: #8f5d3d;
+  --danger: #9e4d46;
+  --shadow: 0 20px 52px rgba(94, 62, 37, 0.1);
 }
 * {
   box-sizing: border-box;
@@ -113,7 +113,7 @@ img {
   gap: 18px;
   padding: 22px;
   margin-bottom: 16px;
-  background: linear-gradient(135deg, rgba(214, 121, 67, 0.12), rgba(255, 248, 239, 0.86) 45%, rgba(249, 240, 226, 0.94)), var(--panel-strong);
+  background: linear-gradient(135deg, rgba(200, 155, 109, 0.12), rgba(255, 255, 255, 0.02) 45%, rgba(255, 255, 255, 0.01)), var(--panel-strong);
 }
 
 
@@ -130,13 +130,7 @@ img {
   width: 100%;
 }
 
-.hero-lead {
-  margin: 0;
-  max-width: 720px;
-  font-size: 1.02rem;
-  line-height: 1.75;
-  color: var(--muted);
-}
+
 
 
 .eyebrow,
@@ -245,10 +239,6 @@ h3 {
   border-color: rgba(223, 119, 73, 0.45);
 }
 
-.theme-toggle {
-  display: none;
-}
-
 .icon-control {
   width: 54px;
   height: 54px;
@@ -261,30 +251,23 @@ h3 {
   font-size: 1.2rem;
 }
 
-.theme-toggle .icon-control {
-  position: absolute;
-  top: 0;
-}
-
-.theme-mode-button {
-  width: 128px;
-  font-size: 0.84rem;
+.theme-toggle-button {
+  width: 54px;
+  min-width: 54px;
+  padding: 0;
+  font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-#theme-light-button {
-  left: 0;
-  z-index: 1;
-}
-
-#theme-dark-button {
-  left: 82px;
-  z-index: 2;
+  letter-spacing: 0;
 }
 
 .utility-menu {
   position: relative;
+}
+
+.utility-menu-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .floating-menu {
@@ -544,13 +527,14 @@ h3 {
 }
 
 .action-button-danger {
-  background: rgba(184, 93, 86, 0.16);
-  color: #ffd6d1;
-  border-color: rgba(184, 93, 86, 0.35);
+  background: rgba(184, 93, 86, 0.18);
+  color: #ffeae7;
+  border-color: rgba(217, 136, 130, 0.34);
 }
 
 :root[data-theme='light'] .action-button-danger {
-  color: #7b251c;
+  color: #6f241d;
+  background: rgba(184, 93, 86, 0.14);
 }
 
 .action-button:disabled {
@@ -735,6 +719,10 @@ h3 {
     width: 100%;
     justify-content: flex-start;
     justify-items: start;
+  }
+
+  .utility-menu-row {
+    flex-wrap: wrap;
   }
 
   .control,

@@ -6,7 +6,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/cracked_core.png",
     "description": {
       "en": "At the start of each combat, Channel 1 Lightning.",
-      "ko": "매 전투 시작 시 번개 오브를 1번 채널링합니다."
+      "ko": "매 전투 시작 시 번개 오브를 1번 영창합니다."
     },
     "koName": "부서진 핵"
   },
@@ -50,7 +50,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/metronome.png",
     "description": {
       "en": "The first time you Channel 7 Orbs each combat, deal 30 damage to ALL enemies.",
-      "ko": "매 전투마다 처음으로 구체를 번 영창 시, 모든 적에게 피해를 줍니다."
+      "ko": "매 전투마다 처음으로 구체를 7번 영창 시, 모든 적에게 피해를 30 줍니다."
     },
     "koName": "메트로놈"
   },
@@ -83,7 +83,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/symbiotic_virus.png",
     "description": {
       "en": "At the start of each combat, Channel 1 Dark.",
-      "ko": "매 전투 시작 시 암흑 오브를 1번 채널링합니다."
+      "ko": "매 전투 시작 시 암흑 오브를 1번 영창합니다."
     },
     "koName": "공생 바이러스"
   },
@@ -94,7 +94,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/alchemical_coffer.png",
     "description": {
       "en": "Upon pickup, gain 4 potion slots filled with random potions.",
-      "ko": "획득 시, 무작위 포션들로 채워진 포션 슬롯을 개 얻습니다."
+      "ko": "획득 시, 무작위 포션들로 채워진 포션 슬롯을 4개 얻습니다."
     },
     "koName": "연금술 궤짝"
   },
@@ -127,7 +127,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/astrolabe.png",
     "description": {
       "en": "Upon pickup, Transform 3 cards, then Upgrade them.",
-      "ko": "획득 시, 카드를 장 선택해 변화시키고 강화합니다."
+      "ko": "획득 시, 카드를 3장 선택해 변화시키고 강화합니다."
     },
     "koName": "아스트롤라베"
   },
@@ -138,7 +138,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/beautiful_bracelet.png",
     "description": {
       "en": "Upon pickup, choose 3 cards in your Deck. Enchant them with Swift 3.",
-      "ko": "획득 시, 덱에서 카드를 장 선택합니다. 그 카드에 신속을 3 인챈트합니다."
+      "ko": "획득 시, 덱에서 카드를 3장 선택합니다. 그 카드에 신속을 3 인챈트합니다."
     },
     "koName": "아름다운 팔찌"
   },
@@ -149,7 +149,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/big_mushroom.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 20. At the start of each combat, draw 2 fewer cards.",
-      "ko": "획득 시, 최대 체력이 % 증가합니다. 매 전투 시작 시 카드를 장 덜 뽑습니다."
+      "ko": "획득 시, 최대 체력이 20% 증가합니다. 매 전투 시작 시 카드를 2장 덜 뽑습니다."
     },
     "koName": "커다란 버섯"
   },
@@ -160,7 +160,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/biiig_hug.png",
     "description": {
       "en": "Upon pickup, remove 4 cards from your Deck. Whenever you shuffle your Draw Pile, add a Soot into your Draw Pile.",
-      "ko": "획득 시, 덱에서 카드를 장 제거합니다. 뽑을 카드 더미를 섞을 때마다, 뽑을 카드 더미에 그을음을 1장 추가합니다."
+      "ko": "획득 시, 덱에서 카드를 4장 제거합니다. 뽑을 카드 더미를 섞을 때마다, 뽑을 카드 더미에 그을음을 1장 추가합니다."
     },
     "koName": "찌이인한 포옹"
   },
@@ -182,7 +182,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/black_blood.png",
     "description": {
       "en": "At the end of combat, heal 12 HP.",
-      "ko": "매 전투 종료 시, 체력을 회복합니다."
+      "ko": "매 전투 종료 시, 체력을 12 회복합니다."
     },
     "koName": "어두운 피"
   },
@@ -237,7 +237,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/booming_conch.png",
     "description": {
       "en": "At the start of Elite combats, draw 2 additional cards.",
-      "ko": "엘리트 전투 시작 시, 카드를 추가로 장 뽑습니다."
+      "ko": "엘리트 전투 시작 시, 카드를 추가로 2장 뽑습니다."
     },
     "koName": "콰광 소라"
   },
@@ -248,7 +248,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/brilliant_scarf.png",
     "description": {
       "en": "The 5th card you play each turn is free.",
-      "ko": "매 턴마다 다섯 번째로 내는 카드를 비용 없이 사용합니다."
+      "ko": "매 5턴마다 다섯 번째로 내는 카드를 비용 없이 사용합니다."
     },
     "koName": "멋진 스카프"
   },
@@ -281,7 +281,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/choices_paradox.png",
     "description": {
       "en": "At the start of each combat, add 1 of 5 random cards into your Hand. Add Retain to the chosen card.",
-      "ko": "매 전투 시작 시, 무작위 카드 장 중 1장을 손으로 가져옵니다. 선택한 카드에 보존을 추가합니다."
+      "ko": "매 전투 시작 시, 무작위 카드 5장 중 1장을 손으로 가져옵니다. 선택한 카드에 보존을 추가합니다."
     },
     "koName": "선택의 역설"
   },
@@ -303,7 +303,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/claws.png",
     "description": {
       "en": "Upon pickup, Transform up to 6 cards into Maul.",
-      "ko": "획득 시, 최대 장의 카드를 할퀴기로 변화시킵니다."
+      "ko": "획득 시, 최대 6장의 카드를 할퀴기로 변화시킵니다."
     },
     "koName": "클로"
   },
@@ -347,7 +347,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/daughter_of_the_wind.png",
     "description": {
       "en": "Whenever you play an Attack, gain 1 Block.",
-      "ko": "공격 카드를 사용할 때마다, 방어도를 얻습니다."
+      "ko": "공격 카드를 사용할 때마다, 방어도를 1 얻습니다."
     },
     "koName": "바람의 딸"
   },
@@ -380,7 +380,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/distinguished_cape.png",
     "description": {
       "en": "Upon pickup, lose 9 Max HP. Add 3 Apparitions to your Deck.",
-      "ko": "획득 시, 최대 체력을 9 잃습니다. 덱에 영체화를 장 추가합니다."
+      "ko": "획득 시, 최대 체력을 9 잃습니다. 덱에 영체화를 3장 추가합니다."
     },
     "koName": "기품 있는 망토"
   },
@@ -468,7 +468,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/empty_cage.png",
     "description": {
       "en": "Upon pickup, remove 2 cards from your Deck.",
-      "ko": "획득 시, 덱에서 카드를 장 제거합니다."
+      "ko": "획득 시, 덱에서 카드를 2장 제거합니다."
     },
     "koName": "빈 새장"
   },
@@ -479,7 +479,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fake_anchor.png",
     "description": {
       "en": "Start each combat with 4 Block.",
-      "ko": "매 전투 시작 시 방어도를 얻습니다."
+      "ko": "매 전투 시작 시 방어도를 4 얻습니다."
     },
     "koName": "닻?"
   },
@@ -490,7 +490,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fake_blood_vial.png",
     "description": {
       "en": "At the start of each combat, heal 1 HP.",
-      "ko": "매 전투 시작 시, 체력을 회복합니다."
+      "ko": "매 전투 시작 시, 체력을 1 회복합니다."
     },
     "koName": "피가 담?긴 병"
   },
@@ -501,7 +501,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fake_happy_flower.png",
     "description": {
       "en": "Every 5 turns, gain Colorless Energy .",
-      "ko": "턴마다, 에너지 1를 얻습니다."
+      "ko": "5턴마다, 에너지 1를 얻습니다."
     },
     "koName": "행?복한 꽃"
   },
@@ -512,7 +512,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fake_lees_waffle.png",
     "description": {
       "en": "Upon pickup, heal 10% of your HP.",
-      "ko": "획득 시, 체력을 % 회복합니다."
+      "ko": "획득 시, 체력을 10% 회복합니다."
     },
     "koName": "리의 와?플"
   },
@@ -523,7 +523,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fake_mango.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 3.",
-      "ko": "획득 시, 최대 체력이 상승합니다."
+      "ko": "획득 시, 최대 체력이 3 상승합니다."
     },
     "koName": "망?고"
   },
@@ -545,7 +545,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fake_orichalcum.png",
     "description": {
       "en": "If you end your turn without Block, gain 3 Block.",
-      "ko": "내 턴 종료 시 방어도가 없다면, 방어도를 획득합니다."
+      "ko": "내 턴 종료 시 방어도가 없다면, 방어도를 3 획득합니다."
     },
     "koName": "오리하르?콘"
   },
@@ -567,7 +567,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fake_strike_dummy.png",
     "description": {
       "en": "Cards containing “Strike” deal 1 additional damage.",
-      "ko": "이름에 “타격”이 포함된 카드의 피해량이 증가합니다."
+      "ko": "이름에 “타격”이 포함된 카드의 피해량이 1 증가합니다."
     },
     "koName": "타격용 인?형"
   },
@@ -589,7 +589,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fiddle.png",
     "description": {
       "en": "At the start of each turn, draw 2 additional cards. You may not draw cards during your turn.",
-      "ko": "매 턴 시작 시, 카드를 추가로 장 뽑습니다. 내 턴 동안 카드를 뽑을 수 없습니다."
+      "ko": "매 턴 시작 시, 카드를 추가로 2장 뽑습니다. 내 턴 동안 카드를 뽑을 수 없습니다."
     },
     "koName": "바이올린"
   },
@@ -600,7 +600,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/forgotten_soul.png",
     "description": {
       "en": "Whenever you Exhaust a card, deal 1 damage to a random enemy.",
-      "ko": "카드를 소멸시킬 때마다, 무작위 적에게 피해를 줍니다."
+      "ko": "카드를 소멸시킬 때마다, 무작위 적에게 피해를 1 줍니다."
     },
     "koName": "잊힌 영혼"
   },
@@ -611,7 +611,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fragrant_mushroom.png",
     "description": {
       "en": "Upon pickup, lose 15 HP and Upgrade 3 random cards.",
-      "ko": "획득 시, 최대 체력을 % 잃고 무작위 카드를 장 강화합니다."
+      "ko": "획득 시, 최대 체력을 15HP 잃고 무작위 카드를 3장 강화합니다."
     },
     "koName": "향기로운 버섯"
   },
@@ -622,7 +622,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fur_coat.png",
     "description": {
       "en": "Upon pickup, mark 7 random combats. Enemies in those rooms have 1 HP.",
-      "ko": "획득 시, 번의 무작위 전투에 표식을 남깁니다. 해당 방의 적은 체력이 1이 됩니다."
+      "ko": "획득 시, 7번의 무작위 전투에 표식을 남깁니다. 해당 방의 적은 체력이 1이 됩니다."
     },
     "koName": "모피 코트"
   },
@@ -677,7 +677,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/hand_drill.png",
     "description": {
       "en": "Whenever you break an enemy's Block, apply 2 Vulnerable.",
-      "ko": "적의 방어도를 파괴할 때마다, 취약을 부여합니다."
+      "ko": "적의 방어도를 파괴할 때마다, 취약을 2 부여합니다."
     },
     "koName": "핸드 드릴"
   },
@@ -699,7 +699,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/infused_core.png",
     "description": {
       "en": "At the start of each combat, Channel 3 Lightning.",
-      "ko": "매 전투 시작 시, 전기를 번 영창합니다."
+      "ko": "매 전투 시작 시, 전기를 3번 영창합니다."
     },
     "koName": "주입된 핵"
   },
@@ -710,7 +710,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/iron_club.png",
     "description": {
       "en": "Every 4 cards you play, draw 1 card.",
-      "ko": "카드를 장 사용할 때마다, 카드를 1장 뽑습니다."
+      "ko": "카드를 4장 사용할 때마다, 카드를 1장 뽑습니다."
     },
     "koName": "쇠몽둥이"
   },
@@ -787,7 +787,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/leafy_poultice.png",
     "description": {
       "en": "Upon pickup, Transform 1 of your Strikes and 1 of your Defends and lose 10 Max HP.",
-      "ko": "획득 시, 타격 1장과 수비 1장을 변화시킵니다. 최대 체력을 잃습니다."
+      "ko": "획득 시, 타격 1장과 수비 1장을 변화시킵니다. 최대 체력을 10 잃습니다."
     },
     "koName": "나뭇잎 습포"
   },
@@ -820,7 +820,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/lost_wisp.png",
     "description": {
       "en": "Whenever you play a Power, deal 8 damage to ALL enemies.",
-      "ko": "파워 카드를 사용할 때마다, 모든 적에게 피해를 줍니다."
+      "ko": "파워 카드를 사용할 때마다, 모든 적에게 8 피해를 줍니다."
     },
     "koName": "길 잃은 위습"
   },
@@ -842,7 +842,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/maw_bank.png",
     "description": {
       "en": "Whenever you climb a floor, gain 12 Gold. No longer works when you spend any Gold at the shop.",
-      "ko": "첨탑을 한 층 오를 때마다 골드를 얻습니다. 상점에서 골드를 사용 시 더 이상 발동하지 않습니다."
+      "ko": "첨탑을 한 층 오를 때마다 골드를 12 얻습니다. 상점에서 골드를 사용 시 더 이상 발동하지 않습니다."
     },
     "koName": "아귀 저금통"
   },
@@ -897,7 +897,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/new_leaf.png",
     "description": {
       "en": "Upon pickup, Transform 1 card.",
-      "ko": "획득 시, 카드를 장 변화시킵니다."
+      "ko": "획득 시, 카드를 1장 변화시킵니다."
     },
     "koName": "새로운 잎"
   },
@@ -908,7 +908,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/nutritious_oyster.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 11.",
-      "ko": "획득 시, 최대 체력이 증가합니다."
+      "ko": "획득 시, 최대 체력이 11 증가합니다."
     },
     "koName": "영양만점 굴"
   },
@@ -930,7 +930,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/paels_blood.png",
     "description": {
       "en": "At the start of your turn, draw 1 additional card.",
-      "ko": "매 턴 시작 시, 카드를 추가로 장 뽑습니다."
+      "ko": "매 턴 시작 시, 카드를 추가로 1장 뽑습니다."
     },
     "koName": "파엘의 혈액"
   },
@@ -974,7 +974,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/paels_growth.png",
     "description": {
       "en": "Upon pickup, Enchant a card with Clone.",
-      "ko": "획득 시, 카드 1장에 를 인챈트합니다."
+      "ko": "획득 시, 카드 1장에 복사를 인챈트합니다."
     },
     "koName": "파엘의 종양"
   },
@@ -1051,7 +1051,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/philosophers_stone.png",
     "description": {
       "en": "Gain Colorless Energy at the start of each turn. ALL enemies start combat with 1 Strength.",
-      "ko": "매 턴 시작 시 에너지 1를 얻습니다. 전투 시작 시 모든 적이 힘을 얻습니다."
+      "ko": "매 턴 시작 시 에너지 1를 얻습니다. 전투 시작 시 모든 적이 힘을 1 얻습니다."
     },
     "koName": "현자의 돌"
   },
@@ -1062,7 +1062,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/phylactery_unbound.png",
     "description": {
       "en": "At the start of each combat, Summon 5. At the start of your turn, Summon 2.",
-      "ko": "매 전투 시작 시, 소환. 내 턴 시작 시, 소환."
+      "ko": "매 전투 시작 시, 소환 5. 내 턴 시작 시, 소환 2."
     },
     "koName": "해방된 성물함"
   },
@@ -1073,7 +1073,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/pollinous_core.png",
     "description": {
       "en": "Every 4 turns, draw 2 additional cards.",
-      "ko": "턴마다, 카드를 추가로 장 뽑습니다."
+      "ko": "4턴마다, 카드를 추가로 2장 뽑습니다."
     },
     "koName": "꽃가루 핵"
   },
@@ -1095,7 +1095,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/precarious_shears.png",
     "description": {
       "en": "Upon pickup, remove 2 cards from your Deck and take 13 damage.",
-      "ko": "획득 시, 덱에서 카드를 장 제거하고 피해를 받습니다."
+      "ko": "획득 시, 덱에서 카드를 2장 제거하고 피해를 13 받습니다."
     },
     "koName": "불안정한 가위"
   },
@@ -1106,7 +1106,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/precise_scissors.png",
     "description": {
       "en": "Upon pickup, remove 1 card from your Deck.",
-      "ko": "획득 시, 덱에서 카드를 장 제거합니다."
+      "ko": "획득 시, 덱에서 카드를 1장 제거합니다."
     },
     "koName": "정밀한 가위"
   },
@@ -1117,7 +1117,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/preserved_fog.png",
     "description": {
       "en": "Upon pickup, remove 5 cards from your Deck. Add Folly to your Deck.",
-      "ko": "획득 시, 덱에서 카드를 장 제거합니다. 덱에 어리석음을 추가합니다."
+      "ko": "획득 시, 덱에서 카드를 5장 제거합니다. 덱에 어리석음을 추가합니다."
     },
     "koName": "보존된 안개"
   },
@@ -1150,7 +1150,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/radiant_pearl.png",
     "description": {
       "en": "At the start of each combat, add 1 Luminesce into your Hand.",
-      "ko": "매 전투 시작 시, 발광을 장 손으로 가져옵니다."
+      "ko": "매 전투 시작 시, 발광을 1장 손으로 가져옵니다."
     },
     "koName": "빛나는 진주"
   },
@@ -1183,7 +1183,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/royal_poison.png",
     "description": {
       "en": "At the start of each combat, lose 4 HP.",
-      "ko": "매 전투 시작 시, 체력을 잃습니다."
+      "ko": "매 전투 시작 시, 체력을 4 잃습니다."
     },
     "koName": "왕실의 독"
   },
@@ -1205,7 +1205,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sai.png",
     "description": {
       "en": "At the start of your turn, gain 7 Block.",
-      "ko": "내 턴 시작 시, 방어도를 얻습니다."
+      "ko": "내 턴 시작 시, 방어도를 7 얻습니다."
     },
     "koName": "사이"
   },
@@ -1216,7 +1216,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sand_castle.png",
     "description": {
       "en": "Upon pickup, Upgrade 6 random cards.",
-      "ko": "획득 시, 무작위 카드를 장 강화합니다."
+      "ko": "획득 시, 무작위 카드를 6장 강화합니다."
     },
     "koName": "모래성"
   },
@@ -1249,7 +1249,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/seal_of_gold.png",
     "description": {
       "en": "At the start of your turn, spend 5 Gold to gain Colorless Energy .",
-      "ko": "내 턴 시작 시, 골드를 소모해 에너지 1를 얻습니다."
+      "ko": "내 턴 시작 시, 골드를 5 소모해 에너지 1를 얻습니다."
     },
     "koName": "황금 인장"
   },
@@ -1260,7 +1260,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sere_talon.png",
     "description": {
       "en": "Upon pickup, add 2 random Curses and 3 Wishes to your Deck.",
-      "ko": "획득 시, 덱에 무작위 저주를 장, 염원을 장 추가합니다."
+      "ko": "획득 시, 덱에 무작위 저주를 2장, 염원을 3장 추가합니다."
     },
     "koName": "말라비틀어진 발톱"
   },
@@ -1271,7 +1271,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/signet_ring.png",
     "description": {
       "en": "Upon pickup, gain 999 Gold.",
-      "ko": "획득 시, 골드를 얻습니다."
+      "ko": "획득 시, 골드를 999 얻습니다."
     },
     "koName": "인장 반지"
   },
@@ -1282,7 +1282,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/silver_crucible.png",
     "description": {
       "en": "The first 3 card rewards you see are Upgraded. The first Treasure Chest you open is empty.",
-      "ko": "처음 번의 카드 보상이 강화된 상태로 등장합니다. 처음으로 여는 보물 상자가 비어 있습니다."
+      "ko": "처음 3번의 카드 보상이 강화된 상태로 등장합니다. 처음으로 여는 보물 상자가 비어 있습니다."
     },
     "koName": "은 도가니"
   },
@@ -1304,7 +1304,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/snecko_eye.png",
     "description": {
       "en": "At the start of your turn, draw 2 additional cards. Start each combat Confused.",
-      "ko": "내 턴 시작 시, 카드를 추가로 장 뽑습니다. 매 전투 시작 시 혼란이 부여됩니다."
+      "ko": "내 턴 시작 시, 카드를 추가로 2장 뽑습니다. 매 전투 시작 시 혼란이 부여됩니다."
     },
     "koName": "스네코의 눈"
   },
@@ -1326,7 +1326,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sparkling_rouge.png",
     "description": {
       "en": "At the start of your 3rd turn, gain 1 Strength and 1 Dexterity.",
-      "ko": "세 번째 턴 시작 시, 힘을 , 민첩을 얻습니다."
+      "ko": "세 번째 턴 시작 시, 힘을 1, 민첩을 1 얻습니다."
     },
     "koName": "반짝이는 립스틱"
   },
@@ -1348,7 +1348,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/stone_humidifier.png",
     "description": {
       "en": "Whenever you Rest at a Rest Site, raise your Max HP by 5.",
-      "ko": "휴식 장소에서 휴식을 취할 때마다, 최대 체력이 증가합니다."
+      "ko": "휴식 장소에서 휴식을 취할 때마다, 최대 체력이 5 증가합니다."
     },
     "koName": "석재 가습기"
   },
@@ -1370,7 +1370,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sword_of_jade.png",
     "description": {
       "en": "Start each combat with 3 Strength.",
-      "ko": "매 전투 시작 시, 힘을 얻습니다."
+      "ko": "매 전투 시작 시, 힘을 3 얻습니다."
     },
     "koName": "비취 검"
   },
@@ -1381,7 +1381,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sword_of_stone.png",
     "description": {
       "en": "Transforms into a powerful Relic after defeating 5 Elites.",
-      "ko": "엘리트를 번 처치한 후에 강력한 유물로 변화합니다."
+      "ko": "엘리트를 5번 처치한 후에 강력한 유물로 변화합니다."
     },
     "koName": "돌 검"
   },
@@ -1403,7 +1403,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/tea_of_discourtesy.png",
     "description": {
       "en": "At the start of the next combat, shuffle 2 Dazed into your Draw Pile.",
-      "ko": "다음 전투 시작 시, 뽑을 카드 더미에 어지러움을 장 섞어 넣습니다."
+      "ko": "다음 전투 시작 시, 뽑을 카드 더미에 어지러움을 2장 섞어 넣습니다."
     },
     "koName": "무례함의 차"
   },
@@ -1414,7 +1414,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/the_boot.png",
     "description": {
       "en": "Whenever you would deal 4 or less unblocked attack damage, increase it to 5.",
-      "ko": "이하의 막히지 않은 공격 피해를 줄 때마다, 그 공격의 피해량이 로 상승합니다."
+      "ko": "이하의 막히지 않은 공격 피해를 4 줄 때마다, 그 공격의 피해량이 5로 상승합니다."
     },
     "koName": "장화"
   },
@@ -1458,7 +1458,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/toy_box.png",
     "description": {
       "en": "Upon pickup, obtain 4 Wax Relics. Every 3 combats, your left-most Wax Relic will melt away.",
-      "ko": "획득 시, 밀랍 유물을 개 얻습니다. 번의 전투마다 가장 왼쪽에 있는 밀랍 유물이 녹아서 사라집니다."
+      "ko": "획득 시, 밀랍 유물을 4개 얻습니다. 3번의 전투마다 가장 왼쪽에 있는 밀랍 유물이 녹아서 사라집니다."
     },
     "koName": "장난감 상자"
   },
@@ -1469,7 +1469,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/tri_boomerang.png",
     "description": {
       "en": "Choose 3 Attacks in your Deck. Enchant them with Instinct.",
-      "ko": "덱의 공격 카드를 장 선택합니다. 선택한 카드에 본능을 인챈트합니다."
+      "ko": "덱의 공격 카드를 3장 선택합니다. 선택한 카드에 본능을 인챈트합니다."
     },
     "koName": "삼단 부메랑"
   },
@@ -1480,7 +1480,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/velvet_choker.png",
     "description": {
       "en": "Gain Colorless Energy at the start of each turn. You cannot play more than 6 cards per turn.",
-      "ko": "매 턴 시작 시, 에너지 1를 얻습니다. 한 턴에 카드를 장까지만 사용할 수 있습니다."
+      "ko": "매 턴 시작 시, 에너지 1를 얻습니다. 한 턴에 카드를 6장까지만 사용할 수 있습니다."
     },
     "koName": "벨벳 초커"
   },
@@ -1491,7 +1491,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/war_hammer.png",
     "description": {
       "en": "Whenever you kill an Elite, Upgrade 4 random cards.",
-      "ko": "엘리트를 처치할 때마다, 무작위 카드를 장 강화합니다."
+      "ko": "엘리트를 처치할 때마다, 무작위 카드를 4장 강화합니다."
     },
     "koName": "전투용 망치"
   },
@@ -1524,7 +1524,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/wongos_mystery_ticket.png",
     "description": {
       "en": "Receive 3 random Relics after 5 combats.",
-      "ko": "번의 전투가 끝난 후에, 무작위 유물을 개 받습니다."
+      "ko": "5번의 전투가 끝난 후에, 무작위 유물을 3개 받습니다."
     },
     "koName": "웡고스 비밀 티켓"
   },
@@ -1535,7 +1535,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://sts2json.untapped.gg/art/relics/yummy_cookie.png",
     "description": {
       "en": "Upon pickup, Upgrade 4 cards.",
-      "ko": "획득 시, 카드를 장 강화합니다."
+      "ko": "획득 시, 카드를 4장 강화합니다."
     },
     "koName": "냠냠 쿠키"
   },
@@ -1546,7 +1546,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/brimstone.png",
     "description": {
       "en": "At the start of your turn, gain 2 Strength and ALL enemies gain 1 Strength.",
-      "ko": "내 턴 시작 시, 힘을 얻고 모든 적이 힘을 얻습니다."
+      "ko": "내 턴 시작 시, 힘을 2 얻고 모든 적이 힘을 1 얻습니다."
     },
     "koName": "유황"
   },
@@ -1557,7 +1557,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/burning_blood.png",
     "description": {
       "en": "At the end of combat, heal 6 HP.",
-      "ko": "매 전투 종료 시, 체력을 회복합니다."
+      "ko": "매 전투 종료 시, 체력을 6 회복합니다."
     },
     "koName": "불타는 혈액"
   },
@@ -1568,7 +1568,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/charons_ashes.png",
     "description": {
       "en": "Whenever you Exhaust a card, deal 3 damage to ALL enemies.",
-      "ko": "카드를 소멸시킬 때마다, 모든 적에게 피해를 줍니다."
+      "ko": "카드를 소멸시킬 때마다, 모든 적에게 3 피해를 줍니다."
     },
     "koName": "카론의 유골"
   },
@@ -1601,7 +1601,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/red_skull.png",
     "description": {
       "en": "While your HP is at or below 50%, you have 3 additional Strength.",
-      "ko": "체력이 % 이하인 동안, 추가 힘을 지닙니다."
+      "ko": "체력이 50% 이하인 동안, 추가 힘을 3 지닙니다."
     },
     "koName": "붉은 해골"
   },
@@ -1623,7 +1623,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/self_forming_clay.png",
     "description": {
       "en": "Whenever you lose HP in combat, gain 3 Block next turn.",
-      "ko": "전투 동안 체력을 잃을 때마다, 다음 턴에 방어도를 얻습니다."
+      "ko": "전투 동안 체력을 잃을 때마다, 다음 턴에 방어도를 3 얻습니다."
     },
     "koName": "자가 형성 점토"
   },
@@ -1634,7 +1634,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/big_hat.png",
     "description": {
       "en": "At the start of each combat, add 2 random Ethereal cards into your Hand.",
-      "ko": "매 전투 시작 시, 무작위 휘발성 카드 장을 손으로 가져옵니다."
+      "ko": "매 전투 시작 시, 무작위 휘발성 카드 2장을 손으로 가져옵니다."
     },
     "koName": "커다란 모자"
   },
@@ -1645,7 +1645,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/bone_flute.png",
     "description": {
       "en": "Whenever Osty attacks, gain 2 Block.",
-      "ko": "골골이가 공격할 때마다, 방어도를 얻습니다."
+      "ko": "골골이가 공격할 때마다, 방어도를 2 얻습니다."
     },
     "koName": "뼈 플루트"
   },
@@ -1656,7 +1656,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/book_repair_knife.png",
     "description": {
       "en": "Whenever a non-Minion enemy dies to Doom, heal 3 HP.",
-      "ko": "하수인이 아닌 적이 종말로 인해 죽을 때마다, 체력을 회복합니다."
+      "ko": "하수인이 아닌 적이 종말로 인해 죽을 때마다, 체력을 3 회복합니다."
     },
     "koName": "책 수리용 칼"
   },
@@ -1678,7 +1678,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/bound_phylactery.png",
     "description": {
       "en": "At the start of your turn, Summon 1.",
-      "ko": "내 턴 시작 시, 소환."
+      "ko": "내 턴 시작 시, 소환 1."
     },
     "koName": "구속된 성물함"
   },
@@ -1689,7 +1689,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/funerary_mask.png",
     "description": {
       "en": "At the start of each combat, add 3 Souls into your Draw Pile.",
-      "ko": "매 전투 시작 시, 뽑을 카드 더미에 영혼을 장 섞어 넣습니다."
+      "ko": "매 전투 시작 시, 뽑을 카드 더미에 영혼을 3장 섞어 넣습니다."
     },
     "koName": "장례용 가면"
   },
@@ -1700,7 +1700,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/ivory_tile.png",
     "description": {
       "en": "Whenever you play a card that costs Necrobinder Energy Necrobinder Energy Necrobinder Energy or more, gain Necrobinder Energy .",
-      "ko": "비용이 이상인 카드를 사용할 때마다, 에너지 1를 얻습니다."
+      "ko": "비용이 3이상인 카드를 사용할 때마다, 에너지 1를 얻습니다."
     },
     "koName": "상아 패"
   },
@@ -1722,7 +1722,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/divine_right.png",
     "description": {
       "en": "At the start of each combat, gain Regent Star Energy Regent Star Energy Regent Star Energy .",
-      "ko": "매 전투 시작 시, 별 에너지을 얻습니다."
+      "ko": "매 전투 시작 시, 별 에너지을 3 얻습니다."
     },
     "koName": "신성한 빛"
   },
@@ -1733,7 +1733,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fencing_manual.png",
     "description": {
       "en": "At the start of each combat, Forge 10.",
-      "ko": "매 전투 시작 시, 단조."
+      "ko": "매 전투 시작 시, 단조 10."
     },
     "koName": "검술 안내서"
   },
@@ -1744,7 +1744,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/galactic_dust.png",
     "description": {
       "en": "For every 10 Regent Star Energy spent, gain 10 Block.",
-      "ko": "별 에너지 1을 소모할 때마다, 방어도를 얻습니다."
+      "ko": "별 에너지 10을 소모할 때마다, 방어도를 10 얻습니다."
     },
     "koName": "은하 먼지"
   },
@@ -1755,7 +1755,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/lunar_pastry.png",
     "description": {
       "en": "At the end of your turn, gain Regent Star Energy .",
-      "ko": "내 턴 종료 시, 별 에너지을 얻습니다."
+      "ko": "내 턴 종료 시, 별 에너지을 1 얻습니다."
     },
     "koName": "달 모양 페스츄리"
   },
@@ -1766,7 +1766,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/mini_regent.png",
     "description": {
       "en": "The first time you spend Regent Star Energy each turn, gain 1 Strength.",
-      "ko": "매 턴마다 처음으로 별 에너지 1을 소모 시, 힘을 얻습니다."
+      "ko": "매 턴마다 처음으로 별 에너지 1을 소모 시, 힘을 1 얻습니다."
     },
     "koName": "미니 리젠트"
   },
@@ -1777,7 +1777,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/orange_dough.png",
     "description": {
       "en": "At the start of each combat, add 2 random Colorless cards into your Hand.",
-      "ko": "매 전투 시작 시, 무작위 무색 카드를 장 손으로 가져옵니다."
+      "ko": "매 전투 시작 시, 무작위 무색 카드를 2장 손으로 가져옵니다."
     },
     "koName": "주황색 반죽"
   },
@@ -1788,7 +1788,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/regalite.png",
     "description": {
       "en": "Whenever you create a Colorless card, gain 2 Block.",
-      "ko": "무색 카드를 생성할 때마다, 방어도를 얻습니다."
+      "ko": "무색 카드를 생성할 때마다, 방어도를 2 얻습니다."
     },
     "koName": "리갈라이트"
   },
@@ -1810,7 +1810,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/akabeko.png",
     "description": {
       "en": "At the start of each combat, gain 8 Vigor.",
-      "ko": "매 전투 시작 시, 활력을 얻습니다."
+      "ko": "매 전투 시작 시, 활력을 8 얻습니다."
     },
     "koName": "아카베코"
   },
@@ -1821,7 +1821,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/amethyst_aubergine.png",
     "description": {
       "en": "Enemies drop 10 additional Gold.",
-      "ko": "적이 보상으로 주는 골드가 증가합니다."
+      "ko": "적이 보상으로 주는 골드가 10 증가합니다."
     },
     "koName": "자수정 가지"
   },
@@ -1832,7 +1832,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/anchor.png",
     "description": {
       "en": "Start each combat with 10 Block.",
-      "ko": "매 전투 시작 시 방어도를 얻습니다."
+      "ko": "매 전투 시작 시 방어도를 10 얻습니다."
     },
     "koName": "닻"
   },
@@ -1854,7 +1854,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/bag_of_marbles.png",
     "description": {
       "en": "At the start of each combat, apply 1 Vulnerable to ALL enemies.",
-      "ko": "매 전투 시작 시, 모든 적에게 취약을 부여합니다."
+      "ko": "매 전투 시작 시, 모든 적에게 취약을 1 부여합니다."
     },
     "koName": "구슬 주머니"
   },
@@ -1865,7 +1865,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/bag_of_preparation.png",
     "description": {
       "en": "At the start of each combat, draw 2 additional cards.",
-      "ko": "매 전투 시작 시, 카드를 추가로 장 뽑습니다."
+      "ko": "매 전투 시작 시, 카드를 추가로 2장 뽑습니다."
     },
     "koName": "준비된 가방"
   },
@@ -1898,7 +1898,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/belt_buckle.png",
     "description": {
       "en": "While you have no potions, you have 2 additional Dexterity.",
-      "ko": "보존한 포션이 없는 동안, 추가 민첩을 지닙니다."
+      "ko": "보존한 포션이 없는 동안, 추가 민첩을 2 지닙니다."
     },
     "koName": "벨트 버클"
   },
@@ -1920,7 +1920,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/book_of_five_rings.png",
     "description": {
       "en": "Every 5 cards you add to your Deck, heal 15 HP.",
-      "ko": "덱에 카드를 장 추가할 때마다, 체력을 회복합니다."
+      "ko": "덱에 카드를 5장 추가할 때마다, 체력을 15 회복합니다."
     },
     "koName": "다섯 반지의 책"
   },
@@ -1942,7 +1942,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/bread.png",
     "description": {
       "en": "At the start of your first turn, lose Colorless Energy Colorless Energy . At the start of all other turns, gain Colorless Energy .",
-      "ko": "첫 턴 시작 시, 를 잃습니다. 다른 모든 턴 시작 시, 를 얻습니다."
+      "ko": "첫 턴 시작 시, 2 를 잃습니다. 다른 모든 턴 시작 시, 1 를 얻습니다."
     },
     "koName": "빵"
   },
@@ -1953,7 +1953,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/bronze_scales.png",
     "description": {
       "en": "Start each combat with 3 Thorns.",
-      "ko": "매 전투 시작 시, 가시를 얻습니다."
+      "ko": "매 전투 시작 시, 가시를 3 얻습니다."
     },
     "koName": "청동 비늘"
   },
@@ -1975,7 +1975,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/candelabra.png",
     "description": {
       "en": "At the start of your 2nd turn, gain Colorless Energy Colorless Energy .",
-      "ko": "두 번째 턴 시작 시, 에너지 1를 얻습니다."
+      "ko": "두 번째 턴 시작 시, 에너지 2 를 얻습니다."
     },
     "koName": "촛대"
   },
@@ -1986,7 +1986,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/captains_wheel.png",
     "description": {
       "en": "At the start of your 3rd turn, gain 18 Block.",
-      "ko": "세 번째 턴 시작 시, 방어도를 얻습니다."
+      "ko": "세 번째 턴 시작 시, 방어도를 18 얻습니다."
     },
     "koName": "선장의 타륜"
   },
@@ -1997,7 +1997,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/cauldron.png",
     "description": {
       "en": "Upon pickup, brews 5 random potions.",
-      "ko": "획득 시, 무작위 포션을 개 생성합니다."
+      "ko": "획득 시, 무작위 포션을 5개 생성합니다."
     },
     "koName": "가마솥"
   },
@@ -2008,7 +2008,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/centennial_puzzle.png",
     "description": {
       "en": "The first time you lose HP each combat, draw 3 cards.",
-      "ko": "매 전투마다 처음으로 체력을 잃을 시, 카드를 장 뽑습니다."
+      "ko": "매 전투마다 처음으로 체력을 잃을 시, 카드를 3장 뽑습니다."
     },
     "koName": "백년퍼즐"
   },
@@ -2019,7 +2019,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/chandelier.png",
     "description": {
       "en": "At the start of your 3rd turn, gain Colorless Energy Colorless Energy Colorless Energy .",
-      "ko": "세 번째 턴 시작 시, 에너지 1를 얻습니다."
+      "ko": "세 번째 턴 시작 시, 에너지 3를 얻습니다."
     },
     "koName": "샹들리에"
   },
@@ -2030,7 +2030,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/chemical_x.png",
     "description": {
       "en": "The effects of your cost X cards are increased by 2.",
-      "ko": "비용이 X인 카드의 효과가 증가합니다."
+      "ko": "비용이 X인 카드의 효과가 2 증가합니다."
     },
     "koName": "케미컬 X"
   },
@@ -2074,7 +2074,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/dragon_fruit.png",
     "description": {
       "en": "Whenever you gain Gold, raise your Max HP by 1.",
-      "ko": "골드를 획득할 때마다, 최대 체력이 증가합니다."
+      "ko": "골드를 획득할 때마다, 최대 체력이 1 증가합니다."
     },
     "koName": "용과"
   },
@@ -2085,7 +2085,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/eternal_feather.png",
     "description": {
       "en": "For every 5 cards in your Deck, heal 3 HP whenever you enter a Rest Site.",
-      "ko": "휴식처에 들어갈 때마다 덱의 카드 5장당 체력을 1 회복합니다."
+      "ko": "휴식처에 들어갈 때마다 덱의 카드 5장당 체력을 3 회복합니다."
     },
     "koName": "영원의 깃털"
   },
@@ -2096,7 +2096,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/festive_popper.png",
     "description": {
       "en": "At the start of each combat, deal 9 damage to ALL enemies.",
-      "ko": "매 전투 시작 시, 모든 적에게 피해를 줍니다."
+      "ko": "매 전투 시작 시, 모든 적에게 피해를 9 줍니다."
     },
     "koName": "축제용 폭죽"
   },
@@ -2107,7 +2107,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/fresnel_lens.png",
     "description": {
       "en": "Whenever you add a card that gains Block to your Deck, Enchant it with Nimble 2.",
-      "ko": "방어도를 얻는 카드를 덱에 추가할 때마다, 그 카드에 날렵함을 인챈트합니다."
+      "ko": "방어도를 얻는 카드를 덱에 추가할 때마다, 그 카드에 날렵함을 2 인챈트합니다."
     },
     "koName": "프레넬 렌즈"
   },
@@ -2140,7 +2140,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/game_piece.png",
     "description": {
       "en": "Whenever you play a Power, draw 1 card.",
-      "ko": "파워 카드를 사용할 때마다, 카드를 장 뽑습니다."
+      "ko": "파워 카드를 사용할 때마다, 카드를 1장 뽑습니다."
     },
     "koName": "게임용 말"
   },
@@ -2173,7 +2173,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/gnarled_hammer.png",
     "description": {
       "en": "Upon pickup, Enchant up to 3 Attacks with Sharp 3.",
-      "ko": "획득 시, 최대 장의 공격 카드에 예리를 인챈트합니다."
+      "ko": "획득 시, 최대 3장의 공격 카드에 예리를 3 인챈트합니다."
     },
     "koName": "울퉁불퉁한 망치"
   },
@@ -2184,7 +2184,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/gorget.png",
     "description": {
       "en": "At the start of each combat, gain 4 Plating.",
-      "ko": "매 전투 시작 시, 판금을 얻습니다."
+      "ko": "매 전투 시작 시, 판금을 4 얻습니다."
     },
     "koName": "목 보호대"
   },
@@ -2195,7 +2195,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/gremlin_horn.png",
     "description": {
       "en": "Whenever an enemy dies, gain Colorless Energy and draw 1 card.",
-      "ko": "적이 죽을 때마다, 에너지 1를 얻고 카드를 장 뽑습니다."
+      "ko": "적이 죽을 때마다, 에너지 1를 얻고 카드를 1장 뽑습니다."
     },
     "koName": "그렘린 뿔"
   },
@@ -2206,7 +2206,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/happy_flower.png",
     "description": {
       "en": "Every 3 turns, gain Colorless Energy .",
-      "ko": "턴마다, 에너지 1를 얻습니다."
+      "ko": "3턴마다, 에너지 1를 얻습니다."
     },
     "koName": "행복한 꽃"
   },
@@ -2217,7 +2217,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/horn_cleat.png",
     "description": {
       "en": "At the start of your 2nd turn, gain 14 Block.",
-      "ko": "두 번째 턴 시작 시, 방어도를 얻습니다."
+      "ko": "두 번째 턴 시작 시, 14 방어도를 얻습니다."
     },
     "koName": "소뿔모양 걸이"
   },
@@ -2239,7 +2239,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/intimidating_helmet.png",
     "description": {
       "en": "Whenever you play a card that costs Colorless Energy Colorless Energy or more, gain 4 Block.",
-      "ko": "비용이 에너지 1 이상인 카드를 사용할 때마다, 방어도를 얻습니다."
+      "ko": "비용이 에너지 1 이상인 카드를 사용할 때마다, 방어도를 4 얻습니다."
     },
     "koName": "위압적인 투구"
   },
@@ -2250,7 +2250,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/joss_paper.png",
     "description": {
       "en": "Every 5 times you Exhaust a card, draw 1 card.",
-      "ko": "카드를 장 소멸시킬 때마다, 카드를 장 뽑습니다."
+      "ko": "카드를 5장 소멸시킬 때마다, 카드를 1장 뽑습니다."
     },
     "koName": "향지"
   },
@@ -2272,7 +2272,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/kifuda.png",
     "description": {
       "en": "Upon pickup, Enchant up to 3 cards with Adroit.",
-      "ko": "획득 시, 최대 장의 카드에 숙련을 인챈트합니다."
+      "ko": "획득 시, 최대 3장의 카드에 숙련을 인챈트합니다."
     },
     "koName": "목패"
   },
@@ -2283,7 +2283,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/kunai.png",
     "description": {
       "en": "Every time you play 3 Attacks in a single turn, gain 1 Dexterity.",
-      "ko": "한 턴에 공격 카드를 장 사용할 때마다, 민첩을 얻습니다."
+      "ko": "한 턴에 공격 카드를 3장 사용할 때마다, 민첩을 1 얻습니다."
     },
     "koName": "수리검"
   },
@@ -2294,7 +2294,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/kusarigama.png",
     "description": {
       "en": "Every time you play 3 Attacks in a single turn, deal 6 damage to a random enemy.",
-      "ko": "한 턴에 공격 카드를 장 사용할 때마다, 무작위 적에게 피해를 줍니다."
+      "ko": "한 턴에 공격 카드를 3장 사용할 때마다, 무작위 적에게 피해를 6 줍니다."
     },
     "koName": "사슬낫"
   },
@@ -2327,7 +2327,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/lees_waffle.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 7 and heal all of your HP.",
-      "ko": "획득 시, 최대 체력이 상승하고 모든 체력을 회복합니다."
+      "ko": "획득 시, 최대 체력이 7 상승하고 모든 체력을 회복합니다."
     },
     "koName": "리의 와플"
   },
@@ -2338,7 +2338,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/letter_opener.png",
     "description": {
       "en": "Every time you play 3 Skills in a single turn, deal 5 damage to ALL enemies.",
-      "ko": "한 턴에 스킬 카드를 장 사용할 때마다, 모든 적에게 피해를 줍니다."
+      "ko": "한 턴에 스킬 카드를 3장 사용할 때마다, 모든 적에게 5 피해를 줍니다."
     },
     "koName": "편지 칼"
   },
@@ -2349,7 +2349,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/lizard_tail.png",
     "description": {
       "en": "When you would die, heal to 50% of your Max HP instead (works once).",
-      "ko": "사망 시, 최대 체력의 %만큼 체력을 회복합니다 (한 번만)."
+      "ko": "사망 시, 최대 체력의 50%만큼 체력을 회복합니다 (한 번만)."
     },
     "koName": "도마뱀 꼬리"
   },
@@ -2360,7 +2360,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/looming_fruit.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 31.",
-      "ko": "획득 시, 최대 체력이 증가합니다."
+      "ko": "획득 시, 최대 체력이 31 증가합니다."
     },
     "koName": "기분 나쁜 과일"
   },
@@ -2371,7 +2371,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/lucky_fysh.png",
     "description": {
       "en": "Whenever you add a card to your Deck, gain 15 Gold.",
-      "ko": "덱에 카드를 추가할 때마다, 골드를 얻습니다."
+      "ko": "덱에 카드를 추가할 때마다, 골드를 15 얻습니다."
     },
     "koName": "행운의 물교기"
   },
@@ -2382,7 +2382,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/mango.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 14.",
-      "ko": "획득 시, 최대 체력이 상승합니다."
+      "ko": "획득 시, 최대 체력이 14 상승합니다."
     },
     "koName": "망고"
   },
@@ -2393,7 +2393,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/meal_ticket.png",
     "description": {
       "en": "Whenever you enter a shop room, heal 15 HP.",
-      "ko": "상점 방에 진입할 때마다, 체력을 회복합니다."
+      "ko": "상점 방에 진입할 때마다, 체력을 15 회복합니다."
     },
     "koName": "식권"
   },
@@ -2404,7 +2404,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/meat_on_the_bone.png",
     "description": {
       "en": "If your HP is at or below 50% at the end of combat, heal 12 HP.",
-      "ko": "매 전투 종료 시 남은 체력이 % 이하라면, 체력을 회복합니다."
+      "ko": "매 전투 종료 시 남은 체력이 50% 이하라면, 체력을 12 회복합니다."
     },
     "koName": "고깃덩어리"
   },
@@ -2415,7 +2415,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/membership_card.png",
     "description": {
       "en": "50% discount on all products!",
-      "ko": "모든 상품이 % 할인됩니다!"
+      "ko": "모든 상품이 50% 할인됩니다!"
     },
     "koName": "멤버십 카드"
   },
@@ -2426,7 +2426,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/mercury_hourglass.png",
     "description": {
       "en": "At the start of your turn, deal 3 damage to ALL enemies.",
-      "ko": "내 턴 시작 시, 모든 적에게 피해를 줍니다."
+      "ko": "내 턴 시작 시, 모든 적에게 피해를 3 줍니다."
     },
     "koName": "수은 모래시계"
   },
@@ -2437,7 +2437,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/miniature_cannon.png",
     "description": {
       "en": "Upgraded Attacks deal 3 additional damage.",
-      "ko": "강화된 공격 카드의 피해량이 증가합니다."
+      "ko": "강화된 공격 카드의 피해량이 3 증가합니다."
     },
     "koName": "미니어처 대포"
   },
@@ -2481,7 +2481,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/mystic_lighter.png",
     "description": {
       "en": "Enchanted Attacks deal 9 additional damage.",
-      "ko": "인챈트된 공격 카드의 피해량이 증가합니다."
+      "ko": "인챈트된 공격 카드의 피해량이 9 증가합니다."
     },
     "koName": "신비로운 라이터"
   },
@@ -2492,7 +2492,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/nunchaku.png",
     "description": {
       "en": "Every time you play 10 Attacks, gain Colorless Energy .",
-      "ko": "공격 카드를 장 사용할 때마다, 에너지 1를 얻습니다."
+      "ko": "공격 카드를 10장 사용할 때마다, 에너지 1를 얻습니다."
     },
     "koName": "쌍절곤"
   },
@@ -2503,7 +2503,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/oddly_smooth_stone.png",
     "description": {
       "en": "Start each combat with 1 Dexterity.",
-      "ko": "매 전투 시작 시, 민첩을 얻습니다."
+      "ko": "매 전투 시작 시, 민첩을 1 얻습니다."
     },
     "koName": "기묘하게 매끄러운 돌"
   },
@@ -2514,7 +2514,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/old_coin.png",
     "description": {
       "en": "Upon pickup, gain 300 Gold.",
-      "ko": "획득 시, 골드를 얻습니다."
+      "ko": "획득 시, 골드를 300 얻습니다."
     },
     "koName": "낡은 동전"
   },
@@ -2525,7 +2525,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/orichalcum.png",
     "description": {
       "en": "If you end your turn without Block, gain 6 Block.",
-      "ko": "내 턴 종료 시 방어도가 없다면, 방어도를 획득합니다."
+      "ko": "내 턴 종료 시 방어도가 없다면, 방어도를 6 획득합니다."
     },
     "koName": "오리하르콘"
   },
@@ -2536,7 +2536,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/ornamental_fan.png",
     "description": {
       "en": "Every time you play 3 Attacks in a single turn, gain 4 Block.",
-      "ko": "한 턴에 공격 카드를 장 사용할 때마다, 방어도를 얻습니다."
+      "ko": "한 턴에 공격 카드를 3장 사용할 때마다, 방어도를 4 얻습니다."
     },
     "koName": "장식용 부채"
   },
@@ -2547,7 +2547,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/orrery.png",
     "description": {
       "en": "Upon pickup, gain 5 card rewards.",
-      "ko": "획득 시, 카드 보상을 번 얻습니다."
+      "ko": "획득 시, 카드 보상을 5 번 얻습니다."
     },
     "koName": "태양계 모형"
   },
@@ -2558,7 +2558,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/pantograph.png",
     "description": {
       "en": "At the start of each Boss combat, heal 25 HP.",
-      "ko": "매 보스 전투 시작 시, 체력을 회복합니다."
+      "ko": "매 보스 전투 시작 시, 체력을 25 회복합니다."
     },
     "koName": "팬터그래프"
   },
@@ -2569,7 +2569,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/parrying_shield.png",
     "description": {
       "en": "If you end a turn with at least 10 Block, deal 6 damage to a random enemy.",
-      "ko": "매 턴 종료 시 방어도가 이상이라면, 무작위 적에게 피해를 줍니다."
+      "ko": "매 턴 종료 시 방어도가 10 이상이라면, 무작위 적에게 6 피해를 줍니다."
     },
     "koName": "쳐내기용 방패"
   },
@@ -2580,7 +2580,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/pear.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 10.",
-      "ko": "획득 시, 최대 체력이 증가합니다."
+      "ko": "획득 시, 최대 체력이 10 증가합니다."
     },
     "koName": "배"
   },
@@ -2613,7 +2613,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/permafrost.png",
     "description": {
       "en": "The first time you play a Power each combat, gain 6 Block.",
-      "ko": "매 전투마다 처음으로 파워 카드를 사용 시, 방어도를 얻습니다."
+      "ko": "매 전투마다 처음으로 파워 카드를 사용 시, 방어도를 6 얻습니다."
     },
     "koName": "영원한 얼음"
   },
@@ -2635,7 +2635,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/planisphere.png",
     "description": {
       "en": "Whenever you enter a ? room, heal 4 HP.",
-      "ko": "? 방에 진입할 때마다, 체력을 회복합니다."
+      "ko": "? 방에 진입할 때마다, 체력을 4 회복합니다."
     },
     "koName": "별자리판"
   },
@@ -2646,7 +2646,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/pocketwatch.png",
     "description": {
       "en": "Whenever you play 3 or fewer cards during your turn, draw 3 additional cards at the start of your next turn.",
-      "ko": "내 턴 동안 카드를 장 이하로 사용했다면, 다음 턴 시작 시 카드를 추가로 장 뽑습니다."
+      "ko": "내 턴 동안 카드를 3장 이하로 사용했다면, 다음 턴 시작 시 카드를 추가로 3장 뽑습니다."
     },
     "koName": "회중시계"
   },
@@ -2657,7 +2657,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/potion_belt.png",
     "description": {
       "en": "Upon pickup, gain 2 potion slots.",
-      "ko": "획득 시, 포션 슬롯을 개 얻습니다."
+      "ko": "획득 시, 포션 슬롯을 2개 얻습니다."
     },
     "koName": "포션 벨트"
   },
@@ -2679,7 +2679,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/punch_dagger.png",
     "description": {
       "en": "Upon pickup, Enchant an Attack with Momentum 5.",
-      "ko": "획득 시, 공격 카드 1장에 기세를 인챈트합니다."
+      "ko": "획득 시, 공격 카드 1장에 기세를 5 인챈트합니다."
     },
     "koName": "펀치 대거"
   },
@@ -2690,7 +2690,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/rainbow_ring.png",
     "description": {
       "en": "The first time you play an Attack, Skill, and Power each turn, gain 1 Strength and 1 Dexterity.",
-      "ko": "매 턴마다 공격, 스킬, 파워 카드를 처음으로 모두 사용 시, 힘을 , 민첩을 얻습니다."
+      "ko": "매 턴마다 공격, 스킬, 파워 카드를 처음으로 모두 사용 시, 힘을 1 , 민첩을 1 얻습니다."
     },
     "koName": "무지개 반지"
   },
@@ -2701,7 +2701,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/red_mask.png",
     "description": {
       "en": "At the start of each combat, apply 1 Weak to ALL enemies.",
-      "ko": "매 전투 시작 시, 모든 적에게 약화를 부여합니다."
+      "ko": "매 전투 시작 시, 모든 적에게 약화를 1 부여합니다."
     },
     "koName": "붉은 가면"
   },
@@ -2723,7 +2723,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/reptile_trinket.png",
     "description": {
       "en": "Whenever you use a potion, gain 3 Strength this turn.",
-      "ko": "포션을 사용할 때마다, 이번 턴 동안 힘을 얻습니다."
+      "ko": "포션을 사용할 때마다, 이번 턴 동안 힘을 3 얻습니다."
     },
     "koName": "파충류 장식"
   },
@@ -2745,7 +2745,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/ripple_basin.png",
     "description": {
       "en": "If you did not play any Attacks during your turn, gain 4 Block.",
-      "ko": "내 턴 동안 공격 카드를 사용하지 않았다면, 방어도를 얻습니다."
+      "ko": "내 턴 동안 공격 카드를 사용하지 않았다면, 방어도를 4 얻습니다."
     },
     "koName": "찰랑이는 대야"
   },
@@ -2767,7 +2767,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/screaming_flagon.png",
     "description": {
       "en": "If you end your turn with no cards in your Hand, deal 20 damage to ALL enemies.",
-      "ko": "내 턴 종료 시 손패에 카드가 없다면, 모든 적에게 피해를 줍니다."
+      "ko": "내 턴 종료 시 손패에 카드가 없다면, 모든 적에게 20 피해를 줍니다."
     },
     "koName": "비명을 지르는 병"
   },
@@ -2789,7 +2789,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/shuriken.png",
     "description": {
       "en": "Every time you play 3 Attacks in a single turn, gain 1 Strength.",
-      "ko": "한 턴에 공격 카드를 장 사용할 때마다, 힘을 얻습니다."
+      "ko": "한 턴에 공격 카드를 3장 사용할 때마다, 힘을 1 얻습니다."
     },
     "koName": "표창"
   },
@@ -2800,7 +2800,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sling_of_courage.png",
     "description": {
       "en": "Start each Elite combat with 2 Strength.",
-      "ko": "매 엘리트 전투 시작 시, 힘을 얻습니다."
+      "ko": "매 엘리트 전투 시작 시, 힘을 2 얻습니다."
     },
     "koName": "용기의 투석구"
   },
@@ -2811,7 +2811,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/stone_calendar.png",
     "description": {
       "en": "At the end of turn 7, deal 52 damage to ALL enemies.",
-      "ko": "턴 종료 시, 모든 적에게 피해를 줍니다."
+      "ko": "7턴 종료 시, 모든 적에게 52 피해를 줍니다."
     },
     "koName": "석재 달력"
   },
@@ -2822,7 +2822,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/stone_cracker.png",
     "description": {
       "en": "At the start of Boss combats, Upgrade 3 random cards in your Draw Pile for the rest of combat.",
-      "ko": "매 보스 전투 시작 시, 뽑을 카드 더미에 있는 무작위 카드 장을 남은 전투 동안 강화합니다."
+      "ko": "매 보스 전투 시작 시, 뽑을 카드 더미에 있는 무작위 카드 3장을 남은 전투 동안 강화합니다."
     },
     "koName": "착암기"
   },
@@ -2833,7 +2833,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/strawberry.png",
     "description": {
       "en": "Upon pickup, raise your Max HP by 7.",
-      "ko": "획득 시, 최대 체력이 증가합니다."
+      "ko": "획득 시, 최대 체력이 7 증가합니다."
     },
     "koName": "딸기"
   },
@@ -2844,7 +2844,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/strike_dummy.png",
     "description": {
       "en": "Cards containing “Strike” deal 3 additional damage.",
-      "ko": "이름에 “타격”이 포함된 카드의 피해량이 증가합니다."
+      "ko": "이름에 “타격”이 포함된 카드의 피해량이 3 증가합니다."
     },
     "koName": "타격용 인형"
   },
@@ -2855,7 +2855,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/sturdy_clamp.png",
     "description": {
       "en": "Up to 10 Block persists across turns.",
-      "ko": "턴 사이에 방어도가 최대 까지 유지됩니다."
+      "ko": "턴 사이에 방어도가 최대 10 까지 유지됩니다."
     },
     "koName": "튼튼한 조임쇠"
   },
@@ -2866,7 +2866,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/the_abacus.png",
     "description": {
       "en": "Whenever you shuffle your Draw Pile, gain 6 Block.",
-      "ko": "뽑을 카드 더미를 섞을 때마다, 방어도를 얻습니다."
+      "ko": "뽑을 카드 더미를 섞을 때마다, 방어도를 6 얻습니다."
     },
     "koName": "주판"
   },
@@ -2877,7 +2877,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/the_courier.png",
     "description": {
       "en": "The merchant no longer runs out of cards, relics, or potions and his prices are reduced by 20%.",
-      "ko": "상인이 판매하는 카드, 유물, 포션이 품절되지 않으며, 판매 금액이 % 감소합니다."
+      "ko": "상인이 판매하는 카드, 유물, 포션이 품절되지 않으며, 판매 금액이 20% 감소합니다."
     },
     "koName": "배달원"
   },
@@ -2921,7 +2921,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/tungsten_rod.png",
     "description": {
       "en": "Whenever you would lose HP, lose 1 less.",
-      "ko": "체력을 잃을 때마다, 만큼 덜 잃습니다."
+      "ko": "체력을 잃을 때마다, 1만큼 덜 잃습니다."
     },
     "koName": "텅스텐 막대"
   },
@@ -2932,7 +2932,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/tuning_fork.png",
     "description": {
       "en": "Every time you play 10 Skills, gain 7 Block.",
-      "ko": "스킬 카드를 장 사용할 때마다, 방어도를 얻습니다."
+      "ko": "스킬 카드를 장 사용할 때마다, 방어도를 7 얻습니다."
     },
     "koName": "소리굽쇠"
   },
@@ -2965,7 +2965,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/vajra.png",
     "description": {
       "en": "Start each combat with 1 Strength.",
-      "ko": "매 전투 시작 시, 힘을 얻습니다."
+      "ko": "매 전투 시작 시, 힘을 1 얻습니다."
     },
     "koName": "금강저"
   },
@@ -2987,7 +2987,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/venerable_tea_set.png",
     "description": {
       "en": "Whenever you enter a Rest Site, start the next combat with an additional Colorless Energy Colorless Energy .",
-      "ko": "휴식 장소에 진입할 때마다, 다음 전투 시작 시 추가로 에너지 1를 얻습니다."
+      "ko": "휴식 장소에 진입할 때마다, 다음 전투 시작 시 추가로 에너지 2 를 얻습니다."
     },
     "koName": "유서 깊은 차 세트"
   },
@@ -3009,7 +3009,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/vexing_puzzlebox.png",
     "description": {
       "en": "At the start of each combat, add a random card into your Hand. It costs 0 Colorless Energy .",
-      "ko": "매 전투 시작 시, 무작위 카드를 1장 손으로 가져옵니다. 그 카드의 비용이 0비용이 0이 됩니다."
+      "ko": "매 전투 시작 시, 무작위 카드를 1장 손으로 가져옵니다. 그 카드의 비용이 비용이 0이 됩니다."
     },
     "koName": "짜증나는 퍼즐상자"
   },
@@ -3020,7 +3020,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/war_paint.png",
     "description": {
       "en": "Upon pickup, Upgrade 2 random Skills.",
-      "ko": "획득 시, 무작위 스킬 카드를 장 강화합니다."
+      "ko": "획득 시, 무작위 스킬 카드를 2장 강화합니다."
     },
     "koName": "출진 물감"
   },
@@ -3031,7 +3031,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/whetstone.png",
     "description": {
       "en": "Upon pickup, Upgrade 2 random Attacks.",
-      "ko": "획득 시, 무작위 공격 카드를 장 강화합니다."
+      "ko": "획득 시, 무작위 공격 카드를 2장 강화합니다."
     },
     "koName": "숫돌"
   },
@@ -3075,7 +3075,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/helical_dart.png",
     "description": {
       "en": "Whenever you play a Shiv, gain 1 Dexterity this turn.",
-      "ko": "단도를 사용할 때마다, 이번 턴 동안 민첩을 얻습니다."
+      "ko": "단도를 사용할 때마다, 이번 턴 동안 민첩을 1 얻습니다."
     },
     "koName": "나선형 다트"
   },
@@ -3085,8 +3085,8 @@ window.STS2_RELICS_DATA = [
     "tier": "Shop",
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/ninja_scroll.png",
     "description": {
-      "en": "At the start of each combat, add 3 Shivs into your Hand.",
-      "ko": "매 전투 시작 시, 단도를 장 손으로 가져옵니다."
+      "en": "At the start of each combat, add 3 Dagger into your Hand.",
+      "ko": "매 전투 시작 시, 단도를 3장 손으로 가져옵니다."
     },
     "koName": "닌자 두루마리"
   },
@@ -3108,7 +3108,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/ring_of_the_snake.png",
     "description": {
       "en": "At the start of each combat, draw 2 additional cards.",
-      "ko": "매 전투 시작 시, 카드를 추가로 장 뽑습니다."
+      "ko": "매 전투 시작 시, 카드를 추가로 2장 뽑습니다."
     },
     "koName": "뱀의 반지"
   },
@@ -3119,7 +3119,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/snecko_skull.png",
     "description": {
       "en": "Whenever you apply Poison, apply an additional 1 Poison.",
-      "ko": "중독을 부여할 때마다, 추가로 중독을 부여합니다."
+      "ko": "중독을 부여할 때마다, 추가로 중독을 1 부여합니다."
     },
     "koName": "스네코의 해골"
   },
@@ -3141,7 +3141,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/tough_bandages.png",
     "description": {
       "en": "Whenever you discard a card during your turn, gain 3 Block.",
-      "ko": "내 턴 동안 카드를 버릴 때마다, 방어도를 얻습니다."
+      "ko": "내 턴 동안 카드를 버릴 때마다, 방어도를 3 얻습니다."
     },
     "koName": "질긴 붕대"
   },
@@ -3152,7 +3152,7 @@ window.STS2_RELICS_DATA = [
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/twisted_funnel.png",
     "description": {
       "en": "At the start of each combat, apply 4 Poison to ALL enemies.",
-      "ko": "매 전투 시작 시, 모든 적에게 중독을 부여합니다."
+      "ko": "매 전투 시작 시, 모든 적에게 중독을 4 부여합니다."
     },
     "koName": "뒤틀린 깔때기"
   }

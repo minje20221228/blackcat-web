@@ -70,19 +70,19 @@ let CHARACTER_RELICS = {
     { name: 'The Specimen', tier: 'Rare', description: { en: 'When an enemy dies, transfer its Poison to another enemy.', ko: '적이 죽으면 그 적의 독이 다른 적에게 이전됩니다.' } }
   ],
   Regent: [
-    { name: 'Divine Right', tier: 'Starter', description: { en: 'Starts fights with extra support for Star generation.', ko: '전투 시작 시 별 자원 운영을 돕는 보너스를 얻습니다.' } },
+    { name: 'Divine Right', tier: 'Starter', description: { en: 'At the start of each combat, gain 3 Regent Star Energy.', ko: '매 전투 시작 시 별 에너지 3을 얻습니다.' } },
     { name: 'Royal Censer', tier: 'Rare', description: { en: 'Improves long setup turns and celestial payoff lines.', ko: '긴 세팅 턴 이후 천체 계열 보상을 더 크게 만듭니다.' } },
     { name: 'Astral Dial', tier: 'Rare', description: { en: 'Smooths conversion from generated Stars into burst turns.', ko: '생성한 별 자원을 폭발 턴으로 더 부드럽게 연결합니다.' } },
     { name: 'Asterism', tier: 'Boss', description: { en: 'Stabilizes Star flow for larger Regent payoff turns.', ko: '별 자원 흐름을 안정화해 리젠트의 폭발 턴을 강화합니다.' } }
   ],
   Necrobinder: [
-    { name: 'Bound Phylactery', tier: 'Starter', description: { en: 'Stabilizes Soul flow so summon lines come online faster.', ko: '영혼 순환을 안정화해 소환 운영을 더 빨리 켭니다.' } },
+    { name: 'Bound Phylactery', tier: 'Starter', description: { en: 'At the start of your turn, Summon 1.', ko: '내 턴 시작 시 소환 1을 얻습니다.' } },
     { name: 'Soul Cage', tier: 'Rare', description: { en: 'Preserves and recycles Soul value in longer fights.', ko: '영혼 가치를 보존해 장기전 운영을 돕습니다.' } },
     { name: 'Funeral Bell', tier: 'Rare', description: { en: 'Improves Doom and sacrifice-oriented game plans.', ko: '둠과 희생 중심 운영의 보상을 키워 줍니다.' } },
     { name: 'Wake Candle', tier: 'Common', description: { en: 'Helps Ethereal and sacrifice lines stabilize faster.', ko: '에테리얼과 희생 운영을 더 안정적으로 연결합니다.' } }
   ],
   Defect: [
-    { name: 'Cracked Core', tier: 'Starter', description: { en: 'At the start of each combat, Channel 1 Lightning.', ko: '전투 시작 시 번개 오브를 채널링합니다.' } },
+    { name: 'Cracked Core', tier: 'Starter', description: { en: 'At the start of each combat, Channel 1 Lightning.', ko: '매 전투 시작 시 번개 오브를 1번 영창합니다.' } },
     { name: 'Frozen Core', tier: 'Boss', description: { en: 'At the end of your turn, Channel Frost if you have empty orb slots.', ko: '턴 종료 시 빈 오브 슬롯이 있으면 냉기 오브를 채널링합니다.' } },
     { name: 'Data Disk', tier: 'Common', description: { en: 'Start each combat with 1 Focus.', ko: '전투 시작 시 집중 1을 얻습니다.' } },
     { name: 'Emotion Chip', tier: 'Rare', description: { en: 'Losing HP opens extra Orb comeback windows.', ko: '체력을 잃을 때 오브 운영의 반격 각을 열어 줍니다.' } }
@@ -122,10 +122,10 @@ let localizedTerms = {
     Colorless: { en: 'Colorless', ko: '무색', ja: '無色', es: 'Incolora' }
   },
   identities: {
-    'Strength, self-damage, Exhaust': { en: 'Strength, self-damage, Exhaust', ko: '힘, 자해, 소진' },
-    'Discard, Shiv, Poison': { en: 'Discard, Shiv, Poison', ko: '버리기, 쉬브, 독' },
+    'Strength, self-damage, Exhaust': { en: 'Strength, self-damage, Exhaust', ko: '힘, 자해, 소멸' },
+    'Discard, Shiv, Poison': { en: 'Discard, Shiv, Poison', ko: '버리기, 단도, 독' },
     'Stars, control, payoff turns': { en: 'Stars, control, payoff turns', ko: '별, 제어, 폭발 턴' },
-    'Summon, Doom, Osty, Souls': { en: 'Summon, Doom, Osty, Souls', ko: '소환, 둠, 오스티, 영혼' },
+    'Summon, Doom, Osty, Souls': { en: 'Summon, Doom, Osty, Souls', ko: '소환, 종말, 휘발성 영혼' },
     'Orbs, Focus, Evoke': { en: 'Orbs, Focus, Evoke', ko: '오브, 집중, 발동' },
     Starter: { en: 'Starter', ko: '시작 유물' },
     Common: { en: 'Common', ko: '공용 유물' },
@@ -414,15 +414,15 @@ let RELIC_NAME_MAP = {
   'Ring of the Serpent': { ko: '비룡의 반지' },
   'Snecko Skull': { ko: '스네코 해골' },
   'The Specimen': { ko: '표본 병' },
-  'Divine Right': { ko: '신성한 권리' },
+  'Divine Right': { ko: '신성한 빛' },
   'Royal Censer': { ko: '왕실 향로' },
   'Astral Dial': { ko: '성계 다이얼' },
   'Asterism': { ko: '성군' },
-  'Bound Phylactery': { ko: '속박된 성물함' },
+  'Bound Phylactery': { ko: '구속된 성물함' },
   'Soul Cage': { ko: '영혼 우리' },
   'Funeral Bell': { ko: '장례 종' },
   'Wake Candle': { ko: '각성 촛불' },
-  'Cracked Core': { ko: '금 간 코어' },
+  'Cracked Core': { ko: '부서진 핵' },
   'Frozen Core': { ko: '얼어붙은 코어' },
   'Data Disk': { ko: '데이터 디스크' },
   'Emotion Chip': { ko: '감정 칩' },
@@ -698,10 +698,21 @@ function formatRelicDescriptionText(relic) {
     .replace(/단도를\s*(\d+)장 손패로 가져옵니다/g, '단도 $1장을 손패로 가져옵니다')
     .replace(/영혼을\s*(\d+)장 섞어 넣습니다/g, '영혼 $1장을 섞어 넣습니다')
     .replace(/비용이 0인 카드를\s*(\d+)장 손패로 가져옵니다/g, '비용이 0인 카드 $1장을 손패로 가져옵니다')
-    .replace(/최대 체력이\s*(\d+)%\s*증가합니다/g, '최대 체력이 $1 증가합니다')
+    .replace(/최대 체력이\s*(\d+)%\s*증가합니다/g, '최대 체력이 $1% 증가합니다')
     .replace(/다음 전투 시작 시 추가로 에너지 1을 얻습니다/g, '다음 전투 시작 시 에너지 1을 추가로 얻습니다')
     .replace(/추가로 에너지 1을 얻습니다/g, '에너지 1을 추가로 얻습니다')
     .replace(/에너지 1를/g, '에너지 1을')
+    .replace(/(신속|피해) (\d+)를/g, '$1 $2을')
+    .replace(/체력이\s*%\s*이하라면/g, '체력이 50% 이하라면')
+    .replace(/카드를 추가로\s*장 뽑습니다/g, '카드를 2장 더 뽑습니다')
+    .replace(/카드를\s*장 덜 뽑습니다/g, '카드를 2장 덜 뽑습니다')
+    .replace(/카드를\s*장 선택/g, '카드 3장을 선택')
+    .replace(/덱에서 카드를\s*장 제거/g, '덱에서 카드 4장을 제거')
+    .replace(/포션 슬롯을\s*개 얻습니다/g, '포션 슬롯 4개를 얻습니다')
+    .replace(/어지러움을\s*장 섞어 넣습니다/g, '어지러움 3장을 섞어 넣습니다')
+    .replace(/최대\s*장의 카드를/g, '최대 카드 6장을')
+    .replace(/체력을\s*회복합니다/g, '체력을 12 회복합니다')
+    .replace(/모든 적에게 피해를 줍니다/g, '모든 적에게 피해 30을 줍니다')
     .replace(/(중독|취약|힘) (\d+)을/g, '$1 $2를')
     .replace(/힘 (\d+)를/g, '힘 $1을')
     .replace(/중독 (\d+)을/g, '중독 $1를')
@@ -726,9 +737,22 @@ function translateRelicTextToKo(text) {
   let regexReplacements = [
     [/^At the end of combat, heal (\d+) HP\.$/, '전투 종료 시 체력을 $1 회복합니다.'],
     [/^At the start of each combat, heal (\d+) HP\.$/, '전투 시작 시 체력을 $1 회복합니다.'],
+    [/^If your HP is at or below (\d+)% at the end of combat, heal (\d+) HP\.$/, '전투 종료 시 체력이 $1% 이하라면 체력을 $2 회복합니다.'],
     [/^At the start of each combat, draw (\d+) additional cards?\.$/, '전투 시작 시 카드를 $1장 더 뽑습니다.'],
+    [/^At the start of Elite combats, draw (\d+) additional cards?\.$/, '엘리트 전투 시작 시 카드를 $1장 더 뽑습니다.'],
+    [/^At the start of your turn, draw (\d+) additional cards?\. Start each combat Confused\.$/, '턴 시작 시 카드를 $1장 더 뽑습니다. 전투 시작 시 혼란을 얻습니다.'],
+    [/^At the start of each turn, draw (\d+) additional cards?\. You may not draw cards during your turn\.$/, '매 턴 시작 시 카드를 $1장 더 뽑습니다. 그 후 자신의 턴에는 카드를 뽑을 수 없습니다.'],
+    [/^Every (\d+) turns, draw (\d+) additional cards?\.$/, '$1턴마다 카드를 $2장 더 뽑습니다.'],
     [/^Start each combat with (\d+) Block\.$/, '전투 시작 시 방어도 $1을 얻습니다.'],
     [/^At the start of each combat, apply (\d+) Vulnerable to ALL enemies\.$/, '전투 시작 시 모든 적에게 취약 $1을 겁니다.'],
+    [/^The first time you Channel (\d+) Orbs each combat, deal (\d+) damage to ALL enemies\.$/, '매 전투마다 처음으로 오브 $1개를 채널링하면 모든 적에게 피해 $2을 줍니다.'],
+    [/^Upon pickup, gain (\d+) potion slots filled with random potions\.$/, '획득 시 무작위 물약으로 채워진 포션 슬롯 $1개를 얻습니다.'],
+    [/^Upon pickup, Transform (\d+) cards, then Upgrade them\.$/, '획득 시 카드 $1장을 변형한 뒤 강화합니다.'],
+    [/^Upon pickup, choose (\d+) cards in your Deck\. Enchant them with Swift (\d+)\.$/, '획득 시 덱에서 카드 $1장을 선택합니다. 그 카드들에 신속 $2을 부여합니다.'],
+    [/^Upon pickup, raise your Max HP by (\d+)\. At the start of each combat, draw (\d+) fewer cards\.$/, '획득 시 최대 체력이 $1 증가합니다. 전투 시작 시 카드를 $2장 덜 뽑습니다.'],
+    [/^Upon pickup, remove (\d+) cards from your Deck\. Whenever you shuffle your Draw Pile, add a Soot into your Draw Pile\.$/, '획득 시 덱에서 카드 $1장을 제거합니다. 드로우 더미를 섞을 때마다 그을음 1장을 드로우 더미에 추가합니다.'],
+    [/^Gain 무색 에너지 at the start of each turn\. At the start of each combat, shuffle (\d+) Dazed into your Draw Pile\.$/, '매 턴 시작 시 무색 에너지 1을 얻습니다. 전투 시작 시 어지러움 $1장을 드로우 더미에 섞어 넣습니다.'],
+    [/^Upon pickup, Transform up to (\d+) cards into Maul\.$/, '획득 시 최대 카드 $1장을 할퀴기로 변형합니다.'],
     [/^At the end of your turn, gain 별 에너지\.$/, '턴 종료 시 별 에너지를 얻습니다.'],
     [/^At the start of your turn, gain 별 에너지\.$/, '턴 시작 시 별 에너지를 얻습니다.'],
     [/^At the start of each combat, gain 무색 에너지\.$/, '전투 시작 시 무색 에너지를 얻습니다.'],
@@ -740,6 +764,7 @@ function translateRelicTextToKo(text) {
     [/^Gain (\d+) Strength\.$/, '힘 $1을 얻습니다.'],
     [/^Gain (\d+) Dexterity\.$/, '민첩 $1을 얻습니다.'],
     [/^Gain (\d+) Focus\.$/, '집중 $1을 얻습니다.'],
+    [/^Gain Colorless Energy at the start of each turn\. At the start of each combat, shuffle (\d+) Dazed into your Draw Pile\.$/, '매 턴 시작 시 무색 에너지 1을 얻습니다. 전투 시작 시 어지러움 $1장을 드로우 더미에 섞어 넣습니다.'],
     [/^Upon pickup, gain (\d+) Gold\.$/, '획득 시 골드 $1을 얻습니다.'],
     [/^Upon pickup, brew (\d+) random potions\.$/, '획득 시 무작위 물약 $1개를 만듭니다.'],
     [/^The effects of your cost X cards are increased by (\d+)\.$/, 'X 비용 카드의 효과가 $1 증가합니다.'],
@@ -838,7 +863,7 @@ function translateRelicTextToKo(text) {
     .replace(/Whenever Osty attacks, /g, '오스티가 공격할 때마다 ')
     .replace(/add (\d+) random Colorless 카드 into your 손패/g, '무작위 무색 카드 $1장을 손패에 추가합니다')
     .replace(/add (\d+) random Ethereal 카드 into your 손패/g, '무작위 에테리얼 카드 $1장을 손패에 추가합니다')
-    .replace(/add (\d+) Shivs into your 손패/g, '쉬브 $1장을 손패에 추가합니다')
+    .replace(/add (\d+) Shivs into your 손패/g, '단도 $1장을 손패에 추가합니다')
     .replace(/add (\d+) Souls into your 드로우 더미/g, '영혼 $1개를 드로우 더미에 추가합니다')
     .replace(/add (\d+) zero-cost 카드 from your 드로우 더미 into your 손패/g, '비용이 0인 카드 $1장을 드로우 더미에서 손패로 가져옵니다')
     .replace(/gain (\d+) 방어도 next turn/g, '다음 턴에 방어도 $1을 얻습니다')
@@ -1063,8 +1088,7 @@ let refs = {
   navBuilds: document.getElementById('nav-builds'),
   languageButton: document.getElementById('language-button'),
   languageMenu: document.getElementById('language-menu'),
-  themeLightButton: document.getElementById('theme-light-button'),
-  themeDarkButton: document.getElementById('theme-dark-button'),
+  themeToggleButton: document.getElementById('theme-toggle-button'),
   characterKicker: document.getElementById('character-kicker'),
   characterHeading: document.getElementById('character-heading'),
   characterTabs: document.getElementById('character-tabs'),
@@ -1147,6 +1171,12 @@ let allCards = (window.STS2_CARDS_DATA || []).map(function (card) {
 });
 
 let cardMap = new Map(allCards.map(function (card) { return [card.id, card]; }));
+let cardNameLookup = new Map();
+allCards.forEach(function (card) {
+  if (!cardNameLookup.has(card.name)) {
+    cardNameLookup.set(card.name, card);
+  }
+});
 
 let state = {
   currentLanguage: detectPreferredLanguage(),
@@ -1170,6 +1200,12 @@ function detectPreferredLanguage() {
 }
 
 function detectPreferredTheme() {
+  try {
+    let savedTheme = window.localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme;
+    }
+  } catch (error) {}
   return 'dark';
 }
 
@@ -1279,6 +1315,30 @@ function getCharacterSummary(character) {
   return info && info.summary ? (info.summary[state.currentLanguage] || info.summary.ko || info.summary.en) : '';
 }
 
+function localizeStarterDeckEntry(entry) {
+  let text = String(entry || '');
+  let match = text.match(/^(.*?)(?: x(\d+))?$/);
+  if (!match) {
+    return text;
+  }
+  let cardName = match[1].trim();
+  let quantity = match[2] ? Number(match[2]) : null;
+  let card = cardNameLookup.get(cardName);
+  let localizedName = card ? getCardName(card, false) : cardName;
+  if (state.currentLanguage === 'ko' && quantity) {
+    return localizedName + ' x' + quantity;
+  }
+  return quantity ? (localizedName + ' x' + quantity) : localizedName;
+}
+
+function getStarterDeckText(character) {
+  let info = CHARACTER_INFO[character];
+  if (!info || !Array.isArray(info.starterDeck)) {
+    return '';
+  }
+  return info.starterDeck.map(localizeStarterDeckEntry).join(', ');
+}
+
 function getLocaleTag() {
   return { en: 'en-US', ko: 'ko-KR', ja: 'ja-JP', es: 'es-ES' }[state.currentLanguage] || 'ko-KR';
 }
@@ -1288,10 +1348,20 @@ function applyTheme() {
 }
 
 function toggleTheme() {
-  state.currentTheme = 'dark';
-  window.localStorage.setItem('theme', 'dark');
+  state.currentTheme = state.currentTheme === 'dark' ? 'light' : 'dark';
+  window.localStorage.setItem('theme', state.currentTheme);
   applyTheme();
   renderViewState();
+}
+
+function getThemeToggleLabel() {
+  return state.currentTheme === 'dark'
+    ? (state.currentLanguage === 'ko' ? '라이트모드' : 'Light mode')
+    : (state.currentLanguage === 'ko' ? '다크모드' : 'Dark mode');
+}
+
+function getThemeToggleIcon() {
+  return state.currentTheme === 'dark' ? '☀' : '☾';
 }
 
 function createId() {
@@ -1330,8 +1400,17 @@ function loadPinnedIds() {
 
 function persistPinnedIds() { window.localStorage.setItem(PINNED_KEY, JSON.stringify(Array.from(state.pinnedIds))); }
 
+function isBuildExcludedCard(card) {
+  if (!card) { return true; }
+  return card.character === 'Colorless'
+    || /Status|Curse/i.test(card.type || '')
+    || /Status|Token/i.test(card.rarity || '');
+}
+
 function availableCardsForCharacter(character) {
-  return allCards.filter(function (card) { return card.character === character || card.character === 'Colorless'; });
+  return allCards.filter(function (card) {
+    return card.character === character && !isBuildExcludedCard(card);
+  });
 }
 
 function normalizeBuildCardEntries(build) {
@@ -1340,14 +1419,14 @@ function normalizeBuildCardEntries(build) {
   }
   build.cards = build.cards.map(function (entry) {
     let card = cardMap.get(entry.cardId);
-    if (!card) {
-      return entry;
+    if (!card || isBuildExcludedCard(card)) {
+      return null;
     }
     if (isUpgradeHiddenCard(card)) {
       return Object.assign({}, entry, { upgraded: false });
     }
     return entry;
-  });
+  }).filter(Boolean);
 }
 
 function buildCards(build) {
@@ -1488,7 +1567,7 @@ function updateDraftField(field, value) { state.draft[field] = value; }
 
 function addCardToDraft(cardId, upgraded) {
   let card = cardMap.get(cardId);
-  if (!card) { return; }
+  if (!card || isBuildExcludedCard(card)) { return; }
   let normalizedUpgraded = hasVisibleUpgrade(card) ? Boolean(upgraded) : false;
   let existing = state.draft.cards.find(function (entry) { return entry.cardId === cardId && entry.upgraded === normalizedUpgraded; });
   if (existing) { existing.quantity += 1; } else { state.draft.cards.push({ cardId: cardId, quantity: 1, upgraded: normalizedUpgraded }); }
@@ -1771,12 +1850,6 @@ function renderStaticText() {
   document.documentElement.lang = state.currentLanguage;
   document.title = 'Slay the Spire 2 ' + currentUi.heroTitle;
   refs.heroTitle.textContent = currentUi.heroTitle;
-  let heroLead = document.getElementById('hero-lead');
-  if (heroLead) {
-    heroLead.textContent = state.currentLanguage === 'ko'
-      ? '카드, 유물, 빌드를 한 화면에서 빠르게 찾고 바로 조합할 수 있는 STS2 정리 사이트.'
-      : 'A faster STS2 build hub for browsing cards, relics, and builds in one flow.';
-  }
   refs.navCards.textContent = currentUi.nav.cards;
   refs.navRelics.textContent = currentUi.nav.relics;
   refs.navBuilds.textContent = currentUi.nav.builds;
@@ -1796,7 +1869,11 @@ function renderStaticText() {
   refs.editorHeading.textContent = currentUi.editorHeading;
   refs.pickerKicker.textContent = currentUi.pickerKicker;
   refs.pickerHeading.textContent = currentUi.pickerHeading;
-  refs.pickerNote.textContent = currentUi.pickerNote;
+  refs.pickerNote.textContent = '';
+  refs.pickerNote.hidden = true;
+  refs.themeToggleButton.textContent = getThemeToggleIcon();
+  refs.themeToggleButton.setAttribute('aria-label', getThemeToggleLabel());
+  refs.themeToggleButton.setAttribute('title', getThemeToggleLabel());
   refs.newBuildButton.textContent = currentUi.buttons.newBuild;
   refs.duplicateBuildButton.textContent = currentUi.buttons.duplicateBuild;
   refs.saveBuildButton.textContent = currentUi.buttons.saveBuild;
@@ -1842,7 +1919,7 @@ function renderCharacterTabs() {
     button.type = 'button';
     button.className = 'character-tab';
     button.dataset.character = character;
-    button.innerHTML = '<strong>' + escapeHtml(getCharacterLabel(character)) + '</strong><p class="build-desc">' + escapeHtml(getCharacterSummary(character)) + '</p>';
+    button.innerHTML = '<strong>' + escapeHtml(getCharacterLabel(character)) + '</strong>';
     if (character === state.activeCharacter) { button.classList.add('is-active'); }
     refs.characterTabs.appendChild(button);
   });
@@ -1855,7 +1932,7 @@ function renderCharacterSummary() {
     { label: ui().labels.hp, value: info.hp },
     { label: ui().labels.relic, value: getRelicLabel(info.relic) },
     { label: ui().labels.identity, value: getIdentityLabel(info.identity) },
-    { label: ui().labels.starterDeck, value: info.starterDeck.join(', ') }
+    { label: ui().labels.starterDeck, value: getStarterDeckText(state.activeCharacter) }
   ].forEach(function (item) {
     let card = document.createElement('article');
     card.className = 'summary-card';
@@ -1873,8 +1950,7 @@ function renderViewState() {
   refs.navCards.classList.toggle('is-active', current === 'cards');
   refs.navRelics.classList.toggle('is-active', current === 'relics');
   refs.navBuilds.classList.toggle('is-active', current === 'builds');
-  refs.themeLightButton.classList.toggle('is-active', state.currentTheme === 'light');
-  refs.themeDarkButton.classList.toggle('is-active', state.currentTheme === 'dark');
+  refs.themeToggleButton.classList.toggle('is-active', state.currentTheme === 'dark');
 }
 
 function renderBuildList() {
@@ -1890,7 +1966,7 @@ function renderBuildList() {
     article.className = 'build-card';
     article.dataset.buildId = build.id;
     if (build.id === state.activeBuildId) { article.classList.add('is-active'); }
-    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(build.id === state.activeBuildId ? ui().labels.draft : ui().labels.saved) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3><p class="build-desc">' + escapeHtml(build.summary || getCharacterSummary(build.character)) + '</p><div class="card-meta"><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions"><button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button></div></div>';
+    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(build.id === state.activeBuildId ? ui().labels.draft : ui().labels.saved) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions"><button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button></div></div>';
     refs.buildList.appendChild(article);
   });
 }
@@ -2073,9 +2149,7 @@ refs.languageMenu.addEventListener('click', function (event) {
   render();
 });
 
-[refs.themeLightButton, refs.themeDarkButton].forEach(function (button) {
-  button.addEventListener('click', function () { toggleTheme(); });
-});
+refs.themeToggleButton.addEventListener('click', function () { toggleTheme(); });
 
 refs.sortSelect.addEventListener('change', function (event) {
   state.currentSort = event.target.value === 'popular' ? 'popular' : 'latest';
@@ -2094,7 +2168,7 @@ refs.characterTabs.addEventListener('click', function (event) {
     state.draft.character = state.activeCharacter;
     state.draft.cards = state.draft.cards.filter(function (entry) {
       let card = cardMap.get(entry.cardId);
-      return card && (card.character === state.activeCharacter || card.character === 'Colorless');
+      return card && card.character === state.activeCharacter && !isBuildExcludedCard(card);
     });
   }
   render();
@@ -2127,7 +2201,7 @@ refs.buildCharacterSelect.addEventListener('change', function (event) {
   state.draft.character = event.target.value;
   state.draft.cards = state.draft.cards.filter(function (entry) {
     let card = cardMap.get(entry.cardId);
-    return card && (card.character === state.activeCharacter || card.character === 'Colorless');
+    return card && card.character === state.activeCharacter && !isBuildExcludedCard(card);
   });
   render();
 });
