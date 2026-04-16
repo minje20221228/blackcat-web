@@ -12,101 +12,175 @@
   <link href="https://fonts.googleapis.com/css2?family=Maru+Buri:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-static-page data-page-title-en="Methodology | Slay the Spire 2 Build Lab" data-page-title-ko="운영 원칙 | Slay the Spire 2 Build Lab">
   <div class="app-shell static-page-shell">
     <header class="hero static-hero">
       <div class="hero-copy">
-        <p class="eyebrow">Methodology</p>
-        <div class="title-row">
-          <h1>How The Guidance Is Built</h1>
+        <div data-static-lang-content="en">
+          <p class="eyebrow">Methodology</p>
+          <div class="title-row">
+            <h1>How The Guidance Is Built</h1>
+          </div>
+          <p class="hero-summary">The site combines static game reference data with editorial notes intended to help visitors evaluate deck direction, card roles, and relic implications in a more structured way.</p>
         </div>
-        <p class="hero-summary">The site combines static game reference data with editorial notes intended to help visitors evaluate deck direction, card roles, and relic implications in a more structured way.</p>
+        <div data-static-lang-content="ko" hidden>
+          <p class="eyebrow">운영 원칙</p>
+          <div class="title-row">
+            <h1>이 사이트가 빌드를 정리하는 방식</h1>
+          </div>
+          <p class="hero-summary">이 사이트는 게임 데이터와 에디토리얼 해설을 함께 제공해, 카드 역할과 유물 의미, 덱 방향성을 더 구조적으로 이해할 수 있도록 설계되었습니다.</p>
+        </div>
       </div>
       <div class="hero-controls">
         <div class="page-language-switch" aria-label="Language switch">
-          <a class="nav-button text-link-button is-active" href="/methodology">English</a>
-          <a class="nav-button text-link-button" href="/methodology-ko">한국어</a>
+          <button class="nav-button text-link-button" type="button" data-static-lang-button="en">English</button>
+          <button class="nav-button text-link-button" type="button" data-static-lang-button="ko">한국어</button>
         </div>
         <nav class="info-nav" aria-label="Page navigation">
-          <a class="nav-button text-link-button" href="/">Home</a>
-          <a class="nav-button text-link-button" href="/about">About</a>
-          <a class="nav-button text-link-button" href="/privacy">Privacy</a>
-          <a class="nav-button text-link-button" href="/contact">Contact</a>
+          <a class="nav-button text-link-button" href="/"><span data-static-lang-content="en">Home</span><span data-static-lang-content="ko" hidden>홈</span></a>
+          <a class="nav-button text-link-button" href="/about"><span data-static-lang-content="en">About</span><span data-static-lang-content="ko" hidden>소개</span></a>
+          <a class="nav-button text-link-button" href="/privacy"><span data-static-lang-content="en">Privacy</span><span data-static-lang-content="ko" hidden>개인정보처리방침</span></a>
+          <a class="nav-button text-link-button" href="/contact"><span data-static-lang-content="en">Contact</span><span data-static-lang-content="ko" hidden>문의</span></a>
         </nav>
       </div>
     </header>
 
     <main class="static-main">
       <section class="panel static-panel">
-        <div class="panel-head">
-          <div>
-            <p class="section-kicker">Framework</p>
-            <h2>Four Questions Behind Each Build</h2>
+        <div data-static-lang-content="en">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Framework</p>
+              <h2>Four Questions Behind Each Build</h2>
+            </div>
+          </div>
+          <div class="principles-grid">
+            <article class="principle-card">
+              <h3>How does the deck survive early fights?</h3>
+              <p class="section-note">A build needs enough frontloaded defense or damage to reach the turns where synergy matters. Early act consistency is weighted heavily.</p>
+            </article>
+            <article class="principle-card">
+              <h3>What resource is it scaling?</h3>
+              <p class="section-note">Each character wins through a different resource pattern such as Strength, Poison, Stars, Souls, or Orb sequencing. Build notes should identify that resource clearly.</p>
+            </article>
+            <article class="principle-card">
+              <h3>What turns actually win the combat?</h3>
+              <p class="section-note">Decks are judged by their most important turns: setup turns, payoff turns, recovery turns, and boss-kill turns.</p>
+            </article>
+            <article class="principle-card">
+              <h3>What bloat makes the plan worse?</h3>
+              <p class="section-note">Cards that look individually acceptable can still weaken a deck by diluting draw quality and delaying payoff turns.</p>
+            </article>
           </div>
         </div>
-        <div class="principles-grid">
-          <article class="principle-card">
-            <h3>How does the deck survive early fights?</h3>
-            <p class="section-note">A build needs enough frontloaded defense or damage to reach the turns where synergy matters. Early act consistency is weighted heavily.</p>
-          </article>
-          <article class="principle-card">
-            <h3>What resource is it scaling?</h3>
-            <p class="section-note">Each character wins through a different resource pattern such as Strength, Poison, Stars, Souls, or Orb sequencing. Build notes should identify that resource clearly.</p>
-          </article>
-          <article class="principle-card">
-            <h3>What turns actually win the combat?</h3>
-            <p class="section-note">Decks are judged by their most important turns: setup turns, payoff turns, recovery turns, and boss-kill turns.</p>
-          </article>
-          <article class="principle-card">
-            <h3>What bloat makes the plan worse?</h3>
-            <p class="section-note">Cards that look individually acceptable can still weaken a deck by diluting draw quality and delaying payoff turns.</p>
-          </article>
+        <div data-static-lang-content="ko" hidden>
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">프레임워크</p>
+              <h2>빌드를 볼 때 던지는 네 가지 질문</h2>
+            </div>
+          </div>
+          <div class="principles-grid">
+            <article class="principle-card">
+              <h3>이 덱은 초반 전투를 어떻게 버티는가?</h3>
+              <p class="section-note">시너지가 완성되기 전까지 살아남을 만큼의 즉시 화력이나 방어력이 있는지 먼저 봅니다. 초반 액트 안정성은 높은 비중으로 평가합니다.</p>
+            </article>
+            <article class="principle-card">
+              <h3>어떤 자원을 성장시키는가?</h3>
+              <p class="section-note">캐릭터마다 강해지는 방식이 다릅니다. 힘, 독, 별, 영혼, 오브 같은 핵심 자원을 무엇으로 보고 있는지 빌드 설명에서 명확히 드러내야 합니다.</p>
+            </article>
+            <article class="principle-card">
+              <h3>실제로 전투를 끝내는 턴은 언제인가?</h3>
+              <p class="section-note">세팅 턴, 폭발 턴, 회복 턴, 보스 킬 턴처럼 중요한 순간을 중심으로 덱을 이해해야 빌드의 구조가 보입니다.</p>
+            </article>
+            <article class="principle-card">
+              <h3>무슨 카드가 덱을 흐리게 만드는가?</h3>
+              <p class="section-note">개별 성능이 나쁘지 않아 보여도, 드로우 질을 떨어뜨리거나 핵심 턴을 늦추면 전체 계획을 해칠 수 있습니다.</p>
+            </article>
+          </div>
         </div>
       </section>
 
       <section class="panel static-panel">
-        <div class="panel-head">
-          <div>
-            <p class="section-kicker">Data Handling</p>
-            <h2>Reference Data And Editorial Copy</h2>
+        <div data-static-lang-content="en">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Data Handling</p>
+              <h2>Reference Data And Editorial Copy</h2>
+            </div>
           </div>
+          <p class="section-note">Card and relic records are presented as reference material, but the surrounding summaries, category framing, and site copy are written to make the information easier to use. The editorial goal is to add value through explanation, selection, and context instead of repeating thin database text.</p>
+          <p class="section-note">When game terminology changes, the site should be updated so that both the raw labels and the explanatory guidance stay usable. Accuracy matters because reference pages lose trust quickly when players cannot map an in-game label to a site entry.</p>
         </div>
-        <p class="section-note">Card and relic records are presented as reference material, but the surrounding summaries, category framing, and site copy are written to make the information easier to use. The editorial goal is to add value through explanation, selection, and context instead of repeating thin database text.</p>
-        <p class="section-note">When game terminology changes, the site should be updated so that both the raw labels and the explanatory guidance stay usable. Accuracy matters because reference pages lose trust quickly when players cannot map an in-game label to a site entry.</p>
+        <div data-static-lang-content="ko" hidden>
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">데이터 처리</p>
+              <h2>레퍼런스 데이터와 해설 텍스트</h2>
+            </div>
+          </div>
+          <p class="section-note">카드와 유물 목록은 참고 자료로 제공되지만, 주변의 요약과 분류, 해설은 이 정보를 더 잘 쓰게 만들기 위해 별도로 작성합니다. 목표는 얇은 데이터 복제가 아니라 선택과 설명, 맥락을 통해 부가 가치를 만드는 것입니다.</p>
+          <p class="section-note">게임 용어나 이름이 바뀌면 데이터 라벨과 설명 텍스트가 모두 함께 업데이트되어야 합니다. 참고 사이트는 실제 게임 표기와 연결되지 않으면 빠르게 신뢰를 잃기 때문입니다.</p>
+        </div>
       </section>
 
       <section class="panel static-panel">
-        <div class="panel-head">
-          <div>
-            <p class="section-kicker">Updates</p>
-            <h2>What Gets Revised Over Time</h2>
+        <div data-static-lang-content="en">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Updates</p>
+              <h2>What Gets Revised Over Time</h2>
+            </div>
+          </div>
+          <div class="info-card-grid">
+            <article class="info-card">
+              <h3>Character Summaries</h3>
+              <p class="section-note">Updated when identity, pacing, or build incentives shift enough that old primers no longer help decision-making.</p>
+            </article>
+            <article class="info-card">
+              <h3>Reference Tables</h3>
+              <p class="section-note">Updated when cards, relics, names, or localization strings change in a way that affects browsing or searchability.</p>
+            </article>
+            <article class="info-card">
+              <h3>Policy Pages</h3>
+              <p class="section-note">Updated when site practices, analytics, or advertising behavior changes so visitors can understand what the project is doing.</p>
+            </article>
           </div>
         </div>
-        <div class="info-card-grid">
-          <article class="info-card">
-            <h3>Character Summaries</h3>
-            <p class="section-note">Updated when identity, pacing, or build incentives shift enough that old primers no longer help decision-making.</p>
-          </article>
-          <article class="info-card">
-            <h3>Reference Tables</h3>
-            <p class="section-note">Updated when cards, relics, names, or localization strings change in a way that affects browsing or searchability.</p>
-          </article>
-          <article class="info-card">
-            <h3>Policy Pages</h3>
-            <p class="section-note">Updated when site practices, analytics, or advertising behavior changes so visitors can understand what the project is doing.</p>
-          </article>
+        <div data-static-lang-content="ko" hidden>
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">업데이트</p>
+              <h2>시간이 지나며 손보는 영역</h2>
+            </div>
+          </div>
+          <div class="info-card-grid">
+            <article class="info-card">
+              <h3>캐릭터 요약</h3>
+              <p class="section-note">캐릭터 정체성이나 빌드 유도 방향이 바뀌어 기존 요약이 실전 판단에 도움이 되지 않을 때 수정합니다.</p>
+            </article>
+            <article class="info-card">
+              <h3>레퍼런스 표</h3>
+              <p class="section-note">카드, 유물, 이름, 현지화 문자열이 바뀌어 탐색성이나 검색성이 달라질 때 업데이트합니다.</p>
+            </article>
+            <article class="info-card">
+              <h3>정책 페이지</h3>
+              <p class="section-note">광고 운영, 사이트 기능, 수집 방식이 바뀌면 방문자가 현재 사이트 방식을 이해할 수 있도록 함께 수정합니다.</p>
+            </article>
+          </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer panel">
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a class="text-link" href="/">Home</a>
-        <a class="text-link" href="/about">About</a>
-        <a class="text-link" href="/privacy">Privacy</a>
-        <a class="text-link" href="/contact">Contact</a>
+        <a class="text-link" href="/"><span data-static-lang-content="en">Home</span><span data-static-lang-content="ko" hidden>홈</span></a>
+        <a class="text-link" href="/about"><span data-static-lang-content="en">About</span><span data-static-lang-content="ko" hidden>소개</span></a>
+        <a class="text-link" href="/privacy"><span data-static-lang-content="en">Privacy</span><span data-static-lang-content="ko" hidden>개인정보처리방침</span></a>
+        <a class="text-link" href="/contact"><span data-static-lang-content="en">Contact</span><span data-static-lang-content="ko" hidden>문의</span></a>
       </nav>
     </footer>
   </div>
+  <script src="static-pages.js"></script>
 </body>
 </html>

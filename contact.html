@@ -12,77 +12,179 @@
   <link href="https://fonts.googleapis.com/css2?family=Maru+Buri:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-static-page data-page-title-en="Contact | Slay the Spire 2 Build Lab" data-page-title-ko="문의 | Slay the Spire 2 Build Lab">
   <div class="app-shell static-page-shell">
     <header class="hero static-hero">
       <div class="hero-copy">
-        <p class="eyebrow">Contact</p>
-        <div class="title-row">
-          <h1>Corrections And Feedback</h1>
+        <div data-static-lang-content="en">
+          <p class="eyebrow">Contact</p>
+          <div class="title-row">
+            <h1>Corrections And Feedback</h1>
+          </div>
+          <p class="hero-summary">If a card, relic, translation, or policy page needs correction, use the public project links below so issues can be reviewed and tracked.</p>
         </div>
-        <p class="hero-summary">If a card, relic, translation, or policy page needs correction, use the public project links below so issues can be reviewed and tracked.</p>
+        <div data-static-lang-content="ko" hidden>
+          <p class="eyebrow">문의</p>
+          <div class="title-row">
+            <h1>정정 요청과 피드백</h1>
+          </div>
+          <p class="hero-summary">카드, 유물, 번역, 정책 페이지에 수정이 필요하다면 아래 폼이나 공개 프로젝트 경로를 통해 내용을 보낼 수 있습니다.</p>
+        </div>
       </div>
       <div class="hero-controls">
         <div class="page-language-switch" aria-label="Language switch">
-          <a class="nav-button text-link-button is-active" href="/contact">English</a>
-          <a class="nav-button text-link-button" href="/contact-ko">한국어</a>
+          <button class="nav-button text-link-button" type="button" data-static-lang-button="en">English</button>
+          <button class="nav-button text-link-button" type="button" data-static-lang-button="ko">한국어</button>
         </div>
         <nav class="info-nav" aria-label="Page navigation">
-          <a class="nav-button text-link-button" href="/">Home</a>
-          <a class="nav-button text-link-button" href="/about">About</a>
-          <a class="nav-button text-link-button" href="/methodology">Methodology</a>
-          <a class="nav-button text-link-button" href="/privacy">Privacy</a>
+          <a class="nav-button text-link-button" href="/"><span data-static-lang-content="en">Home</span><span data-static-lang-content="ko" hidden>홈</span></a>
+          <a class="nav-button text-link-button" href="/about"><span data-static-lang-content="en">About</span><span data-static-lang-content="ko" hidden>소개</span></a>
+          <a class="nav-button text-link-button" href="/methodology"><span data-static-lang-content="en">Methodology</span><span data-static-lang-content="ko" hidden>운영 원칙</span></a>
+          <a class="nav-button text-link-button" href="/privacy"><span data-static-lang-content="en">Privacy</span><span data-static-lang-content="ko" hidden>개인정보처리방침</span></a>
         </nav>
       </div>
     </header>
 
     <main class="static-main">
       <section class="panel static-panel">
-        <div class="panel-head">
-          <div>
-            <p class="section-kicker">Project Links</p>
-            <h2>Where To Report Issues</h2>
+        <div data-static-lang-content="en">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Contact Form</p>
+              <h2>Send Feedback Directly</h2>
+            </div>
           </div>
+          <form class="static-form" action="https://formspree.io/f/mqewerjl" method="POST">
+            <label class="field-group field-group-wide">
+              <span class="field-label">Your email</span>
+              <input class="text-input" type="email" name="email" maxlength="120" required>
+            </label>
+            <label class="field-group field-group-wide">
+              <span class="field-label">Subject</span>
+              <input class="text-input" type="text" name="subject" maxlength="120" required>
+            </label>
+            <label class="field-group field-group-wide">
+              <span class="field-label">Message</span>
+              <textarea class="text-area" name="message" rows="6" maxlength="3000" required></textarea>
+            </label>
+            <input type="hidden" name="_subject" value="Slay the Spire 2 Build Lab Contact">
+            <button class="action-button action-button-primary" type="submit">Send Message</button>
+          </form>
+          <p class="section-note">Use this form for corrections, content requests, policy questions, or any issue that would benefit from a direct reply.</p>
         </div>
-        <div class="site-links">
-          <a class="text-link" href="https://github.com/minje20221228/blackcat-web" rel="noopener noreferrer">Project Repository</a>
-          <a class="text-link" href="https://github.com/minje20221228/blackcat-web/issues" rel="noopener noreferrer">Issue Tracker</a>
+        <div data-static-lang-content="ko" hidden>
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">문의 폼</p>
+              <h2>바로 의견 보내기</h2>
+            </div>
+          </div>
+          <form class="static-form" action="https://formspree.io/f/mqewerjl" method="POST">
+            <label class="field-group field-group-wide">
+              <span class="field-label">이메일</span>
+              <input class="text-input" type="email" name="email" maxlength="120" required>
+            </label>
+            <label class="field-group field-group-wide">
+              <span class="field-label">제목</span>
+              <input class="text-input" type="text" name="subject" maxlength="120" required>
+            </label>
+            <label class="field-group field-group-wide">
+              <span class="field-label">내용</span>
+              <textarea class="text-area" name="message" rows="6" maxlength="3000" required></textarea>
+            </label>
+            <input type="hidden" name="_subject" value="Slay the Spire 2 Build Lab Contact">
+            <button class="action-button action-button-primary" type="submit">문의 보내기</button>
+          </form>
+          <p class="section-note">정정 요청, 콘텐츠 제안, 정책 문의처럼 답변이 필요한 내용은 이 폼을 통해 직접 보낼 수 있습니다.</p>
         </div>
-        <p class="section-note">Use the issue tracker for factual corrections, broken pages, translation fixes, and suggestions that improve the usefulness of the reference.</p>
       </section>
 
       <section class="panel static-panel">
-        <div class="panel-head">
-          <div>
-            <p class="section-kicker">Useful Reports</p>
-            <h2>What Helps Most</h2>
+        <div data-static-lang-content="en">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Project Links</p>
+              <h2>Where To Report Issues Publicly</h2>
+            </div>
+          </div>
+          <div class="site-links">
+            <a class="text-link" href="https://github.com/minje20221228/blackcat-web" rel="noopener noreferrer">Project Repository</a>
+            <a class="text-link" href="https://github.com/minje20221228/blackcat-web/issues" rel="noopener noreferrer">Issue Tracker</a>
+          </div>
+          <p class="section-note">Use the issue tracker for factual corrections, broken pages, translation fixes, and suggestions that improve the usefulness of the reference.</p>
+        </div>
+        <div data-static-lang-content="ko" hidden>
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">프로젝트 링크</p>
+              <h2>공개 이슈를 남길 수 있는 곳</h2>
+            </div>
+          </div>
+          <div class="site-links">
+            <a class="text-link" href="https://github.com/minje20221228/blackcat-web" rel="noopener noreferrer">프로젝트 저장소</a>
+            <a class="text-link" href="https://github.com/minje20221228/blackcat-web/issues" rel="noopener noreferrer">이슈 트래커</a>
+          </div>
+          <p class="section-note">사실 오류, 깨진 페이지, 번역 수정, 참고 가치 향상에 도움이 되는 제안은 이슈 트래커를 통해 공개적으로 남길 수 있습니다.</p>
+        </div>
+      </section>
+
+      <section class="panel static-panel">
+        <div data-static-lang-content="en">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Useful Reports</p>
+              <h2>What Helps Most</h2>
+            </div>
+          </div>
+          <div class="info-card-grid">
+            <article class="info-card">
+              <h3>Broken Reference Entry</h3>
+              <p class="section-note">Include the character, card or relic name, and a short description of what appears to be wrong.</p>
+            </article>
+            <article class="info-card">
+              <h3>Localization Fix</h3>
+              <p class="section-note">Provide the current label, the corrected label, and the language affected so the change can be verified quickly.</p>
+            </article>
+            <article class="info-card">
+              <h3>Content Suggestion</h3>
+              <p class="section-note">If a guide section feels thin, explain which decision point needs more context, such as early draft paths, boss planning, or relic synergy.</p>
+            </article>
           </div>
         </div>
-        <div class="info-card-grid">
-          <article class="info-card">
-            <h3>Broken Reference Entry</h3>
-            <p class="section-note">Include the character, card or relic name, and a short description of what appears to be wrong.</p>
-          </article>
-          <article class="info-card">
-            <h3>Localization Fix</h3>
-            <p class="section-note">Provide the current label, the corrected label, and the language affected so the change can be verified quickly.</p>
-          </article>
-          <article class="info-card">
-            <h3>Content Suggestion</h3>
-            <p class="section-note">If a guide section feels thin, explain which decision point needs more context, such as early draft paths, boss planning, or relic synergy.</p>
-          </article>
+        <div data-static-lang-content="ko" hidden>
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">도움이 되는 제보</p>
+              <h2>어떤 정보가 가장 유용한가</h2>
+            </div>
+          </div>
+          <div class="info-card-grid">
+            <article class="info-card">
+              <h3>레퍼런스 오류 제보</h3>
+              <p class="section-note">캐릭터 이름, 카드명 또는 유물명과 함께 무엇이 잘못되었는지 짧게 설명해 주면 확인이 빨라집니다.</p>
+            </article>
+            <article class="info-card">
+              <h3>현지화 수정</h3>
+              <p class="section-note">현재 표기, 수정이 필요한 표기, 영향을 받는 언어를 함께 적어 주면 검증이 쉬워집니다.</p>
+            </article>
+            <article class="info-card">
+              <h3>콘텐츠 제안</h3>
+              <p class="section-note">가이드가 얇게 느껴진다면 초반 드래프트, 보스전 준비, 유물 시너지처럼 어느 의사결정 구간의 설명이 더 필요한지 알려 주세요.</p>
+            </article>
+          </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer panel">
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a class="text-link" href="/">Home</a>
-        <a class="text-link" href="/about">About</a>
-        <a class="text-link" href="/methodology">Methodology</a>
-        <a class="text-link" href="/privacy">Privacy</a>
+        <a class="text-link" href="/"><span data-static-lang-content="en">Home</span><span data-static-lang-content="ko" hidden>홈</span></a>
+        <a class="text-link" href="/about"><span data-static-lang-content="en">About</span><span data-static-lang-content="ko" hidden>소개</span></a>
+        <a class="text-link" href="/methodology"><span data-static-lang-content="en">Methodology</span><span data-static-lang-content="ko" hidden>운영 원칙</span></a>
+        <a class="text-link" href="/privacy"><span data-static-lang-content="en">Privacy</span><span data-static-lang-content="ko" hidden>개인정보처리방침</span></a>
       </nav>
     </footer>
   </div>
+  <script src="static-pages.js"></script>
 </body>
 </html>
