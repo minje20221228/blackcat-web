@@ -1088,6 +1088,8 @@ let refs = {
   navBuilds: document.getElementById('nav-builds'),
   languageButton: document.getElementById('language-button'),
   languageMenu: document.getElementById('language-menu'),
+  editorialLangEn: document.getElementById('editorial-lang-en'),
+  editorialLangKo: document.getElementById('editorial-lang-ko'),
   themeToggleButton: document.getElementById('theme-toggle-button'),
   characterKicker: document.getElementById('character-kicker'),
   characterHeading: document.getElementById('character-heading'),
@@ -1847,6 +1849,7 @@ function formatNumber(value) {
 
 function renderStaticText() {
   let currentUi = ui();
+  let editorialLanguage = state.currentLanguage === 'ko' ? 'ko' : 'en';
   document.documentElement.lang = state.currentLanguage;
   document.title = 'Slay the Spire 2 ' + currentUi.heroTitle;
   refs.heroTitle.textContent = currentUi.heroTitle;
@@ -1901,6 +1904,16 @@ function renderStaticText() {
   refs.editorCardSearchInput.placeholder = currentUi.placeholders.search;
   if (refs.buildSearchInput) {
     refs.buildSearchInput.placeholder = state.currentLanguage === 'ko' ? '빌드 제목, 작성자, 카드 검색' : 'Search builds, authors, or cards';
+  }
+  document.querySelectorAll('[data-copy-en][data-copy-ko]').forEach(function (node) {
+    node.textContent = editorialLanguage === 'ko' ? node.dataset.copyKo : node.dataset.copyEn;
+  });
+  document.querySelectorAll('[data-href-en][data-href-ko]').forEach(function (node) {
+    node.setAttribute('href', editorialLanguage === 'ko' ? node.dataset.hrefKo : node.dataset.hrefEn);
+  });
+  if (refs.editorialLangEn && refs.editorialLangKo) {
+    refs.editorialLangEn.classList.toggle('is-active', editorialLanguage === 'en');
+    refs.editorialLangKo.classList.toggle('is-active', editorialLanguage === 'ko');
   }
 }
 
@@ -2148,6 +2161,18 @@ refs.languageMenu.addEventListener('click', function (event) {
   refs.languageMenu.hidden = true;
   render();
 });
+
+if (refs.editorialLangEn && refs.editorialLangKo) {
+  refs.editorialLangEn.addEventListener('click', function () {
+    state.currentLanguage = 'en';
+    render();
+  });
+
+  refs.editorialLangKo.addEventListener('click', function () {
+    state.currentLanguage = 'ko';
+    render();
+  });
+}
 
 refs.themeToggleButton.addEventListener('click', function () { toggleTheme(); });
 
