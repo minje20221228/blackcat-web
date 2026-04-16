@@ -814,3 +814,94 @@ h3 {
 .editor-filter-grid {
   margin: 12px 0 16px;
 }
+
+.editorial-shell,
+.static-main {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.editorial-panel,
+.static-panel,
+.site-footer {
+  padding: 22px;
+}
+
+.editorial-grid,
+.principles-grid,
+.trust-grid,
+.info-card-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.info-card,
+.principle-card,
+.trust-card {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+.site-links,
+.footer-nav,
+.info-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.text-link,
+.text-link-button {
+  text-decoration: none;
+}
+
+.text-link {
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  text-decoration: underline;
+}
+
+.text-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-footer {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.static-page-shell {
+  padding-bottom: 32px;
+}
+
+.static-hero {
+  margin-bottom: 0;
+}
+
+.hero-summary {
+  max-width: 760px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+@media (max-width: 760px) {
+  .editorial-grid,
+  .principles-grid,
+  .trust-grid,
+  .info-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
