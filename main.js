@@ -8,9 +8,18 @@ let CHARACTER_INFO = {
     hp: 80,
     relic: 'Burning Blood',
     identity: 'Strength, self-damage, Exhaust',
+    image: 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/sprites/characterselect_ironclad.png',
     summary: {
       en: 'A frontloaded bruiser built around Strength scaling, self-damage payoffs, and Exhaust routing.',
       ko: '힘 스택, 자해 보상, 소멸 운영으로 압박하는 정면 돌파형 캐릭터.'
+    },
+    description: {
+      en: 'Ironclad leans on raw frontloaded damage, self-harm synergies, and exhaust routing to dominate fights quickly. He is the easiest character to read at a glance, but still rewards careful upgrade order and HP management.',
+      ko: '아이언클래드는 높은 즉발 화력, 자해 시너지, 소멸 전환을 바탕으로 전투를 빠르게 밀어붙입니다. 한눈에 이해하기 쉬운 캐릭터지만, 강화 순서와 체력 관리에 따라 완성도가 크게 갈립니다.'
+    },
+    highlights: {
+      en: ['Strength lines scale fast once fights stabilize.', 'Exhaust turns dead draws into tempo or payoff.', 'HP can be spent aggressively to win before enemies scale.'],
+      ko: ['힘 축이 붙으면 전투 안정화 이후 성장 속도가 빠릅니다.', '소멸 기믹이 죽은 드로우를 템포나 보상으로 바꿉니다.', '체력을 자원처럼 써서 적이 커지기 전에 끝낼 수 있습니다.']
     },
     starterDeck: ['Strike x5', 'Defend x4', 'Bash x1']
   },
@@ -18,9 +27,18 @@ let CHARACTER_INFO = {
     hp: 70,
     relic: 'Ring of the Snake',
     identity: 'Discard, Shiv, Poison',
+    image: 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/sprites/characterselect_silent.png',
     summary: {
       en: 'A tempo character that bends fights through Discard, Shiv bursts, and Poison scaling.',
       ko: '버리기 압축, 단도 폭딜, 독 누적으로 리듬을 만드는 템포형 캐릭터.'
+    },
+    description: {
+      en: 'Silent is built around clean hands, repeated dagger bursts, and poison lines that become stronger the longer a fight goes. Her best decks feel fluid because discard tools keep bad turns short and payoff turns explosive.',
+      ko: '사일런트는 손패 압축, 반복 단도 폭딜, 장기전에서 강해지는 독 라인을 축으로 움직입니다. 버리기 도구가 꼬이는 턴을 줄이고, 보상 카드가 붙으면 가장 유려하게 굴러갑니다.'
+    },
+    highlights: {
+      en: ['Discard improves hand quality and combo consistency.', 'Shiv packages trigger many burst payoffs.', 'Poison gives reliable boss and elite finishing power.'],
+      ko: ['버리기 기믹이 손패 품질과 콤보 안정성을 끌어올립니다.', '단도 패키지가 다양한 폭딜 트리거를 동시에 켭니다.', '독은 보스와 엘리트를 안정적으로 마무리하게 해줍니다.']
     },
     starterDeck: ['Strike x5', 'Defend x5', 'Neutralize x1', 'Survivor x1']
   },
@@ -28,9 +46,18 @@ let CHARACTER_INFO = {
     hp: 75,
     relic: 'Divine Right',
     identity: 'Stars, control, payoff turns',
+    image: 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/sprites/characterselect_regent.png',
     summary: {
       en: 'A setup-heavy character that turns Star generation into large celestial payoff turns.',
       ko: '별 자원을 모아 폭발 턴과 제어력을 만드는 세팅형 캐릭터.'
+    },
+    description: {
+      en: 'Regent banks Star resources and generated tools to create huge payoff turns. He rewards planning, sequencing, and resource discipline more than raw card rate, so the deck often feels better once its turns are mapped in advance.',
+      ko: '리젠트는 별 자원과 생성 카드를 비축해 큰 보상 턴을 만드는 세팅형 캐릭터입니다. 카드 한 장의 즉시 가치보다 순서 설계와 자원 절제가 더 중요해서, 턴 계획이 잡힐수록 훨씬 강해집니다.'
+    },
+    highlights: {
+      en: ['Star costs enable oversized celestial payoffs.', 'Generated cards and minions widen tactical choices.', 'Control tools buy time for decisive setup turns.'],
+      ko: ['별 비용 카드가 대형 폭발 턴을 가능하게 만듭니다.', '생성 카드와 하수인이 전술 선택지를 넓혀 줍니다.', '제어 카드가 결정적 세팅 턴까지 시간을 벌어 줍니다.']
     },
     starterDeck: ['Strike x4', 'Defend x4', 'Falling Star x1', 'Venerate x1']
   },
@@ -38,9 +65,18 @@ let CHARACTER_INFO = {
     hp: 66,
     relic: 'Bound Phylactery',
     identity: 'Summon, Doom, Osty, Souls',
+    image: 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/sprites/characterselect_necrobinder.png',
     summary: {
       en: 'A technical summoner using Souls, Doom thresholds, and board presence from Osty.',
       ko: '영혼 관리와 소환물, 종말 임계치를 함께 굴리는 고난도 소환형 캐릭터.'
+    },
+    description: {
+      en: 'Necrobinder asks you to manage more moving parts than any other character. Souls, Doom thresholds, sacrifice effects, and Osty all overlap, but once assembled they create some of the highest-value turns in the game.',
+      ko: '네크로바인더는 가장 많은 전투 요소를 동시에 관리해야 하는 캐릭터입니다. 영혼, 종말 임계치, 희생 효과, 골골이가 모두 겹치지만, 구조가 완성되면 게임 내에서도 손꼽히는 고가치 턴을 만들 수 있습니다.'
+    },
+    highlights: {
+      en: ['Soul generation fuels long combo chains.', 'Doom creates alternate kill thresholds.', 'Osty adds persistent pressure and utility.'],
+      ko: ['영혼 생성이 긴 연계 턴의 연료가 됩니다.', '종말은 별도의 처치 임계치를 만들어 줍니다.', '골골이는 지속 압박과 유틸리티를 동시에 제공합니다.']
     },
     starterDeck: ['Strike x5', 'Defend x5', 'Bodyguard x1', 'Unleash x1']
   },
@@ -48,9 +84,18 @@ let CHARACTER_INFO = {
     hp: 70,
     relic: 'Cracked Core',
     identity: 'Orbs, Focus, Evoke',
+    image: 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/sprites/characterselect_defect.png',
     summary: {
       en: 'An engine character that scales through Orb sequencing, Focus, and Evoke timing.',
       ko: '오브, 집중, 발동 순서를 굴려 엔진을 완성하는 빌드형 캐릭터.'
+    },
+    description: {
+      en: 'Defect is an engine-first character whose strength comes from orb economy, Focus scaling, and evoke timing. Many average-looking cards become premium once the deck starts channeling and rotating orbs efficiently.',
+      ko: '디펙트는 오브 경제, 집중 성장, 발동 타이밍으로 힘을 끌어올리는 엔진형 캐릭터입니다. 처음엔 평범해 보이는 카드도 오브가 잘 순환하기 시작하면 핵심 부품으로 바뀝니다.'
+    },
+    highlights: {
+      en: ['Orb sequencing controls both offense and defense.', 'Focus multiplies the value of simple cards.', 'Long fights reward stable engine assembly.'],
+      ko: ['오브 순서가 공격과 방어를 동시에 결정합니다.', '집중이 단순한 카드의 가치를 크게 키웁니다.', '장기전일수록 엔진 완성도의 차이가 커집니다.']
     },
     starterDeck: ['Strike x4', 'Defend x4', 'Zap x1', 'Dualcast x1']
   }
@@ -150,6 +195,8 @@ let localizedTerms = {
     Rare: { en: 'Rare', ko: '레어' },
     Special: { en: 'Special', ko: '특수' },
     Ancient: { en: 'Ancient', ko: '고대' },
+    Event: { en: 'Event', ko: '이벤트' },
+    Token: { en: 'Token', ko: '토큰' },
     Status: { en: 'Status', ko: '상태' },
     Curse: { en: 'Curse', ko: '저주' }
   }
@@ -212,6 +259,7 @@ let CARD_LOCALIZATION_TABLE = window.STS2_CARD_LOCALIZATION || {
 };
 
 let RELICS_DATA = window.STS2_RELICS_DATA || [];
+let PATCH_NOTES_DATA = window.STS2_PATCH_NOTES || { generatedAt: '', source: '', items: [] };
 
 let CARD_TEXT_OVERRIDE_MAP = {
   '35-beat-down': {
@@ -898,10 +946,145 @@ RELICS_DATA = RELICS_DATA.map(function (relic) {
   return relic;
 });
 
+function translatePotionTextToKo(text) {
+  let result = String(text || '');
+  let directMap = {
+    'Heal for 20% of your Max HP.': '최대 체력의 20%를 회복합니다.',
+    'Apply 6 Poison.': '독 6을 겁니다.',
+    'Gain 3 Stars.': '별 3개를 얻습니다.',
+    'Apply 33 Doom.': '종말 33을 겁니다.',
+    'Gain 2 Focus.': '집중 2를 얻습니다.',
+    'Choose 1 of 3 random Attack cards to add into your Hand. It\'s free to play this turn.': '무작위 공격 카드 3장 중 1장을 선택해 손패에 추가합니다. 이번 턴에는 비용 없이 사용합니다.',
+    'Gain 12 Block.': '방어도 12를 얻습니다.',
+    'Choose 1 of 3 random Colorless cards to add into your Hand. It\'s free to play this turn.': '무작위 무색 카드 3장 중 1장을 선택해 손패에 추가합니다. 이번 턴에는 비용 없이 사용합니다.',
+    'Gain 2 Dexterity.': '민첩 2를 얻습니다.',
+    'Gain 2 Energy.': '에너지 2를 얻습니다.',
+    'Deal 10 damage to ALL enemies.': '모든 적에게 피해 10을 줍니다.',
+    'Deal 20 damage.': '피해 20을 줍니다.',
+    'Gain 5 Strength. At the end of your turn, lose 5 Strength.': '힘 5를 얻습니다. 턴 종료 시 힘 5를 잃습니다.',
+    'Choose 1 of 3 random Power cards to add into your Hand. It\'s free to play this turn.': '무작위 파워 카드 3장 중 1장을 선택해 손패에 추가합니다. 이번 턴에는 비용 없이 사용합니다.',
+    'Choose 1 of 3 random Skill cards to add into your Hand. It\'s free to play this turn.': '무작위 스킬 카드 3장 중 1장을 선택해 손패에 추가합니다. 이번 턴에는 비용 없이 사용합니다.',
+    'Gain 5 Dexterity. At the end of your turn, lose 5 Dexterity.': '민첩 5를 얻습니다. 턴 종료 시 민첩 5를 잃습니다.',
+    'Gain 2 Strength.': '힘 2를 얻습니다.',
+    'Draw 3 cards.': '카드를 3장 뽑습니다.',
+    'Apply 3 Vulnerable.': '취약 3을 겁니다.',
+    'Apply 3 Weak.': '약화 3을 겁니다.',
+    'Exhaust any number of cards in your Hand.': '손패의 카드를 원하는 만큼 소멸시킵니다.',
+    'Add 3 Upgraded Shivs into your Hand.': '강화된 단도 3장을 손패에 추가합니다.',
+    'Forge 15.': 'Forge 15를 얻습니다.',
+    'Summon 15.': '소환 15를 얻습니다.',
+    'Gain 2 Orb Slots.': '오브 슬롯 2개를 얻습니다.',
+    'Upgrade all cards in your Hand for the rest of combat.': '이번 전투 동안 손패의 모든 카드를 강화합니다.',
+    'This turn, your next card is played an extra time.': '이번 턴에 다음 카드가 한 번 더 발동합니다.',
+    'Triple your Block.': '현재 방어도를 3배로 만듭니다.',
+    'Discard any number of cards, then draw that many.': '카드를 원하는 만큼 버린 뒤, 그만큼 다시 뽑습니다.',
+    'Gain 7 Plating.': '판금 7을 얻습니다.',
+    'Gain 3 Thorns.': '가시 3을 얻습니다.',
+    'Apply 1 Weak and 1 Vulnerable to ALL enemies.': '모든 적에게 약화 1과 취약 1을 겁니다.',
+    'Enemy loses 9 HP at the end of each of its turns.': '적은 자신의 턴 종료마다 체력 9를 잃습니다.',
+    'Gain 5 Regen.': '재생 5를 얻습니다.',
+    'Retain your Hand for 2 turns.': '2턴 동안 손패를 보존합니다.',
+    'Choose a card in your Hand. It is free to play this combat.': '손패의 카드 1장을 선택합니다. 그 카드는 이번 전투 동안 비용 없이 사용합니다.',
+    'All cards containing Strike gain 1 Replay this combat.': '이름에 Strike가 들어간 모든 카드는 이번 전투 동안 Replay 1을 얻습니다.',
+    'Gain 1 Intangible.': '무형 1을 얻습니다.',
+    'Add 3 Upgraded Colorless cards into your Hand.': '강화된 무색 카드 3장을 손패에 추가합니다.',
+    'Add 2 Souls into your Hand.': '영혼 2개를 손패에 추가합니다.',
+    'Channel a Dark for each of your Orb Slots.': '오브 슬롯마다 암흑 오브를 1개 채널링합니다.',
+    'Shuffle ALL your cards into your Draw Pile. Draw 5 cards.': '모든 카드를 드로우 더미에 섞어 넣고 카드를 5장 뽑습니다.',
+    'Play the top 3 cards of your Draw Pile.': '드로우 더미 맨 위 카드 3장을 사용합니다.',
+    'Choose a card in your Draw Pile and add it into your Hand.': '드로우 더미의 카드 1장을 선택해 손패에 추가합니다.',
+    'Fill all your empty potion slots with random potions.': '비어 있는 모든 포션 슬롯을 무작위 포션으로 채웁니다.',
+    'When your HP would be reduced to 0, instead this potion is discarded and you heal to 30% of your Max HP.': '체력이 0이 될 때 대신 이 포션이 소모되고 최대 체력의 30%까지 회복합니다.',
+    'Gain 5 Max HP.': '최대 체력 5를 얻습니다.',
+    'The next Attack you play deals triple damage.': '다음에 사용하는 공격 카드가 3배 피해를 줍니다.',
+    'Put a card from your Discard Pile into your Hand. It\'s free to play this turn.': '버린 카드 더미의 카드 1장을 손패로 가져옵니다. 이번 턴에는 비용 없이 사용합니다.',
+    'Gain 1 Buffer.': 'Buffer 1을 얻습니다.',
+    'Gain 1 Ritual.': '의식 1을 얻습니다.',
+    'ALL enemies lose 7 Strength this turn.': '이번 턴 동안 모든 적의 힘을 7 낮춥니다.',
+    'Gain 10 Block. Next turn, gain 10 Block.': '방어도 10을 얻습니다. 다음 턴에도 방어도 10을 얻습니다.',
+    'Draw 7 cards. Randomize the cost of cards in your Hand this turn.': '카드를 7장 뽑습니다. 이번 턴 동안 손패 카드의 비용이 무작위로 바뀝니다.',
+    'Deal 12 damage to ALL players and enemies. Can be thrown at the Merchant for 100 Gold instead.': '모든 플레이어와 적에게 피해 12를 줍니다. 대신 상인에게 던져 골드 100을 얻을 수도 있습니다.',
+    'Exhaust your Hand. Draw 10 cards.': '손패를 모두 소멸시키고 카드를 10장 뽑습니다.',
+    'Deal 15 damage.': '피해 15를 줍니다.'
+  };
+  return directMap[result] || result;
+}
+
+let POTIONS_DATA = [
+  { name: 'Blood Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Heal for 20% of your Max HP.' } },
+  { name: 'Poison Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Apply 6 Poison.' } },
+  { name: 'Star Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 3 Stars.' } },
+  { name: 'Potion of Doom', rarity: 'Common', pool: 'Shared', description: { en: 'Apply 33 Doom.' } },
+  { name: 'Focus Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 2 Focus.' } },
+  { name: 'Attack Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Choose 1 of 3 random Attack cards to add into your Hand. It\'s free to play this turn.' } },
+  { name: 'Block Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 12 Block.' } },
+  { name: 'Colorless Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Choose 1 of 3 random Colorless cards to add into your Hand. It\'s free to play this turn.' } },
+  { name: 'Dexterity Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 2 Dexterity.' } },
+  { name: 'Energy Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 2 Energy.' } },
+  { name: 'Explosive Ampoule', rarity: 'Common', pool: 'Shared', description: { en: 'Deal 10 damage to ALL enemies.' } },
+  { name: 'Fire Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Deal 20 damage.' } },
+  { name: 'Flex Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 5 Strength. At the end of your turn, lose 5 Strength.' } },
+  { name: 'Power Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Choose 1 of 3 random Power cards to add into your Hand. It\'s free to play this turn.' } },
+  { name: 'Skill Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Choose 1 of 3 random Skill cards to add into your Hand. It\'s free to play this turn.' } },
+  { name: 'Speed Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 5 Dexterity. At the end of your turn, lose 5 Dexterity.' } },
+  { name: 'Strength Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 2 Strength.' } },
+  { name: 'Swift Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Draw 3 cards.' } },
+  { name: 'Vulnerable Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Apply 3 Vulnerable.' } },
+  { name: 'Weak Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Apply 3 Weak.' } },
+  { name: 'Ashwater', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Exhaust any number of cards in your Hand.' } },
+  { name: 'Cunning Potion', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Add 3 Upgraded Shivs into your Hand.' } },
+  { name: 'King\'s Courage', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Forge 15.' } },
+  { name: 'Bone Brew', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Summon 15.' } },
+  { name: 'Potion of Capacity', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Gain 2 Orb Slots.' } },
+  { name: 'Blessing of the Forge', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Upgrade all cards in your Hand for the rest of combat.' } },
+  { name: 'Clarity Extract', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Draw 1 card. At the start of your next turns, draw 1 additional card.' } },
+  { name: 'Cure All', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Gain a restorative buff. Draw 2 cards.' } },
+  { name: 'Duplicator', rarity: 'Uncommon', pool: 'Shared', description: { en: 'This turn, your next card is played an extra time.' } },
+  { name: 'Fortifier', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Triple your Block.' } },
+  { name: 'Fysh Oil', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Gain 1 Strength and 1 Dexterity.' } },
+  { name: 'Gambler\'s Brew', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Discard any number of cards, then draw that many.' } },
+  { name: 'Heart of Iron', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Gain 7 Plating.' } },
+  { name: 'Liquid Bronze', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Gain 3 Thorns.' } },
+  { name: 'Potion of Binding', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Apply 1 Weak and 1 Vulnerable to ALL enemies.' } },
+  { name: 'Powdered Demise', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Enemy loses 9 HP at the end of each of its turns.' } },
+  { name: 'Radiant Tincture', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Gain Radiance now and again for the next 3 turns.' } },
+  { name: 'Regen Potion', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Gain 5 Regen.' } },
+  { name: 'Stable Serum', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Retain your Hand for 2 turns.' } },
+  { name: 'Touch of Insanity', rarity: 'Uncommon', pool: 'Shared', description: { en: 'Choose a card in your Hand. It is free to play this combat.' } },
+  { name: 'Soldier\'s Stew', rarity: 'Rare', pool: 'Shared', description: { en: 'All cards containing Strike gain 1 Replay this combat.' } },
+  { name: 'Ghost in a Jar', rarity: 'Rare', pool: 'Shared', description: { en: 'Gain 1 Intangible.' } },
+  { name: 'Cosmic Concoction', rarity: 'Rare', pool: 'Shared', description: { en: 'Add 3 Upgraded Colorless cards into your Hand.' } },
+  { name: 'Pot of Ghouls', rarity: 'Rare', pool: 'Shared', description: { en: 'Add 2 Souls into your Hand.' } },
+  { name: 'Essence of Darkness', rarity: 'Rare', pool: 'Shared', description: { en: 'Channel a Dark for each of your Orb Slots.' } },
+  { name: 'Beetle Juice', rarity: 'Rare', pool: 'Shared', description: { en: 'Enemy attacks deal less damage for the next few turns.' } },
+  { name: 'Bottled Potential', rarity: 'Rare', pool: 'Shared', description: { en: 'Shuffle ALL your cards into your Draw Pile. Draw 5 cards.' } },
+  { name: 'Distilled Chaos', rarity: 'Rare', pool: 'Shared', description: { en: 'Play the top 3 cards of your Draw Pile.' } },
+  { name: 'Droplet of Precognition', rarity: 'Rare', pool: 'Shared', description: { en: 'Choose a card in your Draw Pile and add it into your Hand.' } },
+  { name: 'Entropic Brew', rarity: 'Rare', pool: 'Shared', description: { en: 'Fill all your empty potion slots with random potions.' } },
+  { name: 'Fairy in a Bottle', rarity: 'Rare', pool: 'Shared', description: { en: 'When your HP would be reduced to 0, instead this potion is discarded and you heal to 30% of your Max HP.' } },
+  { name: 'Fruit Juice', rarity: 'Rare', pool: 'Shared', description: { en: 'Gain 5 Max HP.' } },
+  { name: 'Gigantification Potion', rarity: 'Rare', pool: 'Shared', description: { en: 'The next Attack you play deals triple damage.' } },
+  { name: 'Liquid Memories', rarity: 'Rare', pool: 'Shared', description: { en: 'Put a card from your Discard Pile into your Hand. It\'s free to play this turn.' } },
+  { name: 'Lucky Tonic', rarity: 'Rare', pool: 'Shared', description: { en: 'Gain 1 Buffer.' } },
+  { name: 'Mazaleth\'s Gift', rarity: 'Rare', pool: 'Shared', description: { en: 'Gain 1 Ritual.' } },
+  { name: 'Orobic Acid', rarity: 'Rare', pool: 'Shared', description: { en: 'Add a random Attack, Skill, and Power into your Hand. They\'re free to play this turn.' } },
+  { name: 'Shackling Potion', rarity: 'Rare', pool: 'Shared', description: { en: 'ALL enemies lose 7 Strength this turn.' } },
+  { name: 'Ship in a Bottle', rarity: 'Rare', pool: 'Shared', description: { en: 'Gain 10 Block. Next turn, gain 10 Block.' } },
+  { name: 'Snecko Oil', rarity: 'Rare', pool: 'Shared', description: { en: 'Draw 7 cards. Randomize the cost of cards in your Hand this turn.' } },
+  { name: 'Foul Potion', rarity: 'Event', pool: 'Event', description: { en: 'Deal 12 damage to ALL players and enemies. Can be thrown at the Merchant for 100 Gold instead.' } },
+  { name: 'Glowwater Potion', rarity: 'Event', pool: 'Event', description: { en: 'Exhaust your Hand. Draw 10 cards.' } },
+  { name: 'Potion-Shaped Rock', rarity: 'Token', pool: 'Token', description: { en: 'Deal 15 damage.' } }
+].map(function (potion) {
+  potion.description.ko = translatePotionTextToKo(potion.description.en);
+  return potion;
+});
+
 let uiText = {
   en: {
-    heroTitle: 'Build Lab',
-    nav: { cards: 'Cards', relics: 'Relics', builds: 'Builds' },
+    heroTitle: 'Slay the Spire 2',
+    nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: 'Language', help: 'Help' },
+    patchKicker: 'Steam Sync',
+    patchHeading: 'Latest Patch Notes',
     sortLabel: 'Sort',
     sortOptions: { latest: 'Latest', popular: 'Pinned' },
     characterKicker: 'Characters',
@@ -910,6 +1093,8 @@ let uiText = {
     libraryHeading: 'Card Library',
     relicsKicker: 'Relics',
     relicsHeading: 'Full Relic Collection',
+    potionsKicker: 'Potions',
+    potionsHeading: 'Potion List',
     buildlistKicker: 'Builds',
     buildlistHeading: 'Saved player builds',
     builderKicker: 'Build Editor',
@@ -962,6 +1147,7 @@ let uiText = {
       uniqueCards: 'Unique Cards',
       avgCost: 'Avg Cost',
       updated: 'Updated',
+      synced: 'Synced',
       all: 'All',
       noImage: 'No image',
       draft: 'Draft',
@@ -969,11 +1155,17 @@ let uiText = {
       energy: 'Energy',
       upgraded: 'Upgraded'
     },
+    links: {
+      patchSource: 'Steam',
+      readPatch: 'Read on Steam'
+    },
     empty: {
       builds: 'No saved builds for this character yet. Open the editor and save one.',
       selected: 'No cards selected yet. Add cards from the picker.',
       library: 'No cards matched the current filters.',
-      relics: 'No relic notes are available for this character yet.'
+      relics: 'No relic notes are available for this character yet.',
+      potions: 'No potion entries are available right now.',
+      patchNotes: 'No Steam patch notes were synced yet.'
     },
     status: {
       saved: 'Build saved.',
@@ -985,8 +1177,10 @@ let uiText = {
     }
   },
   ko: {
-    heroTitle: '빌드 랩',
-    nav: { cards: '카드', relics: '유물', builds: '빌드' },
+    heroTitle: 'Slay the Spire 2',
+    nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '언어', help: '도움말' },
+    patchKicker: 'Steam 동기화',
+    patchHeading: '최신 패치노트',
     sortLabel: '정렬',
     sortOptions: { latest: '최신순', popular: '고정순' },
     characterKicker: '캐릭터',
@@ -995,6 +1189,8 @@ let uiText = {
     libraryHeading: '카드 라이브러리',
     relicsKicker: '유물',
     relicsHeading: '전체 유물 도감',
+    potionsKicker: '포션',
+    potionsHeading: '포션 목록',
     buildlistKicker: '빌드',
     buildlistHeading: '저장된 빌드',
     builderKicker: '빌드 편집기',
@@ -1047,6 +1243,7 @@ let uiText = {
       uniqueCards: '고유 카드 수',
       avgCost: '평균 코스트',
       updated: '수정일',
+      synced: '동기화',
       all: '전체',
       noImage: '이미지 없음',
       draft: '초안',
@@ -1054,11 +1251,17 @@ let uiText = {
       energy: '에너지',
       upgraded: '강화'
     },
+    links: {
+      patchSource: 'Steam',
+      readPatch: 'Steam에서 보기'
+    },
     empty: {
       builds: '아직 저장된 빌드가 없습니다. 편집기를 열어 저장하면 여기에 표시됩니다.',
       selected: '아직 선택한 카드가 없습니다. 오른쪽 카드 선택 영역에서 추가해 주세요.',
       library: '현재 필터에 맞는 카드가 없습니다.',
-      relics: '이 캐릭터의 유물 정보가 아직 없습니다.'
+      relics: '이 캐릭터의 유물 정보가 아직 없습니다.',
+      potions: '표시할 포션 정보가 없습니다.',
+      patchNotes: '동기화된 Steam 패치노트가 아직 없습니다.'
     },
     status: {
       saved: '빌드를 저장했습니다.',
@@ -1083,9 +1286,16 @@ GLOBAL_RELICS = GLOBAL_RELICS.concat([
 
 let refs = {
   heroTitle: document.getElementById('hero-title'),
+  layout: document.querySelector('.layout'),
+  content: document.querySelector('.content'),
+  charactersSection: document.getElementById('characters-section'),
+  navCharacter: document.getElementById('nav-character'),
   navCards: document.getElementById('nav-cards'),
   navRelics: document.getElementById('nav-relics'),
+  navPotions: document.getElementById('nav-potions'),
   navBuilds: document.getElementById('nav-builds'),
+  siteMenuButton: document.getElementById('site-menu-button'),
+  siteMenu: document.getElementById('site-menu'),
   languageButton: document.getElementById('language-button'),
   languageMenu: document.getElementById('language-menu'),
   editorialLangEn: document.getElementById('editorial-lang-en'),
@@ -1093,16 +1303,30 @@ let refs = {
   themeToggleButton: document.getElementById('theme-toggle-button'),
   characterKicker: document.getElementById('character-kicker'),
   characterHeading: document.getElementById('character-heading'),
+  patchKicker: document.getElementById('patch-kicker'),
+  patchHeading: document.getElementById('patch-heading'),
+  patchMeta: document.getElementById('patch-meta'),
+  patchList: document.getElementById('patch-list'),
   characterTabs: document.getElementById('character-tabs'),
   characterSummary: document.getElementById('character-summary'),
+  characterDetailPanel: document.getElementById('character-detail-panel'),
+  characterDetailKicker: document.getElementById('character-detail-kicker'),
+  characterDetailHeading: document.getElementById('character-detail-heading'),
+  characterDetailBody: document.getElementById('character-detail-body'),
+  characterDetailImage: document.getElementById('character-detail-image'),
+  characterHighlightList: document.getElementById('character-highlight-list'),
   cardsPanel: document.getElementById('cards-panel'),
   relicsPanel: document.getElementById('relics-panel'),
+  potionsPanel: document.getElementById('potions-panel'),
   buildsPanel: document.getElementById('builds-panel'),
   libraryKicker: document.getElementById('library-kicker'),
   libraryHeading: document.getElementById('library-heading'),
   relicsKicker: document.getElementById('relics-kicker'),
   relicsHeading: document.getElementById('relics-heading'),
   relicsGrid: document.getElementById('relics-grid'),
+  potionsKicker: document.getElementById('potions-kicker'),
+  potionsHeading: document.getElementById('potions-heading'),
+  potionsGrid: document.getElementById('potions-grid'),
   buildlistKicker: document.getElementById('buildlist-kicker'),
   buildlistHeading: document.getElementById('buildlist-heading'),
   sortLabel: document.getElementById('sort-label'),
@@ -1843,6 +2067,16 @@ function formatDate(timestamp) {
   return new Intl.DateTimeFormat(getLocaleTag(), { year: 'numeric', month: 'short', day: 'numeric' }).format(timestamp);
 }
 
+function formatDateTime(timestamp) {
+  return new Intl.DateTimeFormat(getLocaleTag(), {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(timestamp);
+}
+
 function formatNumber(value) {
   return new Intl.NumberFormat(getLocaleTag(), { maximumFractionDigits: 1 }).format(value);
 }
@@ -1851,12 +2085,20 @@ function renderStaticText() {
   let currentUi = ui();
   let editorialLanguage = state.currentLanguage === 'ko' ? 'ko' : 'en';
   document.documentElement.lang = state.currentLanguage;
-  document.title = 'Slay the Spire 2 ' + currentUi.heroTitle;
-  refs.heroTitle.textContent = currentUi.heroTitle;
+  document.title = currentUi.heroTitle;
+  if (refs.heroTitle) { refs.heroTitle.textContent = currentUi.heroTitle; }
+  refs.navCharacter.textContent = currentUi.nav.character;
   refs.navCards.textContent = currentUi.nav.cards;
   refs.navRelics.textContent = currentUi.nav.relics;
+  refs.navPotions.textContent = currentUi.nav.potions;
   refs.navBuilds.textContent = currentUi.nav.builds;
+  refs.languageButton.textContent = currentUi.nav.language;
+  refs.languageButton.setAttribute('title', currentUi.nav.language);
+  refs.siteMenuButton.setAttribute('aria-label', currentUi.nav.help);
+  refs.siteMenuButton.setAttribute('title', currentUi.nav.help);
   refs.sortLabel.textContent = currentUi.sortLabel;
+  refs.patchKicker.textContent = currentUi.patchKicker;
+  refs.patchHeading.textContent = currentUi.patchHeading;
   refs.sortSelect.innerHTML = '<option value="latest">' + currentUi.sortOptions.latest + '</option><option value="popular">' + currentUi.sortOptions.popular + '</option>';
   refs.characterKicker.textContent = currentUi.characterKicker;
   refs.characterHeading.textContent = currentUi.characterHeading;
@@ -1864,6 +2106,8 @@ function renderStaticText() {
   refs.libraryHeading.textContent = getCharacterLabel(state.activeCharacter) + ' ' + currentUi.libraryHeading;
   refs.relicsKicker.textContent = currentUi.relicsKicker;
   refs.relicsHeading.textContent = currentUi.relicsHeading;
+  refs.potionsKicker.textContent = currentUi.potionsKicker;
+  refs.potionsHeading.textContent = currentUi.potionsHeading;
   refs.buildlistKicker.textContent = currentUi.buildlistKicker;
   refs.buildlistHeading.textContent = currentUi.buildlistHeading;
   refs.builderKicker.textContent = currentUi.builderKicker;
@@ -1874,9 +2118,11 @@ function renderStaticText() {
   refs.pickerHeading.textContent = currentUi.pickerHeading;
   refs.pickerNote.textContent = '';
   refs.pickerNote.hidden = true;
-  refs.themeToggleButton.textContent = getThemeToggleIcon();
-  refs.themeToggleButton.setAttribute('aria-label', getThemeToggleLabel());
-  refs.themeToggleButton.setAttribute('title', getThemeToggleLabel());
+  if (refs.themeToggleButton) {
+    refs.themeToggleButton.textContent = getThemeToggleIcon();
+    refs.themeToggleButton.setAttribute('aria-label', getThemeToggleLabel());
+    refs.themeToggleButton.setAttribute('title', getThemeToggleLabel());
+  }
   refs.newBuildButton.textContent = currentUi.buttons.newBuild;
   refs.duplicateBuildButton.textContent = currentUi.buttons.duplicateBuild;
   refs.saveBuildButton.textContent = currentUi.buttons.saveBuild;
@@ -1925,6 +2171,36 @@ function renderLanguageMenu() {
   refs.languageButton.setAttribute('aria-expanded', String(!refs.languageMenu.hidden));
 }
 
+function closeUtilityMenus() {
+  refs.languageMenu.hidden = true;
+  refs.siteMenu.hidden = true;
+  refs.languageButton.setAttribute('aria-expanded', 'false');
+  refs.siteMenuButton.setAttribute('aria-expanded', 'false');
+}
+
+function jumpToSection(target) {
+  let section = null;
+  if (target === 'characters') {
+    state.currentView = 'characters';
+    render();
+    section = refs.charactersSection;
+  } else if (target === 'cards' || target === 'relics' || target === 'potions' || target === 'builds') {
+    state.currentView = target;
+    render();
+    section = target === 'cards'
+      ? refs.cardsPanel
+      : target === 'relics'
+      ? refs.relicsPanel
+      : target === 'potions'
+      ? refs.potionsPanel
+      : refs.buildsPanel;
+  }
+  closeUtilityMenus();
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
 function renderCharacterTabs() {
   refs.characterTabs.innerHTML = '';
   PLAYABLE_CHARACTERS.forEach(function (character) {
@@ -1954,16 +2230,44 @@ function renderCharacterSummary() {
   });
 }
 
+function renderCharacterDetail() {
+  let info = CHARACTER_INFO[state.activeCharacter];
+  if (!info) {
+    refs.characterDetailPanel.hidden = true;
+    return;
+  }
+  let language = state.currentLanguage === 'ko' ? 'ko' : 'en';
+  refs.characterDetailPanel.hidden = state.currentView !== 'characters';
+  refs.characterDetailKicker.textContent = language === 'ko' ? '캐릭터 소개' : 'Character Overview';
+  refs.characterDetailHeading.textContent = getCharacterLabel(state.activeCharacter);
+  refs.characterDetailBody.textContent = info.description[language] || info.description.ko || info.description.en || '';
+  refs.characterDetailImage.src = info.image || '';
+  refs.characterDetailImage.alt = getCharacterLabel(state.activeCharacter);
+  refs.characterHighlightList.innerHTML = (info.highlights[language] || info.highlights.ko || []).map(function (item) {
+    return '<li>' + escapeHtml(item) + '</li>';
+  }).join('');
+}
+
 function renderViewState() {
   let current = state.currentView;
+  let isCharacterView = current === 'characters';
+  refs.characterDetailPanel.hidden = current !== 'characters';
   refs.cardsPanel.hidden = current !== 'cards';
   refs.relicsPanel.hidden = current !== 'relics';
+  refs.potionsPanel.hidden = current !== 'potions';
   refs.buildsPanel.hidden = current !== 'builds';
   refs.builderPanel.hidden = !state.editorOpen;
+  refs.layout.classList.toggle('is-character-view', isCharacterView);
+  refs.content.classList.toggle('is-character-view', isCharacterView);
+  refs.charactersSection.classList.toggle('is-character-view', isCharacterView);
+  refs.navCharacter.classList.toggle('is-active', current === 'characters');
   refs.navCards.classList.toggle('is-active', current === 'cards');
   refs.navRelics.classList.toggle('is-active', current === 'relics');
+  refs.navPotions.classList.toggle('is-active', current === 'potions');
   refs.navBuilds.classList.toggle('is-active', current === 'builds');
-  refs.themeToggleButton.classList.toggle('is-active', state.currentTheme === 'dark');
+  if (refs.themeToggleButton) {
+    refs.themeToggleButton.classList.toggle('is-active', state.currentTheme === 'dark');
+  }
 }
 
 function renderBuildList() {
@@ -2007,9 +2311,44 @@ function renderSelectedCards() {
     let card = document.createElement('article');
     let upgradeButton = hasVisibleUpgrade(entry.card) ? '<button class="pill-button" type="button" data-toggle-upgrade="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '">' + ui().buttons.upgrade + '</button>' : '';
     card.className = 'selected-card';
-    card.innerHTML = '<div class="selected-card-head"><div><p class="selected-card-name">' + escapeHtml(getCardName(entry.card, entry.upgraded)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(entry.card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(entry.card.rarity)) + '</span><span class="build-meta">' + ui().labels.energy + ': ' + escapeHtml(entry.card.cost) + '</span></div></div><span class="stat-chip">x' + entry.quantity + '</span></div><p class="selected-card-text">' + escapeHtml(text) + '</p><div class="selected-card-controls"><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="-1">-1</button><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="1">+1</button>' + upgradeButton + '<button class="pill-button" type="button" data-remove-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '">' + ui().buttons.remove + '</button></div>';
+    card.innerHTML = '<div class="selected-card-head"><div><p class="selected-card-name">' + escapeHtml(getCardName(entry.card, entry.upgraded)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(entry.card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(entry.card.rarity)) + '</span><span class="build-meta">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(entry.card, entry.upgraded)) + '</span></div></div><span class="stat-chip">x' + entry.quantity + '</span></div><p class="selected-card-text">' + escapeHtml(text) + '</p><div class="selected-card-controls"><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="-1">-1</button><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="1">+1</button>' + upgradeButton + '<button class="pill-button" type="button" data-remove-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '">' + ui().buttons.remove + '</button></div>';
     refs.selectedCards.appendChild(card);
   });
+}
+
+function getCardExtraCosts(card, upgraded) {
+  if (!card) {
+    return [];
+  }
+  let costs = upgraded && Array.isArray(card.upgradedExtraCosts) ? card.upgradedExtraCosts : card.extraCosts;
+  return Array.isArray(costs) ? costs.filter(Boolean) : [];
+}
+
+function getAdditionalCostLabel(type) {
+  let labels = {
+    star: { ko: '별', en: 'Star', ja: '星', es: 'Estrella' },
+    energy: { ko: '에너지', en: 'Energy', ja: 'エナジー', es: 'Energía' },
+    summon: { ko: '소환', en: 'Summon', ja: '召喚', es: 'Invocar' },
+    minion_sacrifice: { ko: '하수인 희생', en: 'Minion Sacrifice', ja: '下僕の生贄', es: 'Sacrificio de esbirro' }
+  };
+  let lang = getCurrentLanguage();
+  let entry = labels[type] || labels.energy;
+  return entry[lang] || entry.ko;
+}
+
+function formatCardCostDisplay(card, upgraded) {
+  if (!card) {
+    return '';
+  }
+  let baseCost = card.cost == null ? '' : String(card.cost);
+  let extras = getCardExtraCosts(card, upgraded);
+  if (!extras.length) {
+    return baseCost;
+  }
+  let extraText = extras.map(function (item) {
+    return getAdditionalCostLabel(item.type) + ' ' + item.amount;
+  }).join(' + ');
+  return baseCost + ' + ' + extraText;
 }
 
 function renderFilterControls(filterState, refsGroup) {
@@ -2055,12 +2394,11 @@ function buildLibraryCardMarkup(card, mode) {
   let imageMarkup = imageUrl ? '<img class="library-thumb" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, false)) + '">' : '<div class="library-thumb">' + escapeHtml(ui().labels.noImage) + '</div>';
   let canUpgrade = hasVisibleUpgrade(card);
   let addButtons = '<button class="pill-button pill-button-primary" type="button" data-add-card="' + card.id + '" data-upgraded="false">' + ui().buttons.addBase + '</button>' + (canUpgrade ? '<button class="pill-button" type="button" data-add-card="' + card.id + '" data-upgraded="true">' + ui().buttons.addUpgraded + '</button>' : '');
-  let actions = mode === 'editor' || state.editorOpen
-    ? addButtons + '<a class="pill-button" href="' + escapeHtml(card.sourceUrl) + '" target="_blank" rel="noreferrer">' + ui().buttons.source + '</a>'
-    : '<a class="pill-button" href="' + escapeHtml(card.sourceUrl) + '" target="_blank" rel="noreferrer">' + ui().buttons.source + '</a>';
+  let actions = mode === 'editor' || state.editorOpen ? addButtons : '';
   let upgradedText = canUpgrade ? getCardText(card, true) : '';
   let upgradedBlock = upgradedText ? '<div class="library-card-upgrade"><span class="upgrade-label">' + escapeHtml(ui().labels.upgraded) + '</span><p class="library-card-text">' + escapeHtml(upgradedText) + '</p></div>' : '';
-  return '<div class="library-card-main">' + imageMarkup + '<div><div class="library-card-head"><div><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(card.character)) + '</span><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().labels.energy) + ': ' + escapeHtml(card.cost) + '</span></div></div></div><p class="library-card-text">' + escapeHtml(getCardText(card, false)) + '</p>' + upgradedBlock + '<div class="library-card-actions">' + actions + '</div></div></div>';
+  let actionsBlock = actions ? '<div class="library-card-actions">' + actions + '</div>' : '';
+  return '<div class="library-card-main">' + imageMarkup + '<div><div class="library-card-head"><div><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(card.character)) + '</span><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div></div></div><p class="library-card-text">' + escapeHtml(getCardText(card, false)) + '</p>' + upgradedBlock + actionsBlock + '</div></div>';
 }
 
 function renderLibrary() {
@@ -2124,6 +2462,76 @@ function renderRelics() {
   }
 }
 
+function getPotionPoolLabel(pool) {
+  let labels = {
+    Shared: { en: 'Shared', ko: '공용' },
+    Event: { en: 'Event', ko: '이벤트' },
+    Token: { en: 'Token', ko: '토큰' }
+  };
+  let entry = labels[pool] || labels.Shared;
+  return entry[state.currentLanguage] || entry.ko;
+}
+
+function getPotionImageUrl(name) {
+  let safeLabel = String(name || 'Potion');
+  let initials = safeLabel.split(/[^A-Za-z0-9]+/).filter(Boolean).slice(0, 2).map(function (part) {
+    return part.charAt(0).toUpperCase();
+  }).join('') || 'P';
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6c4127"/><stop offset="100%" stop-color="#1f1713"/></linearGradient></defs><rect width="240" height="240" rx="28" fill="url(#g)"/><path d="M92 48h56v24l22 24v72c0 23-21 40-50 40s-50-17-50-40V96l22-24z" fill="#f1c28b" opacity="0.92"/><path d="M108 48h24v20h-24z" fill="#3a2419"/><path d="M86 126c12 12 28 18 49 18s37-6 49-18v43c0 23-21 40-50 40s-50-17-50-40z" fill="#d97749" opacity="0.85"/><text x="120" y="138" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#2a170f">' + escapeHtml(initials) + '</text></svg>';
+  return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+}
+
+function buildPotionCollection() {
+  let rarityOrder = { Common: 0, Uncommon: 1, Rare: 2, Event: 3, Token: 4 };
+  return POTIONS_DATA.slice().sort(function (a, b) {
+    return (rarityOrder[a.rarity] ?? 99) - (rarityOrder[b.rarity] ?? 99)
+      || getPotionPoolLabel(a.pool).localeCompare(getPotionPoolLabel(b.pool), getLocaleTag())
+      || a.name.localeCompare(b.name, getLocaleTag());
+  });
+}
+
+function renderPotionCard(potion) {
+  let text = potion.description[state.currentLanguage] || potion.description.ko || potion.description.en || '';
+  let imageUrl = potion.imageUrl || getPotionImageUrl(potion.name);
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(potion.name) + '" loading="lazy"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(potion.name) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
+}
+
+function renderPotions() {
+  let potions = buildPotionCollection();
+  refs.potionsGrid.innerHTML = potions.map(renderPotionCard).join('');
+  if (!refs.potionsGrid.innerHTML) {
+    refs.potionsGrid.innerHTML = '<div class="empty-state">' + ui().empty.potions + '</div>';
+  }
+}
+
+function renderPatchNotes() {
+  let notes = PATCH_NOTES_DATA && Array.isArray(PATCH_NOTES_DATA.items) ? PATCH_NOTES_DATA.items : [];
+  if (!notes.length) {
+    refs.patchMeta.innerHTML = '';
+    refs.patchList.innerHTML = '<div class="empty-state">' + ui().empty.patchNotes + '</div>';
+    return;
+  }
+
+  let generatedAt = PATCH_NOTES_DATA.generatedAt ? Date.parse(PATCH_NOTES_DATA.generatedAt) : NaN;
+  let source = PATCH_NOTES_DATA.source || 'https://steamcommunity.com/games/2868840/rss';
+  refs.patchMeta.innerHTML =
+    '<span class="patch-pill">' + escapeHtml(ui().labels.synced) + ': ' + escapeHtml(Number.isFinite(generatedAt) ? formatDateTime(generatedAt) : source) + '</span>' +
+    '<span class="patch-pill">' + escapeHtml(ui().links.patchSource) + '</span>';
+
+  refs.patchList.innerHTML = notes.slice(0, 5).map(function (note) {
+    let publishedAt = note.publishedAt ? Date.parse(note.publishedAt) : NaN;
+    let summary = String(note.summary || '').trim();
+    return '<article class="patch-card">' +
+      '<div class="patch-card-head">' +
+      '<div><h3 class="patch-title">' + escapeHtml(note.title) + '</h3></div>' +
+      '<span class="build-meta">' + escapeHtml(Number.isFinite(publishedAt) ? formatDate(publishedAt) : (note.pubDate || '')) + '</span>' +
+      '</div>' +
+      '<p class="patch-summary">' + escapeHtml(summary || note.title) + '</p>' +
+      '<a class="patch-link" href="' + escapeHtml(note.link) + '" target="_blank" rel="noreferrer">' + escapeHtml(ui().links.readPatch) + '</a>' +
+      '</article>';
+  }).join('');
+}
+
 function renderEditor() {
   renderEditorFields();
   renderSelectedCards();
@@ -2140,16 +2548,36 @@ function render() {
   if (refs.buildSearchInput) { refs.buildSearchInput.value = state.buildSearch; }
   renderCharacterTabs();
   renderCharacterSummary();
+  renderPatchNotes();
+  renderCharacterDetail();
   renderBuildList();
   renderRelics();
+  renderPotions();
   renderEditor();
 }
 
-refs.navCards.addEventListener('click', function () { state.currentView = 'cards'; render(); });
-refs.navRelics.addEventListener('click', function () { state.currentView = 'relics'; render(); });
-refs.navBuilds.addEventListener('click', function () { state.currentView = 'builds'; render(); });
+refs.navCharacter.addEventListener('click', function () { jumpToSection('characters'); });
+refs.navCards.addEventListener('click', function () { jumpToSection('cards'); });
+refs.navRelics.addEventListener('click', function () { jumpToSection('relics'); });
+refs.navPotions.addEventListener('click', function () { jumpToSection('potions'); });
+refs.navBuilds.addEventListener('click', function () { jumpToSection('builds'); });
+
+refs.siteMenuButton.addEventListener('click', function () {
+  refs.languageMenu.hidden = true;
+  refs.languageButton.setAttribute('aria-expanded', 'false');
+  refs.siteMenu.hidden = !refs.siteMenu.hidden;
+  refs.siteMenuButton.setAttribute('aria-expanded', String(!refs.siteMenu.hidden));
+});
+
+refs.siteMenu.addEventListener('click', function (event) {
+  let target = event.target.closest('[data-jump-target]');
+  if (!target) { return; }
+  jumpToSection(target.dataset.jumpTarget);
+});
 
 refs.languageButton.addEventListener('click', function () {
+  refs.siteMenu.hidden = true;
+  refs.siteMenuButton.setAttribute('aria-expanded', 'false');
   refs.languageMenu.hidden = !refs.languageMenu.hidden;
   refs.languageButton.setAttribute('aria-expanded', String(!refs.languageMenu.hidden));
 });
@@ -2158,7 +2586,7 @@ refs.languageMenu.addEventListener('click', function (event) {
   let option = event.target.closest('[data-language]');
   if (!option) { return; }
   state.currentLanguage = languages.includes(option.dataset.language) ? option.dataset.language : 'ko';
-  refs.languageMenu.hidden = true;
+  closeUtilityMenus();
   render();
 });
 
@@ -2174,7 +2602,9 @@ if (refs.editorialLangEn && refs.editorialLangKo) {
   });
 }
 
-refs.themeToggleButton.addEventListener('click', function () { toggleTheme(); });
+if (refs.themeToggleButton) {
+  refs.themeToggleButton.addEventListener('click', function () { toggleTheme(); });
+}
 
 refs.sortSelect.addEventListener('change', function (event) {
   state.currentSort = event.target.value === 'popular' ? 'popular' : 'latest';
@@ -2271,8 +2701,7 @@ refs.selectedCards.addEventListener('click', function (event) {
 
 document.addEventListener('click', function (event) {
   if (!event.target.closest('.utility-menu')) {
-    refs.languageMenu.hidden = true;
-    refs.languageButton.setAttribute('aria-expanded', 'false');
+    closeUtilityMenus();
   }
 });
 
