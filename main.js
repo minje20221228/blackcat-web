@@ -2,6 +2,7 @@ let PLAYABLE_CHARACTERS = ['Ironclad', 'Silent', 'Regent', 'Necrobinder', 'Defec
 let STORAGE_KEY = 'sts2-build-lab-builds-v2';
 let PINNED_KEY = 'sts2-build-lab-pins-v2';
 let languages = ['en', 'ko', 'ja', 'es'];
+let SITE_PAGE = document.body.dataset.page || 'home';
 
 let CHARACTER_INFO = {
   Ironclad: {
@@ -1082,7 +1083,7 @@ let POTIONS_DATA = [
 let uiText = {
   en: {
     heroTitle: 'Slay the Spire 2',
-    nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: 'Language', help: 'Help' },
+    nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: 'Language 🌐', help: 'Help' },
     patchKicker: 'Steam Sync',
     patchHeading: 'Latest Patch Notes',
     sortLabel: 'Sort',
@@ -1178,7 +1179,7 @@ let uiText = {
   },
   ko: {
     heroTitle: 'Slay the Spire 2',
-    nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '언어', help: '도움말' },
+    nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '언어 🌐', help: '도움말' },
     patchKicker: 'Steam 동기화',
     patchHeading: '최신 패치노트',
     sortLabel: '정렬',
@@ -1307,6 +1308,11 @@ let refs = {
   patchHeading: document.getElementById('patch-heading'),
   patchMeta: document.getElementById('patch-meta'),
   patchList: document.getElementById('patch-list'),
+  patchPanel: document.getElementById('patch-panel'),
+  browseCharacterLabel: document.getElementById('browse-character-label'),
+  browseCharacterSelect: document.getElementById('browse-character-select'),
+  buildsCharacterLabel: document.getElementById('builds-character-label'),
+  buildsCharacterSelect: document.getElementById('builds-character-select'),
   characterTabs: document.getElementById('character-tabs'),
   characterSummary: document.getElementById('character-summary'),
   characterDetailPanel: document.getElementById('character-detail-panel'),
@@ -1408,7 +1414,7 @@ let state = {
   currentLanguage: detectPreferredLanguage(),
   currentTheme: detectPreferredTheme(),
   currentSort: 'latest',
-  currentView: 'cards',
+  currentView: pageView() === 'home' ? 'home' : pageView(),
   activeCharacter: PLAYABLE_CHARACTERS[0],
   activeBuildId: null,
   editorOpen: false,
@@ -1421,6 +1427,12 @@ let state = {
 };
 
 function detectPreferredLanguage() {
+  try {
+    let savedLanguage = window.localStorage.getItem('sts2-site-language');
+    if (languages.includes(savedLanguage)) {
+      return savedLanguage;
+    }
+  } catch (error) {}
   let browserLanguage = (navigator.language || 'en').toLowerCase().split('-')[0];
   return languages.includes(browserLanguage) ? browserLanguage : 'ko';
 }
@@ -1433,6 +1445,22 @@ function detectPreferredTheme() {
     }
   } catch (error) {}
   return 'dark';
+}
+
+function pageView() {
+  let pageMap = {
+    home: 'home',
+    characters: 'characters',
+    cards: 'cards',
+    relics: 'relics',
+    potions: 'potions',
+    builds: 'builds'
+  };
+  return pageMap[SITE_PAGE] || 'home';
+}
+
+function isCharacterPage() {
+  return pageView() === 'characters';
 }
 
 function ui() {
@@ -1449,6 +1477,7 @@ function getCharacterLabel(character) { return getLocalizedTerm('characters', ch
 function getIdentityLabel(identity) { return getLocalizedTerm('identities', identity); }
 function getTypeLabel(type) { return getLocalizedTerm('types', type); }
 function getRarityLabel(rarity) { return getLocalizedTerm('rarities', rarity); }
+function getCurrentLanguage() { return state.currentLanguage; }
 function getRelicLabel(relic) {
   let entry = RELIC_NAME_MAP[relic];
   if (state.currentLanguage === 'ko') {
@@ -1473,6 +1502,14 @@ function getRelicFallbackImageUrl(label) {
 }
 
 function handleRelicImageError(img) {
+  if (!img || img.dataset.fallbackApplied === 'true') {
+    return;
+  }
+  img.dataset.fallbackApplied = 'true';
+  img.src = getRelicFallbackImageUrl(img.alt);
+}
+
+function handlePotionImageError(img) {
   if (!img || img.dataset.fallbackApplied === 'true') {
     return;
   }
@@ -2081,6 +2118,43 @@ function formatNumber(value) {
   return new Intl.NumberFormat(getLocaleTag(), { maximumFractionDigits: 1 }).format(value);
 }
 
+function translatePatchTitleToKo(title) {
+  return String(title || '')
+    .replace(/Major Update/gi, '메이저 업데이트')
+    .replace(/Beta Hotfix Patch Notes/gi, '베타 핫픽스 패치노트')
+    .replace(/Hotfix Patch Notes/gi, '핫픽스 패치노트')
+    .replace(/Patch Notes/gi, '패치노트')
+    .replace(/The Neowsletter/gi, '네오우 소식지');
+}
+
+function translatePatchSummaryToKo(text) {
+  return String(text || '')
+    .replace(/CONTENT & BALANCE/g, '콘텐츠 및 밸런스')
+    .replace(/BUG FIXES/g, '버그 수정')
+    .replace(/USER INTERFACE & EXPERIENCE/g, 'UI 및 사용 경험')
+    .replace(/ART/g, '아트')
+    .replace(/Localization/g, '현지화')
+    .replace(/Localization:/g, '현지화:')
+    .replace(/General:/g, '일반:')
+    .replace(/Balance:/g, '밸런스:')
+    .replace(/\bFixed\b/g, '수정')
+    .replace(/\bAdded\b/g, '추가')
+    .replace(/\bUpdated\b/g, '업데이트')
+    .replace(/\bChanged\b/g, '변경')
+    .replace(/\bImproved\b/g, '개선')
+    .replace(/\bcards\b/g, '카드')
+    .replace(/\bcard\b/g, '카드')
+    .replace(/\brelics\b/g, '유물')
+    .replace(/\brelic\b/g, '유물')
+    .replace(/\bpotions\b/g, '포션')
+    .replace(/\bpotion\b/g, '포션')
+    .replace(/\bdamage\b/g, '피해')
+    .replace(/\bcombat\b/g, '전투')
+    .replace(/\bturn\b/g, '턴')
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&');
+}
+
 function renderStaticText() {
   let currentUi = ui();
   let editorialLanguage = state.currentLanguage === 'ko' ? 'ko' : 'en';
@@ -2096,6 +2170,8 @@ function renderStaticText() {
   refs.languageButton.setAttribute('title', currentUi.nav.language);
   refs.siteMenuButton.setAttribute('aria-label', currentUi.nav.help);
   refs.siteMenuButton.setAttribute('title', currentUi.nav.help);
+  refs.browseCharacterLabel.textContent = currentUi.fields.character;
+  refs.buildsCharacterLabel.textContent = currentUi.fields.character;
   refs.sortLabel.textContent = currentUi.sortLabel;
   refs.patchKicker.textContent = currentUi.patchKicker;
   refs.patchHeading.textContent = currentUi.patchHeading;
@@ -2151,6 +2227,11 @@ function renderStaticText() {
   if (refs.buildSearchInput) {
     refs.buildSearchInput.placeholder = state.currentLanguage === 'ko' ? '빌드 제목, 작성자, 카드 검색' : 'Search builds, authors, or cards';
   }
+  refs.navCharacter.classList.toggle('is-active', SITE_PAGE === 'characters');
+  refs.navCards.classList.toggle('is-active', SITE_PAGE === 'cards');
+  refs.navRelics.classList.toggle('is-active', SITE_PAGE === 'relics');
+  refs.navPotions.classList.toggle('is-active', SITE_PAGE === 'potions');
+  refs.navBuilds.classList.toggle('is-active', SITE_PAGE === 'builds');
   document.querySelectorAll('[data-copy-en][data-copy-ko]').forEach(function (node) {
     node.textContent = editorialLanguage === 'ko' ? node.dataset.copyKo : node.dataset.copyEn;
   });
@@ -2230,6 +2311,16 @@ function renderCharacterSummary() {
   });
 }
 
+function renderPageCharacterSelects() {
+  let options = PLAYABLE_CHARACTERS.map(function (character) {
+    return '<option value="' + character + '">' + escapeHtml(getCharacterLabel(character)) + '</option>';
+  }).join('');
+  refs.browseCharacterSelect.innerHTML = options;
+  refs.buildsCharacterSelect.innerHTML = options;
+  refs.browseCharacterSelect.value = state.activeCharacter;
+  refs.buildsCharacterSelect.value = state.activeCharacter;
+}
+
 function renderCharacterDetail() {
   let info = CHARACTER_INFO[state.activeCharacter];
   if (!info) {
@@ -2249,22 +2340,23 @@ function renderCharacterDetail() {
 }
 
 function renderViewState() {
-  let current = state.currentView;
+  let current = pageView();
   let isCharacterView = current === 'characters';
+  let isHome = current === 'home';
+  let isSinglePanel = !isCharacterView;
+  refs.patchPanel.hidden = !isHome;
+  refs.charactersSection.hidden = !isCharacterView;
   refs.characterDetailPanel.hidden = current !== 'characters';
   refs.cardsPanel.hidden = current !== 'cards';
   refs.relicsPanel.hidden = current !== 'relics';
   refs.potionsPanel.hidden = current !== 'potions';
   refs.buildsPanel.hidden = current !== 'builds';
-  refs.builderPanel.hidden = !state.editorOpen;
+  refs.builderPanel.hidden = current !== 'builds' || !state.editorOpen;
   refs.layout.classList.toggle('is-character-view', isCharacterView);
+  refs.layout.classList.toggle('is-home-view', isHome);
+  refs.layout.classList.toggle('is-single-panel', isSinglePanel);
   refs.content.classList.toggle('is-character-view', isCharacterView);
   refs.charactersSection.classList.toggle('is-character-view', isCharacterView);
-  refs.navCharacter.classList.toggle('is-active', current === 'characters');
-  refs.navCards.classList.toggle('is-active', current === 'cards');
-  refs.navRelics.classList.toggle('is-active', current === 'relics');
-  refs.navPotions.classList.toggle('is-active', current === 'potions');
-  refs.navBuilds.classList.toggle('is-active', current === 'builds');
   if (refs.themeToggleButton) {
     refs.themeToggleButton.classList.toggle('is-active', state.currentTheme === 'dark');
   }
@@ -2473,12 +2565,8 @@ function getPotionPoolLabel(pool) {
 }
 
 function getPotionImageUrl(name) {
-  let safeLabel = String(name || 'Potion');
-  let initials = safeLabel.split(/[^A-Za-z0-9]+/).filter(Boolean).slice(0, 2).map(function (part) {
-    return part.charAt(0).toUpperCase();
-  }).join('') || 'P';
-  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6c4127"/><stop offset="100%" stop-color="#1f1713"/></linearGradient></defs><rect width="240" height="240" rx="28" fill="url(#g)"/><path d="M92 48h56v24l22 24v72c0 23-21 40-50 40s-50-17-50-40V96l22-24z" fill="#f1c28b" opacity="0.92"/><path d="M108 48h24v20h-24z" fill="#3a2419"/><path d="M86 126c12 12 28 18 49 18s37-6 49-18v43c0 23-21 40-50 40s-50-17-50-40z" fill="#d97749" opacity="0.85"/><text x="120" y="138" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#2a170f">' + escapeHtml(initials) + '</text></svg>';
-  return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+  let slug = slugifyAssetName(name);
+  return 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/potions/' + slug + '.png';
 }
 
 function buildPotionCollection() {
@@ -2493,7 +2581,7 @@ function buildPotionCollection() {
 function renderPotionCard(potion) {
   let text = potion.description[state.currentLanguage] || potion.description.ko || potion.description.en || '';
   let imageUrl = potion.imageUrl || getPotionImageUrl(potion.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(potion.name) + '" loading="lazy"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(potion.name) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(potion.name) + '" loading="lazy" onerror="handlePotionImageError(this)"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(potion.name) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
 }
 
 function renderPotions() {
@@ -2520,15 +2608,18 @@ function renderPatchNotes() {
 
   refs.patchList.innerHTML = notes.slice(0, 5).map(function (note) {
     let publishedAt = note.publishedAt ? Date.parse(note.publishedAt) : NaN;
-    let summary = String(note.summary || '').trim();
-    return '<article class="patch-card">' +
+    let title = state.currentLanguage === 'ko' ? translatePatchTitleToKo(note.title) : note.title;
+    let summary = String((state.currentLanguage === 'ko' ? translatePatchSummaryToKo(note.summaryKo || note.summary) : note.summary) || '').trim();
+    let noteId = note.id || String(note.link || '').split('/').pop();
+    let detailUrl = '/patch-note.html?id=' + encodeURIComponent(noteId);
+    return '<a class="patch-card patch-card-link" href="' + escapeHtml(detailUrl) + '">' +
       '<div class="patch-card-head">' +
-      '<div><h3 class="patch-title">' + escapeHtml(note.title) + '</h3></div>' +
+      '<div><h3 class="patch-title">' + escapeHtml(title) + '</h3></div>' +
       '<span class="build-meta">' + escapeHtml(Number.isFinite(publishedAt) ? formatDate(publishedAt) : (note.pubDate || '')) + '</span>' +
       '</div>' +
       '<p class="patch-summary">' + escapeHtml(summary || note.title) + '</p>' +
-      '<a class="patch-link" href="' + escapeHtml(note.link) + '" target="_blank" rel="noreferrer">' + escapeHtml(ui().links.readPatch) + '</a>' +
-      '</article>';
+      '<span class="patch-link">' + escapeHtml(ui().links.readPatch) + '</span>' +
+      '</a>';
   }).join('');
 }
 
@@ -2541,11 +2632,13 @@ function renderEditor() {
 function render() {
   ensureActiveBuild();
   applyTheme();
+  state.currentView = pageView();
   renderStaticText();
   renderLanguageMenu();
   renderViewState();
   refs.sortSelect.value = state.currentSort;
   if (refs.buildSearchInput) { refs.buildSearchInput.value = state.buildSearch; }
+  renderPageCharacterSelects();
   renderCharacterTabs();
   renderCharacterSummary();
   renderPatchNotes();
@@ -2555,12 +2648,6 @@ function render() {
   renderPotions();
   renderEditor();
 }
-
-refs.navCharacter.addEventListener('click', function () { jumpToSection('characters'); });
-refs.navCards.addEventListener('click', function () { jumpToSection('cards'); });
-refs.navRelics.addEventListener('click', function () { jumpToSection('relics'); });
-refs.navPotions.addEventListener('click', function () { jumpToSection('potions'); });
-refs.navBuilds.addEventListener('click', function () { jumpToSection('builds'); });
 
 refs.siteMenuButton.addEventListener('click', function () {
   refs.languageMenu.hidden = true;
@@ -2586,6 +2673,9 @@ refs.languageMenu.addEventListener('click', function (event) {
   let option = event.target.closest('[data-language]');
   if (!option) { return; }
   state.currentLanguage = languages.includes(option.dataset.language) ? option.dataset.language : 'ko';
+  try {
+    window.localStorage.setItem('sts2-site-language', state.currentLanguage);
+  } catch (error) {}
   closeUtilityMenus();
   render();
 });
@@ -2605,6 +2695,21 @@ if (refs.editorialLangEn && refs.editorialLangKo) {
 if (refs.themeToggleButton) {
   refs.themeToggleButton.addEventListener('click', function () { toggleTheme(); });
 }
+
+refs.browseCharacterSelect.addEventListener('change', function (event) {
+  state.activeCharacter = event.target.value;
+  state.filters = { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' };
+  state.editorFilters = { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' };
+  render();
+});
+
+refs.buildsCharacterSelect.addEventListener('change', function (event) {
+  state.activeCharacter = event.target.value;
+  if (!state.editorOpen || state.activeBuildId === null) {
+    state.draft = createEmptyBuild(state.activeCharacter);
+  }
+  render();
+});
 
 refs.sortSelect.addEventListener('change', function (event) {
   state.currentSort = event.target.value === 'popular' ? 'popular' : 'latest';

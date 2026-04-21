@@ -252,6 +252,13 @@ h3 {
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .nav-button.is-active,
 .character-tab.is-active,
 .build-card.is-active,
@@ -294,6 +301,14 @@ h3 {
   font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.28), transparent 24%),
+    linear-gradient(180deg, rgba(255, 214, 176, 0.24), rgba(176, 82, 34, 0.18)),
+    rgba(255, 255, 255, 0.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -10px 18px rgba(0, 0, 0, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .floating-menu {
@@ -386,6 +401,14 @@ h3 {
 
 .content.is-character-view {
   align-self: stretch;
+}
+
+.layout.is-home-view {
+  grid-template-columns: 1fr;
+}
+
+.layout.is-single-panel {
+  grid-template-columns: 1fr;
 }
 
 .sidebar,
@@ -550,6 +573,13 @@ h3 {
   background: var(--surface);
 }
 
+.patch-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
 .patch-card-head {
   display: flex;
   flex-wrap: wrap;
@@ -584,6 +614,13 @@ h3 {
 .patch-link:hover,
 .patch-link:focus-visible {
   text-decoration: underline;
+}
+
+.patch-card-link:hover,
+.patch-card-link:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(223, 119, 73, 0.35);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .summary-value {

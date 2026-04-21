@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Slay the Spire 2 최신 패치노트를 한국어 요약과 함께 확인하세요.">
+  <title>Slay the Spire 2 Patch Note</title>
+  <link rel="canonical" href="https://blackcat-web.pages.dev/patch-note.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Maru+Buri:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="patch-note">
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <a class="brand-home" href="/index.html" aria-label="Slay the Spire 2">Slay the Spire 2</a>
+      </div>
+      <div class="hero-controls">
+        <nav class="view-nav" aria-label="Primary navigation">
+          <a class="nav-button nav-link" href="/characters.html">캐릭터</a>
+          <a class="nav-button nav-link" href="/cards.html">카드</a>
+          <a class="nav-button nav-link" href="/relics.html">유물</a>
+          <a class="nav-button nav-link" href="/potions.html">포션</a>
+          <a class="nav-button nav-link" href="/builds.html">빌드</a>
+          <a class="nav-button nav-link" href="/index.html">홈</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="layout is-home-view">
+      <section class="content">
+        <section class="panel content-panel patch-panel">
+          <div class="workspace-head">
+            <div>
+              <p class="section-kicker" id="patch-note-kicker">Steam Patch Note</p>
+              <h1 id="patch-note-title"></h1>
+            </div>
+            <div class="workspace-actions">
+              <div class="action-row">
+                <a class="action-button" id="patch-note-source" href="#" target="_blank" rel="noreferrer">Steam 원문</a>
+              </div>
+            </div>
+          </div>
+          <div class="patch-meta" id="patch-note-meta"></div>
+          <article class="patch-card">
+            <h3 class="patch-title" id="patch-note-summary-heading">한국어 요약</h3>
+            <p class="patch-summary" id="patch-note-summary"></p>
+          </article>
+          <article class="patch-card">
+            <h3 class="patch-title" id="patch-note-body-heading">원문</h3>
+            <p class="patch-summary" id="patch-note-body"></p>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="patch-notes-data.js"></script>
+  <script src="patch-note.js"></script>
+</body>
+</html>

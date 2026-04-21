@@ -89,7 +89,9 @@ async function main() {
       const description = xmlField(block, 'description');
       const link = decodeEntities(xmlField(block, 'link'));
       const pubDate = decodeEntities(xmlField(block, 'pubDate'));
+      const id = String(link).split('/').pop();
       return {
+        id,
         title,
         link,
         pubDate,
