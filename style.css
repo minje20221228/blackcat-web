@@ -109,7 +109,7 @@ img {
 
 .hero {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 24px;
@@ -232,7 +232,7 @@ h3 {
   align-items: center;
   justify-content: flex-end;
   position: relative;
-  z-index: 1;
+  z-index: 5;
 }
 
 .view-nav {
@@ -282,6 +282,7 @@ h3 {
 
 .utility-menu {
   position: relative;
+  z-index: 6;
 }
 
 .utility-button {
@@ -321,7 +322,7 @@ h3 {
   gap: 6px;
   border-radius: 20px;
   background: var(--panel-strong);
-  z-index: 30;
+  z-index: 50;
 }
 
 .site-menu {
