@@ -1011,7 +1011,7 @@ function translatePotionTextToKo(text) {
   return directMap[result] || result;
 }
 
-let POTIONS_DATA = [
+let FALLBACK_POTIONS_DATA = [
   { name: 'Blood Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Heal for 20% of your Max HP.' } },
   { name: 'Poison Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Apply 6 Poison.' } },
   { name: 'Star Potion', rarity: 'Common', pool: 'Shared', description: { en: 'Gain 3 Stars.' } },
@@ -1079,6 +1079,8 @@ let POTIONS_DATA = [
   potion.description.ko = translatePotionTextToKo(potion.description.en);
   return potion;
 });
+
+let POTIONS_DATA = window.STS2_POTIONS_DATA || FALLBACK_POTIONS_DATA;
 
 let uiText = {
   en: {
@@ -2556,11 +2558,17 @@ function renderRelics() {
 
 function getPotionPoolLabel(pool) {
   let labels = {
-    Shared: { en: 'Shared', ko: '공용' },
-    Event: { en: 'Event', ko: '이벤트' },
-    Token: { en: 'Token', ko: '토큰' }
+    shared: { en: 'Shared', ko: '공용' },
+    event: { en: 'Event', ko: '이벤트' },
+    token: { en: 'Token', ko: '토큰' },
+    ironclad: { en: 'Ironclad', ko: '아이언클래드' },
+    silent: { en: 'Silent', ko: '사일런트' },
+    defect: { en: 'Defect', ko: '디펙트' },
+    regent: { en: 'Regent', ko: '리젠트' },
+    necrobinder: { en: 'Necrobinder', ko: '네크로바인더' }
   };
-  let entry = labels[pool] || labels.Shared;
+  let key = String(pool || 'shared').toLowerCase();
+  let entry = labels[key] || labels.shared;
   return entry[state.currentLanguage] || entry.ko;
 }
 
@@ -2569,19 +2577,86 @@ function getPotionImageUrl(name) {
   return 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/potions/' + slug + '.png';
 }
 
+function getPotionDisplayName(potion) {
+  if (state.currentLanguage === 'ko' && potion.koName) {
+    return potion.koName;
+  }
+  return potion.name;
+}
+
+function getPotionDynamicValueMap(potion) {
+  let values = {};
+  (potion.dynamicVars || []).forEach(function (item) {
+    if (!item) {
+      return;
+    }
+    if (item.key) {
+      values[item.key] = item.value;
+    }
+    if (item.power_type) {
+      values[item.power_type] = item.value;
+    }
+    if (item.var_type) {
+      values[item.var_type] = item.value;
+    }
+  });
+  return values;
+}
+
+function getPluralLabel(count, singular, plural) {
+  return Number(count) === 1 ? singular : plural;
+}
+
+function normalizePotionDescription(text, potion, language) {
+  let valueMap = getPotionDynamicValueMap(potion);
+  let result = String(text || '');
+
+  result = result
+    .replace(/\{Energy:energyIcons\(\)\}/g, language === 'ko' ? '에너지 ' + (valueMap.Energy || 0) + '개' : (valueMap.Energy || 0) + ' Energy')
+    .replace(/\{energyPrefix:energyIcons\(1\)\}/g, language === 'ko' ? '에너지 1개' : '1 Energy')
+    .replace(/\{Stars:starIcons\(\)\}/g, language === 'ko' ? '별 ' + (valueMap.Stars || 0) + '개' : (valueMap.Stars || 0) + ' Stars')
+    .replace(/\{Repeat:choose\(1\):다음 턴에\|다음 \[blue\]\{\}\[\/blue\]턴 동안\}/g, Number(valueMap.Repeat) === 1 ? '다음 턴에' : '다음 ' + (valueMap.Repeat || 0) + '턴 동안')
+    .replace(/\{ClarityPower:choose\(1\):턴\|\[blue\]\{\}\[\/blue\]턴\}/g, Number(valueMap.ClarityPower) === 1 ? '턴' : (valueMap.ClarityPower || 0) + '턴')
+    .replace(/\{Repeat:plural:next turn\|for the next \[blue\]\{\}\[\/blue\] turns\}/g, Number(valueMap.Repeat) === 1 ? 'next turn' : 'for the next ' + (valueMap.Repeat || 0) + ' turns')
+    .replace(/\{Repeat:plural:Slot\|Slots\}/g, getPluralLabel(valueMap.Repeat, 'Slot', 'Slots'))
+    .replace(/\{Cards:plural:Soul\|Souls\}/g, getPluralLabel(valueMap.Cards, 'Soul', 'Souls'))
+    .replace(/\{Cards:plural:card\|cards\}/g, getPluralLabel(valueMap.Cards, 'card', 'cards'))
+    .replace(/\{Cards:plural:Shiv\|Shivs\}/g, getPluralLabel(valueMap.Cards, 'Shiv', 'Shivs'))
+    .replace(/\{Repeat:plural:turn\|turns\}/g, getPluralLabel(valueMap.Repeat, 'turn', 'turns'))
+    .replace(/\{RadiancePower:plural:turn\|turns\}/g, getPluralLabel(valueMap.RadiancePower, 'turn', 'turns'))
+    .replace(/\{ClarityPower:plural:turn\|\[blue\]\{\}\[\/blue\] turns\}/g, Number(valueMap.ClarityPower) === 1 ? 'turn' : (valueMap.ClarityPower || 0) + ' turns')
+    .replace(/\{([A-Za-z]+):diff\(\)\}/g, function (_, key) {
+      return valueMap[key] != null ? valueMap[key] : '';
+    })
+    .replace(/\{([A-Za-z]+)\}/g, function (_, key) {
+      return valueMap[key] != null ? valueMap[key] : '';
+    })
+    .replace(/\[(?:gold|blue|green)\]|\[\/(?:gold|blue|green)\]/g, '')
+    .replace(/\s+([?.!,])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return result;
+}
+
 function buildPotionCollection() {
   let rarityOrder = { Common: 0, Uncommon: 1, Rare: 2, Event: 3, Token: 4 };
   return POTIONS_DATA.slice().sort(function (a, b) {
     return (rarityOrder[a.rarity] ?? 99) - (rarityOrder[b.rarity] ?? 99)
       || getPotionPoolLabel(a.pool).localeCompare(getPotionPoolLabel(b.pool), getLocaleTag())
-      || a.name.localeCompare(b.name, getLocaleTag());
+      || getPotionDisplayName(a).localeCompare(getPotionDisplayName(b), getLocaleTag());
   });
 }
 
 function renderPotionCard(potion) {
-  let text = potion.description[state.currentLanguage] || potion.description.ko || potion.description.en || '';
+  let displayName = getPotionDisplayName(potion);
+  let text = normalizePotionDescription(
+    potion.description[state.currentLanguage] || potion.description.ko || potion.description.en || '',
+    potion,
+    state.currentLanguage
+  );
   let imageUrl = potion.imageUrl || getPotionImageUrl(potion.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(potion.name) + '" loading="lazy" onerror="handlePotionImageError(this)"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(potion.name) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(displayName) + '" loading="lazy" onerror="handlePotionImageError(this)"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(displayName) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
 }
 
 function renderPotions() {
