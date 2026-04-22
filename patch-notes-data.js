@@ -1,6 +1,6 @@
 window.STS2_PATCH_NOTES = {
   "source": "https://steamcommunity.com/games/2868840/rss",
-  "generatedAt": "2026-04-22T03:43:24.814Z",
+  "generatedAt": "2026-04-22T08:07:15.009Z",
   "items": [
     {
       "id": "526499614836130065",
