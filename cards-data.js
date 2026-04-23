@@ -2857,8 +2857,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/adaptive_strike.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/AdaptiveStrike",
     "sortCost": 2,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/adaptive_strike.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/adaptive_strike.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/adaptive_strike.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/adaptive_strike.png",
     "koName": "적응형 타격",
     "koUpgradedName": "적응형 타격+",
     "koDescription": "피해 18을 줍니다. 버린 카드 더미에 비용이 0인 이 카드의 복사본을 1장 추가합니다.",
@@ -3456,8 +3456,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/compact.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Compact",
     "sortCost": 1,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/compact.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/compact.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/compact.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/compact.png",
     "koName": "압축",
     "koUpgradedName": "압축+",
     "koDescription": "방어도 6을 얻습니다. 손패의 모든 상태 카드를 연료로 변화시킵니다.",
@@ -3538,8 +3538,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/consuming_shadow.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/ConsumingShadow",
     "sortCost": 2,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/consuming_shadow.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/consuming_shadow.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/consuming_shadow.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/consuming_shadow.png",
     "koName": "그림자 소모",
     "koUpgradedName": "그림자 소모+",
     "koDescription": "암흑 오브를 2번 영창합니다. 내 턴 종료 시, 가장 왼쪽의 구체를 발현합니다.",
@@ -4444,8 +4444,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/hotfix.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Hotfix",
     "sortCost": 0,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/hotfix.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/hotfix.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/hotfix.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/hotfix.png",
     "koName": "핫픽스",
     "koUpgradedName": "핫픽스+",
     "koDescription": "이번 턴 동안 집중 2를 얻습니다.",
@@ -4801,8 +4801,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/modded.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Modded",
     "sortCost": 0,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/modded.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/modded.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/modded.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/modded.png",
     "koName": "모드 적용",
     "koUpgradedName": "모드 적용+",
     "koDescription": "구체 슬롯을 1개 얻습니다. 카드를 1장 뽑습니다. 이 카드의 비용이 1 증가합니다.",
@@ -5228,8 +5228,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/shadow_shield.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/ShadowShield",
     "sortCost": 2,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/shadow_shield.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/shadow_shield.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/shadow_shield.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/shadow_shield.png",
     "koName": "그림자 방패",
     "koUpgradedName": "그림자 방패+",
     "koDescription": "방어도 11을 얻습니다. 암흑 오브를 1번 영창합니다.",
@@ -5263,8 +5263,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/shatter.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Shatter",
     "sortCost": 1,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/shatter.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/shatter.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/shatter.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/shatter.png",
     "koName": "산산조각",
     "koUpgradedName": "산산조각+",
     "koDescription": "모든 적에게 피해 11을 줍니다. 모든 구체를 발현합니다.",
@@ -5367,8 +5367,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/smokestack.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Smokestack",
     "sortCost": 1,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/smokestack.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/smokestack.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/smokestack.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/smokestack.png",
     "koName": "굴뚝",
     "koUpgradedName": "굴뚝+",
     "koDescription": "상태이상 카드를 생성할 때마다, 모든 적에게 피해 5를 줍니다.",
@@ -5402,8 +5402,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/spinner.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Spinner",
     "sortCost": 1,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/spinner.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/spinner.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/spinner.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/spinner.png",
     "koName": "스피너",
     "koUpgradedName": "스피너+",
     "koDescription": "내 턴 시작 시, 유리 오브를 1번 영창합니다.",
@@ -5505,8 +5505,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/subroutine.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Subroutine",
     "sortCost": 1,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/subroutine.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/subroutine.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/subroutine.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/subroutine.png",
     "koName": "서브루틴",
     "koUpgradedName": "서브루틴+",
     "koDescription": "파워 카드를 사용할 때마다, 에너지 1을 얻습니다.",
@@ -5688,8 +5688,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/synthesis.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Synthesis",
     "sortCost": 2,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/synthesis.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/synthesis.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/synthesis.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/synthesis.png",
     "koName": "합성",
     "koUpgradedName": "합성+",
     "koDescription": "피해 12를 줍니다. 다음에 사용하는 파워 카드의 비용이 0 비용이 0이 됩니다.",
@@ -5820,8 +5820,8 @@ window.STS2_CARDS_DATA = [
     "portraitUrl": "/media/card-portraits/defect/trash_to_treasure.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/TrashToTreasure",
     "sortCost": 1,
-    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/trash_to_treasure.png",
-    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/trash_to_treasure.png",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/trash_to_treasure.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/trash_to_treasure.png",
     "koName": "고철을 보물로",
     "koUpgradedName": "고철을 보물로+",
     "koDescription": "상태이상 카드를 생성할 때마다, 무작위 구체를 1번 영창합니다.",
@@ -5914,17 +5914,17 @@ window.STS2_CARDS_DATA = [
     "character": "Defect",
     "pool": "Defect",
     "type": "Skill",
-    "cost": "2",
+    "cost": "3",
     "rarity": "Rare",
     "image": "/media/cards-webp/voltaic.webp",
     "portraitUrl": "/media/card-portraits/defect/voltaic.webp",
     "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/Voltaic",
-    "sortCost": 2,
+    "sortCost": 3,
     "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/voltaic.png",
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/defect/beta/voltaic.png",
     "koName": "동전기",
     "koUpgradedName": "동전기+",
-    "koDescription": "이번 전투 동안 영창한 번개 오브 수만큼 번개 오브를 영창합니다.",
+    "koDescription": "이번 전투 동안 영창한 번개 오브 수만큼 번개 오브를 영창합니다. 소멸",
     "koUpgradedDescription": "이번 전투 동안 영창한 번개 오브 수만큼 번개 오브를 영창합니다.",
     "opggId": "Voltaic",
     "opggDynamicVars": [
@@ -6551,6 +6551,42 @@ window.STS2_CARDS_DATA = [
     ],
     "opggUpgradeChanges": [
       "Damage: +4.0"
+    ],
+    "opggKeywords": [
+      "Exhaust"
+    ]
+  },
+  {
+    "id": "336-not-yet",
+    "slug": "not_yet",
+    "name": "Not Yet",
+    "description": "Heal 10 HP. Exhaust.",
+    "upgradedName": "Not Yet+",
+    "upgradedDescription": "Heal 13 HP. Exhaust.",
+    "character": "Ironclad",
+    "pool": "Ironclad",
+    "type": "Skill",
+    "cost": "2",
+    "rarity": "Rare",
+    "image": "/media/cards-webp/not_yet.webp",
+    "portraitUrl": "/media/card-portraits/ironclad/not_yet.webp",
+    "sourceUrl": "https://op.gg/ko/slay-the-spire2/cards/NotYet",
+    "sortCost": 2,
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/ironclad/not_yet.png",
+    "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/ironclad/not_yet.png",
+    "koName": "불굴",
+    "koUpgradedName": "불굴+",
+    "koDescription": "체력을 10 회복합니다.",
+    "koUpgradedDescription": "체력을 13 회복합니다.",
+    "opggId": "NotYet",
+    "opggDynamicVars": [
+      {
+        "var_type": "Heal",
+        "value": 10
+      }
+    ],
+    "opggUpgradeChanges": [
+      "Heal: +3.0"
     ],
     "opggKeywords": [
       "Exhaust"
@@ -7385,7 +7421,7 @@ window.STS2_CARDS_DATA = [
     "character": "Ironclad",
     "pool": "Ironclad",
     "type": "Attack",
-    "cost": "2",
+    "cost": "1",
     "rarity": "Ancient",
     "image": "/media/cards-webp/break.webp",
     "portraitUrl": "/media/card-portraits/ironclad/break.webp",
@@ -7395,8 +7431,8 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/ironclad/break.png",
     "koName": "박살",
     "koUpgradedName": "박살+",
-    "koDescription": "피해 20을 줍니다. 취약 5을 부여합니다.",
-    "koUpgradedDescription": "피해 25을 줍니다. 취약 7을 겁니다.",
+    "koDescription": "피해 25을 줍니다. 취약 5을 부여합니다.",
+    "koUpgradedDescription": "피해 30을 줍니다. 취약 7을 겁니다.",
     "opggId": "Break",
     "opggDynamicVars": [
       {
@@ -13582,7 +13618,7 @@ window.STS2_CARDS_DATA = [
     "opggDynamicVars": [
       {
         "var_type": "Energy",
-        "value": 2
+        "value": 3
       }
     ],
     "opggUpgradeChanges": [
@@ -14759,7 +14795,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/regent/genesis.png",
     "koName": "창세",
     "koUpgradedName": "창세+",
-    "koDescription": "내 턴 시작 시, 을 얻습니다.",
+    "koDescription": "내 턴 시작 시, 별 에너지 2을 얻습니다.",
     "koUpgradedDescription": "내 턴 시작 시 별 에너지 3을 얻습니다.",
     "opggId": "Genesis",
     "opggDynamicVars": [
@@ -14875,8 +14911,8 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/regent/glow.png",
     "koName": "광채",
     "koUpgradedName": "광채+",
-    "koDescription": "을 얻습니다. 카드를 2장 뽑습니다.",
-    "koUpgradedDescription": "별 에너지 2를 얻습니다. 카드를 2장 뽑습니다.",
+    "koDescription": "별에너지 1을 얻습니다. 카드를 1장 뽑습니다. 다음턴에 카드를 1장을 뽑습니다.",
+    "koUpgradedDescription": "별 에너지 2를 얻습니다. 카드를 1장 뽑습니다. 다음턴에 카드를 1장 뽑습니다.",
     "opggId": "Glow",
     "opggDynamicVars": [
       {
@@ -15127,7 +15163,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/regent/hidden_cache.png",
     "koName": "비밀 상자",
     "koUpgradedName": "비밀 상자+",
-    "koDescription": "을 얻습니다. 다음 턴에, 을 얻습니다.",
+    "koDescription": "별에너지 1을 얻습니다. 다음 턴에, 별에너지 3을 얻습니다.",
     "koUpgradedDescription": "별 에너지 1을 얻습니다. 다음 턴 별 에너지 4를 얻습니다.",
     "opggId": "HiddenCache",
     "opggDynamicVars": [
@@ -16133,7 +16169,7 @@ window.STS2_CARDS_DATA = [
     "portraitImageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/regent/royal_gamble.png",
     "koName": "성대한 도박",
     "koUpgradedName": "성대한 도박+",
-    "koDescription": "을 9 얻습니다.",
+    "koDescription": "별에너지를 9 얻습니다.",
     "koUpgradedDescription": "보존. 별 에너지 9를 얻습니다. 소멸.",
     "opggId": "RoyalGamble",
     "opggDynamicVars": [
@@ -20903,3 +20939,440 @@ window.STS2_CARDS_DATA = [
     "opggKeywords": []
   }
 ];
+
+(function applyPatchedCardUpdates() {
+  var cards = window.STS2_CARDS_DATA || [];
+  var patchMap = {
+    'Dominate': {
+      description: 'Apply 1 Vulnerable. Gain 1 Strength for each Vulnerable on the enemy. Exhaust.',
+      upgradedDescription: 'Apply 2 Vulnerable. Gain 1 Strength for each Vulnerable on the enemy. Exhaust.',
+      koDescription: '취약을 1 부여합니다. 적이 지닌 취약 1당 힘을 1 얻습니다. 소멸.',
+      koUpgradedDescription: '취약을 2 부여합니다. 적이 지닌 취약 1당 힘을 1 얻습니다. 소멸.'
+    },
+    'Expect a Fight': {
+      description: 'Gain 1 Energy for each Attack in your Hand. You cannot gain additional Energy this turn.',
+      upgradedDescription: 'Cost changes from 2 to 1',
+      koDescription: '손패에 있는 공격 카드 1장당 에너지 1을 얻습니다. 이번 턴에는 추가 에너지를 얻을 수 없습니다.',
+      koUpgradedDescription: '비용이 2에서 1로 감소합니다.'
+    },
+    'Spite': {
+      description: 'Deal 5 damage. If you lost HP this turn, hits 2 times.',
+      upgradedDescription: 'Deal 5 damage. If you lost HP this turn, hits 3 times.',
+      koDescription: '피해 5를 줍니다. 이번 턴에 체력을 잃었다면, 2번 적중합니다.',
+      koUpgradedDescription: '피해 5를 줍니다. 이번 턴에 체력을 잃었다면, 3번 적중합니다.'
+    },
+    'Stoke': {
+      description: 'Exhaust your Hand. Add 1 random card into your Hand for each card Exhausted.',
+      upgradedDescription: 'Exhaust your Hand. Add 1 random Upgraded card into your Hand for each card Exhausted.',
+      koDescription: '손패를 모두 소멸시킵니다. 소멸된 카드 1장당 무작위 카드 1장을 손패에 추가합니다.',
+      koUpgradedDescription: '손패를 모두 소멸시킵니다. 소멸된 카드 1장당 강화된 무작위 카드 1장을 손패에 추가합니다.',
+      opggKeywords: []
+    },
+    'Break': {
+      description: 'Deal 20 damage. Apply 5 Vulnerable.',
+      upgradedDescription: 'Deal 30 damage. Apply 7 Vulnerable.',
+      koDescription: '피해 20을 주고 취약을 5 부여합니다.',
+      koUpgradedDescription: '피해 30을 주고 취약을 7 부여합니다.'
+    },
+    'Cinder': {
+      description: 'Deal 18 damage. Exhaust a random card in your Hand.',
+      upgradedDescription: 'Deal 24 damage. Exhaust a random card in your Hand.',
+      koDescription: '피해 18을 줍니다. 손패의 무작위 카드 1장을 소멸시킵니다.',
+      koUpgradedDescription: '피해 24를 줍니다. 손패의 무작위 카드 1장을 소멸시킵니다.'
+    },
+    'Fight Me!': {
+      description: 'Deal 5 damage twice. Gain 3 Strength. The enemy gains 1 Strength.',
+      upgradedDescription: 'Deal 6 damage twice. Gain 4 Strength. The enemy gains 1 Strength.',
+      koDescription: '피해를 5씩 2번 줍니다. 힘을 3 얻습니다. 적은 힘을 1 얻습니다.',
+      koUpgradedDescription: '피해를 6씩 2번 줍니다. 힘을 4 얻습니다. 적은 힘을 1 얻습니다.'
+    },
+    'Forgotten Ritual': {
+      description: 'If you Exhausted a card this turn, gain 3 Energy. Exhaust.',
+      upgradedDescription: 'If you Exhausted a card this turn, gain 4 Energy. Exhaust.',
+      koDescription: '이번 턴에 카드를 소멸시켰다면 에너지 3을 얻습니다. 소멸.',
+      koUpgradedDescription: '이번 턴에 카드를 소멸시켰다면 에너지 4를 얻습니다. 소멸.'
+    },
+    'Hemokinesis': {
+      description: 'Lose 2 HP. Deal 15 damage.',
+      upgradedDescription: 'Lose 2 HP. Deal 20 damage.',
+      koDescription: '체력을 2 잃고 피해 15를 줍니다.',
+      koUpgradedDescription: '체력을 2 잃고 피해 20을 줍니다.'
+    },
+    'Tremble': {
+      description: 'Apply 3 Vulnerable. Exhaust.',
+      upgradedDescription: 'Apply 4 Vulnerable. Exhaust.',
+      koDescription: '취약을 3 부여합니다. 소멸.',
+      koUpgradedDescription: '취약을 4 부여합니다. 소멸.'
+    },
+    'Colossus': {
+      rarity: 'Uncommon'
+    },
+    'Blade of Ink': {
+      description: 'Add 2 Inky Shivs into your Hand.',
+      upgradedDescription: 'Add 3 Inky Shivs into your Hand.',
+      koDescription: '잉크 단도 2장을 손패에 추가합니다.',
+      koUpgradedDescription: '잉크 단도 3장을 손패에 추가합니다.'
+    },
+    'Leading Strike': {
+      description: 'Deal 3 damage. Add 2 Shivs into your Hand.',
+      upgradedDescription: 'Deal 6 damage. Add 2 Shivs into your Hand.',
+      koDescription: '피해 3을 줍니다. 단도 2장을 손패에 추가합니다.',
+      koUpgradedDescription: '피해 6을 줍니다. 단도 2장을 손패에 추가합니다.'
+    },
+    'Speedster': {
+      description: 'Whenever you draw a card during your turn, deal 2 damage to ALL enemies.',
+      upgradedDescription: 'Innate. Whenever you draw a card during your turn, deal 2 damage to ALL enemies.',
+      koDescription: '내 턴 동안 카드를 뽑을 때마다, 모든 적에게 피해 2를 줍니다.',
+      koUpgradedDescription: '선천성. 내 턴 동안 카드를 뽑을 때마다, 모든 적에게 피해 2를 줍니다.'
+    },
+    'Follow Through': {
+      rarity: 'Common',
+      description: 'Deal 7 damage. If you have 5 or more other cards in your Hand, hits an additional time.',
+      upgradedDescription: 'Deal 9 damage. If you have 5 or more other cards in your Hand, hits an additional time.',
+      koDescription: '피해를 7 줍니다. 손패에 다른 카드가 5장 이상 있다면, 1번 추가로 적중합니다.',
+      koUpgradedDescription: '피해를 9 줍니다. 손패에 다른 카드가 5장 이상 있다면, 1번 추가로 적중합니다.'
+    },
+    'Memento Mori': {
+      description: 'Deal 9 damage. Deals 4 additional damage for each card discarded this turn.',
+      upgradedDescription: 'Deal 11 damage. Deals 5 additional damage for each card discarded this turn.',
+      koDescription: '피해 9를 줍니다. 이번 턴에 버린 카드 1장당 피해가 4 증가합니다.',
+      koUpgradedDescription: '피해 11을 줍니다. 이번 턴에 버린 카드 1장당 피해가 5 증가합니다.'
+    },
+    'Acrobatics': {
+      rarity: 'Uncommon'
+    },
+    'Anticipate': {
+      description: 'Gain 2 Dexterity this turn.',
+      upgradedDescription: 'Gain 3 Dexterity this turn.',
+      koDescription: '이번 턴 동안 민첩을 2 얻습니다.',
+      koUpgradedDescription: '이번 턴 동안 민첩을 3 얻습니다.'
+    },
+    'Corrosive Wave': {
+      description: 'Whenever you draw a card this turn, apply 2 Poison to ALL enemies.',
+      upgradedDescription: 'Whenever you draw a card this turn, apply 3 Poison to ALL enemies.',
+      koDescription: '이번 턴에 카드를 뽑을 때마다 모든 적에게 중독을 2 부여합니다.',
+      koUpgradedDescription: '이번 턴에 카드를 뽑을 때마다 모든 적에게 중독을 3 부여합니다.'
+    },
+    'Flick-Flack': {
+      description: 'Sly. Deal 6 damage to ALL enemies.',
+      upgradedDescription: 'Sly. Deal 8 damage to ALL enemies.',
+      koDescription: '교활. 모든 적에게 피해 6을 줍니다.',
+      koUpgradedDescription: '교활. 모든 적에게 피해 8을 줍니다.'
+    },
+    'Grand Finale': {
+      description: 'Can only be played if there are no cards in your Draw Pile. Deal 60 damage to ALL enemies.',
+      upgradedDescription: 'Can only be played if there are no cards in your Draw Pile. Deal 75 damage to ALL enemies.',
+      koDescription: '뽑을 카드 더미에 카드가 없을 때만 사용할 수 있습니다. 모든 적에게 피해 60을 줍니다.',
+      koUpgradedDescription: '뽑을 카드 더미에 카드가 없을 때만 사용할 수 있습니다. 모든 적에게 피해 75를 줍니다.'
+    },
+    'Pinpoint': {
+      description: 'Deal 15 damage. Costs 1 less Energy for each Skill played this turn.',
+      upgradedDescription: 'Deal 19 damage. Costs 1 less Energy for each Skill played this turn.',
+      koDescription: '피해 15를 줍니다. 이번 턴에 사용한 스킬 카드 1장당 비용이 1 감소합니다.',
+      koUpgradedDescription: '피해 19를 줍니다. 이번 턴에 사용한 스킬 카드 1장당 비용이 1 감소합니다.'
+    },
+    'Skewer': {
+      description: 'Deal 8 damage X times.',
+      upgradedDescription: 'Deal 11 damage X times.',
+      koDescription: '피해 8을 X번 줍니다.',
+      koUpgradedDescription: '피해 11을 X번 줍니다.'
+    },
+    'Untouchable': {
+      description: 'Sly. Gain 6 Block.',
+      upgradedDescription: 'Sly. Gain 8 Block.',
+      koDescription: '교활. 방어도 6을 얻습니다.',
+      koUpgradedDescription: '교활. 방어도 8을 얻습니다.'
+    },
+    'Glow': {
+      description: 'Gain 1 Star Energy. Draw 1 card. Next turn, draw 1 card.',
+      upgradedDescription: 'Gain 2 Star Energy. Draw 1 card. Next turn, draw 1 card.',
+      koDescription: '별 에너지 1을 얻습니다. 카드를 1장 뽑습니다. 다음 턴에 카드를 1장 뽑습니다.',
+      koUpgradedDescription: '별 에너지 2를 얻습니다. 카드를 1장 뽑습니다. 다음 턴에 카드를 1장 뽑습니다.'
+    },
+    'Alignment': {
+      extraCosts: [{ type: 'star', amount: 3 }]
+    },
+    'Astral Pulse': {
+      extraCosts: [{ type: 'star', amount: 3 }]
+    },
+    'Arsenal': {
+      description: 'Whenever you create a card, gain 1 Strength.',
+      upgradedDescription: 'Innate. Whenever you create a card, gain 1 Strength.',
+      koDescription: '카드를 생성할 때마다 힘을 1 얻습니다.',
+      koUpgradedDescription: '선천성. 카드를 생성할 때마다 힘을 1 얻습니다.'
+    },
+    'Bundle of Joy': {
+      cost: '1',
+      sortCost: 1
+    },
+    'BEGONE!': {
+      type: 'Skill',
+      description: 'Choose a card in your Hand to Transform into Minion Strike.',
+      upgradedDescription: 'Choose a card in your Hand to Transform into Minion Strike+.',
+      koDescription: '손패의 카드 1장을 하수인 일격으로 변화시킵니다.',
+      koUpgradedDescription: '손패의 카드 1장을 하수인 일격+로 변화시킵니다.'
+    },
+    'CHARGE!!': {
+      description: 'Choose 2 cards in your Draw Pile to Transform into Minion Dive Bombs.',
+      upgradedDescription: 'Choose 2 cards in your Draw Pile to Transform into Minion Dive Bombs+.',
+      koDescription: '뽑을 카드 더미의 카드 2장을 하수인 급강하 폭탄으로 변화시킵니다.',
+      koUpgradedDescription: '뽑을 카드 더미의 카드 2장을 하수인 급강하 폭탄+로 변화시킵니다.'
+    },
+    'Collision Course': {
+      description: 'Deal 11 damage. Add a Debris into your Hand.',
+      upgradedDescription: 'Deal 15 damage. Add a Debris into your Hand.',
+      koDescription: '피해 11을 줍니다. 손패에 잔해 1장을 추가합니다.',
+      koUpgradedDescription: '피해 15를 줍니다. 손패에 잔해 1장을 추가합니다.'
+    },
+    'Gather Light': {
+      description: 'Gain 8 Block. Gain 1 Star Energy.',
+      upgradedDescription: 'Gain 11 Block. Gain 1 Star Energy.',
+      koDescription: '방어도 8을 얻고 별 에너지 1을 얻습니다.',
+      koUpgradedDescription: '방어도 11을 얻고 별 에너지 1을 얻습니다.'
+    },
+    'Cloak of Stars': {
+      extraCosts: [{ type: 'star', amount: 1 }]
+    },
+    'Comet': {
+      extraCosts: [{ type: 'star', amount: 5 }]
+    },
+    'Crescent Spear': {
+      extraCosts: [{ type: 'star', amount: 1 }]
+    },
+    'Decisions, Decisions': {
+      extraCosts: [{ type: 'star', amount: 6 }]
+    },
+    'Dying Star': {
+      extraCosts: [{ type: 'star', amount: 3 }]
+    },
+    'Gamma Blast': {
+      extraCosts: [{ type: 'star', amount: 3 }]
+    },
+    'Heirloom Hammer': {
+      description: 'Deal 20 damage. Choose a Colorless card in your Hand. Add a copy of that card into your Hand.',
+      upgradedDescription: 'Deal 25 damage. Choose a Colorless card in your Hand. Add a copy of that card into your Hand.',
+      koDescription: '피해 20을 줍니다. 손패의 무색 카드 1장을 선택해 그 복사본을 손패에 추가합니다.',
+      koUpgradedDescription: '피해 25를 줍니다. 손패의 무색 카드 1장을 선택해 그 복사본을 손패에 추가합니다.'
+    },
+    'I Am Invincible': {
+      description: 'Gain 10 Block. At the end of your turn, if this is on top of your Draw Pile, play it.',
+      upgradedDescription: 'Gain 13 Block. At the end of your turn, if this is on top of your Draw Pile, play it.',
+      koDescription: '방어도 10을 얻습니다. 턴 종료 시 이 카드가 뽑을 카드 더미 맨 위에 있다면 사용합니다.',
+      koUpgradedDescription: '방어도 13을 얻습니다. 턴 종료 시 이 카드가 뽑을 카드 더미 맨 위에 있다면 사용합니다.'
+    },
+    'Kingly Kick': {
+      description: 'Deal 27 damage. Whenever you draw this card, reduce its cost by 1.',
+      upgradedDescription: 'Deal 35 damage. Whenever you draw this card, reduce its cost by 1.',
+      koDescription: '피해 27을 줍니다. 이 카드를 뽑을 때마다 비용이 1 감소합니다.',
+      koUpgradedDescription: '피해 35를 줍니다. 이 카드를 뽑을 때마다 비용이 1 감소합니다.'
+    },
+    'Kingly Punch': {
+      description: 'Deal 8 damage. Whenever you draw this card, increase its damage by 4 this combat.',
+      upgradedDescription: 'Deal 10 damage. Whenever you draw this card, increase its damage by 6 this combat.',
+      koDescription: '피해 8을 줍니다. 이 카드를 뽑을 때마다 이번 전투 동안 피해량이 4 증가합니다.',
+      koUpgradedDescription: '피해 10을 줍니다. 이 카드를 뽑을 때마다 이번 전투 동안 피해량이 6 증가합니다.'
+    },
+    'Minion Dive Bomb': {
+      cost: '0',
+      sortCost: 0
+    },
+    'Minion Strike': {
+      description: 'Deal 6 damage. Draw 1 card. Exhaust.',
+      upgradedDescription: 'Deal 9 damage. Draw 1 card. Exhaust.',
+      koDescription: '피해 6을 줍니다. 카드를 1장 뽑습니다. 소멸.',
+      koUpgradedDescription: '피해 9를 줍니다. 카드를 1장 뽑습니다. 소멸.'
+    },
+    'Parry': {
+      description: 'Whenever you play Sovereign Blade, gain 10 Block.',
+      upgradedDescription: 'Whenever you play Sovereign Blade, gain 14 Block.',
+      koDescription: '군주의 칼날을 사용할 때마다 방어도 10을 얻습니다.',
+      koUpgradedDescription: '군주의 칼날을 사용할 때마다 방어도 14를 얻습니다.'
+    },
+    'Patter': {
+      description: 'Gain 9 Block. Gain 2 Vigor.',
+      upgradedDescription: 'Gain 11 Block. Gain 3 Vigor.',
+      koDescription: '방어도 9를 얻고 활력을 2 얻습니다.',
+      koUpgradedDescription: '방어도 11을 얻고 활력을 3 얻습니다.'
+    },
+    'Solar Strike': {
+      description: 'Deal 9 damage. Gain 1 Star Energy.',
+      upgradedDescription: 'Deal 10 damage. Gain 2 Star Energy.',
+      koDescription: '피해 9를 주고 별 에너지 1을 얻습니다.',
+      koUpgradedDescription: '피해 10을 주고 별 에너지 2를 얻습니다.'
+    },
+    'Spoils of Battle': {
+      description: 'Forge 12.',
+      upgradedDescription: 'Forge 17.',
+      koDescription: '벼림 12.',
+      koUpgradedDescription: '벼림 17.'
+    },
+    'Void Form': {
+      description: 'Ethereal. End your turn. The first 2 cards you play each turn are free to play.',
+      upgradedDescription: 'End your turn. The first 2 cards you play each turn are free to play.',
+      koDescription: '휘발성. 턴을 종료합니다. 매 턴 처음 사용하는 카드 2장은 비용 없이 사용할 수 있습니다.',
+      koUpgradedDescription: '턴을 종료합니다. 매 턴 처음 사용하는 카드 2장은 비용 없이 사용할 수 있습니다.'
+    },
+    'Wrought in War': {
+      description: 'Deal 7 damage. Forge 7.',
+      upgradedDescription: 'Deal 9 damage. Forge 9.',
+      koDescription: '피해 7을 주고 벼림 7.',
+      koUpgradedDescription: '피해 9를 주고 벼림 9.'
+    },
+    'Falling Star': {
+      extraCosts: [{ type: 'star', amount: 2 }],
+      description: 'Deal 8 damage. Apply 1 Weak. Apply 1 Vulnerable.',
+      upgradedDescription: 'Deal 12 damage. Apply 1 Weak. Apply 1 Vulnerable.',
+      koDescription: '피해 8을 주고 약화 1, 취약 1을 부여합니다.',
+      koUpgradedDescription: '피해 12를 주고 약화 1, 취약 1을 부여합니다.'
+    },
+    'Glitterstream': {
+      description: 'Gain 11 Block. Next turn, gain 5 Block.',
+      upgradedDescription: 'Gain 13 Block. Next turn, gain 7 Block.',
+      koDescription: '방어도 11을 얻습니다. 다음 턴에 방어도 5를 얻습니다.',
+      koUpgradedDescription: '방어도 13을 얻습니다. 다음 턴에 방어도 7을 얻습니다.'
+    },
+    'Refine Blade': {
+      description: 'Forge 9. Next turn, gain 1 Star Energy.',
+      upgradedDescription: 'Forge 13. Next turn, gain 1 Star Energy.',
+      koDescription: '벼림 9. 다음 턴에 별 에너지 1을 얻습니다.',
+      koUpgradedDescription: '벼림 13. 다음 턴에 별 에너지 1을 얻습니다.'
+    },
+    'Celestial Might': {
+      description: 'Deal 6 damage 3 times.',
+      upgradedDescription: 'Deal 6 damage 4 times.',
+      koDescription: '피해 6을 3번 줍니다.',
+      koUpgradedDescription: '피해 6을 4번 줍니다.'
+    },
+    'Guiding Star': {
+      extraCosts: [{ type: 'star', amount: 2 }],
+      description: 'Deal 12 damage. Draw 2 cards.',
+      upgradedDescription: 'Deal 13 damage. Draw 3 cards.',
+      koDescription: '피해 12를 주고 카드를 2장 뽑습니다.',
+      koUpgradedDescription: '피해 13을 주고 카드를 3장 뽑습니다.'
+    },
+    'Meteor Shower': {
+      extraCosts: [{ type: 'star', amount: 2 }]
+    },
+    'Particle Wall': {
+      extraCosts: [{ type: 'star', amount: 2 }]
+    },
+    'Quasar': {
+      extraCosts: [{ type: 'star', amount: 2 }]
+    },
+    'Reflect': {
+      extraCosts: [{ type: 'star', amount: 3 }]
+    },
+    'Resonance': {
+      extraCosts: [{ type: 'star', amount: 3 }]
+    },
+    'Royal Gamble': {
+      extraCosts: [{ type: 'star', amount: 5 }]
+    },
+    'Seven Stars': {
+      extraCosts: [{ type: 'star', amount: 7 }]
+    },
+    'Sword Sage': {
+      description: 'Sovereign Blade now hits an additional time.',
+      upgradedDescription: 'Cost changes from 2 to 1',
+      koDescription: '군주의 칼날이 추가로 1번 더 적중합니다.',
+      koUpgradedDescription: '비용이 2에서 1로 감소합니다.'
+    },
+    'The Sealed Throne': {
+      extraCosts: [{ type: 'star', amount: 3 }]
+    },
+    'The Smith': {
+      extraCosts: [{ type: 'star', amount: 4 }]
+    },
+    'Banshee\'s Cry': {
+      cost: '9',
+      sortCost: 9,
+      description: 'Deal 33 damage to ALL enemies. Costs 2 Energy less for each Ethereal card played this combat.',
+      upgradedDescription: 'Cost changes from 9 to 7',
+      koDescription: '모든 적에게 피해 33을 줍니다. 이번 전투 동안 사용한 휘발성 카드 1장당 비용이 2 감소합니다.',
+      koUpgradedDescription: '비용이 9에서 7로 감소합니다.'
+    },
+    'Borrowed Time': {
+      cost: '1',
+      sortCost: 1,
+      description: 'Gain 4 Energy. Cards cost an additional energy this turn.',
+      upgradedDescription: 'Gain 6 Energy. Cards cost an additional energy this turn.',
+      koDescription: '에너지 4를 얻습니다. 이번 턴 동안 카드의 비용이 1 증가합니다.',
+      koUpgradedDescription: '에너지 6을 얻습니다. 이번 턴 동안 카드의 비용이 1 증가합니다.'
+    },
+    'Danse Macabre': {
+      description: 'Whenever you play a card that costs 2 Energy or more, gain 4 Block.',
+      upgradedDescription: 'Whenever you play a card that costs 2 Energy or more, gain 6 Block.',
+      koDescription: '비용이 2 이상인 카드를 사용할 때마다 방어도 4를 얻습니다.',
+      koUpgradedDescription: '비용이 2 이상인 카드를 사용할 때마다 방어도 6을 얻습니다.'
+    },
+    'Debilitate': {
+      description: 'Deal 10 damage. Vulnerable and Weak are twice as effective against the enemy for the next 3 turns.',
+      upgradedDescription: 'Deal 12 damage. Vulnerable and Weak are twice as effective against the enemy for the next 4 turns.',
+      koDescription: '피해 10을 줍니다. 다음 3턴 동안 적에게 걸린 취약과 약화의 효과가 2배가 됩니다.',
+      koUpgradedDescription: '피해 12를 줍니다. 다음 4턴 동안 적에게 걸린 취약과 약화의 효과가 2배가 됩니다.'
+    },
+    'Defy': {
+      description: 'Ethereal. Gain 6 Block. Apply 1 Weak.',
+      upgradedDescription: 'Ethereal. Gain 9 Block. Apply 1 Weak.',
+      koDescription: '휘발성. 방어도 6을 얻고 약화 1을 부여합니다.',
+      koUpgradedDescription: '휘발성. 방어도 9를 얻고 약화 1을 부여합니다.'
+    },
+    'Dirge': {
+      description: 'Summon 3 X times. Add X Souls into your Draw Pile. Exhaust.',
+      upgradedDescription: 'Summon 4 X times. Add X Souls+ into your Draw Pile. Exhaust.',
+      koDescription: 'X번 소환 3. 뽑을 카드 더미에 영혼을 X장 추가합니다. 소멸.',
+      koUpgradedDescription: 'X번 소환 4. 뽑을 카드 더미에 영혼+를 X장 추가합니다. 소멸.'
+    },
+    'Grave Warden': {
+      description: 'Gain 8 Block. Add a Soul into your Draw Pile.',
+      upgradedDescription: 'Gain 11 Block. Add a Soul into your Draw Pile.',
+      koDescription: '방어도 8을 얻습니다. 뽑을 카드 더미에 영혼을 1장 추가합니다.',
+      koUpgradedDescription: '방어도 11을 얻습니다. 뽑을 카드 더미에 영혼을 1장 추가합니다.'
+    },
+    'Sculpting Strike': {
+      description: 'Deal 9 damage. Add Ethereal to a card in your Hand.',
+      upgradedDescription: 'Deal 12 damage. Add Ethereal to a card in your Hand.',
+      koDescription: '피해 9를 줍니다. 손패의 카드 1장에 휘발성을 부여합니다.',
+      koUpgradedDescription: '피해 12를 줍니다. 손패의 카드 1장에 휘발성을 부여합니다.'
+    },
+    'Seance': {
+      cost: '1',
+      sortCost: 1,
+      description: 'Ethereal. Transform a card in your Draw Pile into Soul.',
+      upgradedDescription: 'Cost changes from 1 to 0',
+      koDescription: '휘발성. 뽑을 카드 더미의 카드 1장을 영혼으로 변화시킵니다.',
+      koUpgradedDescription: '비용이 1에서 0으로 감소합니다.'
+    },
+    'Hotfix': {
+      description: 'Gain 2 Focus this turn. Exhaust.',
+      upgradedDescription: 'Gain 2 Focus this turn.',
+      koDescription: '이번 턴 동안 집중을 2 얻습니다. 소멸.',
+      koUpgradedDescription: '이번 턴 동안 집중을 2 얻습니다.'
+    },
+    'Rocket Punch': {
+      description: 'Deal 13 damage. Draw 1 card. When a Status is created, reduce this card\'s cost to 0 until played.',
+      upgradedDescription: 'Deal 14 damage. Draw 2 cards. When a Status is created, reduce this card\'s cost to 0 until played.',
+      koDescription: '피해 13을 주고 카드를 1장 뽑습니다. 상태 카드가 생성되면, 이 카드의 비용이 사용할 때까지 0이 됩니다.',
+      koUpgradedDescription: '피해 14를 주고 카드를 2장 뽑습니다. 상태 카드가 생성되면, 이 카드의 비용이 사용할 때까지 0이 됩니다.'
+    },
+    'Voltaic': {
+      cost: '3',
+      sortCost: 3
+    },
+    'Serpent Form': {
+      description: 'Whenever you play a card, deal 4 damage to a random enemy.',
+      upgradedDescription: 'Whenever you play a card, deal 6 damage to a random enemy.',
+      koDescription: '카드를 사용할 때마다 무작위 적에게 피해 4를 줍니다.',
+      koUpgradedDescription: '카드를 사용할 때마다 무작위 적에게 피해 6을 줍니다.'
+    }
+  };
+
+  Object.keys(patchMap).forEach(function(name) {
+    var card = cards.find(function(entry) { return entry.name === name; });
+    if (card) Object.assign(card, patchMap[name]);
+  });
+
+  window.STS2_CARDS_DATA = cards.filter(function(card) {
+    return card.name !== 'Grapple';
+  });
+})();
