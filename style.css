@@ -565,32 +565,9 @@ h3 {
 
 .patch-carousel-shell {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
   align-items: stretch;
-}
-
-.patch-carousel-button {
-  width: 44px;
-  min-width: 44px;
-  padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--surface);
-  color: var(--text-strong);
-  cursor: pointer;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, opacity 180ms ease;
-}
-
-.patch-carousel-button:hover,
-.patch-carousel-button:focus-visible {
-  border-color: rgba(223, 119, 73, 0.38);
-  background: rgba(255, 255, 255, 0.07);
-}
-
-.patch-carousel-button:disabled {
-  opacity: 0.38;
-  cursor: default;
 }
 
 .patch-pill {
@@ -1251,10 +1228,6 @@ h3 {
 
   .patch-carousel-shell {
     grid-template-columns: 1fr;
-  }
-
-  .patch-carousel-button {
-    display: none;
   }
 
   .patch-list {

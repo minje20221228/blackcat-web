@@ -1310,8 +1310,6 @@ let refs = {
   patchHeading: document.getElementById('patch-heading'),
   patchMeta: document.getElementById('patch-meta'),
   patchList: document.getElementById('patch-list'),
-  patchPrevButton: document.getElementById('patch-prev-button'),
-  patchNextButton: document.getElementById('patch-next-button'),
   patchPanel: document.getElementById('patch-panel'),
   browseCharacterLabel: document.getElementById('browse-character-label'),
   browseCharacterSelect: document.getElementById('browse-character-select'),
@@ -2821,33 +2819,7 @@ function renderPatchNotes() {
 }
 
 function updatePatchCarouselButtons() {
-  if (!refs.patchList || !refs.patchPrevButton || !refs.patchNextButton) {
-    return;
-  }
-  let maxScrollLeft = Math.max(0, refs.patchList.scrollWidth - refs.patchList.clientWidth);
-  let hasOverflow = maxScrollLeft > 8;
-  refs.patchPrevButton.disabled = !hasOverflow || refs.patchList.scrollLeft <= 4;
-  refs.patchNextButton.disabled = !hasOverflow || refs.patchList.scrollLeft >= maxScrollLeft - 4;
-}
-
-function getPatchCarouselStep() {
-  if (!refs.patchList) {
-    return 320;
-  }
-  let card = refs.patchList.querySelector('.patch-card-link');
-  if (!card) {
-    return Math.max(260, Math.round(refs.patchList.clientWidth * 0.84));
-  }
-  let styles = window.getComputedStyle(refs.patchList);
-  let gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
-  return Math.round(card.getBoundingClientRect().width + gap);
-}
-
-function scrollPatchCarousel(direction) {
-  if (!refs.patchList) {
-    return;
-  }
-  refs.patchList.scrollBy({ left: getPatchCarouselStep() * direction, behavior: 'smooth' });
+  return;
 }
 
 function setupPatchCarousel() {
@@ -2865,6 +2837,7 @@ function setupPatchCarousel() {
     patchCarouselState.startX = event.clientX;
     patchCarouselState.startScrollLeft = refs.patchList.scrollLeft;
     patchCarouselState.moved = false;
+    patchCarouselState.suppressClick = false;
     refs.patchList.classList.add('is-pointer-down');
     refs.patchList.setPointerCapture(event.pointerId);
   });
@@ -2873,9 +2846,8 @@ function setupPatchCarousel() {
       return;
     }
     let delta = event.clientX - patchCarouselState.startX;
-    if (Math.abs(delta) > 6) {
+    if (Math.abs(delta) > 8) {
       patchCarouselState.moved = true;
-      patchCarouselState.suppressClick = true;
       refs.patchList.classList.add('is-dragging');
     }
     if (!patchCarouselState.moved) {
@@ -2895,9 +2867,11 @@ function setupPatchCarousel() {
     patchCarouselState.pointerId = null;
     refs.patchList.classList.remove('is-pointer-down');
     refs.patchList.classList.remove('is-dragging');
+    patchCarouselState.suppressClick = patchCarouselState.moved;
     updatePatchCarouselButtons();
     window.setTimeout(function () {
       patchCarouselState.suppressClick = false;
+      patchCarouselState.moved = false;
     }, 120);
   }
   refs.patchList.addEventListener('pointerup', endPatchDrag);
@@ -2990,14 +2964,6 @@ refs.languageMenu.addEventListener('click', function (event) {
   closeUtilityMenus();
   render();
 });
-
-if (refs.patchPrevButton) {
-  refs.patchPrevButton.addEventListener('click', function () { scrollPatchCarousel(-1); });
-}
-
-if (refs.patchNextButton) {
-  refs.patchNextButton.addEventListener('click', function () { scrollPatchCarousel(1); });
-}
 
 if (refs.editorialLangEn && refs.editorialLangKo) {
   refs.editorialLangEn.addEventListener('click', function () {

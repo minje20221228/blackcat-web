@@ -165,6 +165,7 @@ async function main() {
   const apiPayload = JSON.parse(await fetchText(NEWS_URL));
   const newsItems = (((apiPayload || {}).appnews || {}).newsitems || [])
     .filter((item) => Number(item.appid || APP_ID) === APP_ID)
+    .filter(isOfficialSteamNews)
     .map(normalizeNewsItem);
 
   const rss = await fetchText(RSS_URL).catch(() => '');
