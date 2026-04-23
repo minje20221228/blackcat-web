@@ -24,6 +24,7 @@
   function translatePatchTitleToKo(title) {
     return decode(String(title || ''))
       .replace(/Major Update/gi, '메이저 업데이트')
+      .replace(/Minor Update/gi, '마이너 업데이트')
       .replace(/Beta Hotfix Patch Notes/gi, '베타 핫픽스 패치노트')
       .replace(/Hotfix Patch Notes/gi, '핫픽스 패치노트')
       .replace(/Patch Notes/gi, '패치노트')
@@ -35,6 +36,8 @@
       .replace(/^General:/gm, '일반:')
       .replace(/^Balance:/gm, '밸런스:')
       .replace(/^CONTENT & BALANCE/gm, '콘텐츠 및 밸런스')
+      .replace(/^QUALITY OF LIFE:/gm, '편의성 개선:')
+      .replace(/^PERFORMANCE:/gm, '성능:')
       .replace(/^ART:/gm, '아트:')
       .replace(/^USER INTERFACE & EXPERIENCE:/gm, 'UI 및 사용 경험:')
       .replace(/^WRITING:/gm, '문구:')
@@ -83,6 +86,15 @@
     return result;
   }
 
+  function safeExternalUrl(value) {
+    try {
+      let url = new URL(String(value || ''), window.location.origin);
+      return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '#';
+    } catch (error) {
+      return '#';
+    }
+  }
+
   let note = data.items.find(function (item) {
     let itemId = item.id || String(item.link || '').split('/').pop();
     return itemId === noteId;
@@ -93,14 +105,16 @@
     return;
   }
 
-  localStorage.setItem('sts2-site-language', language);
+  try {
+    localStorage.setItem('sts2-site-language', language);
+  } catch (error) {}
   document.documentElement.lang = language === 'ko' ? 'ko' : 'en';
   document.title = language === 'ko' ? translatePatchTitleToKo(note.title) : note.title;
 
   document.getElementById('patch-note-kicker').textContent = language === 'ko' ? 'Steam 패치노트' : 'Steam Patch Note';
   document.getElementById('patch-note-title').textContent = language === 'ko' ? translatePatchTitleToKo(note.title) : decode(note.title);
   document.getElementById('patch-note-source').textContent = language === 'ko' ? 'Steam 원문' : 'Steam Source';
-  document.getElementById('patch-note-source').href = note.link;
+  document.getElementById('patch-note-source').href = safeExternalUrl(note.link);
   document.getElementById('patch-note-summary-heading').textContent = language === 'ko' ? '한국어 요약' : 'Summary';
   document.getElementById('patch-note-body-heading').textContent = language === 'ko' ? '원문' : 'Original';
   document.getElementById('patch-note-meta').innerHTML =

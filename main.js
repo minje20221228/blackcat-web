@@ -1085,7 +1085,7 @@ let POTIONS_DATA = window.STS2_POTIONS_DATA || FALLBACK_POTIONS_DATA;
 let uiText = {
   en: {
     heroTitle: 'Slay the Spire 2',
-    nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: 'Language 🌐', help: 'Help' },
+    nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: '🌐', help: 'Help' },
     patchKicker: 'Steam Sync',
     patchHeading: 'Latest Patch Notes',
     sortLabel: 'Sort',
@@ -1160,7 +1160,7 @@ let uiText = {
     },
     links: {
       patchSource: 'Steam',
-      readPatch: 'Read on Steam'
+      readPatch: 'Open details'
     },
     empty: {
       builds: 'No saved builds for this character yet. Open the editor and save one.',
@@ -1181,7 +1181,7 @@ let uiText = {
   },
   ko: {
     heroTitle: 'Slay the Spire 2',
-    nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '언어 🌐', help: '도움말' },
+    nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '🌐', help: '도움말' },
     patchKicker: 'Steam 동기화',
     patchHeading: '최신 패치노트',
     sortLabel: '정렬',
@@ -1256,7 +1256,7 @@ let uiText = {
     },
     links: {
       patchSource: 'Steam',
-      readPatch: 'Steam에서 보기'
+      readPatch: '자세히 보기'
     },
     empty: {
       builds: '아직 저장된 빌드가 없습니다. 편집기를 열어 저장하면 여기에 표시됩니다.',
@@ -1310,6 +1310,8 @@ let refs = {
   patchHeading: document.getElementById('patch-heading'),
   patchMeta: document.getElementById('patch-meta'),
   patchList: document.getElementById('patch-list'),
+  patchPrevButton: document.getElementById('patch-prev-button'),
+  patchNextButton: document.getElementById('patch-next-button'),
   patchPanel: document.getElementById('patch-panel'),
   browseCharacterLabel: document.getElementById('browse-character-label'),
   browseCharacterSelect: document.getElementById('browse-character-select'),
@@ -1426,6 +1428,15 @@ let state = {
   filters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
   editorFilters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
   draft: createEmptyBuild(PLAYABLE_CHARACTERS[0])
+};
+
+let patchCarouselState = {
+  dragging: false,
+  pointerId: null,
+  startX: 0,
+  startScrollLeft: 0,
+  moved: false,
+  suppressClick: false
 };
 
 function detectPreferredLanguage() {
@@ -1641,23 +1652,66 @@ function createEmptyBuild(character) {
   return { id: createId(), character: character, title: '', author: '', summary: '', notes: '', cards: [], createdAt: Date.now(), updatedAt: Date.now() };
 }
 
+function sanitizeTextInput(value, maxLength) {
+  return String(value || '')
+    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
+    .slice(0, maxLength);
+}
+
+function sanitizeBuildCardEntry(entry) {
+  if (!entry || typeof entry !== 'object') {
+    return null;
+  }
+  let cardId = sanitizeTextInput(entry.cardId, 120);
+  let card = cardMap.get(cardId);
+  if (!card || isBuildExcludedCard(card)) {
+    return null;
+  }
+  return {
+    cardId: cardId,
+    quantity: Math.max(1, Math.min(99, Number(entry.quantity) || 1)),
+    upgraded: hasVisibleUpgrade(card) ? Boolean(entry.upgraded) : false
+  };
+}
+
+function sanitizeBuild(build) {
+  if (!build || typeof build !== 'object') {
+    return null;
+  }
+  let character = PLAYABLE_CHARACTERS.includes(build.character) ? build.character : PLAYABLE_CHARACTERS[0];
+  let now = Date.now();
+  return {
+    id: sanitizeTextInput(build.id || createId(), 120),
+    character: character,
+    title: sanitizeTextInput(build.title, 80),
+    author: sanitizeTextInput(build.author, 40),
+    summary: sanitizeTextInput(build.summary, 220),
+    notes: sanitizeTextInput(build.notes, 420),
+    cards: Array.isArray(build.cards) ? build.cards.map(sanitizeBuildCardEntry).filter(Boolean) : [],
+    createdAt: Number.isFinite(Number(build.createdAt)) ? Number(build.createdAt) : now,
+    updatedAt: Number.isFinite(Number(build.updatedAt)) ? Number(build.updatedAt) : now
+  };
+}
+
 function loadSavedBuilds() {
   try {
     let raw = window.localStorage.getItem(STORAGE_KEY);
     let parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed) ? parsed.map(sanitizeBuild).filter(Boolean).slice(0, 200) : [];
   } catch (error) {
     return [];
   }
 }
 
-function persistSavedBuilds() { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.savedBuilds)); }
+function persistSavedBuilds() {
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.savedBuilds.map(sanitizeBuild).filter(Boolean).slice(0, 200)));
+}
 
 function loadPinnedIds() {
   try {
     let raw = window.localStorage.getItem(PINNED_KEY);
     let parsed = raw ? JSON.parse(raw) : [];
-    return new Set(Array.isArray(parsed) ? parsed : []);
+    return new Set(Array.isArray(parsed) ? parsed.map(function (item) { return sanitizeTextInput(item, 120); }).filter(Boolean).slice(0, 200) : []);
   } catch (error) {
     return new Set();
   }
@@ -1828,7 +1882,10 @@ function togglePinned(buildId) {
   renderBuildList();
 }
 
-function updateDraftField(field, value) { state.draft[field] = value; }
+function updateDraftField(field, value) {
+  let limits = { title: 80, author: 40, summary: 220, notes: 420 };
+  state.draft[field] = sanitizeTextInput(value, limits[field] || 420);
+}
 
 function addCardToDraft(cardId, upgraded) {
   let card = cardMap.get(cardId);
@@ -2134,11 +2191,16 @@ function translatePatchSummaryToKo(text) {
     .replace(/CONTENT & BALANCE/g, '콘텐츠 및 밸런스')
     .replace(/BUG FIXES/g, '버그 수정')
     .replace(/USER INTERFACE & EXPERIENCE/g, 'UI 및 사용 경험')
+    .replace(/QUALITY OF LIFE/g, '편의성 개선')
+    .replace(/PERFORMANCE/g, '성능')
     .replace(/ART/g, '아트')
     .replace(/Localization/g, '현지화')
     .replace(/Localization:/g, '현지화:')
     .replace(/General:/g, '일반:')
     .replace(/Balance:/g, '밸런스:')
+    .replace(/Events:/g, '이벤트:')
+    .replace(/Modding:/g, '모딩:')
+    .replace(/Multiplayer:/g, '멀티플레이:')
     .replace(/\bFixed\b/g, '수정')
     .replace(/\bAdded\b/g, '추가')
     .replace(/\bUpdated\b/g, '업데이트')
@@ -2169,7 +2231,8 @@ function renderStaticText() {
   refs.navPotions.textContent = currentUi.nav.potions;
   refs.navBuilds.textContent = currentUi.nav.builds;
   refs.languageButton.textContent = currentUi.nav.language;
-  refs.languageButton.setAttribute('title', currentUi.nav.language);
+  refs.languageButton.setAttribute('title', state.currentLanguage === 'ko' ? '언어 선택' : 'Language');
+  refs.languageButton.setAttribute('aria-label', state.currentLanguage === 'ko' ? '언어 선택' : 'Language');
   refs.siteMenuButton.setAttribute('aria-label', currentUi.nav.help);
   refs.siteMenuButton.setAttribute('title', currentUi.nav.help);
   refs.browseCharacterLabel.textContent = currentUi.fields.character;
@@ -2545,7 +2608,7 @@ function renderRelicCard(relic) {
   let rawText = relic.description[state.currentLanguage] || relic.description.ko || relic.description.en || '';
   let text = state.currentLanguage === 'ko' ? formatRelicDescriptionText(relic) : rawText;
   let imageUrl = relic.imageUrl || getRelicImageUrl(relic.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(getRelicLabel(relic.name)) + '" loading="lazy" onerror="handleRelicImageError(this)"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(getRelicLabel(relic.name)) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getIdentityLabel(relic.tier)) + '</span><span class="build-meta">' + escapeHtml(getRelicSourceLabel(relic.owner)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(getRelicLabel(relic.name)) + '" loading="lazy" data-image-fallback="relic"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(getRelicLabel(relic.name)) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getIdentityLabel(relic.tier)) + '</span><span class="build-meta">' + escapeHtml(getRelicSourceLabel(relic.owner)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
 }
 
 function renderRelics() {
@@ -2656,7 +2719,7 @@ function renderPotionCard(potion) {
     state.currentLanguage
   );
   let imageUrl = potion.imageUrl || getPotionImageUrl(potion.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(displayName) + '" loading="lazy" onerror="handlePotionImageError(this)"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(displayName) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(displayName) + '" loading="lazy" data-image-fallback="potion"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(displayName) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
 }
 
 function renderPotions() {
@@ -2672,6 +2735,7 @@ function renderPatchNotes() {
   if (!notes.length) {
     refs.patchMeta.innerHTML = '';
     refs.patchList.innerHTML = '<div class="empty-state">' + ui().empty.patchNotes + '</div>';
+    updatePatchCarouselButtons();
     return;
   }
 
@@ -2681,13 +2745,13 @@ function renderPatchNotes() {
     '<span class="patch-pill">' + escapeHtml(ui().labels.synced) + ': ' + escapeHtml(Number.isFinite(generatedAt) ? formatDateTime(generatedAt) : source) + '</span>' +
     '<span class="patch-pill">' + escapeHtml(ui().links.patchSource) + '</span>';
 
-  refs.patchList.innerHTML = notes.slice(0, 5).map(function (note) {
+  refs.patchList.innerHTML = notes.slice(0, 8).map(function (note) {
     let publishedAt = note.publishedAt ? Date.parse(note.publishedAt) : NaN;
     let title = state.currentLanguage === 'ko' ? translatePatchTitleToKo(note.title) : note.title;
     let summary = String((state.currentLanguage === 'ko' ? translatePatchSummaryToKo(note.summaryKo || note.summary) : note.summary) || '').trim();
     let noteId = note.id || String(note.link || '').split('/').pop();
     let detailUrl = '/patch-note.html?id=' + encodeURIComponent(noteId);
-    return '<a class="patch-card patch-card-link" href="' + escapeHtml(detailUrl) + '">' +
+    return '<a class="patch-card patch-card-link" href="' + escapeHtml(detailUrl) + '" data-patch-card="true">' +
       '<div class="patch-card-head">' +
       '<div><h3 class="patch-title">' + escapeHtml(title) + '</h3></div>' +
       '<span class="build-meta">' + escapeHtml(Number.isFinite(publishedAt) ? formatDate(publishedAt) : (note.pubDate || '')) + '</span>' +
@@ -2696,6 +2760,121 @@ function renderPatchNotes() {
       '<span class="patch-link">' + escapeHtml(ui().links.readPatch) + '</span>' +
       '</a>';
   }).join('');
+  setupPatchCarousel();
+  updatePatchCarouselButtons();
+}
+
+function updatePatchCarouselButtons() {
+  if (!refs.patchList || !refs.patchPrevButton || !refs.patchNextButton) {
+    return;
+  }
+  let maxScrollLeft = Math.max(0, refs.patchList.scrollWidth - refs.patchList.clientWidth);
+  let hasOverflow = maxScrollLeft > 8;
+  refs.patchPrevButton.disabled = !hasOverflow || refs.patchList.scrollLeft <= 4;
+  refs.patchNextButton.disabled = !hasOverflow || refs.patchList.scrollLeft >= maxScrollLeft - 4;
+}
+
+function getPatchCarouselStep() {
+  if (!refs.patchList) {
+    return 320;
+  }
+  let card = refs.patchList.querySelector('.patch-card-link');
+  if (!card) {
+    return Math.max(260, Math.round(refs.patchList.clientWidth * 0.84));
+  }
+  let styles = window.getComputedStyle(refs.patchList);
+  let gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+  return Math.round(card.getBoundingClientRect().width + gap);
+}
+
+function scrollPatchCarousel(direction) {
+  if (!refs.patchList) {
+    return;
+  }
+  refs.patchList.scrollBy({ left: getPatchCarouselStep() * direction, behavior: 'smooth' });
+}
+
+function setupPatchCarousel() {
+  if (!refs.patchList || refs.patchList.dataset.carouselBound === 'true') {
+    updatePatchCarouselButtons();
+    return;
+  }
+  refs.patchList.dataset.carouselBound = 'true';
+  refs.patchList.addEventListener('pointerdown', function (event) {
+    if (event.pointerType === 'mouse' && event.button !== 0) {
+      return;
+    }
+    patchCarouselState.dragging = true;
+    patchCarouselState.pointerId = event.pointerId;
+    patchCarouselState.startX = event.clientX;
+    patchCarouselState.startScrollLeft = refs.patchList.scrollLeft;
+    patchCarouselState.moved = false;
+    refs.patchList.classList.add('is-pointer-down');
+    refs.patchList.setPointerCapture(event.pointerId);
+  });
+  refs.patchList.addEventListener('pointermove', function (event) {
+    if (!patchCarouselState.dragging || event.pointerId !== patchCarouselState.pointerId) {
+      return;
+    }
+    let delta = event.clientX - patchCarouselState.startX;
+    if (Math.abs(delta) > 6) {
+      patchCarouselState.moved = true;
+      patchCarouselState.suppressClick = true;
+      refs.patchList.classList.add('is-dragging');
+    }
+    if (!patchCarouselState.moved) {
+      return;
+    }
+    refs.patchList.scrollLeft = patchCarouselState.startScrollLeft - delta;
+    updatePatchCarouselButtons();
+  });
+  function endPatchDrag(event) {
+    if (!patchCarouselState.dragging || (event && event.pointerId !== patchCarouselState.pointerId)) {
+      return;
+    }
+    if (event && refs.patchList.hasPointerCapture(event.pointerId)) {
+      refs.patchList.releasePointerCapture(event.pointerId);
+    }
+    patchCarouselState.dragging = false;
+    patchCarouselState.pointerId = null;
+    refs.patchList.classList.remove('is-pointer-down');
+    refs.patchList.classList.remove('is-dragging');
+    updatePatchCarouselButtons();
+    window.setTimeout(function () {
+      patchCarouselState.suppressClick = false;
+    }, 120);
+  }
+  refs.patchList.addEventListener('pointerup', endPatchDrag);
+  refs.patchList.addEventListener('pointercancel', endPatchDrag);
+  refs.patchList.addEventListener('lostpointercapture', endPatchDrag);
+  refs.patchList.addEventListener('scroll', updatePatchCarouselButtons, { passive: true });
+  refs.patchList.addEventListener('click', function (event) {
+    if (!patchCarouselState.suppressClick) {
+      return;
+    }
+    let card = event.target.closest('[data-patch-card]');
+    if (!card) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
+}
+
+function bindImageFallbacks() {
+  document.querySelectorAll('img[data-image-fallback]').forEach(function (img) {
+    if (img.dataset.fallbackBound === 'true') {
+      return;
+    }
+    img.dataset.fallbackBound = 'true';
+    img.addEventListener('error', function () {
+      if (img.dataset.imageFallback === 'relic') {
+        handleRelicImageError(img);
+      } else if (img.dataset.imageFallback === 'potion') {
+        handlePotionImageError(img);
+      }
+    });
+  });
 }
 
 function renderEditor() {
@@ -2722,6 +2901,7 @@ function render() {
   renderRelics();
   renderPotions();
   renderEditor();
+  bindImageFallbacks();
 }
 
 refs.siteMenuButton.addEventListener('click', function () {
@@ -2754,6 +2934,14 @@ refs.languageMenu.addEventListener('click', function (event) {
   closeUtilityMenus();
   render();
 });
+
+if (refs.patchPrevButton) {
+  refs.patchPrevButton.addEventListener('click', function () { scrollPatchCarousel(-1); });
+}
+
+if (refs.patchNextButton) {
+  refs.patchNextButton.addEventListener('click', function () { scrollPatchCarousel(1); });
+}
 
 if (refs.editorialLangEn && refs.editorialLangKo) {
   refs.editorialLangEn.addEventListener('click', function () {
