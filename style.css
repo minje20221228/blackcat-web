@@ -606,17 +606,20 @@ h3 {
 }
 
 .patch-card {
-  padding: 16px;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 20px;
-  background: var(--surface);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+    var(--surface);
+  overflow: hidden;
 }
 
 .patch-list {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 28%);
-  gap: 12px;
+  grid-auto-columns: minmax(260px, 31%);
+  gap: 14px;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 2px 2px 10px;
@@ -652,7 +655,56 @@ h3 {
   color: inherit;
   text-decoration: none;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-  min-height: 192px;
+  min-height: 340px;
+}
+
+.patch-card-feature {
+  grid-column: span 2;
+}
+
+.patch-card-media {
+  position: relative;
+  height: 132px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(225, 184, 139, 0.22), transparent 32%),
+    linear-gradient(135deg, rgba(39, 47, 58, 0.95), rgba(14, 18, 22, 0.92));
+}
+
+.patch-card-feature .patch-card-media {
+  height: 188px;
+}
+
+.patch-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.04);
+}
+
+.patch-card-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 28%, rgba(0, 0, 0, 0.36));
+  pointer-events: none;
+}
+
+.patch-card-media-empty {
+  display: grid;
+  place-items: center;
+  color: rgba(243, 246, 250, 0.72);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.patch-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px;
 }
 
 .patch-card-head {
@@ -660,18 +712,48 @@ h3 {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 10px;
+}
+
+.patch-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.patch-badge,
+.patch-source {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 5px 8px;
+  border: 1px solid rgba(200, 155, 109, 0.24);
+  border-radius: 999px;
+  background: rgba(200, 155, 109, 0.12);
+  color: var(--accent-strong);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.patch-badge-muted,
+.patch-source {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--muted);
 }
 
 .patch-title {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.03rem;
   font-weight: 700;
+  line-height: 1.38;
 }
 
 .patch-summary {
-  margin: 0;
+  margin: 10px 0 0;
   color: var(--muted);
   line-height: 1.58;
   white-space: pre-line;
@@ -681,10 +763,18 @@ h3 {
 .patch-link {
   display: inline-flex;
   align-items: center;
-  margin-top: 12px;
   color: var(--accent-strong);
   text-decoration: none;
   font-weight: 700;
+}
+
+.patch-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
 .patch-link:hover,
@@ -704,7 +794,8 @@ h3 {
 }
 
 [data-page='patch-note'] .patch-card {
-  padding: 14px 15px;
+  padding: 16px;
+  overflow: visible;
 }
 
 [data-page='patch-note'] .patch-title {
@@ -714,6 +805,16 @@ h3 {
 [data-page='patch-note'] .patch-summary {
   font-size: 0.9rem;
   line-height: 1.55;
+}
+
+.patch-note-image {
+  width: 100%;
+  max-height: 360px;
+  margin: 0 0 14px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
 }
 
 .summary-value {
@@ -1158,6 +1259,15 @@ h3 {
 
   .patch-list {
     grid-auto-columns: minmax(216px, 86%);
+  }
+
+  .patch-card-feature {
+    grid-column: span 1;
+  }
+
+  .patch-card-media,
+  .patch-card-feature .patch-card-media {
+    height: 126px;
   }
 
   .menu-toggle-button {

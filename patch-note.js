@@ -11,6 +11,15 @@
       .replace(/&#39;/g, '\'');
   }
 
+  function escapeHtml(text) {
+    return String(text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function formatDate(value) {
     let stamp = Date.parse(value);
     if (!Number.isFinite(stamp)) return value || '';
@@ -29,6 +38,24 @@
       .replace(/Hotfix Patch Notes/gi, '핫픽스 패치노트')
       .replace(/Patch Notes/gi, '패치노트')
       .replace(/The Neowsletter/gi, '네오우 소식지');
+  }
+
+  function getCategoryLabel(note) {
+    let category = note && note.category === 'patch' ? 'patch' : 'news';
+    if (language === 'ko') {
+      return category === 'patch' ? '패치노트' : '뉴스';
+    }
+    return category === 'patch' ? 'Patch Notes' : 'News';
+  }
+
+  function getKindLabel(note) {
+    let kind = String((note && note.kind) || 'news').toLowerCase();
+    let labels = {
+      ko: { major: '대형 업데이트', hotfix: '핫픽스', beta: '베타', patch: '패치', news: '뉴스', announcement: '공지' },
+      en: { major: 'Major Update', hotfix: 'Hotfix', beta: 'Beta', patch: 'Patch', news: 'News', announcement: 'Announcement' }
+    };
+    let bucket = labels[language === 'ko' ? 'ko' : 'en'];
+    return bucket[kind] || bucket.news;
   }
 
   function translatePatchTextToKo(text) {
@@ -111,15 +138,22 @@
   document.documentElement.lang = language === 'ko' ? 'ko' : 'en';
   document.title = language === 'ko' ? translatePatchTitleToKo(note.title) : note.title;
 
-  document.getElementById('patch-note-kicker').textContent = language === 'ko' ? 'Steam 패치노트' : 'Steam Patch Note';
+  document.getElementById('patch-note-kicker').textContent = language === 'ko' ? 'Steam 뉴스룸' : 'Steam Newsroom';
   document.getElementById('patch-note-title').textContent = language === 'ko' ? translatePatchTitleToKo(note.title) : decode(note.title);
   document.getElementById('patch-note-source').textContent = language === 'ko' ? 'Steam 원문' : 'Steam Source';
   document.getElementById('patch-note-source').href = safeExternalUrl(note.link);
   document.getElementById('patch-note-summary-heading').textContent = language === 'ko' ? '한국어 요약' : 'Summary';
-  document.getElementById('patch-note-body-heading').textContent = language === 'ko' ? '원문' : 'Original';
+  document.getElementById('patch-note-body-heading').textContent = language === 'ko' ? 'Steam 원문 내용' : 'Steam Source Content';
   document.getElementById('patch-note-meta').innerHTML =
-    '<span class="patch-pill">' + (language === 'ko' ? '게시일' : 'Published') + ': ' + formatDate(note.publishedAt || note.pubDate) + '</span>' +
-    '<span class="patch-pill">Steam</span>';
+    '<span class="patch-pill">' + escapeHtml(language === 'ko' ? '게시일' : 'Published') + ': ' + escapeHtml(formatDate(note.publishedAt || note.pubDate)) + '</span>' +
+    '<span class="patch-pill">' + escapeHtml(getCategoryLabel(note)) + '</span>' +
+    '<span class="patch-pill">' + escapeHtml(getKindLabel(note)) + '</span>' +
+    '<span class="patch-pill">' + escapeHtml(decode(note.sourceLabel || 'Steam')) + '</span>';
+  let image = document.getElementById('patch-note-image');
+  if (image && note.image) {
+    image.src = note.image;
+    image.hidden = false;
+  }
   document.getElementById('patch-note-summary').textContent = language === 'ko'
     ? translatePatchTextToKo(note.summaryKo || note.summary || '')
     : decode(note.summary || '');

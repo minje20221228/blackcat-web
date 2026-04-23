@@ -1086,8 +1086,8 @@ let uiText = {
   en: {
     heroTitle: 'Slay the Spire 2',
     nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: '🌐', help: 'Help' },
-    patchKicker: 'Steam Sync',
-    patchHeading: 'Latest Patch Notes',
+    patchKicker: 'Steam Newsroom',
+    patchHeading: 'Patch Notes & News',
     sortLabel: 'Sort',
     sortOptions: { latest: 'Latest', popular: 'Pinned' },
     characterKicker: 'Characters',
@@ -1159,7 +1159,7 @@ let uiText = {
       upgraded: 'Upgraded'
     },
     links: {
-      patchSource: 'Steam',
+      patchSource: 'Steam News',
       readPatch: 'Open details'
     },
     empty: {
@@ -1168,7 +1168,7 @@ let uiText = {
       library: 'No cards matched the current filters.',
       relics: 'No relic notes are available for this character yet.',
       potions: 'No potion entries are available right now.',
-      patchNotes: 'No Steam patch notes were synced yet.'
+      patchNotes: 'No Steam news has been synced yet.'
     },
     status: {
       saved: 'Build saved.',
@@ -1182,8 +1182,8 @@ let uiText = {
   ko: {
     heroTitle: 'Slay the Spire 2',
     nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '🌐', help: '도움말' },
-    patchKicker: 'Steam 동기화',
-    patchHeading: '최신 패치노트',
+    patchKicker: 'Steam 뉴스룸',
+    patchHeading: '패치노트 & 뉴스',
     sortLabel: '정렬',
     sortOptions: { latest: '최신순', popular: '고정순' },
     characterKicker: '캐릭터',
@@ -1255,7 +1255,7 @@ let uiText = {
       upgraded: '강화'
     },
     links: {
-      patchSource: 'Steam',
+      patchSource: 'Steam 뉴스',
       readPatch: '자세히 보기'
     },
     empty: {
@@ -1264,7 +1264,7 @@ let uiText = {
       library: '현재 필터에 맞는 카드가 없습니다.',
       relics: '이 캐릭터의 유물 정보가 아직 없습니다.',
       potions: '표시할 포션 정보가 없습니다.',
-      patchNotes: '동기화된 Steam 패치노트가 아직 없습니다.'
+      patchNotes: '동기화된 Steam 뉴스가 아직 없습니다.'
     },
     status: {
       saved: '빌드를 저장했습니다.',
@@ -2219,6 +2219,72 @@ function translatePatchSummaryToKo(text) {
     .replace(/&amp;/g, '&');
 }
 
+function getPatchCategoryLabel(note) {
+  let category = note && note.category === 'patch' ? 'patch' : 'news';
+  if (state.currentLanguage === 'ko') {
+    return category === 'patch' ? '패치노트' : '뉴스';
+  }
+  return category === 'patch' ? 'Patch Notes' : 'News';
+}
+
+function getPatchKindLabel(note) {
+  let kind = String((note && note.kind) || 'news').toLowerCase();
+  let labels = {
+    ko: { major: '대형 업데이트', hotfix: '핫픽스', beta: '베타', patch: '패치', news: '뉴스', announcement: '공지' },
+    en: { major: 'Major Update', hotfix: 'Hotfix', beta: 'Beta', patch: 'Patch', news: 'News', announcement: 'Announcement' }
+  };
+  let bucket = labels[state.currentLanguage === 'ko' ? 'ko' : 'en'];
+  return bucket[kind] || bucket.news;
+}
+
+function getPatchSourceLabel(note) {
+  return String((note && note.sourceLabel) || ui().links.patchSource || 'Steam');
+}
+
+function getPatchExcerpt(note, maxLength) {
+  let text = String((state.currentLanguage === 'ko' ? (note.summaryKo || translatePatchSummaryToKo(note.summary || '')) : (note.summary || '')) || '').trim();
+  text = text.replace(/\s*\n\s*/g, ' ').replace(/\s{2,}/g, ' ');
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.slice(0, maxLength - 1).trim() + '…';
+}
+
+function getPatchTitle(note) {
+  return state.currentLanguage === 'ko' ? translatePatchTitleToKo(note.title) : note.title;
+}
+
+function renderPatchCard(note, index) {
+  let publishedAt = note.publishedAt ? Date.parse(note.publishedAt) : NaN;
+  let noteId = note.id || String(note.link || '').split('/').pop();
+  let detailUrl = '/patch-note.html?id=' + encodeURIComponent(noteId);
+  let title = getPatchTitle(note);
+  let image = String(note.image || '').trim();
+  let isFeatured = index === 0;
+  let classes = 'patch-card patch-card-link' + (isFeatured ? ' patch-card-feature' : '');
+  let media = image
+    ? '<div class="patch-card-media"><img src="' + escapeHtml(image) + '" alt="" loading="lazy"></div>'
+    : '<div class="patch-card-media patch-card-media-empty"><span>' + escapeHtml(getPatchKindLabel(note)) + '</span></div>';
+  return '<a class="' + classes + '" href="' + escapeHtml(detailUrl) + '" data-patch-card="true">' +
+    media +
+    '<div class="patch-card-content">' +
+    '<div class="patch-card-head">' +
+    '<div class="patch-card-badges">' +
+    '<span class="patch-badge">' + escapeHtml(getPatchCategoryLabel(note)) + '</span>' +
+    '<span class="patch-badge patch-badge-muted">' + escapeHtml(getPatchKindLabel(note)) + '</span>' +
+    '</div>' +
+    '<span class="build-meta">' + escapeHtml(Number.isFinite(publishedAt) ? formatDate(publishedAt) : (note.pubDate || '')) + '</span>' +
+    '</div>' +
+    '<h3 class="patch-title">' + escapeHtml(title) + '</h3>' +
+    '<p class="patch-summary">' + escapeHtml(getPatchExcerpt(note, isFeatured ? 260 : 150) || note.title) + '</p>' +
+    '<div class="patch-card-foot">' +
+    '<span class="patch-source">' + escapeHtml(getPatchSourceLabel(note)) + '</span>' +
+    '<span class="patch-link">' + escapeHtml(ui().links.readPatch) + '</span>' +
+    '</div>' +
+    '</div>' +
+    '</a>';
+}
+
 function renderStaticText() {
   let currentUi = ui();
   let editorialLanguage = state.currentLanguage === 'ko' ? 'ko' : 'en';
@@ -2741,25 +2807,15 @@ function renderPatchNotes() {
 
   let generatedAt = PATCH_NOTES_DATA.generatedAt ? Date.parse(PATCH_NOTES_DATA.generatedAt) : NaN;
   let source = PATCH_NOTES_DATA.source || 'https://steamcommunity.com/games/2868840/rss';
+  let patchCount = notes.filter(function (note) { return note.category === 'patch'; }).length;
+  let newsCount = notes.length - patchCount;
   refs.patchMeta.innerHTML =
     '<span class="patch-pill">' + escapeHtml(ui().labels.synced) + ': ' + escapeHtml(Number.isFinite(generatedAt) ? formatDateTime(generatedAt) : source) + '</span>' +
-    '<span class="patch-pill">' + escapeHtml(ui().links.patchSource) + '</span>';
+    '<span class="patch-pill">' + escapeHtml(ui().links.patchSource) + ' ' + escapeHtml(String(notes.length)) + '</span>' +
+    '<span class="patch-pill">' + escapeHtml(state.currentLanguage === 'ko' ? '패치 ' : 'Patch ') + escapeHtml(String(patchCount)) + '</span>' +
+    '<span class="patch-pill">' + escapeHtml(state.currentLanguage === 'ko' ? '뉴스 ' : 'News ') + escapeHtml(String(newsCount)) + '</span>';
 
-  refs.patchList.innerHTML = notes.slice(0, 8).map(function (note) {
-    let publishedAt = note.publishedAt ? Date.parse(note.publishedAt) : NaN;
-    let title = state.currentLanguage === 'ko' ? translatePatchTitleToKo(note.title) : note.title;
-    let summary = String((state.currentLanguage === 'ko' ? translatePatchSummaryToKo(note.summaryKo || note.summary) : note.summary) || '').trim();
-    let noteId = note.id || String(note.link || '').split('/').pop();
-    let detailUrl = '/patch-note.html?id=' + encodeURIComponent(noteId);
-    return '<a class="patch-card patch-card-link" href="' + escapeHtml(detailUrl) + '" data-patch-card="true">' +
-      '<div class="patch-card-head">' +
-      '<div><h3 class="patch-title">' + escapeHtml(title) + '</h3></div>' +
-      '<span class="build-meta">' + escapeHtml(Number.isFinite(publishedAt) ? formatDate(publishedAt) : (note.pubDate || '')) + '</span>' +
-      '</div>' +
-      '<p class="patch-summary">' + escapeHtml(summary || note.title) + '</p>' +
-      '<span class="patch-link">' + escapeHtml(ui().links.readPatch) + '</span>' +
-      '</a>';
-  }).join('');
+  refs.patchList.innerHTML = notes.slice(0, 18).map(renderPatchCard).join('');
   setupPatchCarousel();
   updatePatchCarouselButtons();
 }
