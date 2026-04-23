@@ -141,11 +141,22 @@ img {
 
 .brand-home {
   color: var(--text-strong);
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-size: 50px;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.brand-home-logo {
+  display: block;
+  width: auto;
+  height: 1em;
+  max-width: min(300px, 72vw);
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.34));
 }
 
 
