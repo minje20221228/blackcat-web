@@ -1434,7 +1434,7 @@ let patchCarouselState = {
   startX: 0,
   startScrollLeft: 0,
   moved: false,
-  suppressClick: false
+  targetHref: ''
 };
 
 function detectPreferredLanguage() {
@@ -2822,6 +2822,13 @@ function updatePatchCarouselButtons() {
   return;
 }
 
+function goToPatchCard() {
+  if (!patchCarouselState.targetHref) {
+    return;
+  }
+  window.location.href = patchCarouselState.targetHref;
+}
+
 function setupPatchCarousel() {
   if (!refs.patchList || refs.patchList.dataset.carouselBound === 'true') {
     updatePatchCarouselButtons();
@@ -2837,7 +2844,11 @@ function setupPatchCarousel() {
     patchCarouselState.startX = event.clientX;
     patchCarouselState.startScrollLeft = refs.patchList.scrollLeft;
     patchCarouselState.moved = false;
-    patchCarouselState.suppressClick = false;
+    patchCarouselState.targetHref = '';
+    let card = event.target.closest('[data-patch-card]');
+    if (card && card.href) {
+      patchCarouselState.targetHref = card.href;
+    }
     refs.patchList.classList.add('is-pointer-down');
     refs.patchList.setPointerCapture(event.pointerId);
   });
@@ -2860,34 +2871,30 @@ function setupPatchCarousel() {
     if (!patchCarouselState.dragging || (event && event.pointerId !== patchCarouselState.pointerId)) {
       return;
     }
+    let wasMoved = patchCarouselState.moved;
+    patchCarouselState.dragging = false;
     if (event && refs.patchList.hasPointerCapture(event.pointerId)) {
       refs.patchList.releasePointerCapture(event.pointerId);
     }
-    patchCarouselState.dragging = false;
     patchCarouselState.pointerId = null;
     refs.patchList.classList.remove('is-pointer-down');
     refs.patchList.classList.remove('is-dragging');
-    patchCarouselState.suppressClick = patchCarouselState.moved;
     updatePatchCarouselButtons();
-    window.setTimeout(function () {
-      patchCarouselState.suppressClick = false;
-      patchCarouselState.moved = false;
-    }, 120);
+    if (event && event.type === 'pointerup' && !wasMoved) {
+      goToPatchCard();
+    }
+    patchCarouselState.moved = false;
+    patchCarouselState.targetHref = '';
   }
   refs.patchList.addEventListener('pointerup', endPatchDrag);
   refs.patchList.addEventListener('pointercancel', endPatchDrag);
   refs.patchList.addEventListener('lostpointercapture', endPatchDrag);
   refs.patchList.addEventListener('scroll', updatePatchCarouselButtons, { passive: true });
   refs.patchList.addEventListener('click', function (event) {
-    if (!patchCarouselState.suppressClick) {
-      return;
-    }
-    let card = event.target.closest('[data-patch-card]');
-    if (!card) {
+    if (event.detail === 0) {
       return;
     }
     event.preventDefault();
-    event.stopPropagation();
   }, true);
 }
 
