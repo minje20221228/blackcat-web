@@ -20942,6 +20942,107 @@ window.STS2_CARDS_DATA = [
 
 (function applyPatchedCardUpdates() {
   var cards = window.STS2_CARDS_DATA || [];
+  var cardImageBaseUrl = 'https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/card_portraits/';
+  var cardImageFolders = {
+    Colorless: 'colorless',
+    Defect: 'defect',
+    Event: 'event',
+    Ironclad: 'ironclad',
+    Necrobinder: 'necrobinder',
+    Regent: 'regent',
+    Silent: 'silent'
+  };
+
+  function slugifyCardAsset(value) {
+    return String(value || '')
+      .replace(/['’]/g, '')
+      .replace(/&/g, ' and ')
+      .replace(/[^a-zA-Z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '')
+      .toLowerCase();
+  }
+
+  function parseSortCost(cost) {
+    if (cost == null || cost === '') return 999;
+    var text = String(cost).trim();
+    if (text.toUpperCase() === 'X') return 99;
+    if (text.toUpperCase() === 'N/A') return 999;
+    var value = Number(text);
+    return Number.isFinite(value) ? value : 999;
+  }
+
+  function parseCostChangeText(text) {
+    var match = String(text || '').match(/^Cost changes from\s+(.+?)\s+to\s+(.+?)\.?$/i);
+    return match ? { from: match[1], to: match[2] } : null;
+  }
+
+  function getCostChangeText(fromCost, toCost, language) {
+    if (language === 'ko') {
+      return '비용이 ' + fromCost + '에서 ' + toCost + getKoreanCostParticle(toCost) + ' 감소합니다.';
+    }
+    return 'Cost changes from ' + fromCost + ' to ' + toCost;
+  }
+
+  function getKoreanCostParticle(cost) {
+    var text = String(cost == null ? '' : cost).trim();
+    var last = text.charAt(text.length - 1);
+    var needsEu = { '0': true, '3': true, '6': true };
+    return needsEu[last] ? '으로' : '로';
+  }
+
+  function getCardImageFolder(card, patch) {
+    if (patch && patch.imageFolder) return patch.imageFolder;
+    var imageUrl = String((patch && patch.imageUrl) || (card && card.imageUrl) || '');
+    var match = imageUrl.match(/\/card_portraits\/(.+)\/[^/]+\.png(?:[?#].*)?$/);
+    if (match) return match[1];
+    var type = (patch && patch.type) || (card && card.type) || '';
+    if (type === 'Status') return 'status';
+    if (type === 'Curse') return 'curse';
+    var character = (patch && patch.character) || (card && card.character) || 'Colorless';
+    return cardImageFolders[character] || slugifyCardAsset(character);
+  }
+
+  function applyPatchedImage(card, patch) {
+    if (!card || !patch || patch.autoImage === false) return;
+    var slug = patch.imageSlug || slugifyCardAsset(patch.name || card.name);
+    var folder = getCardImageFolder(card, patch);
+    if (!slug || !folder) return;
+    var imageUrl = cardImageBaseUrl + folder + '/' + slug + '.png';
+    patch.imageUrl = patch.imageUrl || imageUrl;
+    patch.portraitImageUrl = patch.portraitImageUrl || imageUrl;
+  }
+
+  function applyPatchedCostText(card, patch) {
+    if (!card || !patch) return;
+    if (patch.cost != null && patch.sortCost == null) {
+      patch.sortCost = parseSortCost(patch.cost);
+    }
+    if (patch.upgradedCost == null && patch.upgradedDescription) {
+      var patchCostChange = parseCostChangeText(patch.upgradedDescription);
+      if (patchCostChange) patch.upgradedCost = patchCostChange.to;
+    }
+    if (patch.upgradedCost == null) return;
+    var fromCost = patch.cost != null ? patch.cost : card.cost;
+    patch.upgradedSortCost = patch.upgradedSortCost == null ? parseSortCost(patch.upgradedCost) : patch.upgradedSortCost;
+    if (!patch.upgradedDescription || parseCostChangeText(patch.upgradedDescription)) {
+      patch.upgradedDescription = getCostChangeText(fromCost, patch.upgradedCost, 'en');
+    }
+    if (!patch.koUpgradedDescription || /^비용이\s+.+에서\s+.+(?:으)?로\s+감소합니다\.?$/.test(patch.koUpgradedDescription)) {
+      patch.koUpgradedDescription = getCostChangeText(fromCost, patch.upgradedCost, 'ko');
+    }
+  }
+
+  function syncDerivedCostData(card) {
+    if (!card) return;
+    var costChange = parseCostChangeText(card.upgradedDescription);
+    if (costChange && card.upgradedCost == null) {
+      card.upgradedCost = costChange.to;
+    }
+    if (card.upgradedCost != null && card.upgradedSortCost == null) {
+      card.upgradedSortCost = parseSortCost(card.upgradedCost);
+    }
+  }
+
   var patchMap = {
     'Dominate': {
       description: 'Apply 1 Vulnerable. Gain 1 Strength for each Vulnerable on the enemy. Exhaust.',
@@ -20951,9 +21052,9 @@ window.STS2_CARDS_DATA = [
     },
     'Expect a Fight': {
       description: 'Gain 1 Energy for each Attack in your Hand. You cannot gain additional Energy this turn.',
-      upgradedDescription: 'Cost changes from 2 to 1',
+      upgradedCost: '1',
       koDescription: '손패에 있는 공격 카드 1장당 에너지 1을 얻습니다. 이번 턴에는 추가 에너지를 얻을 수 없습니다.',
-      koUpgradedDescription: '비용이 2에서 1로 감소합니다.'
+      koUpgradedDescription: ''
     },
     'Spite': {
       description: 'Deal 5 damage. If you lost HP this turn, hits 2 times.',
@@ -21273,9 +21374,9 @@ window.STS2_CARDS_DATA = [
     },
     'Sword Sage': {
       description: 'Sovereign Blade now hits an additional time.',
-      upgradedDescription: 'Cost changes from 2 to 1',
+      upgradedCost: '1',
       koDescription: '군주의 칼날이 추가로 1번 더 적중합니다.',
-      koUpgradedDescription: '비용이 2에서 1로 감소합니다.'
+      koUpgradedDescription: ''
     },
     'The Sealed Throne': {
       extraCosts: [{ type: 'star', amount: 3 }]
@@ -21287,9 +21388,9 @@ window.STS2_CARDS_DATA = [
       cost: '9',
       sortCost: 9,
       description: 'Deal 33 damage to ALL enemies. Costs 2 Energy less for each Ethereal card played this combat.',
-      upgradedDescription: 'Cost changes from 9 to 7',
+      upgradedCost: '7',
       koDescription: '모든 적에게 피해 33을 줍니다. 이번 전투 동안 사용한 휘발성 카드 1장당 비용이 2 감소합니다.',
-      koUpgradedDescription: '비용이 9에서 7로 감소합니다.'
+      koUpgradedDescription: ''
     },
     'Borrowed Time': {
       cost: '1',
@@ -21339,9 +21440,9 @@ window.STS2_CARDS_DATA = [
       cost: '1',
       sortCost: 1,
       description: 'Ethereal. Transform a card in your Draw Pile into Soul.',
-      upgradedDescription: 'Cost changes from 1 to 0',
+      upgradedCost: '0',
       koDescription: '휘발성. 뽑을 카드 더미의 카드 1장을 영혼으로 변화시킵니다.',
-      koUpgradedDescription: '비용이 1에서 0으로 감소합니다.'
+      koUpgradedDescription: ''
     },
     'Hotfix': {
       description: 'Gain 2 Focus this turn. Exhaust.',
@@ -21369,8 +21470,14 @@ window.STS2_CARDS_DATA = [
 
   Object.keys(patchMap).forEach(function(name) {
     var card = cards.find(function(entry) { return entry.name === name; });
-    if (card) Object.assign(card, patchMap[name]);
+    if (!card) return;
+    var patch = patchMap[name];
+    applyPatchedImage(card, patch);
+    applyPatchedCostText(card, patch);
+    Object.assign(card, patch);
   });
+
+  cards.forEach(syncDerivedCostData);
 
   window.STS2_CARDS_DATA = cards.filter(function(card) {
     return card.name !== 'Grapple';

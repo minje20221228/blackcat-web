@@ -2561,7 +2561,7 @@ function formatCardCostDisplay(card, upgraded) {
   if (!card) {
     return '';
   }
-  let baseCost = card.cost == null ? '' : String(card.cost);
+  let baseCost = upgraded && card.upgradedCost != null ? String(card.upgradedCost) : (card.cost == null ? '' : String(card.cost));
   let extras = getCardExtraCosts(card, upgraded);
   if (!extras.length) {
     return baseCost;
