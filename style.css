@@ -1448,7 +1448,21 @@ h3 {
 .site-footer {
   display: grid;
   gap: 14px;
+  justify-items: center;
   margin-top: 16px;
+  text-align: center;
+}
+
+.site-footer .footer-nav {
+  justify-content: center;
+}
+
+.footer-mark {
+  margin: 0;
+  color: var(--text);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .static-page-shell {
