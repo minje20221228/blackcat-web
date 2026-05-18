@@ -1035,6 +1035,73 @@ h3 {
   gap: 14px;
 }
 
+.editor-library-list {
+  display: grid;
+  gap: 8px;
+}
+
+.editor-library-list .library-card {
+  padding: 10px 12px;
+  border-radius: 16px;
+}
+
+.editor-card-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.editor-card-copy {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.editor-card-title-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.editor-card-title-row .library-card-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editor-card-text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.editor-card-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.editor-card-actions .pill-button {
+  min-width: 64px;
+  text-align: center;
+}
+
+.editor-added-chip {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(223, 119, 73, 0.38);
+  background: rgba(223, 119, 73, 0.18);
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
 .pill-button {
   padding: 8px 12px;
   background: var(--surface-strong);
@@ -1289,6 +1356,14 @@ h3 {
   .library-list,
   .editor-library-list {
     max-height: none;
+  }
+
+  .editor-card-row {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-card-actions {
+    justify-content: flex-start;
   }
 }
 

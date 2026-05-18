@@ -1814,10 +1814,6 @@ function loadBuildIntoDraft(buildId) {
 }
 
 function saveCurrentBuild() {
-  if (!state.draft.cards.length) {
-    showStatus(ui().status.needCards);
-    return;
-  }
   let now = Date.now();
   let draft = clone(state.draft);
   draft.character = state.activeCharacter;
@@ -1839,6 +1835,10 @@ function saveCurrentBuild() {
   }
 
   state.draft = clone(draft);
+  state.activeCharacter = draft.character;
+  state.buildSearch = '';
+  state.currentSort = 'latest';
+  state.editorOpen = false;
   persistSavedBuilds();
   showStatus(ui().status.saved);
   render();
@@ -2615,6 +2615,13 @@ function buildLibraryCardMarkup(card, mode) {
   let imageMarkup = imageUrl ? '<img class="library-thumb" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, false)) + '">' : '<div class="library-thumb">' + escapeHtml(ui().labels.noImage) + '</div>';
   let canUpgrade = hasVisibleUpgrade(card);
   let addButtons = '<button class="pill-button pill-button-primary" type="button" data-add-card="' + card.id + '" data-upgraded="false">' + ui().buttons.addBase + '</button>' + (canUpgrade ? '<button class="pill-button" type="button" data-add-card="' + card.id + '" data-upgraded="true">' + ui().buttons.addUpgraded + '</button>' : '');
+  if (mode === 'editor') {
+    let quantity = state.draft.cards.reduce(function (sum, entry) {
+      return entry.cardId === card.id ? sum + entry.quantity : sum;
+    }, 0);
+    let selectedChip = quantity ? '<span class="editor-added-chip">x' + quantity + '</span>' : '';
+    return '<div class="editor-card-row"><div class="editor-card-copy"><div class="editor-card-title-row"><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p>' + selectedChip + '</div><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div><p class="library-card-text editor-card-text">' + escapeHtml(getCardText(card, false)) + '</p></div><div class="editor-card-actions">' + addButtons + '</div></div>';
+  }
   let actions = mode === 'editor' || state.editorOpen ? addButtons : '';
   let upgradedText = canUpgrade ? getCardText(card, true) : '';
   let upgradedBlock = upgradedText ? '<div class="library-card-upgrade"><span class="upgrade-label">' + escapeHtml(ui().labels.upgraded) + '</span><p class="library-card-text">' + escapeHtml(upgradedText) + '</p></div>' : '';
