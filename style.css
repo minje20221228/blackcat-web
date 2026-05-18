@@ -1369,6 +1369,11 @@ h3 {
   margin-top: 16px;
 }
 
+.home-editorial,
+.page-brief {
+  margin-bottom: 16px;
+}
+
 .editorial-panel,
 .static-panel,
 .site-footer {
