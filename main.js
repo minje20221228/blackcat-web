@@ -1154,6 +1154,7 @@ let uiText = {
       all: 'All',
       noImage: 'No image',
       draft: 'Draft',
+      recommended: 'Recommended',
       saved: 'Saved',
       energy: 'Energy',
       upgraded: 'Upgraded'
@@ -1250,6 +1251,7 @@ let uiText = {
       all: '전체',
       noImage: '이미지 없음',
       draft: '초안',
+      recommended: '추천',
       saved: '저장됨',
       energy: '에너지',
       upgraded: '강화'
@@ -1650,6 +1652,157 @@ function createEmptyBuild(character) {
   return { id: createId(), character: character, title: '', author: '', summary: '', notes: '', cards: [], createdAt: Date.now(), updatedAt: Date.now() };
 }
 
+let RECOMMENDED_BUILD_UPDATED_AT = Date.UTC(2026, 4, 29, 0, 0, 0);
+let RECOMMENDED_BUILD_DATA = [
+  {
+    id: 'recommended-ironclad-strength-exhaust',
+    character: 'Ironclad',
+    title: { en: 'Strength Exhaust Tempo', ko: '힘 소멸 템포' },
+    summary: {
+      en: 'Stabilize early fights with efficient attacks, then turn Exhaust and Strength into decisive burst turns.',
+      ko: '효율적인 공격으로 초반을 넘기고, 소멸과 힘을 폭발 턴으로 연결하는 추천 빌드입니다.'
+    },
+    notes: {
+      en: 'Upgrade Bash or Pommel Strike early, then prioritize Inflame, Feel No Pain, and Burning Pact. Fiend Fire and Offering convert the deck into a fast boss-kill plan once draw and defense are covered.',
+      ko: '초반에는 Bash 또는 Pommel Strike 강화로 전투 시간을 줄이고, 이후 Inflame, Feel No Pain, Burning Pact를 우선합니다. 드로우와 방어가 갖춰지면 Fiend Fire와 Offering이 보스전 마무리 수단이 됩니다.'
+    },
+    cards: [
+      { cardId: '31-bash', quantity: 1, upgraded: true },
+      { cardId: '371-pommel-strike', quantity: 2, upgraded: false },
+      { cardId: '447-shrug-it-off', quantity: 2, upgraded: false },
+      { cardId: '276-inflame', quantity: 1, upgraded: true },
+      { cardId: '191-feel-no-pain', quantity: 1, upgraded: true },
+      { cardId: '71-burning-pact', quantity: 1, upgraded: false },
+      { cardId: '194-fiend-fire', quantity: 1, upgraded: true },
+      { cardId: '346-offering', quantity: 1, upgraded: true }
+    ]
+  },
+  {
+    id: 'recommended-silent-shiv-discard',
+    character: 'Silent',
+    title: { en: 'Shiv Draw Engine', ko: '단도 드로우 엔진' },
+    summary: {
+      en: 'Use Shiv generation, discard, and cheap card flow to create many small actions that scale into Finisher turns.',
+      ko: '단도 생성, 버리기, 저비용 손패 순환으로 행동 수를 늘리고 Finisher 턴으로 전환하는 추천 빌드입니다.'
+    },
+    notes: {
+      en: 'Accuracy and Afterimage raise the value of every Shiv. Acrobatics and Calculated Gamble keep the hand moving, while Well-Laid Plans lets the deck hold payoff cards for the right turn.',
+      ko: 'Accuracy와 Afterimage가 단도 한 장의 가치를 끌어올립니다. Acrobatics와 Calculated Gamble로 손패를 계속 돌리고, Well-Laid Plans로 보상 카드를 필요한 턴까지 보존합니다.'
+    },
+    cards: [
+      { cardId: '43-blade-dance', quantity: 2, upgraded: true },
+      { cardId: '93-cloak-and-dagger', quantity: 2, upgraded: false },
+      { cardId: '2-accuracy', quantity: 1, upgraded: true },
+      { cardId: '6-afterimage', quantity: 1, upgraded: true },
+      { cardId: '3-acrobatics', quantity: 2, upgraded: false },
+      { cardId: '78-calculated-gamble', quantity: 1, upgraded: true },
+      { cardId: '198-finisher', quantity: 1, upgraded: true },
+      { cardId: '555-well-laid-plans', quantity: 1, upgraded: false }
+    ]
+  },
+  {
+    id: 'recommended-regent-star-payoff',
+    character: 'Regent',
+    title: { en: 'Star Payoff Control', ko: '별 보상 컨트롤' },
+    summary: {
+      en: 'Build Star flow and defensive control first, then spend the stored tempo on Comet and Genesis turns.',
+      ko: '별 수급과 방어 제어를 먼저 만들고, 모은 템포를 Comet과 Genesis 턴에 쓰는 추천 빌드입니다.'
+    },
+    notes: {
+      en: 'Falling Star, Venerate, and Guiding Star keep the resource engine active. Cloak of Stars and Gather Light buy time until Convergence, Comet, or Genesis can turn setup into a win condition.',
+      ko: 'Falling Star, Venerate, Guiding Star로 별 흐름을 유지합니다. Cloak of Stars와 Gather Light로 시간을 벌고, Convergence, Comet, Genesis로 세팅을 승리 조건으로 바꿉니다.'
+    },
+    cards: [
+      { cardId: '185-falling-star', quantity: 2, upgraded: false },
+      { cardId: '548-venerate', quantity: 1, upgraded: true },
+      { cardId: '240-guiding-star', quantity: 2, upgraded: false },
+      { cardId: '222-gather-light', quantity: 1, upgraded: true },
+      { cardId: '94-cloak-of-stars', quantity: 2, upgraded: false },
+      { cardId: '105-convergence', quantity: 1, upgraded: true },
+      { cardId: '99-comet', quantity: 1, upgraded: true },
+      { cardId: '223-genesis', quantity: 1, upgraded: true }
+    ]
+  },
+  {
+    id: 'recommended-necrobinder-soul-summon',
+    character: 'Necrobinder',
+    title: { en: 'Soul Summon Control', ko: '영혼 소환 컨트롤' },
+    summary: {
+      en: 'Create board presence with Osty and Wisp support, then convert Souls into longer combo turns.',
+      ko: '골골이와 Wisp 보조로 전장 압박을 만들고, 영혼을 긴 연계 턴으로 바꾸는 추천 빌드입니다.'
+    },
+    notes: {
+      en: 'Bodyguard and Grave Warden protect setup turns while Invoke, Capture Spirit, and Sacrifice keep Soul resources moving. Necro Mastery is the long-fight payoff once the deck can survive awkward draws.',
+      ko: 'Bodyguard와 Grave Warden으로 세팅 턴을 보호하고, Invoke, Capture Spirit, Sacrifice로 영혼 자원을 순환합니다. 어색한 손패도 버틸 수 있으면 Necro Mastery가 장기전 보상이 됩니다.'
+    },
+    cards: [
+      { cardId: '51-bodyguard', quantity: 1, upgraded: true },
+      { cardId: '540-unleash', quantity: 1, upgraded: true },
+      { cardId: '279-invoke', quantity: 2, upgraded: false },
+      { cardId: '560-wisp', quantity: 2, upgraded: false },
+      { cardId: '236-grave-warden', quantity: 2, upgraded: false },
+      { cardId: '81-capture-spirit', quantity: 1, upgraded: true },
+      { cardId: '333-necro-mastery', quantity: 1, upgraded: true },
+      { cardId: '419-sacrifice', quantity: 1, upgraded: false }
+    ]
+  },
+  {
+    id: 'recommended-defect-focus-orbs',
+    character: 'Defect',
+    title: { en: 'Focus Orb Engine', ko: '집중 오브 엔진' },
+    summary: {
+      en: 'Channel early Lightning and Frost, then let Focus, extra slots, and repeated orb triggers carry long fights.',
+      ko: '초반 번개와 냉기 오브를 채널링하고, 집중과 슬롯, 반복 발동으로 장기전을 장악하는 추천 빌드입니다.'
+    },
+    notes: {
+      en: 'Ball Lightning and Coolheaded keep the deck active while Glacier covers dangerous turns. Defragment and Capacitor multiply the value of every orb, and Echo Form becomes the late boss-fight ceiling.',
+      ko: 'Ball Lightning과 Coolheaded로 덱을 움직이고 Glacier로 위험 턴을 막습니다. Defragment와 Capacitor가 모든 오브의 가치를 키우며, Echo Form은 후반 보스전 상한을 높입니다.'
+    },
+    cards: [
+      { cardId: '565-zap', quantity: 1, upgraded: true },
+      { cardId: '164-dualcast', quantity: 1, upgraded: true },
+      { cardId: '27-ball-lightning', quantity: 2, upgraded: false },
+      { cardId: '107-coolheaded', quantity: 2, upgraded: true },
+      { cardId: '226-glacier', quantity: 1, upgraded: true },
+      { cardId: '144-defragment', quantity: 1, upgraded: true },
+      { cardId: '80-capacitor', quantity: 1, upgraded: false },
+      { cardId: '166-echo-form', quantity: 1, upgraded: true }
+    ]
+  }
+];
+
+function getLocalizedBuildValue(value) {
+  if (value && typeof value === 'object') {
+    return value[state.currentLanguage] || value.ko || value.en || '';
+  }
+  return String(value || '');
+}
+
+function getRecommendedBuilds() {
+  return RECOMMENDED_BUILD_DATA.map(function (build) {
+    return {
+      id: build.id,
+      character: build.character,
+      title: getLocalizedBuildValue(build.title),
+      author: 'Build Lab',
+      summary: getLocalizedBuildValue(build.summary),
+      notes: getLocalizedBuildValue(build.notes),
+      cards: clone(build.cards),
+      source: 'recommended',
+      createdAt: RECOMMENDED_BUILD_UPDATED_AT,
+      updatedAt: RECOMMENDED_BUILD_UPDATED_AT
+    };
+  });
+}
+
+function getAllBuilds() {
+  return getRecommendedBuilds().concat(state.savedBuilds);
+}
+
+function findBuildById(buildId) {
+  return getAllBuilds().find(function (build) { return build.id === buildId; });
+}
+
 function sanitizeTextInput(value, maxLength) {
   return String(value || '')
     .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
@@ -1767,13 +1920,16 @@ function summarizeBuild(build) {
 
 function buildsForActiveCharacter() {
   let search = state.buildSearch.trim().toLowerCase();
-  let builds = state.savedBuilds.filter(function (build) {
+  let builds = getAllBuilds().filter(function (build) {
     return build.character === state.activeCharacter && (!search || getBuildSearchText(build).includes(search));
   });
   return builds.slice().sort(function (a, b) {
     if (state.currentSort === 'popular') {
       let pinDiff = Number(state.pinnedIds.has(b.id)) - Number(state.pinnedIds.has(a.id));
       if (pinDiff) { return pinDiff; }
+    }
+    if ((a.source === 'recommended') !== (b.source === 'recommended')) {
+      return a.source === 'recommended' ? -1 : 1;
     }
     return b.updatedAt - a.updatedAt;
   });
@@ -1782,7 +1938,7 @@ function buildsForActiveCharacter() {
 function ensureActiveBuild() {
   state.savedBuilds.forEach(normalizeBuildCardEntries);
   normalizeBuildCardEntries(state.draft);
-  if (state.activeBuildId && !state.savedBuilds.some(function (build) { return build.id === state.activeBuildId; })) {
+  if (state.activeBuildId && !findBuildById(state.activeBuildId)) {
     state.activeBuildId = null;
   }
   if (state.draft.character !== state.activeCharacter) {
@@ -1802,7 +1958,7 @@ function openEditor(mode) {
 }
 
 function loadBuildIntoDraft(buildId) {
-  let build = state.savedBuilds.find(function (item) { return item.id === buildId; });
+  let build = findBuildById(buildId);
   if (!build) { return; }
   state.activeBuildId = build.id;
   state.activeCharacter = build.character;
@@ -1816,6 +1972,7 @@ function loadBuildIntoDraft(buildId) {
 function saveCurrentBuild() {
   let now = Date.now();
   let draft = clone(state.draft);
+  delete draft.source;
   draft.character = state.activeCharacter;
   draft.updatedAt = now;
   draft.title = draft.title.trim() || (getCharacterLabel(state.activeCharacter) + ' Build');
@@ -1847,6 +2004,7 @@ function saveCurrentBuild() {
 function duplicateCurrentBuild() {
   let duplicate = clone(state.draft);
   duplicate.id = createId();
+  delete duplicate.source;
   duplicate.title = duplicate.title ? duplicate.title + ' Copy' : getCharacterLabel(state.activeCharacter) + ' Copy';
   duplicate.createdAt = Date.now();
   duplicate.updatedAt = Date.now();
@@ -2504,7 +2662,8 @@ function renderBuildList() {
     article.className = 'build-card';
     article.dataset.buildId = build.id;
     if (build.id === state.activeBuildId) { article.classList.add('is-active'); }
-    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(build.id === state.activeBuildId ? ui().labels.draft : ui().labels.saved) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions"><button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button></div></div>';
+    let label = build.id === state.activeBuildId ? ui().labels.draft : (build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved);
+    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions"><button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button></div></div>';
     refs.buildList.appendChild(article);
   });
 }
