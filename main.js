@@ -1142,7 +1142,8 @@ let uiText = {
       upgrade: 'Toggle +',
       pin: 'Pin',
       unpin: 'Unpin',
-      source: 'Source'
+      source: 'Source',
+      close: 'Close'
     },
     labels: {
       hp: 'Health',
@@ -1161,7 +1162,10 @@ let uiText = {
       recommended: 'Recommended',
       saved: 'Saved',
       energy: 'Energy',
-      upgraded: 'Upgraded'
+      upgraded: 'Upgraded',
+      managePrompt: 'Enter the author name or admin key to manage this build.',
+      manageDenied: 'Only the author or an admin can edit or delete this build.',
+      ownerOnly: 'Author/Admin only'
     },
     links: {
       patchSource: 'Steam News',
@@ -1243,7 +1247,8 @@ let uiText = {
       upgrade: '강화 전환',
       pin: '고정',
       unpin: '고정 해제',
-      source: '출처'
+      source: '출처',
+      close: '닫기'
     },
     labels: {
       hp: '체력',
@@ -1262,7 +1267,10 @@ let uiText = {
       recommended: '추천',
       saved: '저장됨',
       energy: '에너지',
-      upgraded: '강화'
+      upgraded: '강화',
+      managePrompt: '이 빌드를 수정/삭제하려면 작성자명 또는 관리자 키를 입력하세요.',
+      manageDenied: '작성자 또는 관리자만 이 빌드를 수정/삭제할 수 있습니다.',
+      ownerOnly: '작성자/관리자 전용'
     },
     links: {
       patchSource: 'Steam 뉴스',
@@ -1362,7 +1370,10 @@ let refs = {
   pickerNote: document.getElementById('picker-note'),
   selectedCards: document.getElementById('selected-cards'),
   editorLibraryList: document.getElementById('editor-library-list'),
-  editorCardDetail: document.getElementById('editor-card-detail'),
+  cardModal: document.getElementById('card-modal'),
+  cardModalBackdrop: document.getElementById('card-modal-backdrop'),
+  cardModalClose: document.getElementById('card-modal-close'),
+  cardModalContent: document.getElementById('card-modal-content'),
   libraryList: document.getElementById('library-list'),
   fieldTitleLabel: document.getElementById('field-title-label'),
   fieldAuthorLabel: document.getElementById('field-author-label'),
@@ -1438,6 +1449,7 @@ let state = {
   filters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
   editorFilters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
   activePickerCardId: null,
+  activeModalCardId: null,
   draft: createEmptyBuild(PLAYABLE_CHARACTERS[0])
 };
 
@@ -1992,6 +2004,17 @@ function loadBuildIntoDraft(buildId) {
   render();
 }
 
+function loadBuildForEdit(buildId) {
+  let build = findBuildById(buildId);
+  if (!build) { return; }
+  if (build.source !== 'recommended' && !requestManagePermission(build)) { return; }
+  if (build.source === 'recommended') {
+    showStatus(ui().labels.manageDenied);
+    return;
+  }
+  loadBuildIntoDraft(buildId);
+}
+
 function saveCurrentBuild() {
   let now = Date.now();
   let draft = clone(state.draft);
@@ -2039,6 +2062,39 @@ function duplicateCurrentBuild() {
   render();
 }
 
+function normalizeCredential(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function getAdminCredential() {
+  try {
+    return normalizeCredential(window.localStorage.getItem('sts2-build-lab-admin-key'));
+  } catch (error) {
+    return '';
+  }
+}
+
+function canManageBuild(build, credential) {
+  if (!build) { return false; }
+  let normalized = normalizeCredential(credential);
+  let author = normalizeCredential(build.author);
+  let adminKey = getAdminCredential();
+  return Boolean(normalized && (normalized === author || (adminKey && normalized === adminKey)));
+}
+
+function requestManagePermission(build) {
+  if (!build || build.source === 'recommended') {
+    showStatus(ui().labels.manageDenied);
+    return false;
+  }
+  let credential = window.prompt(ui().labels.managePrompt || 'Enter author name or admin key.');
+  if (canManageBuild(build, credential)) {
+    return true;
+  }
+  showStatus(ui().labels.manageDenied);
+  return false;
+}
+
 function deleteCurrentBuild() {
   if (!state.activeBuildId) {
     state.draft = createEmptyBuild(state.activeCharacter);
@@ -2047,6 +2103,8 @@ function deleteCurrentBuild() {
     render();
     return;
   }
+  let activeBuild = state.savedBuilds.find(function (build) { return build.id === state.activeBuildId; });
+  if (!requestManagePermission(activeBuild)) { return; }
   state.savedBuilds = state.savedBuilds.filter(function (build) { return build.id !== state.activeBuildId; });
   state.pinnedIds.delete(state.activeBuildId);
   persistSavedBuilds();
@@ -2059,7 +2117,7 @@ function deleteCurrentBuild() {
 
 function deleteSavedBuild(buildId) {
   let build = state.savedBuilds.find(function (item) { return item.id === buildId; });
-  if (!build) { return; }
+  if (!build || !requestManagePermission(build)) { return; }
   state.savedBuilds = state.savedBuilds.filter(function (item) { return item.id !== buildId; });
   state.pinnedIds.delete(buildId);
   if (state.activeBuildId === buildId) {
@@ -2757,8 +2815,10 @@ function renderBuildList() {
     article.dataset.buildId = build.id;
     if (build.id === state.activeBuildId) { article.classList.add('is-active'); }
     let label = build.id === state.activeBuildId ? ui().labels.draft : (build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved);
-    let deleteButton = build.source === 'recommended' ? '' : '<button class="pill-button pill-button-danger" type="button" data-delete-build="' + build.id + '">' + ui().buttons.deleteSavedBuild + '</button>';
-    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions"><button class="pill-button pill-button-primary" type="button" data-edit-build="' + build.id + '">' + ui().buttons.editBuild + '</button><button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button>' + deleteButton + '</div></div>';
+    let manageButtons = build.source === 'recommended'
+      ? '<span class="build-meta">' + escapeHtml(ui().labels.ownerOnly) + '</span>'
+      : '<button class="pill-button pill-button-primary" type="button" data-edit-build="' + build.id + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + build.id + '">' + ui().buttons.deleteSavedBuild + '</button>';
+    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions">' + manageButtons + '<button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button></div></div>';
     refs.buildList.appendChild(article);
   });
 }
@@ -2887,25 +2947,43 @@ function buildEditorCardTileMarkup(card) {
   return '<button class="editor-card-tile' + activeClass + '" type="button" data-picker-card="' + escapeHtml(card.id) + '" aria-label="' + escapeHtml(getCardName(card, false)) + '">' + imageMarkup + '<span class="editor-card-tile-name">' + escapeHtml(getCardName(card, false)) + '</span>' + selectedChip + '</button>';
 }
 
-function renderEditorPickerDetail(cards) {
-  if (!refs.editorCardDetail) { return; }
-  if (!cards.length) {
-    refs.editorCardDetail.innerHTML = '<div class="empty-state">' + ui().empty.library + '</div>';
+function renderEditorPickerDetail() {
+  return;
+}
+
+function closeCardModal() {
+  state.activeModalCardId = null;
+  if (refs.cardModal) { refs.cardModal.hidden = true; }
+}
+
+function renderCardModal() {
+  if (!refs.cardModal || !refs.cardModalContent) { return; }
+  let card = cardMap.get(state.activeModalCardId);
+  if (!card) {
+    closeCardModal();
     return;
   }
-  let card = cardMap.get(state.activePickerCardId);
-  if (!card || !cards.some(function (item) { return item.id === card.id; })) {
-    card = cards[0];
-    state.activePickerCardId = card.id;
-  }
   let imageUrl = getCardImageUrl(card);
-  let imageMarkup = imageUrl ? '<img class="editor-card-detail-image" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, false)) + '" loading="lazy">' : '<div class="editor-card-detail-image editor-card-detail-image-empty">' + escapeHtml(ui().labels.noImage) + '</div>';
+  let imageMarkup = imageUrl ? '<img class="card-modal-image" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, false)) + '" loading="lazy">' : '<div class="card-modal-image card-modal-image-empty">' + escapeHtml(ui().labels.noImage) + '</div>';
   let canUpgrade = hasVisibleUpgrade(card);
   let upgradedText = canUpgrade ? getCardText(card, true) : '';
-  let upgradedBlock = upgradedText ? '<div class="library-card-upgrade"><span class="upgrade-label">' + escapeHtml(ui().labels.upgraded) + '</span><p class="library-card-text">' + escapeHtml(upgradedText) + '</p></div>' : '';
-  let addButtons = '<button class="pill-button pill-button-primary" type="button" data-add-card="' + escapeHtml(card.id) + '" data-upgraded="false">' + ui().buttons.addBase + '</button>' + (canUpgrade ? '<button class="pill-button" type="button" data-add-card="' + escapeHtml(card.id) + '" data-upgraded="true">' + ui().buttons.addUpgraded + '</button>' : '');
-  refs.editorCardDetail.innerHTML = '<article class="editor-card-detail">' + imageMarkup + '<div class="editor-card-detail-copy"><div><h4 class="editor-card-detail-title">' + escapeHtml(getCardName(card, false)) + '</h4><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div></div><p class="library-card-text">' + escapeHtml(getCardText(card, false)) + '</p>' + upgradedBlock + '<div class="editor-card-actions">' + addButtons + '</div></div></article>';
+  let upgradedBlock = upgradedText ? '<section class="card-modal-section"><span class="upgrade-label">' + escapeHtml(ui().labels.upgraded) + '</span><p class="library-card-text">' + escapeHtml(upgradedText) + '</p></section>' : '';
+  let currentEntry = state.draft.cards.find(function (entry) { return entry.cardId === card.id && entry.upgraded === false; });
+  let upgradedEntry = state.draft.cards.find(function (entry) { return entry.cardId === card.id && entry.upgraded === true; });
+  let removeBase = currentEntry ? '<button class="pill-button pill-button-danger" type="button" data-remove-card="' + escapeHtml(card.id) + '" data-upgraded="false">' + ui().buttons.remove + '</button>' : '';
+  let removeUpgraded = upgradedEntry ? '<button class="pill-button pill-button-danger" type="button" data-remove-card="' + escapeHtml(card.id) + '" data-upgraded="true">' + ui().buttons.remove + ' +</button>' : '';
+  let addButtons = '<button class="pill-button pill-button-primary" type="button" data-add-card="' + escapeHtml(card.id) + '" data-upgraded="false">' + ui().buttons.addBase + '</button>' + (canUpgrade ? '<button class="pill-button" type="button" data-add-card="' + escapeHtml(card.id) + '" data-upgraded="true">' + ui().buttons.addUpgraded + '</button>' : '') + removeBase + removeUpgraded;
+  refs.cardModalContent.innerHTML = '<article class="card-modal-card">' + imageMarkup + '<div class="card-modal-copy"><div><p class="section-kicker">' + escapeHtml(getCharacterLabel(card.character)) + '</p><h3 class="card-modal-title" id="card-modal-title">' + escapeHtml(getCardName(card, false)) + '</h3><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div></div><section class="card-modal-section"><p class="library-card-text">' + escapeHtml(getCardText(card, false)) + '</p></section>' + upgradedBlock + '<div class="card-modal-actions">' + addButtons + '</div></div></article>';
+  refs.cardModal.hidden = false;
 }
+
+function openCardModal(cardId) {
+  state.activePickerCardId = cardId;
+  state.activeModalCardId = cardId;
+  renderLibrary();
+  renderCardModal();
+}
+
 
 function buildLibraryCardMarkup(card, mode) {
   let imageUrl = getCardImageUrl(card);
@@ -2948,7 +3026,6 @@ function renderLibrary() {
       refs.editorLibraryList.appendChild(editCard);
     });
   }
-  renderEditorPickerDetail(editorCards);
 }
 
 function getRelicSourceLabel(owner) {
@@ -3349,12 +3426,12 @@ refs.buildList.addEventListener('click', function (event) {
   let editButton = event.target.closest('[data-edit-build]');
   if (editButton) {
     event.stopPropagation();
-    loadBuildIntoDraft(editButton.dataset.editBuild);
+    loadBuildForEdit(editButton.dataset.editBuild);
     return;
   }
   let buildCard = event.target.closest('[data-build-id]');
   if (!buildCard) { return; }
-  loadBuildIntoDraft(buildCard.dataset.buildId);
+  loadBuildForEdit(buildCard.dataset.buildId);
 });
 
 refs.newBuildButton.addEventListener('click', function () { openEditor('new'); });
@@ -3394,8 +3471,7 @@ refs.editorLibrarySortSelect.addEventListener('change', function (event) { state
 function handlePickerCardClick(event) {
   let tile = event.target.closest('[data-picker-card]');
   if (!tile) { return; }
-  state.activePickerCardId = tile.dataset.pickerCard;
-  renderLibrary();
+  openCardModal(tile.dataset.pickerCard);
 }
 
 function handleAddCardClick(event) {
@@ -3405,7 +3481,16 @@ function handleAddCardClick(event) {
 }
 
 refs.editorLibraryList.addEventListener('click', handlePickerCardClick);
-if (refs.editorCardDetail) { refs.editorCardDetail.addEventListener('click', handleAddCardClick); }
+if (refs.cardModalContent) { refs.cardModalContent.addEventListener('click', function (event) {
+  handleAddCardClick(event);
+  let remove = event.target.closest('[data-remove-card]');
+  if (remove) {
+    removeCard(remove.dataset.removeCard, remove.dataset.upgraded === 'true');
+    renderCardModal();
+  }
+}); }
+if (refs.cardModalClose) { refs.cardModalClose.addEventListener('click', closeCardModal); }
+if (refs.cardModalBackdrop) { refs.cardModalBackdrop.addEventListener('click', closeCardModal); }
 refs.libraryList.addEventListener('click', handleAddCardClick);
 
 refs.selectedCards.addEventListener('click', function (event) {
@@ -3417,6 +3502,7 @@ refs.selectedCards.addEventListener('click', function (event) {
   let remove = event.target.closest('[data-remove-card]');
   if (remove) {
     removeCard(remove.dataset.removeCard, remove.dataset.upgraded === 'true');
+    if (state.activeModalCardId === remove.dataset.removeCard) { renderCardModal(); }
     return;
   }
   let upgrade = event.target.closest('[data-toggle-upgrade]');
