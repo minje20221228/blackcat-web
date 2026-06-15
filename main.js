@@ -1182,7 +1182,7 @@ let uiText = {
       saved: 'Build saved.',
       deleted: 'Build deleted.',
       needCards: 'Add at least one card before saving.',
-      reset: 'Build editor opened with an empty draft.',
+      reset: 'Build editor opened with the starter deck.',
       duplicated: 'Draft duplicated.',
       loaded: 'Build loaded into the editor.'
     }
@@ -1287,7 +1287,7 @@ let uiText = {
       saved: '빌드를 저장했습니다.',
       deleted: '빌드를 삭제했습니다.',
       needCards: '카드를 1장 이상 넣은 뒤 저장해 주세요.',
-      reset: '빈 빌드 편집기를 열었습니다.',
+      reset: '기본 덱이 들어간 빌드 편집기를 열었습니다.',
       duplicated: '현재 초안을 복제했습니다.',
       loaded: '빌드를 편집기로 불러왔습니다.'
     }
@@ -1613,20 +1613,41 @@ function getCharacterSummary(character) {
   return info && info.summary ? (info.summary[state.currentLanguage] || info.summary.ko || info.summary.en) : '';
 }
 
-function localizeStarterDeckEntry(entry) {
+function parseStarterDeckEntry(entry) {
   let text = String(entry || '');
   let match = text.match(/^(.*?)(?: x(\d+))?$/);
   if (!match) {
-    return text;
+    return { name: text.trim(), quantity: 1 };
   }
-  let cardName = match[1].trim();
-  let quantity = match[2] ? Number(match[2]) : null;
-  let card = cardNameLookup.get(cardName);
-  let localizedName = card ? getCardName(card, false) : cardName;
-  if (state.currentLanguage === 'ko' && quantity) {
-    return localizedName + ' x' + quantity;
+  return { name: match[1].trim(), quantity: Math.max(1, Number(match[2]) || 1) };
+}
+
+function findStarterDeckCard(character, cardName) {
+  return allCards.find(function (card) {
+    return card.character === character && card.name === cardName && !isBuildExcludedCard(card);
+  }) || cardNameLookup.get(cardName);
+}
+
+function localizeStarterDeckEntry(entry, character) {
+  let parsed = parseStarterDeckEntry(entry);
+  if (!parsed.name) {
+    return '';
   }
-  return quantity ? (localizedName + ' x' + quantity) : localizedName;
+  let card = findStarterDeckCard(character, parsed.name);
+  let localizedName = card ? getCardName(card, false) : parsed.name;
+  return parsed.quantity ? (localizedName + ' x' + parsed.quantity) : localizedName;
+}
+
+function getStarterDeckEntries(character) {
+  let info = CHARACTER_INFO[character];
+  if (!info || !Array.isArray(info.starterDeck)) {
+    return [];
+  }
+  return info.starterDeck.map(function (entry) {
+    let parsed = parseStarterDeckEntry(entry);
+    let card = findStarterDeckCard(character, parsed.name);
+    return card ? { cardId: card.id, quantity: parsed.quantity, upgraded: false } : null;
+  }).filter(Boolean);
 }
 
 function getStarterDeckText(character) {
@@ -1634,7 +1655,7 @@ function getStarterDeckText(character) {
   if (!info || !Array.isArray(info.starterDeck)) {
     return '';
   }
-  return info.starterDeck.map(localizeStarterDeckEntry).join(', ');
+  return info.starterDeck.map(function (entry) { return localizeStarterDeckEntry(entry, character); }).filter(Boolean).join(', ');
 }
 
 function getLocaleTag() {
@@ -1671,7 +1692,7 @@ function clone(value) {
 }
 
 function createEmptyBuild(character) {
-  return { id: createId(), character: character, title: '', author: '', summary: '', notes: '', cards: [], createdAt: Date.now(), updatedAt: Date.now() };
+  return { id: createId(), character: character, title: '', author: '', summary: '', notes: '', cards: getStarterDeckEntries(character), createdAt: Date.now(), updatedAt: Date.now() };
 }
 
 let RECOMMENDED_BUILD_UPDATED_AT = Date.UTC(2026, 4, 29, 0, 0, 0);
@@ -3561,15 +3582,16 @@ refs.buildSummaryInput.addEventListener('input', function (event) { updateDraftF
 refs.buildNotesInput.addEventListener('input', function (event) { updateDraftField('notes', event.target.value); });
 
 refs.buildCharacterSelect.addEventListener('change', function (event) {
+  let previousDraft = state.draft;
   state.activeCharacter = event.target.value;
   state.activeBuildFilter = event.target.value;
   state.activeBuildId = null;
   state.activePickerCardId = null;
-  state.draft.character = event.target.value;
-  state.draft.cards = state.draft.cards.filter(function (entry) {
-    let card = cardMap.get(entry.cardId);
-    return card && card.character === state.activeCharacter && !isBuildExcludedCard(card);
-  });
+  state.draft = createEmptyBuild(event.target.value);
+  state.draft.title = previousDraft.title;
+  state.draft.author = previousDraft.author;
+  state.draft.summary = previousDraft.summary;
+  state.draft.notes = previousDraft.notes;
   render();
 });
 
