@@ -489,6 +489,15 @@ h3 {
   gap: 14px;
 }
 
+.decision-note {
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
 .character-summary {
   margin-top: 18px;
 }

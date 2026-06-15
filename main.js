@@ -2255,6 +2255,52 @@ function getCardText(card, upgraded) {
   return state.currentLanguage === 'ko' ? translateCardTextToKo(raw) : raw;
 }
 
+function getCardDecisionNote(card) {
+  let language = state.currentLanguage;
+  let typeNotes = {
+    Attack: {
+      en: 'Evaluation lens: ask whether this improves the next dangerous fight or only adds more damage to a deck that already kills quickly.',
+      ko: '판단 기준: 다음 위험 전투를 실제로 단축하는지, 이미 피해가 충분한 덱에 공격만 더하는지 구분하세요.'
+    },
+    Skill: {
+      en: 'Evaluation lens: compare this against the deck\'s current weak turn, especially block gaps, hand quality, and setup time.',
+      ko: '판단 기준: 현재 덱의 약한 턴을 기준으로 방어 공백, 손패 품질, 세팅 시간을 줄이는지 보세요.'
+    },
+    Power: {
+      en: 'Evaluation lens: take this when the deck can survive the setup turn and repeatedly profit from the effect afterward.',
+      ko: '판단 기준: 세팅 턴을 버틸 수 있고 이후 효과를 반복해서 회수할 수 있을 때 가치가 큽니다.'
+    },
+    Status: {
+      en: 'Evaluation lens: treat this as deck friction and check how much draw, exhaust, or discard support is needed to absorb it.',
+      ko: '판단 기준: 덱을 흐리는 카드로 보고 드로우, 소멸, 버리기 지원으로 감당 가능한지 확인하세요.'
+    },
+    Curse: {
+      en: 'Evaluation lens: only accept this cost when the reward clearly outweighs weaker draw quality and removal pressure.',
+      ko: '판단 기준: 드로우 품질 하락과 제거 압박보다 보상이 확실히 클 때만 감수할 비용입니다.'
+    }
+  };
+  let rarityNotes = {
+    Starter: {
+      en: 'Starter cards define the floor plan; replace or support them according to the first role the deck fails to cover.',
+      ko: '시작 카드는 기본 운영의 기준입니다. 덱이 처음으로 비는 역할에 맞춰 교체하거나 보완하세요.'
+    },
+    Rare: {
+      en: 'Rare cards are strongest when they solve a named problem, not when they are added only because the rarity looks premium.',
+      ko: '레어 카드는 희귀도만 보고 넣기보다 명확한 문제를 해결할 때 가장 강합니다.'
+    }
+  };
+  let note = typeNotes[card.type] || {
+    en: 'Evaluation lens: judge this by the job it performs in the current deck, then compare that job with your next path risk.',
+    ko: '판단 기준: 현재 덱에서 맡는 역할을 먼저 보고, 그 역할이 다음 경로의 위험과 맞는지 비교하세요.'
+  };
+  let rarityNote = rarityNotes[card.rarity];
+  let base = note[language] || note.en;
+  if (rarityNote) {
+    return base + ' ' + (rarityNote[language] || rarityNote.en);
+  }
+  return base;
+}
+
 function getCardSearchText(card) {
   let localized = getCardLocalization(card) || {};
   return [
@@ -2272,7 +2318,8 @@ function getCardSearchText(card) {
     localized.upgradedDescription,
     getCharacterLabel(card.character),
     getTypeLabel(card.type),
-    getRarityLabel(card.rarity)
+    getRarityLabel(card.rarity),
+    getCardDecisionNote(card)
   ].filter(Boolean).join(' ').toLowerCase();
 }
 
@@ -2779,13 +2826,13 @@ function buildLibraryCardMarkup(card, mode) {
       return entry.cardId === card.id ? sum + entry.quantity : sum;
     }, 0);
     let selectedChip = quantity ? '<span class="editor-added-chip">x' + quantity + '</span>' : '';
-    return '<div class="editor-card-row"><div class="editor-card-copy"><div class="editor-card-title-row"><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p>' + selectedChip + '</div><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div><p class="library-card-text editor-card-text">' + escapeHtml(getCardText(card, false)) + '</p></div><div class="editor-card-actions">' + addButtons + '</div></div>';
+    return '<div class="editor-card-row"><div class="editor-card-copy"><div class="editor-card-title-row"><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p>' + selectedChip + '</div><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div><p class="library-card-text editor-card-text">' + escapeHtml(getCardText(card, false)) + '</p><p class="decision-note">' + escapeHtml(getCardDecisionNote(card)) + '</p></div><div class="editor-card-actions">' + addButtons + '</div></div>';
   }
   let actions = mode === 'editor' || state.editorOpen ? addButtons : '';
   let upgradedText = canUpgrade ? getCardText(card, true) : '';
   let upgradedBlock = upgradedText ? '<div class="library-card-upgrade"><span class="upgrade-label">' + escapeHtml(ui().labels.upgraded) + '</span><p class="library-card-text">' + escapeHtml(upgradedText) + '</p></div>' : '';
   let actionsBlock = actions ? '<div class="library-card-actions">' + actions + '</div>' : '';
-  return '<div class="library-card-main">' + imageMarkup + '<div><div class="library-card-head"><div><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(card.character)) + '</span><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div></div></div><p class="library-card-text">' + escapeHtml(getCardText(card, false)) + '</p>' + upgradedBlock + actionsBlock + '</div></div>';
+  return '<div class="library-card-main">' + imageMarkup + '<div><div class="library-card-head"><div><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(card.character)) + '</span><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div></div></div><p class="library-card-text">' + escapeHtml(getCardText(card, false)) + '</p><p class="decision-note">' + escapeHtml(getCardDecisionNote(card)) + '</p>' + upgradedBlock + actionsBlock + '</div></div>';
 }
 
 function renderLibrary() {
@@ -2838,7 +2885,39 @@ function renderRelicCard(relic) {
   let rawText = relic.description[state.currentLanguage] || relic.description.ko || relic.description.en || '';
   let text = state.currentLanguage === 'ko' ? formatRelicDescriptionText(relic) : rawText;
   let imageUrl = relic.imageUrl || getRelicImageUrl(relic.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(getRelicLabel(relic.name)) + '" loading="lazy" data-image-fallback="relic"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(getRelicLabel(relic.name)) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getIdentityLabel(relic.tier)) + '</span><span class="build-meta">' + escapeHtml(getRelicSourceLabel(relic.owner)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(getRelicLabel(relic.name)) + '" loading="lazy" data-image-fallback="relic"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(getRelicLabel(relic.name)) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getIdentityLabel(relic.tier)) + '</span><span class="build-meta">' + escapeHtml(getRelicSourceLabel(relic.owner)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p><p class="decision-note">' + escapeHtml(getRelicDecisionNote(relic)) + '</p></div></div></article>';
+}
+
+function getRelicDecisionNote(relic) {
+  let language = state.currentLanguage;
+  let tierNotes = {
+    Starter: {
+      en: 'Decision lens: this defines the character baseline, so future rewards should either protect it or convert it into a stronger engine.',
+      ko: '판단 기준: 캐릭터의 기본 운영을 정하는 유물이므로 이후 보상은 이 축을 지키거나 더 큰 엔진으로 전환하는지 봅니다.'
+    },
+    Boss: {
+      en: 'Decision lens: check the new constraint before the reward; boss relics often change which cards become playable.',
+      ko: '판단 기준: 보상보다 새 제약을 먼저 확인하세요. 보스 유물은 이후 집을 수 있는 카드 범위를 크게 바꿉니다.'
+    },
+    Rare: {
+      en: 'Decision lens: rare relics should open a clear line, such as faster scaling, safer elites, or more reliable payoff turns.',
+      ko: '판단 기준: 레어 유물은 빠른 성장, 안전한 엘리트, 안정적인 폭발 턴처럼 명확한 방향을 열 때 강합니다.'
+    },
+    Shop: {
+      en: 'Decision lens: compare this against removals, potions, and card buys because shop gold has many competing uses.',
+      ko: '판단 기준: 상점 골드는 제거, 포션, 카드 구매와 경쟁하므로 같은 비용의 다른 선택과 비교하세요.'
+    },
+    Event: {
+      en: 'Decision lens: event relics are best judged by the cost paid to obtain them and the fights immediately after.',
+      ko: '판단 기준: 이벤트 유물은 획득 비용과 바로 이어질 전투 위험을 함께 보고 평가하세요.'
+    }
+  };
+  let fallback = {
+    en: 'Decision lens: ask whether this relic covers a current weakness, speeds up an existing plan, or changes future draft priorities.',
+    ko: '판단 기준: 현재 약점을 막는지, 이미 강한 계획을 앞당기는지, 이후 드래프트 우선순위를 바꾸는지 확인하세요.'
+  };
+  let note = tierNotes[relic.tier] || fallback;
+  return note[language] || note.en;
 }
 
 function renderRelics() {
@@ -2949,7 +3028,31 @@ function renderPotionCard(potion) {
     state.currentLanguage
   );
   let imageUrl = potion.imageUrl || getPotionImageUrl(potion.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(displayName) + '" loading="lazy" data-image-fallback="potion"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(displayName) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(displayName) + '" loading="lazy" data-image-fallback="potion"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(displayName) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p><p class="decision-note">' + escapeHtml(getPotionDecisionNote(potion)) + '</p></div></div></article>';
+}
+
+function getPotionDecisionNote(potion) {
+  let language = state.currentLanguage;
+  let rarityNotes = {
+    Common: {
+      en: 'Timing lens: use this to prevent routine health loss or make the next elite path safer.',
+      ko: '타이밍 기준: 평범한 체력 손실을 줄이거나 다음 엘리트 경로를 안전하게 만들 때 쓰세요.'
+    },
+    Uncommon: {
+      en: 'Timing lens: these often buy one missing deck role for a turn, so save them for the fight where that role matters.',
+      ko: '타이밍 기준: 한 턴 동안 덱에 없는 역할을 빌려오는 경우가 많으므로 그 역할이 꼭 필요한 전투에 맞추세요.'
+    },
+    Rare: {
+      en: 'Timing lens: rare potions can decide boss or elite fights, but holding them too long can waste future potion rewards.',
+      ko: '타이밍 기준: 레어 포션은 보스나 엘리트를 결정할 수 있지만, 너무 오래 들고 있으면 이후 포션 보상을 놓칠 수 있습니다.'
+    }
+  };
+  let fallback = {
+    en: 'Timing lens: compare the value of using this now with the health, upgrade, or path risk it can save.',
+    ko: '타이밍 기준: 지금 사용했을 때 아낄 수 있는 체력, 강화 기회, 경로 위험을 기준으로 비교하세요.'
+  };
+  let note = rarityNotes[potion.rarity] || fallback;
+  return note[language] || note.en;
 }
 
 function renderPotions() {
