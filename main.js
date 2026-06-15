@@ -1113,6 +1113,7 @@ let uiText = {
       title: 'Build title',
       author: 'Author',
       character: 'Character',
+      buildCharacter: 'Builds for',
       summary: 'Summary',
       notes: 'Notes',
       search: 'Search cards',
@@ -1133,6 +1134,8 @@ let uiText = {
       duplicateBuild: 'Duplicate',
       saveBuild: 'Save build',
       deleteBuild: 'Delete',
+      editBuild: 'Edit',
+      deleteSavedBuild: 'Delete',
       addBase: 'Add base',
       addUpgraded: 'Add +',
       remove: 'Remove',
@@ -1152,6 +1155,7 @@ let uiText = {
       updated: 'Updated',
       synced: 'Synced',
       all: 'All',
+      allBuilds: 'All builds',
       noImage: 'No image',
       draft: 'Draft',
       recommended: 'Recommended',
@@ -1210,6 +1214,7 @@ let uiText = {
       title: '빌드 제목',
       author: '작성자',
       character: '캐릭터',
+      buildCharacter: '빌드 보기',
       summary: '요약',
       notes: '운영 메모',
       search: '카드 검색',
@@ -1230,6 +1235,8 @@ let uiText = {
       duplicateBuild: '복제',
       saveBuild: '빌드 저장',
       deleteBuild: '빌드 삭제',
+      editBuild: '수정',
+      deleteSavedBuild: '삭제',
       addBase: '일반 추가',
       addUpgraded: '강화 추가',
       remove: '제거',
@@ -1249,6 +1256,7 @@ let uiText = {
       updated: '수정일',
       synced: '동기화',
       all: '전체',
+      allBuilds: '전체보기',
       noImage: '이미지 없음',
       draft: '초안',
       recommended: '추천',
@@ -1354,6 +1362,7 @@ let refs = {
   pickerNote: document.getElementById('picker-note'),
   selectedCards: document.getElementById('selected-cards'),
   editorLibraryList: document.getElementById('editor-library-list'),
+  editorCardDetail: document.getElementById('editor-card-detail'),
   libraryList: document.getElementById('library-list'),
   fieldTitleLabel: document.getElementById('field-title-label'),
   fieldAuthorLabel: document.getElementById('field-author-label'),
@@ -1420,6 +1429,7 @@ let state = {
   currentSort: 'latest',
   currentView: pageView() === 'home' ? 'home' : pageView(),
   activeCharacter: PLAYABLE_CHARACTERS[0],
+  activeBuildFilter: 'all',
   activeBuildId: null,
   editorOpen: false,
   savedBuilds: loadSavedBuilds(),
@@ -1427,6 +1437,7 @@ let state = {
   buildSearch: '',
   filters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
   editorFilters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
+  activePickerCardId: null,
   draft: createEmptyBuild(PLAYABLE_CHARACTERS[0])
 };
 
@@ -1879,7 +1890,8 @@ function isBuildExcludedCard(card) {
 
 function availableCardsForCharacter(character) {
   return allCards.filter(function (card) {
-    return card.character === character && !isBuildExcludedCard(card);
+    let characterMatch = character === 'all' || card.character === character;
+    return characterMatch && !isBuildExcludedCard(card);
   });
 }
 
@@ -1921,7 +1933,8 @@ function summarizeBuild(build) {
 function buildsForActiveCharacter() {
   let search = state.buildSearch.trim().toLowerCase();
   let builds = getAllBuilds().filter(function (build) {
-    return build.character === state.activeCharacter && (!search || getBuildSearchText(build).includes(search));
+    let characterMatch = state.activeBuildFilter === 'all' || build.character === state.activeBuildFilter;
+    return characterMatch && (!search || getBuildSearchText(build).includes(search));
   });
   return builds.slice().sort(function (a, b) {
     if (state.currentSort === 'popular') {
@@ -1941,6 +1954,9 @@ function ensureActiveBuild() {
   if (state.activeBuildId && !findBuildById(state.activeBuildId)) {
     state.activeBuildId = null;
   }
+  if (!PLAYABLE_CHARACTERS.includes(state.activeCharacter)) {
+    state.activeCharacter = PLAYABLE_CHARACTERS[0];
+  }
   if (state.draft.character !== state.activeCharacter) {
     state.draft.character = state.activeCharacter;
   }
@@ -1951,6 +1967,11 @@ function openEditor(mode) {
   state.editorOpen = true;
   if (mode === 'new') {
     state.activeBuildId = null;
+    if (!PLAYABLE_CHARACTERS.includes(state.activeCharacter)) {
+      state.activeCharacter = PLAYABLE_CHARACTERS[0];
+    }
+    state.activeBuildFilter = state.activeCharacter;
+    state.activePickerCardId = null;
     state.draft = createEmptyBuild(state.activeCharacter);
     showStatus(ui().status.reset);
   }
@@ -1962,6 +1983,8 @@ function loadBuildIntoDraft(buildId) {
   if (!build) { return; }
   state.activeBuildId = build.id;
   state.activeCharacter = build.character;
+  state.activeBuildFilter = build.character;
+  state.activePickerCardId = null;
   state.draft = clone(build);
   state.editorOpen = true;
   state.currentView = 'builds';
@@ -1993,6 +2016,8 @@ function saveCurrentBuild() {
 
   state.draft = clone(draft);
   state.activeCharacter = draft.character;
+  state.activeBuildFilter = draft.character;
+  state.activePickerCardId = null;
   state.buildSearch = '';
   state.currentSort = 'latest';
   state.editorOpen = false;
@@ -2028,6 +2053,22 @@ function deleteCurrentBuild() {
   persistPinnedIds();
   state.activeBuildId = null;
   state.draft = createEmptyBuild(state.activeCharacter);
+  showStatus(ui().status.deleted);
+  render();
+}
+
+function deleteSavedBuild(buildId) {
+  let build = state.savedBuilds.find(function (item) { return item.id === buildId; });
+  if (!build) { return; }
+  state.savedBuilds = state.savedBuilds.filter(function (item) { return item.id !== buildId; });
+  state.pinnedIds.delete(buildId);
+  if (state.activeBuildId === buildId) {
+    state.activeBuildId = null;
+    state.editorOpen = false;
+    state.draft = createEmptyBuild(state.activeCharacter);
+  }
+  persistSavedBuilds();
+  persistPinnedIds();
   showStatus(ui().status.deleted);
   render();
 }
@@ -2505,7 +2546,7 @@ function renderStaticText() {
   refs.siteMenuButton.setAttribute('aria-label', currentUi.nav.help);
   refs.siteMenuButton.setAttribute('title', currentUi.nav.help);
   refs.browseCharacterLabel.textContent = currentUi.fields.character;
-  refs.buildsCharacterLabel.textContent = currentUi.fields.character;
+  refs.buildsCharacterLabel.textContent = currentUi.fields.buildCharacter || currentUi.fields.character;
   refs.sortLabel.textContent = currentUi.sortLabel;
   refs.patchKicker.textContent = currentUi.patchKicker;
   refs.patchHeading.textContent = currentUi.patchHeading;
@@ -2649,10 +2690,11 @@ function renderPageCharacterSelects() {
   let options = PLAYABLE_CHARACTERS.map(function (character) {
     return '<option value="' + character + '">' + escapeHtml(getCharacterLabel(character)) + '</option>';
   }).join('');
+  let buildOptions = '<option value="all">' + escapeHtml(ui().labels.allBuilds || ui().labels.all) + '</option>' + options;
   refs.browseCharacterSelect.innerHTML = options;
-  refs.buildsCharacterSelect.innerHTML = options;
+  refs.buildsCharacterSelect.innerHTML = buildOptions;
   refs.browseCharacterSelect.value = state.activeCharacter;
-  refs.buildsCharacterSelect.value = state.activeCharacter;
+  refs.buildsCharacterSelect.value = state.activeBuildFilter;
 }
 
 function renderCharacterDetail() {
@@ -2700,7 +2742,12 @@ function renderBuildList() {
   let builds = buildsForActiveCharacter();
   refs.buildList.innerHTML = '';
   if (!builds.length) {
-    refs.buildList.innerHTML = '<div class="empty-state">' + (state.buildSearch.trim() ? (state.currentLanguage === 'ko' ? '검색 조건에 맞는 빌드가 없습니다.' : 'No builds matched the search.') : ui().empty.builds) + '</div>';
+    let emptyText = state.buildSearch.trim()
+      ? (state.currentLanguage === 'ko' ? '검색 조건에 맞는 빌드가 없습니다.' : 'No builds matched the search.')
+      : (state.activeBuildFilter === 'all'
+        ? (state.currentLanguage === 'ko' ? '저장된 빌드가 없습니다. 편집기를 열고 새 빌드를 저장해 보세요.' : 'No saved builds yet. Open the editor and save one.')
+        : ui().empty.builds);
+    refs.buildList.innerHTML = '<div class="empty-state">' + emptyText + '</div>';
     return;
   }
   builds.forEach(function (build) {
@@ -2710,7 +2757,8 @@ function renderBuildList() {
     article.dataset.buildId = build.id;
     if (build.id === state.activeBuildId) { article.classList.add('is-active'); }
     let label = build.id === state.activeBuildId ? ui().labels.draft : (build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved);
-    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions"><button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button></div></div>';
+    let deleteButton = build.source === 'recommended' ? '' : '<button class="pill-button pill-button-danger" type="button" data-delete-build="' + build.id + '">' + ui().buttons.deleteSavedBuild + '</button>';
+    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions"><button class="pill-button pill-button-primary" type="button" data-edit-build="' + build.id + '">' + ui().buttons.editBuild + '</button><button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button>' + deleteButton + '</div></div>';
     refs.buildList.appendChild(article);
   });
 }
@@ -2722,6 +2770,12 @@ function renderEditorFields() {
   refs.buildNotesInput.value = state.draft.notes;
   refs.buildCharacterSelect.innerHTML = PLAYABLE_CHARACTERS.map(function (character) { return '<option value="' + character + '">' + escapeHtml(getCharacterLabel(character)) + '</option>'; }).join('');
   refs.buildCharacterSelect.value = state.activeCharacter;
+  if (state.activePickerCardId) {
+    let pickerCard = cardMap.get(state.activePickerCardId);
+    if (!pickerCard || pickerCard.character !== state.activeCharacter || isBuildExcludedCard(pickerCard)) {
+      state.activePickerCardId = null;
+    }
+  }
   refs.deleteBuildButton.disabled = false;
 }
 
@@ -2738,7 +2792,9 @@ function renderSelectedCards() {
     let card = document.createElement('article');
     let upgradeButton = hasVisibleUpgrade(entry.card) ? '<button class="pill-button" type="button" data-toggle-upgrade="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '">' + ui().buttons.upgrade + '</button>' : '';
     card.className = 'selected-card';
-    card.innerHTML = '<div class="selected-card-head"><div><p class="selected-card-name">' + escapeHtml(getCardName(entry.card, entry.upgraded)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(entry.card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(entry.card.rarity)) + '</span><span class="build-meta">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(entry.card, entry.upgraded)) + '</span></div></div><span class="stat-chip">x' + entry.quantity + '</span></div><p class="selected-card-text">' + escapeHtml(text) + '</p><div class="selected-card-controls"><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="-1">-1</button><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="1">+1</button>' + upgradeButton + '<button class="pill-button" type="button" data-remove-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '">' + ui().buttons.remove + '</button></div>';
+    let imageUrl = getCardImageUrl(entry.card);
+    let imageMarkup = imageUrl ? '<img class="selected-card-thumb" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(entry.card, entry.upgraded)) + '" loading="lazy">' : '';
+    card.innerHTML = '<div class="selected-card-layout">' + imageMarkup + '<div class="selected-card-body"><div class="selected-card-head"><div><p class="selected-card-name">' + escapeHtml(getCardName(entry.card, entry.upgraded)) + '</p><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(entry.card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(entry.card.rarity)) + '</span><span class="build-meta">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(entry.card, entry.upgraded)) + '</span></div></div><span class="stat-chip">x' + entry.quantity + '</span></div><p class="selected-card-text">' + escapeHtml(text) + '</p><div class="selected-card-controls"><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="-1">-1</button><button class="pill-button" type="button" data-adjust-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '" data-delta="1">+1</button>' + upgradeButton + '<button class="pill-button" type="button" data-remove-card="' + entry.card.id + '" data-upgraded="' + entry.upgraded + '">' + ui().buttons.remove + '</button></div></div></div>';
     refs.selectedCards.appendChild(card);
   });
 }
@@ -2816,17 +2872,48 @@ function renderFilters() {
   });
 }
 
+function getCardImageUrl(card) {
+  return (card && (card.portraitImageUrl || card.imageUrl)) || '';
+}
+
+function buildEditorCardTileMarkup(card) {
+  let imageUrl = getCardImageUrl(card);
+  let quantity = state.draft.cards.reduce(function (sum, entry) {
+    return entry.cardId === card.id ? sum + entry.quantity : sum;
+  }, 0);
+  let selectedChip = quantity ? '<span class="editor-added-chip editor-card-count">x' + quantity + '</span>' : '';
+  let activeClass = state.activePickerCardId === card.id ? ' is-active' : '';
+  let imageMarkup = imageUrl ? '<img class="editor-card-image" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, false)) + '" loading="lazy">' : '<span class="editor-card-image-missing">' + escapeHtml(ui().labels.noImage) + '</span>';
+  return '<button class="editor-card-tile' + activeClass + '" type="button" data-picker-card="' + escapeHtml(card.id) + '" aria-label="' + escapeHtml(getCardName(card, false)) + '">' + imageMarkup + '<span class="editor-card-tile-name">' + escapeHtml(getCardName(card, false)) + '</span>' + selectedChip + '</button>';
+}
+
+function renderEditorPickerDetail(cards) {
+  if (!refs.editorCardDetail) { return; }
+  if (!cards.length) {
+    refs.editorCardDetail.innerHTML = '<div class="empty-state">' + ui().empty.library + '</div>';
+    return;
+  }
+  let card = cardMap.get(state.activePickerCardId);
+  if (!card || !cards.some(function (item) { return item.id === card.id; })) {
+    card = cards[0];
+    state.activePickerCardId = card.id;
+  }
+  let imageUrl = getCardImageUrl(card);
+  let imageMarkup = imageUrl ? '<img class="editor-card-detail-image" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, false)) + '" loading="lazy">' : '<div class="editor-card-detail-image editor-card-detail-image-empty">' + escapeHtml(ui().labels.noImage) + '</div>';
+  let canUpgrade = hasVisibleUpgrade(card);
+  let upgradedText = canUpgrade ? getCardText(card, true) : '';
+  let upgradedBlock = upgradedText ? '<div class="library-card-upgrade"><span class="upgrade-label">' + escapeHtml(ui().labels.upgraded) + '</span><p class="library-card-text">' + escapeHtml(upgradedText) + '</p></div>' : '';
+  let addButtons = '<button class="pill-button pill-button-primary" type="button" data-add-card="' + escapeHtml(card.id) + '" data-upgraded="false">' + ui().buttons.addBase + '</button>' + (canUpgrade ? '<button class="pill-button" type="button" data-add-card="' + escapeHtml(card.id) + '" data-upgraded="true">' + ui().buttons.addUpgraded + '</button>' : '');
+  refs.editorCardDetail.innerHTML = '<article class="editor-card-detail">' + imageMarkup + '<div class="editor-card-detail-copy"><div><h4 class="editor-card-detail-title">' + escapeHtml(getCardName(card, false)) + '</h4><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div></div><p class="library-card-text">' + escapeHtml(getCardText(card, false)) + '</p>' + upgradedBlock + '<div class="editor-card-actions">' + addButtons + '</div></div></article>';
+}
+
 function buildLibraryCardMarkup(card, mode) {
-  let imageUrl = card.portraitImageUrl || card.imageUrl;
+  let imageUrl = getCardImageUrl(card);
   let imageMarkup = imageUrl ? '<img class="library-thumb" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, false)) + '">' : '<div class="library-thumb">' + escapeHtml(ui().labels.noImage) + '</div>';
   let canUpgrade = hasVisibleUpgrade(card);
   let addButtons = '<button class="pill-button pill-button-primary" type="button" data-add-card="' + card.id + '" data-upgraded="false">' + ui().buttons.addBase + '</button>' + (canUpgrade ? '<button class="pill-button" type="button" data-add-card="' + card.id + '" data-upgraded="true">' + ui().buttons.addUpgraded + '</button>' : '');
   if (mode === 'editor') {
-    let quantity = state.draft.cards.reduce(function (sum, entry) {
-      return entry.cardId === card.id ? sum + entry.quantity : sum;
-    }, 0);
-    let selectedChip = quantity ? '<span class="editor-added-chip">x' + quantity + '</span>' : '';
-    return '<div class="editor-card-row"><div class="editor-card-copy"><div class="editor-card-title-row"><p class="library-card-name">' + escapeHtml(getCardName(card, false)) + '</p>' + selectedChip + '</div><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, false)) + '</span></div><p class="library-card-text editor-card-text">' + escapeHtml(getCardText(card, false)) + '</p><p class="decision-note">' + escapeHtml(getCardDecisionNote(card)) + '</p></div><div class="editor-card-actions">' + addButtons + '</div></div>';
+    return buildEditorCardTileMarkup(card);
   }
   let actions = mode === 'editor' || state.editorOpen ? addButtons : '';
   let upgradedText = canUpgrade ? getCardText(card, true) : '';
@@ -2856,11 +2943,12 @@ function renderLibrary() {
   } else {
     editorCards.forEach(function (card) {
       let editCard = document.createElement('article');
-      editCard.className = 'library-card';
+      editCard.className = 'editor-card-picker-item';
       editCard.innerHTML = buildLibraryCardMarkup(card, 'editor');
       refs.editorLibraryList.appendChild(editCard);
     });
   }
+  renderEditorPickerDetail(editorCards);
 }
 
 function getRelicSourceLabel(owner) {
@@ -2885,40 +2973,9 @@ function renderRelicCard(relic) {
   let rawText = relic.description[state.currentLanguage] || relic.description.ko || relic.description.en || '';
   let text = state.currentLanguage === 'ko' ? formatRelicDescriptionText(relic) : rawText;
   let imageUrl = relic.imageUrl || getRelicImageUrl(relic.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(getRelicLabel(relic.name)) + '" loading="lazy" data-image-fallback="relic"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(getRelicLabel(relic.name)) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getIdentityLabel(relic.tier)) + '</span><span class="build-meta">' + escapeHtml(getRelicSourceLabel(relic.owner)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p><p class="decision-note">' + escapeHtml(getRelicDecisionNote(relic)) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(getRelicLabel(relic.name)) + '" loading="lazy" data-image-fallback="relic"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(getRelicLabel(relic.name)) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getIdentityLabel(relic.tier)) + '</span><span class="build-meta">' + escapeHtml(getRelicSourceLabel(relic.owner)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
 }
 
-function getRelicDecisionNote(relic) {
-  let language = state.currentLanguage;
-  let tierNotes = {
-    Starter: {
-      en: 'Decision lens: this defines the character baseline, so future rewards should either protect it or convert it into a stronger engine.',
-      ko: '판단 기준: 캐릭터의 기본 운영을 정하는 유물이므로 이후 보상은 이 축을 지키거나 더 큰 엔진으로 전환하는지 봅니다.'
-    },
-    Boss: {
-      en: 'Decision lens: check the new constraint before the reward; boss relics often change which cards become playable.',
-      ko: '판단 기준: 보상보다 새 제약을 먼저 확인하세요. 보스 유물은 이후 집을 수 있는 카드 범위를 크게 바꿉니다.'
-    },
-    Rare: {
-      en: 'Decision lens: rare relics should open a clear line, such as faster scaling, safer elites, or more reliable payoff turns.',
-      ko: '판단 기준: 레어 유물은 빠른 성장, 안전한 엘리트, 안정적인 폭발 턴처럼 명확한 방향을 열 때 강합니다.'
-    },
-    Shop: {
-      en: 'Decision lens: compare this against removals, potions, and card buys because shop gold has many competing uses.',
-      ko: '판단 기준: 상점 골드는 제거, 포션, 카드 구매와 경쟁하므로 같은 비용의 다른 선택과 비교하세요.'
-    },
-    Event: {
-      en: 'Decision lens: event relics are best judged by the cost paid to obtain them and the fights immediately after.',
-      ko: '판단 기준: 이벤트 유물은 획득 비용과 바로 이어질 전투 위험을 함께 보고 평가하세요.'
-    }
-  };
-  let fallback = {
-    en: 'Decision lens: ask whether this relic covers a current weakness, speeds up an existing plan, or changes future draft priorities.',
-    ko: '판단 기준: 현재 약점을 막는지, 이미 강한 계획을 앞당기는지, 이후 드래프트 우선순위를 바꾸는지 확인하세요.'
-  };
-  let note = tierNotes[relic.tier] || fallback;
-  return note[language] || note.en;
-}
 
 function renderRelics() {
   let relics = buildRelicCollection();
@@ -3028,32 +3085,9 @@ function renderPotionCard(potion) {
     state.currentLanguage
   );
   let imageUrl = potion.imageUrl || getPotionImageUrl(potion.name);
-  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(displayName) + '" loading="lazy" data-image-fallback="potion"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(displayName) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p><p class="decision-note">' + escapeHtml(getPotionDecisionNote(potion)) + '</p></div></div></article>';
+  return '<article class="relic-card"><div class="relic-card-layout"><img class="relic-thumb" src="' + imageUrl + '" alt="' + escapeHtml(displayName) + '" loading="lazy" data-image-fallback="potion"><div class="relic-card-copy"><div class="relic-card-head"><div><h3 class="relic-title">' + escapeHtml(displayName) + '</h3><div class="relic-tag-row"><span class="relic-tag">' + escapeHtml(getRarityLabel(potion.rarity)) + '</span><span class="build-meta">' + escapeHtml(getPotionPoolLabel(potion.pool)) + '</span></div></div></div><p class="relic-copy">' + escapeHtml(text) + '</p></div></div></article>';
 }
 
-function getPotionDecisionNote(potion) {
-  let language = state.currentLanguage;
-  let rarityNotes = {
-    Common: {
-      en: 'Timing lens: use this to prevent routine health loss or make the next elite path safer.',
-      ko: '타이밍 기준: 평범한 체력 손실을 줄이거나 다음 엘리트 경로를 안전하게 만들 때 쓰세요.'
-    },
-    Uncommon: {
-      en: 'Timing lens: these often buy one missing deck role for a turn, so save them for the fight where that role matters.',
-      ko: '타이밍 기준: 한 턴 동안 덱에 없는 역할을 빌려오는 경우가 많으므로 그 역할이 꼭 필요한 전투에 맞추세요.'
-    },
-    Rare: {
-      en: 'Timing lens: rare potions can decide boss or elite fights, but holding them too long can waste future potion rewards.',
-      ko: '타이밍 기준: 레어 포션은 보스나 엘리트를 결정할 수 있지만, 너무 오래 들고 있으면 이후 포션 보상을 놓칠 수 있습니다.'
-    }
-  };
-  let fallback = {
-    en: 'Timing lens: compare the value of using this now with the health, upgrade, or path risk it can save.',
-    ko: '타이밍 기준: 지금 사용했을 때 아낄 수 있는 체력, 강화 기회, 경로 위험을 기준으로 비교하세요.'
-  };
-  let note = rarityNotes[potion.rarity] || fallback;
-  return note[language] || note.en;
-}
 
 function renderPotions() {
   let potions = buildPotionCollection();
@@ -3265,9 +3299,13 @@ refs.browseCharacterSelect.addEventListener('change', function (event) {
 });
 
 refs.buildsCharacterSelect.addEventListener('change', function (event) {
-  state.activeCharacter = event.target.value;
-  if (!state.editorOpen || state.activeBuildId === null) {
-    state.draft = createEmptyBuild(state.activeCharacter);
+  state.activeBuildFilter = event.target.value === 'all' ? 'all' : event.target.value;
+  if (state.activeBuildFilter !== 'all') {
+    state.activeCharacter = state.activeBuildFilter;
+    if (!state.editorOpen || state.activeBuildId === null) {
+      state.draft = createEmptyBuild(state.activeCharacter);
+      state.activePickerCardId = null;
+    }
   }
   render();
 });
@@ -3302,6 +3340,18 @@ refs.buildList.addEventListener('click', function (event) {
     togglePinned(pinButton.dataset.pinBuild);
     return;
   }
+  let deleteButton = event.target.closest('[data-delete-build]');
+  if (deleteButton) {
+    event.stopPropagation();
+    deleteSavedBuild(deleteButton.dataset.deleteBuild);
+    return;
+  }
+  let editButton = event.target.closest('[data-edit-build]');
+  if (editButton) {
+    event.stopPropagation();
+    loadBuildIntoDraft(editButton.dataset.editBuild);
+    return;
+  }
   let buildCard = event.target.closest('[data-build-id]');
   if (!buildCard) { return; }
   loadBuildIntoDraft(buildCard.dataset.buildId);
@@ -3318,7 +3368,9 @@ refs.buildNotesInput.addEventListener('input', function (event) { updateDraftFie
 
 refs.buildCharacterSelect.addEventListener('change', function (event) {
   state.activeCharacter = event.target.value;
+  state.activeBuildFilter = event.target.value;
   state.activeBuildId = null;
+  state.activePickerCardId = null;
   state.draft.character = event.target.value;
   state.draft.cards = state.draft.cards.filter(function (entry) {
     let card = cardMap.get(entry.cardId);
@@ -3328,16 +3380,23 @@ refs.buildCharacterSelect.addEventListener('change', function (event) {
 });
 
 refs.cardSearchInput.addEventListener('input', function (event) { state.filters.search = event.target.value; renderLibrary(); });
-refs.editorCardSearchInput.addEventListener('input', function (event) { state.editorFilters.search = event.target.value; renderLibrary(); });
+refs.editorCardSearchInput.addEventListener('input', function (event) { state.editorFilters.search = event.target.value; state.activePickerCardId = null; renderLibrary(); });
 refs.buildSearchInput.addEventListener('input', function (event) { state.buildSearch = event.target.value; renderBuildList(); });
 refs.typeFilterSelect.addEventListener('change', function (event) { state.filters.type = event.target.value; renderLibrary(); });
 refs.rarityFilterSelect.addEventListener('change', function (event) { state.filters.rarity = event.target.value; renderLibrary(); });
 refs.costFilterSelect.addEventListener('change', function (event) { state.filters.cost = event.target.value; renderLibrary(); });
 refs.librarySortSelect.addEventListener('change', function (event) { state.filters.librarySort = event.target.value; renderLibrary(); });
-refs.editorTypeFilterSelect.addEventListener('change', function (event) { state.editorFilters.type = event.target.value; renderLibrary(); });
-refs.editorRarityFilterSelect.addEventListener('change', function (event) { state.editorFilters.rarity = event.target.value; renderLibrary(); });
-refs.editorCostFilterSelect.addEventListener('change', function (event) { state.editorFilters.cost = event.target.value; renderLibrary(); });
-refs.editorLibrarySortSelect.addEventListener('change', function (event) { state.editorFilters.librarySort = event.target.value; renderLibrary(); });
+refs.editorTypeFilterSelect.addEventListener('change', function (event) { state.editorFilters.type = event.target.value; state.activePickerCardId = null; renderLibrary(); });
+refs.editorRarityFilterSelect.addEventListener('change', function (event) { state.editorFilters.rarity = event.target.value; state.activePickerCardId = null; renderLibrary(); });
+refs.editorCostFilterSelect.addEventListener('change', function (event) { state.editorFilters.cost = event.target.value; state.activePickerCardId = null; renderLibrary(); });
+refs.editorLibrarySortSelect.addEventListener('change', function (event) { state.editorFilters.librarySort = event.target.value; state.activePickerCardId = null; renderLibrary(); });
+
+function handlePickerCardClick(event) {
+  let tile = event.target.closest('[data-picker-card]');
+  if (!tile) { return; }
+  state.activePickerCardId = tile.dataset.pickerCard;
+  renderLibrary();
+}
 
 function handleAddCardClick(event) {
   let button = event.target.closest('[data-add-card]');
@@ -3345,7 +3404,8 @@ function handleAddCardClick(event) {
   addCardToDraft(button.dataset.addCard, button.dataset.upgraded === 'true');
 }
 
-refs.editorLibraryList.addEventListener('click', handleAddCardClick);
+refs.editorLibraryList.addEventListener('click', handlePickerCardClick);
+if (refs.editorCardDetail) { refs.editorCardDetail.addEventListener('click', handleAddCardClick); }
 refs.libraryList.addEventListener('click', handleAddCardClick);
 
 refs.selectedCards.addEventListener('click', function (event) {

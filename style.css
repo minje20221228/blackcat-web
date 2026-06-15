@@ -905,6 +905,9 @@ h3 {
 }
 
 .build-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   align-items: center;
   justify-content: flex-end;
 }
@@ -954,6 +957,12 @@ h3 {
   background: rgba(184, 93, 86, 0.18);
   color: #ffeae7;
   border-color: rgba(217, 136, 130, 0.34);
+}
+
+.pill-button-danger {
+  background: rgba(184, 93, 86, 0.14);
+  border-color: rgba(217, 136, 130, 0.34);
+  color: #ffeae7;
 }
 
 :root[data-theme='light'] .action-button-danger {
@@ -1010,6 +1019,25 @@ h3 {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.selected-card-layout {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.selected-card-thumb {
+  width: 72px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+}
+
+.selected-card-body {
+  min-width: 0;
+}
+
 .selected-card-head,
 .library-card-head {
   margin-bottom: 10px;
@@ -1044,47 +1072,121 @@ h3 {
   gap: 14px;
 }
 
+.editor-picker-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(280px, 1.15fr);
+  gap: 14px;
+  align-items: start;
+}
+
 .editor-library-list {
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(94px, 1fr));
+  gap: 10px;
+  max-height: 620px;
 }
 
-.editor-library-list .library-card {
-  padding: 10px 12px;
-  border-radius: 16px;
-}
-
-.editor-card-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: center;
-}
-
-.editor-card-copy {
+.editor-card-picker-item {
   min-width: 0;
+}
+
+.editor-card-tile {
+  position: relative;
   display: grid;
   gap: 7px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
-.editor-card-title-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+.editor-card-tile:hover,
+.editor-card-tile.is-active {
+  border-color: rgba(223, 119, 73, 0.55);
+  background: rgba(223, 119, 73, 0.12);
+}
+
+.editor-card-image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+}
+
+.editor-card-image-missing {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.72rem;
+  background: var(--surface-strong);
+}
+
+.editor-card-tile-name {
+  overflow: hidden;
+  min-height: 2.4em;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.editor-card-count {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.editor-card-detail-shell {
+  position: sticky;
+  top: 18px;
+}
+
+.editor-card-detail {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.editor-card-detail-image {
+  width: 132px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+}
+
+.editor-card-detail-image-empty {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.editor-card-detail-copy {
+  display: grid;
+  gap: 12px;
+  align-content: start;
   min-width: 0;
 }
 
-.editor-card-title-row .library-card-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.editor-card-text {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+.editor-card-detail-title {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
 }
 
 .editor-card-actions {
@@ -1367,8 +1469,19 @@ h3 {
     max-height: none;
   }
 
-  .editor-card-row {
+  .editor-picker-layout,
+  .editor-card-detail,
+  .selected-card-layout {
     grid-template-columns: 1fr;
+  }
+
+  .editor-card-detail-shell {
+    position: static;
+  }
+
+  .editor-card-detail-image,
+  .selected-card-thumb {
+    width: min(100%, 180px);
   }
 
   .editor-card-actions {
