@@ -1791,7 +1791,116 @@ let RECOMMENDED_BUILD_DATA = [
       { cardId: '80-capacitor', quantity: 1, upgraded: false },
       { cardId: '166-echo-form', quantity: 1, upgraded: true }
     ]
+  },
+  {
+    id: 'recommended-ironclad-barricade-block',
+    character: 'Ironclad',
+    title: { en: 'Barricade Block Finish', ko: '바리케이드 방어 마무리' },
+    summary: {
+      en: 'Stack durable Block with Barricade, then convert defense into damage through Body Slam and Colossus turns.',
+      ko: 'Barricade로 방어도를 유지하고 Body Slam과 Colossus 턴으로 방어를 피해로 바꾸는 빌드입니다.'
+    },
+    notes: {
+      en: 'Armaments and Shrug It Off keep early turns stable. Flame Barrier and Barricade let the deck store defense, while Body Slam gives the build a low-cost finisher once Block is high.',
+      ko: 'Armaments와 Shrug It Off로 초반을 안정화합니다. Flame Barrier와 Barricade가 방어도를 보존하고, Body Slam은 방어도가 쌓인 뒤 저비용 마무리 수단이 됩니다.'
+    },
+    cards: [
+      { cardId: '17-armaments', quantity: 1, upgraded: true },
+      { cardId: '447-shrug-it-off', quantity: 2, upgraded: false },
+      { cardId: '201-flame-barrier', quantity: 2, upgraded: false },
+      { cardId: '30-barricade', quantity: 1, upgraded: true },
+      { cardId: '50-body-slam', quantity: 2, upgraded: true },
+      { cardId: '98-colossus', quantity: 1, upgraded: true }
+    ]
+  },
+  {
+    id: 'recommended-silent-poison-control',
+    character: 'Silent',
+    title: { en: 'Poison Control Curve', ko: '독 컨트롤 커브' },
+    summary: {
+      en: 'Lean on Poison, Weak, and block density to win longer fights without needing a large attack package.',
+      ko: '독, 약화, 방어 밀도로 장기전을 이기며 큰 공격 카드 묶음에 덜 의존하는 빌드입니다.'
+    },
+    notes: {
+      en: 'Deadly Poison and Bouncing Flask create boss pressure. Backflip, Blur, and Footwork keep the deck alive while Burst doubles the important poison or defense turn.',
+      ko: 'Deadly Poison과 Bouncing Flask가 보스전 압박을 만듭니다. Backflip, Blur, Footwork로 생존하고 Burst로 핵심 독 또는 방어 턴을 두 배로 키웁니다.'
+    },
+    cards: [
+      { cardId: '128-deadly-poison', quantity: 2, upgraded: false },
+      { cardId: '58-bouncing-flask', quantity: 1, upgraded: true },
+      { cardId: '24-backflip', quantity: 2, upgraded: false },
+      { cardId: '49-blur', quantity: 1, upgraded: true },
+      { cardId: '210-footwork', quantity: 1, upgraded: true },
+      { cardId: '72-burst', quantity: 1, upgraded: true }
+    ]
+  },
+  {
+    id: 'recommended-regent-celestial-burst',
+    character: 'Regent',
+    title: { en: 'Celestial Burst Route', ko: '천체 폭발 루트' },
+    summary: {
+      en: 'Use Star generation and celestial attacks to line up a controlled burst turn before bosses outscale the deck.',
+      ko: '별 생성과 천체 공격을 묶어 보스가 커지기 전에 제어된 폭발 턴을 만드는 빌드입니다.'
+    },
+    notes: {
+      en: 'Guiding Star and Glow smooth resources. Celestial Might, Comet, and Big Bang are the payoff cards; Cloak of Stars and Bulwark buy the turns needed to set them up.',
+      ko: 'Guiding Star와 Glow로 자원 흐름을 부드럽게 만듭니다. Celestial Might, Comet, Big Bang이 보상이며 Cloak of Stars와 Bulwark가 세팅 시간을 벌어 줍니다.'
+    },
+    cards: [
+      { cardId: '240-guiding-star', quantity: 2, upgraded: false },
+      { cardId: '231-glow', quantity: 2, upgraded: false },
+      { cardId: '94-cloak-of-stars', quantity: 2, upgraded: false },
+      { cardId: '68-bulwark', quantity: 1, upgraded: true },
+      { cardId: '84-celestial-might', quantity: 1, upgraded: true },
+      { cardId: '99-comet', quantity: 1, upgraded: true },
+      { cardId: '41-big-bang', quantity: 1, upgraded: true }
+    ]
+  },
+  {
+    id: 'recommended-necrobinder-doom-control',
+    character: 'Necrobinder',
+    title: { en: 'Doom Control Clock', ko: '종말 컨트롤 시계' },
+    summary: {
+      en: 'Delay and weaken enemies while Doom and sacrifice cards create a second win condition.',
+      ko: '적을 지연하고 약화시키면서 종말과 희생 카드로 또 다른 승리 조건을 만드는 빌드입니다.'
+    },
+    notes: {
+      en: 'Countdown, Delay, and Fear control the fight while Capture Spirit and Glimpse Beyond keep resources flowing. End of Days and Deathbringer are the payoff once the deck can survive setup turns.',
+      ko: 'Countdown, Delay, Fear로 전투를 제어하고 Capture Spirit과 Glimpse Beyond로 자원을 유지합니다. 세팅 턴을 버틸 수 있으면 End of Days와 Deathbringer가 보상이 됩니다.'
+    },
+    cards: [
+      { cardId: '112-countdown', quantity: 2, upgraded: false },
+      { cardId: '146-delay', quantity: 1, upgraded: true },
+      { cardId: '188-fear', quantity: 1, upgraded: true },
+      { cardId: '81-capture-spirit', quantity: 1, upgraded: true },
+      { cardId: '229-glimpse-beyond', quantity: 1, upgraded: false },
+      { cardId: '169-end-of-days', quantity: 1, upgraded: true },
+      { cardId: '130-deathbringer', quantity: 1, upgraded: true }
+    ]
+  },
+  {
+    id: 'recommended-defect-claw-tempo',
+    character: 'Defect',
+    title: { en: 'Claw Tempo Loop', ko: '클로 템포 루프' },
+    summary: {
+      en: 'Keep the deck cheap, cycle quickly, and let Claw-style scaling turn repeated small actions into a boss plan.',
+      ko: '덱을 가볍게 유지하고 빠르게 순환해 Claw식 성장으로 작은 행동을 보스전 계획으로 바꾸는 빌드입니다.'
+    },
+    notes: {
+      en: 'Claw, FTL, and Compile Driver keep turns efficient. Beam Cell and Go for the Eyes improve combat safety, while All for One and Double Energy create the high-action payoff turn.',
+      ko: 'Claw, FTL, Compile Driver로 턴 효율을 유지합니다. Beam Cell과 Go for the Eyes로 전투 안정성을 보완하고 All for One과 Double Energy가 고행동 보상 턴을 만듭니다.'
+    },
+    cards: [
+      { cardId: '91-claw', quantity: 3, upgraded: true },
+      { cardId: '216-ftl', quantity: 2, upgraded: false },
+      { cardId: '101-compile-driver', quantity: 2, upgraded: false },
+      { cardId: '34-beam-cell', quantity: 1, upgraded: true },
+      { cardId: '232-go-for-the-eyes', quantity: 1, upgraded: false },
+      { cardId: '11-all-for-one', quantity: 1, upgraded: true },
+      { cardId: '158-double-energy', quantity: 1, upgraded: true }
+    ]
   }
+
 ];
 
 function getLocalizedBuildValue(value) {
