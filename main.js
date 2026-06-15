@@ -1,6 +1,5 @@
 let PLAYABLE_CHARACTERS = ['Ironclad', 'Silent', 'Regent', 'Necrobinder', 'Defect'];
 let STORAGE_KEY = 'sts2-build-lab-builds-v2';
-let PINNED_KEY = 'sts2-build-lab-pins-v2';
 let languages = ['en', 'ko', 'ja', 'es'];
 let SITE_PAGE = document.body.dataset.page || 'home';
 
@@ -1089,7 +1088,7 @@ let uiText = {
     patchKicker: 'Steam Newsroom',
     patchHeading: 'Patch Notes & News',
     sortLabel: 'Sort',
-    sortOptions: { latest: 'Latest', popular: 'Pinned' },
+    sortOptions: { latest: 'Recommended first', newest: 'Newest' },
     characterKicker: 'Characters',
     characterHeading: 'Choose a character',
     libraryKicker: 'Cards',
@@ -1132,6 +1131,7 @@ let uiText = {
     buttons: {
       newBuild: 'Open editor',
       duplicateBuild: 'Duplicate',
+      viewBuild: 'View',
       saveBuild: 'Save build',
       deleteBuild: 'Delete',
       editBuild: 'Edit',
@@ -1164,8 +1164,7 @@ let uiText = {
       energy: 'Energy',
       upgraded: 'Upgraded',
       managePrompt: 'Enter the author name or admin key to manage this build.',
-      manageDenied: 'Only the author or an admin can edit or delete this build.',
-      ownerOnly: 'Author/Admin only'
+      manageDenied: 'Only the author or an admin can edit or delete this build.'
     },
     links: {
       patchSource: 'Steam News',
@@ -1194,7 +1193,7 @@ let uiText = {
     patchKicker: 'Steam 뉴스룸',
     patchHeading: '패치노트 & 뉴스',
     sortLabel: '정렬',
-    sortOptions: { latest: '최신순', popular: '고정순' },
+    sortOptions: { latest: '추천 우선', newest: '최신순' },
     characterKicker: '캐릭터',
     characterHeading: '캐릭터 선택',
     libraryKicker: '카드',
@@ -1237,6 +1236,7 @@ let uiText = {
     buttons: {
       newBuild: '편집기 열기',
       duplicateBuild: '복제',
+      viewBuild: '보기',
       saveBuild: '빌드 저장',
       deleteBuild: '빌드 삭제',
       editBuild: '수정',
@@ -1269,8 +1269,7 @@ let uiText = {
       energy: '에너지',
       upgraded: '강화',
       managePrompt: '이 빌드를 수정/삭제하려면 작성자명 또는 관리자 키를 입력하세요.',
-      manageDenied: '작성자 또는 관리자만 이 빌드를 수정/삭제할 수 있습니다.',
-      ownerOnly: '작성자/관리자 전용'
+      manageDenied: '작성자 또는 관리자만 이 빌드를 수정/삭제할 수 있습니다.'
     },
     links: {
       patchSource: 'Steam 뉴스',
@@ -1444,12 +1443,12 @@ let state = {
   activeBuildId: null,
   editorOpen: false,
   savedBuilds: loadSavedBuilds(),
-  pinnedIds: loadPinnedIds(),
   buildSearch: '',
   filters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
   editorFilters: { search: '', type: 'all', rarity: 'all', cost: 'all', librarySort: 'name' },
   activePickerCardId: null,
   activeModalCardId: null,
+  activeModalBuildId: null,
   draft: createEmptyBuild(PLAYABLE_CHARACTERS[0])
 };
 
@@ -1990,18 +1989,6 @@ function persistSavedBuilds() {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.savedBuilds.map(sanitizeBuild).filter(Boolean).slice(0, 200)));
 }
 
-function loadPinnedIds() {
-  try {
-    let raw = window.localStorage.getItem(PINNED_KEY);
-    let parsed = raw ? JSON.parse(raw) : [];
-    return new Set(Array.isArray(parsed) ? parsed.map(function (item) { return sanitizeTextInput(item, 120); }).filter(Boolean).slice(0, 200) : []);
-  } catch (error) {
-    return new Set();
-  }
-}
-
-function persistPinnedIds() { window.localStorage.setItem(PINNED_KEY, JSON.stringify(Array.from(state.pinnedIds))); }
-
 function isBuildExcludedCard(card) {
   if (!card) { return true; }
   return card.character === 'Colorless'
@@ -2058,9 +2045,8 @@ function buildsForActiveCharacter() {
     return characterMatch && (!search || getBuildSearchText(build).includes(search));
   });
   return builds.slice().sort(function (a, b) {
-    if (state.currentSort === 'popular') {
-      let pinDiff = Number(state.pinnedIds.has(b.id)) - Number(state.pinnedIds.has(a.id));
-      if (pinDiff) { return pinDiff; }
+    if (state.currentSort === 'newest') {
+      return b.updatedAt - a.updatedAt;
     }
     if ((a.source === 'recommended') !== (b.source === 'recommended')) {
       return a.source === 'recommended' ? -1 : 1;
@@ -2215,9 +2201,7 @@ function deleteCurrentBuild() {
   let activeBuild = state.savedBuilds.find(function (build) { return build.id === state.activeBuildId; });
   if (!requestManagePermission(activeBuild)) { return; }
   state.savedBuilds = state.savedBuilds.filter(function (build) { return build.id !== state.activeBuildId; });
-  state.pinnedIds.delete(state.activeBuildId);
   persistSavedBuilds();
-  persistPinnedIds();
   state.activeBuildId = null;
   state.draft = createEmptyBuild(state.activeCharacter);
   showStatus(ui().status.deleted);
@@ -2228,22 +2212,14 @@ function deleteSavedBuild(buildId) {
   let build = state.savedBuilds.find(function (item) { return item.id === buildId; });
   if (!build || !requestManagePermission(build)) { return; }
   state.savedBuilds = state.savedBuilds.filter(function (item) { return item.id !== buildId; });
-  state.pinnedIds.delete(buildId);
   if (state.activeBuildId === buildId) {
     state.activeBuildId = null;
     state.editorOpen = false;
     state.draft = createEmptyBuild(state.activeCharacter);
   }
   persistSavedBuilds();
-  persistPinnedIds();
   showStatus(ui().status.deleted);
   render();
-}
-
-function togglePinned(buildId) {
-  if (state.pinnedIds.has(buildId)) { state.pinnedIds.delete(buildId); } else { state.pinnedIds.add(buildId); }
-  persistPinnedIds();
-  renderBuildList();
 }
 
 function updateDraftField(field, value) {
@@ -2717,7 +2693,7 @@ function renderStaticText() {
   refs.sortLabel.textContent = currentUi.sortLabel;
   refs.patchKicker.textContent = currentUi.patchKicker;
   refs.patchHeading.textContent = currentUi.patchHeading;
-  refs.sortSelect.innerHTML = '<option value="latest">' + currentUi.sortOptions.latest + '</option><option value="popular">' + currentUi.sortOptions.popular + '</option>';
+  refs.sortSelect.innerHTML = '<option value="latest">' + currentUi.sortOptions.latest + '</option><option value="newest">' + currentUi.sortOptions.newest + '</option>';
   refs.characterKicker.textContent = currentUi.characterKicker;
   refs.characterHeading.textContent = currentUi.characterHeading;
   refs.libraryKicker.textContent = currentUi.libraryKicker;
@@ -2924,10 +2900,11 @@ function renderBuildList() {
     article.dataset.buildId = build.id;
     if (build.id === state.activeBuildId) { article.classList.add('is-active'); }
     let label = build.id === state.activeBuildId ? ui().labels.draft : (build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved);
-    let manageButtons = build.source === 'recommended'
-      ? '<span class="build-meta">' + escapeHtml(ui().labels.ownerOnly) + '</span>'
-      : '<button class="pill-button pill-button-primary" type="button" data-edit-build="' + build.id + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + build.id + '">' + ui().buttons.deleteSavedBuild + '</button>';
-    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions">' + manageButtons + '<button class="pill-button" type="button" data-pin-build="' + build.id + '">' + (state.pinnedIds.has(build.id) ? ui().buttons.unpin : ui().buttons.pin) + '</button></div></div>';
+    let manageButtons = '<button class="pill-button pill-button-primary" type="button" data-view-build="' + build.id + '">' + ui().buttons.viewBuild + '</button>';
+    if (build.source !== 'recommended') {
+      manageButtons += '<button class="pill-button" type="button" data-edit-build="' + build.id + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + build.id + '">' + ui().buttons.deleteSavedBuild + '</button>';
+    }
+    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions">' + manageButtons + '</div></div>';
     refs.buildList.appendChild(article);
   });
 }
@@ -3062,6 +3039,7 @@ function renderEditorPickerDetail() {
 
 function closeCardModal() {
   state.activeModalCardId = null;
+  state.activeModalBuildId = null;
   if (refs.cardModal) { refs.cardModal.hidden = true; }
 }
 
@@ -3091,6 +3069,36 @@ function openCardModal(cardId) {
   state.activeModalCardId = cardId;
   renderLibrary();
   renderCardModal();
+}
+
+function renderBuildModal(build) {
+  if (!refs.cardModal || !refs.cardModalContent || !build) { return; }
+  let summary = summarizeBuild(build);
+  let cards = buildCards(build);
+  let label = build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved;
+  let notesBlock = build.notes ? '<section class="card-modal-section"><span class="upgrade-label">' + escapeHtml(ui().fields.notes) + '</span><p class="library-card-text">' + escapeHtml(build.notes) + '</p></section>' : '';
+  let manageButtons = '';
+  if (build.source !== 'recommended') {
+    manageButtons = '<button class="pill-button pill-button-primary" type="button" data-edit-build="' + escapeHtml(build.id) + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + escapeHtml(build.id) + '">' + ui().buttons.deleteSavedBuild + '</button>';
+  }
+  let cardList = cards.length ? cards.map(function (entry) {
+    let card = entry.card;
+    let imageUrl = getCardImageUrl(card);
+    let imageMarkup = imageUrl ? '<img class="build-modal-thumb" src="' + escapeHtml(imageUrl) + '" alt="' + escapeHtml(getCardName(card, entry.upgraded)) + '" loading="lazy">' : '<div class="build-modal-thumb build-modal-thumb-empty">' + escapeHtml(ui().labels.noImage) + '</div>';
+    let upgradedBadge = entry.upgraded ? '<span class="build-meta">' + escapeHtml(ui().labels.upgraded) + '</span>' : '';
+    return '<li class="build-modal-card-row">' + imageMarkup + '<div><div class="build-modal-card-head"><strong>' + escapeHtml(getCardName(card, entry.upgraded)) + '</strong><span class="build-meta">x' + entry.quantity + '</span>' + upgradedBadge + '</div><div class="card-meta"><span class="build-meta">' + escapeHtml(getTypeLabel(card.type)) + '</span><span class="build-meta">' + escapeHtml(getRarityLabel(card.rarity)) + '</span><span class="build-meta energy-chip">' + escapeHtml(ui().fields.cost) + ': ' + escapeHtml(formatCardCostDisplay(card, entry.upgraded)) + '</span></div><p class="library-card-text">' + escapeHtml(getCardText(card, entry.upgraded)) + '</p></div></li>';
+  }).join('') : '<li class="empty-state">' + escapeHtml(ui().empty.selected) + '</li>';
+
+  refs.cardModalContent.innerHTML = '<article class="build-modal-card"><div class="build-modal-hero"><p class="section-kicker">' + escapeHtml(label) + ' · ' + escapeHtml(getCharacterLabel(build.character)) + '</p><h3 class="card-modal-title" id="card-modal-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div>' + notesBlock + '<div class="card-modal-actions">' + manageButtons + '</div></div><section class="build-modal-list-section"><span class="upgrade-label">' + escapeHtml(ui().editorHeading) + '</span><ul class="build-modal-list">' + cardList + '</ul></section></article>';
+  refs.cardModal.hidden = false;
+}
+
+function openBuildModal(buildId) {
+  let build = findBuildById(buildId);
+  if (!build) { return; }
+  state.activeModalCardId = null;
+  state.activeModalBuildId = build.id;
+  renderBuildModal(build);
 }
 
 
@@ -3497,7 +3505,7 @@ refs.buildsCharacterSelect.addEventListener('change', function (event) {
 });
 
 refs.sortSelect.addEventListener('change', function (event) {
-  state.currentSort = event.target.value === 'popular' ? 'popular' : 'latest';
+  state.currentSort = event.target.value === 'newest' ? 'newest' : 'latest';
   renderBuildList();
 });
 
@@ -3520,10 +3528,10 @@ refs.characterTabs.addEventListener('click', function (event) {
 });
 
 refs.buildList.addEventListener('click', function (event) {
-  let pinButton = event.target.closest('[data-pin-build]');
-  if (pinButton) {
+  let viewButton = event.target.closest('[data-view-build]');
+  if (viewButton) {
     event.stopPropagation();
-    togglePinned(pinButton.dataset.pinBuild);
+    openBuildModal(viewButton.dataset.viewBuild);
     return;
   }
   let deleteButton = event.target.closest('[data-delete-build]');
@@ -3540,7 +3548,7 @@ refs.buildList.addEventListener('click', function (event) {
   }
   let buildCard = event.target.closest('[data-build-id]');
   if (!buildCard) { return; }
-  loadBuildForEdit(buildCard.dataset.buildId);
+  openBuildModal(buildCard.dataset.buildId);
 });
 
 refs.newBuildButton.addEventListener('click', function () { openEditor('new'); });
@@ -3591,6 +3599,18 @@ function handleAddCardClick(event) {
 
 refs.editorLibraryList.addEventListener('click', handlePickerCardClick);
 if (refs.cardModalContent) { refs.cardModalContent.addEventListener('click', function (event) {
+  let deleteBuildButton = event.target.closest('[data-delete-build]');
+  if (deleteBuildButton) {
+    deleteSavedBuild(deleteBuildButton.dataset.deleteBuild);
+    closeCardModal();
+    return;
+  }
+  let editBuildButton = event.target.closest('[data-edit-build]');
+  if (editBuildButton) {
+    closeCardModal();
+    loadBuildForEdit(editBuildButton.dataset.editBuild);
+    return;
+  }
   handleAddCardClick(event);
   let remove = event.target.closest('[data-remove-card]');
   if (remove) {
