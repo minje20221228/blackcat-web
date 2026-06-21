@@ -1,7 +1,7 @@
 window.STS2_PATCH_NOTES = {
   "source": "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=2868840&count=80&maxlength=0&format=json",
   "rssSource": "https://steamcommunity.com/games/2868840/rss",
-  "generatedAt": "2026-06-21T10:05:43.991Z",
+  "generatedAt": "2026-06-21T14:33:18.693Z",
   "items": [
     {
       "id": "667242081733838608",
@@ -427,23 +427,6 @@ window.STS2_PATCH_NOTES = {
       "summary": "Happy Slay the Spire 2 launch day everyone! We have a day 1 hotfix for various issues and softlocks that players have reported. Thank you all for your feedback! For those who don't know, you can submit feedback in-game by pressing F2 or through the settings menu.\nBUG FIXES:\n- Fixed an issue where, if you played your first run in multiplayer and disconnected after defeating the Act 1 boss, you would be unable to start a new run or enter the Timeline screen\n- Fixed crash from fast card play when card play is cancelled during targeting\n- Fixed crash when displaying untranslated text for languages with complex plural rules\n- Fixed intermittent crash with non-English languages",
       "summaryKo": "긴급 수정과 소프트락, 충돌, 멀티플레이 문제 같은 안정성 개선을 빠르게 확인할 수 있습니다.",
       "body": "Happy Slay the Spire 2 launch day everyone! We have a day 1 hotfix for various issues and softlocks that players have reported. Thank you all for your feedback! For those who don't know, you can submit feedback in-game by pressing F2 or through the settings menu.\nBUG FIXES:\n- Fixed an issue where, if you played your first run in multiplayer and disconnected after defeating the Act 1 boss, you would be unable to start a new run or enter the Timeline screen\n- Fixed crash from fast card play when card play is cancelled during targeting\n- Fixed crash when displaying untranslated text for languages with complex plural rules\n- Fixed intermittent crash with non-English languages\n- Fixed localization-related crash in Japanese Knife Trap translation referencing non-existent Damage variable\n- Fixed unsupported Steam languages showing all text as W's instead of falling back to English"
-    },
-    {
-      "id": "1826362059922055",
-      "title": "Slay the Spire 2 is out NOW in Early Access!!",
-      "link": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1826362059922055",
-      "pubDate": "Thu, 05 Mar 2026 17:51:30 GMT",
-      "publishedAt": "2026-03-05T17:51:30.000Z",
-      "kind": "news",
-      "category": "news",
-      "sourceLabel": "Steam Community",
-      "author": "demileaf",
-      "official": true,
-      "external": false,
-      "image": "https://clan.akamai.steamstatic.com/images/44971832/310c731af8708aec9a7adf5a7d2e2e5961b6adee.png",
-      "summary": "The Spire has finally reawakened.\nSlay the Spire 2, the long awaited sequel to the original genre-defining roguelike deckbuilder, is available now on Steam Early Access!\nhttps://store.steampowered.com/app/2868840/Slay_the_Spire_2/\nWe're so excited for you all to see for yourselves what we've been working on for the past 5 years. If you've been keeping up with our monthly Neowsletters, you already know that this reawakened Spire has a LOT of new features and content compared to the one you may already know, but there's plenty more to discover and much more on the way. For more info, you can check out our FAQ (https://steamcommunity.com/app/2868840/discussions/0/4355620416676744549/).\nFor those who have never ventured into the Spire before, you don't need any prior experience with Slay the Spire 1 to enjoy what Slay the Spire 2 has to offer. Now is a great time to dive right in and ascend the Spire, either on your own or—this time around—with your friends!\nAbout Slay the Spire 2",
-      "summaryKo": "The Spire has finally reawakened.",
-      "body": "The Spire has finally reawakened.\nSlay the Spire 2, the long awaited sequel to the original genre-defining roguelike deckbuilder, is available now on Steam Early Access!\nhttps://store.steampowered.com/app/2868840/Slay_the_Spire_2/\nWe're so excited for you all to see for yourselves what we've been working on for the past 5 years. If you've been keeping up with our monthly Neowsletters, you already know that this reawakened Spire has a LOT of new features and content compared to the one you may already know, but there's plenty more to discover and much more on the way. For more info, you can check out our FAQ (https://steamcommunity.com/app/2868840/discussions/0/4355620416676744549/).\nFor those who have never ventured into the Spire before, you don't need any prior experience with Slay the Spire 1 to enjoy what Slay the Spire 2 has to offer. Now is a great time to dive right in and ascend the Spire, either on your own or—this time around—with your friends!\nAbout Slay the Spire 2\nFor 1,000 years, the Spire lay dormant, its secrets buried and its horrors forgotten. Now, it has reopened, hungrier and more dangerous than ever, devouring all who dare to ascend.\nNew perils demand sharper strategies, relentless cunning, and unwavering resolve. Outwit the Spire’s brutal trials and uncover the truths hidden at its peak.\nClimb the Spire with a new and returning cast of characters, each with their own cards, motives, and secrets. Make allies of the most ancient of the Spire’s residents, encounter all-new environments, defeat formidable foes, and uncover fragments of the Spire’s past as you ascend it again and again.\nAlso, while you can always choose to brave the ascent on your own, up to 4 players can now team up to face the Spire’s challenges together in an all-new co-op mode. Discover multiplayer-specific cards, powerful team synergies, and carry your friends (or get carried) to victory!\nAbout Early Access\nThe Spire truly is ever-changing… in more ways than one. While Slay the Spire 2 already has more content than Slay the Spire 1, even more content—including cards, events, environments, enemies, and more—will be added and balanced throughout Early Access.\nWe don't have a specific timeline to share with you all, but we'll be sure to keep you regularly updated and give you peeks behind the development curtain. Your feedback (as well as your fanart and memes) will be invaluable throughout this process, just as it was with the first game. This time, you'll be able to submit your feedback and bug reports in-game! Join the journey now to be a part of the Spire’s next evolution."
     }
   ]
 };
