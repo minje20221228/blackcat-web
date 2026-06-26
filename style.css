@@ -2464,3 +2464,121 @@ select {
     padding: 14px;
   }
 }
+
+
+/* High quality flat reading refresh */
+.page-brief,
+.field-group[for="build-notes-input"] {
+  display: none !important;
+}
+
+.hero,
+.panel,
+.content-panel,
+.sidebar,
+.detail-block,
+.build-card,
+.library-card,
+.relic-card,
+.info-card,
+.summary-card,
+.card-modal-panel,
+.auth-modal-panel,
+.static-panel,
+.editorial-panel,
+.selected-card,
+.editor-card-tile,
+.builder-panel:not([hidden]) > .workspace-head,
+.builder-panel:not([hidden]) .detail-block {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.content-panel,
+.sidebar,
+.detail-block,
+.static-panel,
+.editorial-panel,
+.builder-panel:not([hidden]) > .workspace-head,
+.builder-panel:not([hidden]) .detail-block {
+  background: color-mix(in srgb, var(--panel-strong) 88%, transparent);
+}
+
+.build-card,
+.library-card,
+.relic-card,
+.selected-card,
+.editor-card-tile,
+.summary-card {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 92%, transparent), color-mix(in srgb, var(--panel) 96%, transparent));
+  border-radius: 14px;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.build-card:hover,
+.library-card:hover,
+.relic-card:hover,
+.editor-card-tile:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 100%, transparent), color-mix(in srgb, var(--panel-strong) 96%, transparent));
+}
+
+.card-meta {
+  gap: 8px;
+}
+
+.build-meta,
+.stat-chip,
+.energy-chip {
+  border: 0 !important;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
+.build-author-name {
+  color: var(--accent-strong);
+  font-weight: 800;
+}
+
+.nav-button,
+.action-button,
+.pill-button,
+.filter-button,
+.segment-button,
+.icon-button,
+.search-input,
+.select-input,
+.text-input,
+.text-area {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.nav-button:focus-visible,
+.action-button:focus-visible,
+.pill-button:focus-visible,
+.filter-button:focus-visible,
+.segment-button:focus-visible,
+.icon-button:focus-visible,
+.search-input:focus-visible,
+.select-input:focus-visible,
+.text-input:focus-visible,
+.text-area:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent-strong) 84%, white);
+  outline-offset: 2px;
+}
+
+.auth-modal-panel {
+  width: min(420px, calc(100vw - 32px));
+  background: color-mix(in srgb, var(--panel-strong) 94%, black);
+}
+
+.auth-account-summary {
+  border: 0 !important;
+  box-shadow: none !important;
+  text-align: center;
+}
+
+.g_id_signin,
+.google-signin-button {
+  justify-items: center;
+}

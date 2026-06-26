@@ -1736,9 +1736,9 @@ function createEmptyBuild(character) {
     id: createId(),
     character: character,
     title: '',
-    author: auth ? auth.displayName : '',
+    author: auth ? getAuthNickname(auth) : '',
     ownerId: auth ? auth.userId : '',
-    ownerName: auth ? auth.displayName : '',
+    ownerName: auth ? getAuthNickname(auth) : '',
     summary: '',
     notes: '',
     cards: getStarterDeckEntries(character),
@@ -1784,11 +1784,27 @@ function sanitizeProfileText(value, maxLength) {
   return sanitizeTextInput(String(value || ''), maxLength).trim();
 }
 
+function getDisplayNickname(value) {
+  let text = sanitizeProfileText(value, 80);
+  if (!text) { return 'Google User'; }
+  return sanitizeProfileText(text.split('@')[0] || text, 40) || 'Google User';
+}
+
+function getAuthNickname(auth) {
+  if (!auth) { return ''; }
+  return getDisplayNickname(auth.displayName || auth.email || 'Google User');
+}
+
+function getBuildNickname(build) {
+  if (!build) { return ''; }
+  return getDisplayNickname(build.ownerName || build.author || 'Google User');
+}
+
 function buildAuthSessionFromGoogle(payload) {
   if (!payload || !payload.sub) { return null; }
   let email = sanitizeProfileText(payload.email, 120);
   let name = sanitizeProfileText(payload.name, 80);
-  let displayName = name || email || 'Google User';
+  let displayName = getDisplayNickname(name || email || 'Google User');
   return {
     provider: 'google',
     userId: 'google:' + sanitizeProfileText(payload.sub, 120),
@@ -1813,7 +1829,7 @@ function loadAuthSession() {
       provider: 'google',
       userId: 'google:' + googleSub,
       googleSub: googleSub,
-      displayName: sanitizeProfileText(parsed.displayName || parsed.email || 'Google User', 80),
+      displayName: getDisplayNickname(parsed.displayName || parsed.email || 'Google User'),
       email: sanitizeProfileText(parsed.email, 120),
       picture: sanitizeProfileText(parsed.picture, 300),
       sessionId: sanitizeTextInput(parsed.sessionId || createSessionToken(), 80),
@@ -2132,11 +2148,11 @@ function sanitizeBuild(build) {
     id: sanitizeTextInput(build.id || createId(), 120),
     character: character,
     title: sanitizeTextInput(build.title, 80),
-    author: sanitizeTextInput(build.author, 40),
+    author: getDisplayNickname(build.ownerName || build.author || 'Google User'),
     ownerId: sanitizeTextInput(build.ownerId || '', 80).toLowerCase(),
-    ownerName: sanitizeTextInput(build.ownerName || build.author || '', 40),
+    ownerName: getDisplayNickname(build.ownerName || build.author || 'Google User'),
     summary: sanitizeTextInput(build.summary, 220),
-    notes: sanitizeTextInput(build.notes, 420),
+    notes: '',
     cards: Array.isArray(build.cards) ? build.cards.map(sanitizeBuildCardEntry).filter(Boolean) : [],
     createdAt: Number.isFinite(Number(build.createdAt)) ? Number(build.createdAt) : now,
     updatedAt: Number.isFinite(Number(build.updatedAt)) ? Number(build.updatedAt) : now
@@ -2296,12 +2312,12 @@ function saveCurrentBuild() {
   if (!requireAuth()) { return; }
   draft.character = state.activeCharacter;
   draft.updatedAt = now;
-  draft.author = state.auth.displayName;
+  draft.author = getAuthNickname(state.auth);
   draft.ownerId = state.auth.userId;
-  draft.ownerName = state.auth.displayName;
+  draft.ownerName = getAuthNickname(state.auth);
   draft.title = draft.title.trim() || (getCharacterLabel(state.activeCharacter) + ' Build');
   draft.summary = draft.summary.trim() || getCharacterSummary(state.activeCharacter);
-  draft.notes = draft.notes.trim();
+  draft.notes = '';
 
   if (state.activeBuildId && state.savedBuilds.some(function (build) { return build.id === state.activeBuildId; })) {
     draft.id = state.activeBuildId;
@@ -2973,11 +2989,12 @@ function closeUtilityMenus() {
 
 function renderAuthButton() {
   if (!refs.authButton) { return; }
-  let label = state.auth ? state.auth.displayName : ui().nav.login;
+  let nickname = getAuthNickname(state.auth);
+  let label = state.auth ? nickname : ui().nav.login;
   refs.authButton.textContent = label;
   refs.authButton.classList.toggle('is-active', Boolean(state.auth));
-  refs.authButton.setAttribute('aria-label', state.auth ? ((ui().labels.loggedInAs || 'Signed in as') + ' ' + state.auth.displayName) : ui().nav.login);
-  refs.authButton.setAttribute('title', state.auth ? ((ui().labels.loggedInAs || 'Signed in as') + ' ' + state.auth.displayName) : ui().nav.login);
+  refs.authButton.setAttribute('aria-label', state.auth ? ((ui().labels.loggedInAs || 'Signed in as') + ' ' + nickname) : ui().nav.login);
+  refs.authButton.setAttribute('title', state.auth ? ((ui().labels.loggedInAs || 'Signed in as') + ' ' + nickname) : ui().nav.login);
 }
 
 function setAuthError(message) {
@@ -2995,7 +3012,7 @@ function loadGoogleIdentityScript(callback) {
     callback(true);
     return;
   }
-  let existing = document.querySelector('script[data-google-identity="true"]');
+  let existing = document.querySelector('script[data-google-identity="true"], script[src*="accounts.google.com/gsi/client"]');
   if (existing) {
     existing.addEventListener('load', function () { callback(true); }, { once: true });
     existing.addEventListener('error', function () { callback(false); }, { once: true });
@@ -3011,6 +3028,8 @@ function loadGoogleIdentityScript(callback) {
   document.head.appendChild(script);
 }
 
+window.handleGoogleCredentialGlobal = handleGoogleCredential;
+
 function handleGoogleCredential(response) {
   let payload = decodeJwtPayload(response && response.credential);
   let auth = buildAuthSessionFromGoogle(payload);
@@ -3021,9 +3040,9 @@ function handleGoogleCredential(response) {
   state.auth = auth;
   persistAuthSession(state.auth);
   if (state.draft && !state.draft.source) {
-    state.draft.author = state.auth.displayName;
+    state.draft.author = getAuthNickname(state.auth);
     state.draft.ownerId = state.auth.userId;
-    state.draft.ownerName = state.auth.displayName;
+    state.draft.ownerName = getAuthNickname(state.auth);
   }
   closeLoginDialog();
   showStatus(ui().status.loggedIn);
@@ -3035,7 +3054,7 @@ function renderGoogleLoginButton() {
   if (!target) { return; }
   target.innerHTML = '';
   if (state.auth) {
-    target.innerHTML = '<div class="auth-account-summary"><strong>' + escapeHtml(state.auth.displayName) + '</strong>' + (state.auth.email ? '<span>' + escapeHtml(state.auth.email) + '</span>' : '') + '</div>';
+    target.innerHTML = '<div class="auth-account-summary"><strong>' + escapeHtml(getAuthNickname(state.auth)) + '</strong></div>';
     return;
   }
   let clientId = getGoogleClientId();
@@ -3052,6 +3071,12 @@ function renderGoogleLoginButton() {
       return;
     }
     target.innerHTML = '';
+    let onload = document.getElementById('g_id_onload');
+    if (onload) {
+      onload.dataset.client_id = clientId;
+      onload.dataset.callback = 'handleGoogleCredentialGlobal';
+      onload.dataset.auto_prompt = 'false';
+    }
     accounts.initialize({ client_id: clientId, callback: handleGoogleCredential, auto_select: false, cancel_on_tap_outside: true });
     accounts.renderButton(target, { theme: 'outline', size: 'large', type: 'standard', shape: 'rectangular', text: 'signin_with', width: Math.min(360, target.clientWidth || 320) });
   });
@@ -3087,7 +3112,7 @@ function ensureLoginDialog() {
   modal.className = 'auth-modal';
   modal.id = 'auth-modal';
   modal.hidden = true;
-  modal.innerHTML = '<button class="auth-modal-backdrop" id="auth-modal-backdrop" type="button" aria-label="Close"></button><section class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title"><button class="card-modal-close" id="auth-modal-close" type="button" aria-label="Close">×</button><p class="section-kicker" id="auth-modal-title"></p><div class="google-signin-button" id="google-signin-button"></div><p class="section-note auth-help" id="auth-help"></p><p class="status-text auth-error" id="auth-error" role="alert"></p><div class="auth-actions"><button class="action-button" id="auth-logout-button" type="button"></button></div></section>';
+  modal.innerHTML = '<button class="auth-modal-backdrop" id="auth-modal-backdrop" type="button" aria-label="Close"></button><section class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title"><button class="card-modal-close" id="auth-modal-close" type="button" aria-label="Close">×</button><p class="section-kicker" id="auth-modal-title"></p><div id="g_id_onload" data-client_id="" data-callback="handleGoogleCredentialGlobal" data-auto_prompt="false"></div><div class="g_id_signin google-signin-button" id="google-signin-button" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left"></div><p class="section-note auth-help" id="auth-help"></p><p class="status-text auth-error" id="auth-error" role="alert"></p><div class="auth-actions"><button class="action-button" id="auth-logout-button" type="button"></button></div></section>';
   document.body.appendChild(modal);
   document.getElementById('auth-modal-close').addEventListener('click', closeLoginDialog);
   document.getElementById('auth-modal-backdrop').addEventListener('click', closeLoginDialog);
@@ -3241,19 +3266,19 @@ function renderBuildList() {
     if (build.source !== 'recommended' && canManageBuild(build)) {
       manageButtons += '<button class="pill-button" type="button" data-edit-build="' + build.id + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + build.id + '">' + ui().buttons.deleteSavedBuild + '</button>';
     }
-    article.innerHTML = renderBuildPreview(build) + '<div class="build-card-body"><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + escapeHtml(ui().labels.owner || ui().fields.author) + ': ' + escapeHtml(build.author || build.ownerName || '') + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div><div class="build-card-actions">' + manageButtons + '</div></div>';
+    article.innerHTML = renderBuildPreview(build) + '<div class="build-card-body"><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta build-author-name">' + escapeHtml(getBuildNickname(build)) + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div><div class="build-card-actions">' + manageButtons + '</div></div>';
     refs.buildList.appendChild(article);
   });
 }
 
 function renderEditorFields() {
   refs.buildTitleInput.value = state.draft.title;
-  state.draft.author = state.auth ? state.auth.displayName : state.draft.author;
+  state.draft.author = state.auth ? getAuthNickname(state.auth) : state.draft.author;
   refs.buildAuthorInput.value = state.draft.author;
   refs.buildAuthorInput.readOnly = true;
   refs.buildAuthorInput.classList.toggle('is-readonly', true);
   refs.buildSummaryInput.value = state.draft.summary;
-  refs.buildNotesInput.value = state.draft.notes;
+  if (refs.buildNotesInput) { refs.buildNotesInput.value = ''; }
   refs.buildCharacterSelect.innerHTML = PLAYABLE_CHARACTERS.map(function (character) { return '<option value="' + character + '">' + escapeHtml(getCharacterLabel(character)) + '</option>'; }).join('');
   refs.buildCharacterSelect.value = state.activeCharacter;
   if (state.activePickerCardId) {
@@ -3416,7 +3441,7 @@ function renderBuildModal(build) {
   let summary = summarizeBuild(build);
   let cards = buildCards(build);
   let label = build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved;
-  let notesBlock = build.notes ? '<section class="card-modal-section"><span class="upgrade-label">' + escapeHtml(ui().fields.notes) + '</span><p class="library-card-text">' + escapeHtml(build.notes) + '</p></section>' : '';
+  let notesBlock = '';
   let manageButtons = '';
   if (build.source !== 'recommended' && canManageBuild(build)) {
     manageButtons = '<button class="pill-button pill-button-primary" type="button" data-edit-build="' + escapeHtml(build.id) + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + escapeHtml(build.id) + '">' + ui().buttons.deleteSavedBuild + '</button>';
@@ -3908,9 +3933,9 @@ refs.saveBuildButton.addEventListener('click', function () { saveCurrentBuild();
 refs.deleteBuildButton.addEventListener('click', function () { deleteCurrentBuild(); });
 if (refs.closeBuilderButton) { refs.closeBuilderButton.addEventListener('click', closeEditor); }
 refs.buildTitleInput.addEventListener('input', function (event) { updateDraftField('title', event.target.value); });
-refs.buildAuthorInput.addEventListener('input', function () { if (state.auth) { state.draft.author = state.auth.displayName; refs.buildAuthorInput.value = state.auth.displayName; } });
+refs.buildAuthorInput.addEventListener('input', function () { if (state.auth) { state.draft.author = getAuthNickname(state.auth); refs.buildAuthorInput.value = getAuthNickname(state.auth); } });
 refs.buildSummaryInput.addEventListener('input', function (event) { updateDraftField('summary', event.target.value); });
-refs.buildNotesInput.addEventListener('input', function (event) { updateDraftField('notes', event.target.value); });
+if (refs.buildNotesInput) { refs.buildNotesInput.addEventListener('input', function () { updateDraftField('notes', ''); }); }
 
 refs.buildCharacterSelect.addEventListener('change', function (event) {
   let previousDraft = state.draft;
@@ -3920,11 +3945,11 @@ refs.buildCharacterSelect.addEventListener('change', function (event) {
   state.activePickerCardId = null;
   state.draft = createEmptyBuild(event.target.value);
   state.draft.title = previousDraft.title;
-  state.draft.author = state.auth ? state.auth.displayName : previousDraft.author;
+  state.draft.author = state.auth ? getAuthNickname(state.auth) : previousDraft.author;
   state.draft.ownerId = state.auth ? state.auth.userId : previousDraft.ownerId;
-  state.draft.ownerName = state.auth ? state.auth.displayName : previousDraft.ownerName;
+  state.draft.ownerName = state.auth ? getAuthNickname(state.auth) : previousDraft.ownerName;
   state.draft.summary = previousDraft.summary;
-  state.draft.notes = previousDraft.notes;
+  state.draft.notes = '';
   render();
 });
 
