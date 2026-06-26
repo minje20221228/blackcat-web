@@ -2432,11 +2432,6 @@ select {
   background: var(--panel-strong);
 }
 
-.google-signin-button {
-  min-height: 44px;
-  display: grid;
-  align-items: center;
-}
 
 .auth-account-summary {
   display: grid;
@@ -2576,9 +2571,4 @@ select {
   border: 0 !important;
   box-shadow: none !important;
   text-align: center;
-}
-
-.g_id_signin,
-.google-signin-button {
-  justify-items: center;
 }

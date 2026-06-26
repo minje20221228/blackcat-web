@@ -23,14 +23,14 @@
           <div class="title-row">
             <h1>Privacy Policy</h1>
           </div>
-          <p class="hero-summary">This page explains what data the site stores locally, how Google login is used for build ownership, what third-party services may be used, and how advertising-related technologies can apply.</p>
+          <p class="hero-summary">This page explains what data the site stores locally, how local login IDs are used for build ownership, what third-party services may be used, and how advertising-related technologies can apply.</p>
         </div>
         <div data-static-lang-content="ko" hidden>
           <p class="eyebrow">개인정보처리방침</p>
           <div class="title-row">
             <h1>개인정보처리방침</h1>
           </div>
-          <p class="hero-summary">이 페이지는 사이트가 로컬에 저장하는 정보, Google 로그인으로 빌드 소유자를 구분하는 방식, 사용할 수 있는 외부 서비스, 광고 관련 기술 적용 가능성을 설명합니다.</p>
+          <p class="hero-summary">이 페이지는 사이트가 로컬에 저장하는 정보, 로컬 로그인 아이디로 빌드 소유자를 구분하는 방식, 사용할 수 있는 외부 서비스, 광고 관련 기술 적용 가능성을 설명합니다.</p>
         </div>
       </div>
       <div class="hero-controls">
@@ -57,7 +57,7 @@
               <h2>Build Data Saved In The Browser</h2>
             </div>
           </div>
-          <p class="section-note">The build editor stores selected builds and ownership metadata in the browser so visitors can keep working across visits. Build contents, the signed-in Google nickname, email address, and stable Google account identifier are saved locally on the visitor’s device; public build cards show only the nickname, and this site does not run a separate account database for those builds.</p>
+          <p class="section-note">The build editor stores selected builds and ownership metadata in the browser so visitors can keep working across visits. Build contents, the signed-in local login ID, and ownership identifier are saved locally on the visitor’s device; public build cards show only the nickname, and this site does not run a separate account database for those builds.</p>
         </div>
         <div data-static-lang-content="ko" hidden>
           <div class="panel-head">
@@ -66,7 +66,7 @@
               <h2>브라우저에 저장되는 빌드 데이터</h2>
             </div>
           </div>
-          <p class="section-note">빌드 편집기는 선택한 빌드와 소유자 메타데이터를 브라우저에 저장해 방문자가 이어서 작업할 수 있게 합니다. 빌드 내용, 로그인한 Google 닉네임, 이메일 주소, 안정적인 Google 계정 식별자는 방문자 기기에 로컬로 저장되며, 공개 빌드 카드에는 닉네임만 표시하고 이 사이트는 해당 빌드를 위한 별도 계정 데이터베이스를 운영하지 않습니다.</p>
+          <p class="section-note">빌드 편집기는 선택한 빌드와 소유자 메타데이터를 브라우저에 저장해 방문자가 이어서 작업할 수 있게 합니다. 빌드 내용, 로그인한 로컬 로그인 아이디와 소유자 식별자는 방문자 기기에 로컬로 저장되며, 공개 빌드 카드에는 닉네임만 표시하고 이 사이트는 해당 빌드를 위한 별도 계정 데이터베이스를 운영하지 않습니다.</p>
         </div>
       </section>
 
@@ -74,22 +74,22 @@
         <div data-static-lang-content="en">
           <div class="panel-head">
             <div>
-              <p class="section-kicker">Google Login</p>
-              <h2>Build Ownership Through Google</h2>
+              <p class="section-kicker">Local Login</p>
+              <h2>Build Ownership Through Local IDs</h2>
             </div>
           </div>
-          <p class="section-note">When visitors use Google login, Google Identity Services returns basic account information such as display name, email address, profile image URL, and a stable account subject identifier. Build Lab uses that information only to derive a nickname for display and to check whether the same Google account is editing or deleting a locally saved build.</p>
-          <p class="section-note">The Google login token is processed in the browser. Build Lab stores only the minimal profile fields needed for the local build editor session and does not request Google Drive, Gmail, or other Google account permissions.</p>
+          <p class="section-note">When visitors use the build login, they enter a local login ID directly in the browser. Build Lab uses that ID only to show a nickname and to check whether the same local ID is editing or deleting a locally saved build.</p>
+          <p class="section-note">No external account token is requested for this local login. Build Lab stores only the minimal local session fields needed for the build editor on the visitor’s device.</p>
         </div>
         <div data-static-lang-content="ko" hidden>
           <div class="panel-head">
             <div>
-              <p class="section-kicker">Google 로그인</p>
-              <h2>Google 계정으로 구분하는 빌드 소유자</h2>
+              <p class="section-kicker">로컬 로그인</p>
+              <h2>로컬 아이디로 구분하는 빌드 소유자</h2>
             </div>
           </div>
-          <p class="section-note">방문자가 Google 로그인을 사용하면 Google Identity Services가 표시 이름, 이메일 주소, 프로필 이미지 URL, 안정적인 계정 subject 식별자 같은 기본 계정 정보를 반환합니다. Build Lab은 이 정보를 표시용 닉네임 생성과 같은 Google 계정이 로컬에 저장된 빌드를 수정 또는 삭제하는지 확인하는 용도로만 사용합니다.</p>
-          <p class="section-note">Google 로그인 토큰은 브라우저에서 처리됩니다. Build Lab은 로컬 빌드 편집기 세션에 필요한 최소 프로필 필드만 저장하며 Google Drive, Gmail 또는 다른 Google 계정 권한은 요청하지 않습니다.</p>
+          <p class="section-note">방문자가 빌드 로그인을 사용하면 브라우저에서 로컬 로그인 아이디를 직접 입력합니다. Build Lab은 이 아이디를 표시용 닉네임 생성과 같은 로컬 아이디가 저장된 빌드를 수정 또는 삭제하는지 확인하는 용도로만 사용합니다.</p>
+          <p class="section-note">이 로컬 로그인에는 외부 계정 토큰을 요청하지 않습니다. Build Lab은 방문자 기기의 빌드 편집기 세션에 필요한 최소 로컬 세션 필드만 저장합니다.</p>
         </div>
       </section>
 
@@ -126,7 +126,7 @@
               <h2>External Resources</h2>
             </div>
           </div>
-          <p class="section-note">The site loads fonts from Google Fonts, may load advertising scripts from Google, and loads Google Identity Services when login is used. Those services can receive technical request information such as IP address, user agent, and page URL as part of normal web delivery.</p>
+          <p class="section-note">The site loads fonts from Google Fonts and may load advertising scripts from Google. Those services can receive technical request information such as IP address, user agent, and page URL as part of normal web delivery.</p>
         </div>
         <div data-static-lang-content="ko" hidden>
           <div class="panel-head">
@@ -135,7 +135,7 @@
               <h2>외부 리소스 사용</h2>
             </div>
           </div>
-          <p class="section-note">이 사이트는 Google Fonts에서 폰트를 불러오고, Google 광고 스크립트를 불러올 수 있으며, 로그인 사용 시 Google Identity Services를 불러옵니다. 이 과정에서 IP 주소, 사용자 에이전트, 페이지 URL 같은 기술적 요청 정보가 일반적인 웹 서비스 제공 범위 안에서 전달될 수 있습니다.</p>
+          <p class="section-note">이 사이트는 Google Fonts에서 폰트를 불러오고 Google 광고 스크립트를 불러올 수 있습니다. 이 과정에서 IP 주소, 사용자 에이전트, 페이지 URL 같은 기술적 요청 정보가 일반적인 웹 서비스 제공 범위 안에서 전달될 수 있습니다.</p>
         </div>
       </section>
 

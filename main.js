@@ -1,7 +1,6 @@
 let PLAYABLE_CHARACTERS = ['Ironclad', 'Silent', 'Regent', 'Necrobinder', 'Defect'];
 let STORAGE_KEY = 'sts2-build-lab-builds-v2';
-let AUTH_STORAGE_KEY = 'sts2-build-lab-google-auth-v1';
-let GOOGLE_IDENTITY_SCRIPT_URL = 'https://accounts.google.com/gsi/client';
+let AUTH_STORAGE_KEY = 'sts2-build-lab-auth-v1';
 let languages = ['en', 'ko', 'ja', 'es'];
 let SITE_PAGE = document.body.dataset.page || 'home';
 
@@ -1147,7 +1146,7 @@ let uiText = {
       source: 'Source',
       close: 'Close',
       closeEditor: 'Exit editor',
-      login: 'Google login',
+      login: 'Login',
       logout: 'Log out'
     },
     labels: {
@@ -1168,17 +1167,14 @@ let uiText = {
       saved: 'Saved',
       energy: 'Energy',
       upgraded: 'Upgraded',
-      managePrompt: 'Sign in with the Google account that created this build.',
-      manageDenied: 'Only the signed-in Google account owner can edit or delete this build.',
-      loginTitle: 'Google login',
-      loginHelp: 'Use Google login to create and manage builds. This static site stores only your Google account display name, email, and stable Google account ID in this browser.',
-      loginId: 'Google account',
-      loginInvalid: 'Google login did not return a valid account.',
+      managePrompt: 'Sign in with the build author ID to manage this build.',
+      manageDenied: 'Only the signed-in author can edit or delete this build.',
+      loginTitle: 'Sign in',
+      loginHelp: 'Use 2-24 letters, numbers, Korean characters, dots, hyphens, or underscores. This static site stores the session only in this browser.',
+      loginId: 'Login ID',
+      loginInvalid: 'Use 2-24 allowed characters for your login ID.',
       loggedInAs: 'Signed in as',
-      loginRequired: 'Sign in with Google before creating or saving builds.',
-      googleConfigMissing: 'Google login needs a Google OAuth client ID configured for this domain.',
-      googleLoading: 'Loading Google login...',
-      googleUnavailable: 'Google login could not be loaded. Try again later.',
+      loginRequired: 'Sign in before creating or saving builds.',
       owner: 'Author',
       preview: 'Preview'
     },
@@ -1202,7 +1198,7 @@ let uiText = {
       duplicated: 'Draft duplicated.',
       loaded: 'Build loaded into the editor.',
       editorClosed: 'Returned to the build list.',
-      loggedIn: 'Signed in with Google.',
+      loggedIn: 'Signed in.',
       loggedOut: 'Signed out.'
     }
   },
@@ -1269,7 +1265,7 @@ let uiText = {
       source: '출처',
       close: '닫기',
       closeEditor: '나가기',
-      login: 'Google 로그인',
+      login: '로그인',
       logout: '로그아웃'
     },
     labels: {
@@ -1290,17 +1286,14 @@ let uiText = {
       saved: '저장됨',
       energy: '에너지',
       upgraded: '강화',
-      managePrompt: '이 빌드를 수정/삭제하려면 만든 Google 계정으로 로그인하세요.',
-      manageDenied: '로그인한 Google 계정 소유자만 이 빌드를 수정/삭제할 수 있습니다.',
-      loginTitle: 'Google 로그인',
-      loginHelp: '빌드를 만들고 관리하려면 Google 로그인을 사용합니다. 이 정적 사이트는 Google 계정 표시 이름, 이메일, 안정적인 Google 계정 ID만 이 브라우저에 저장합니다.',
-      loginId: 'Google 계정',
-      loginInvalid: 'Google 로그인에서 유효한 계정 정보를 받지 못했습니다.',
+      managePrompt: '이 빌드를 수정/삭제하려면 빌드 작성자 아이디로 로그인하세요.',
+      manageDenied: '로그인한 작성자만 이 빌드를 수정/삭제할 수 있습니다.',
+      loginTitle: '로그인',
+      loginHelp: '아이디는 2-24자의 한글, 영문, 숫자, 점, 하이픈, 밑줄만 사용할 수 있습니다. 정적 사이트라 로그인 정보는 이 브라우저에만 저장됩니다.',
+      loginId: '로그인 아이디',
+      loginInvalid: '아이디는 허용된 문자 2-24자로 입력해 주세요.',
       loggedInAs: '로그인됨',
-      loginRequired: '빌드를 만들거나 저장하려면 Google로 먼저 로그인해 주세요.',
-      googleConfigMissing: '이 도메인에 대한 Google OAuth 클라이언트 ID 설정이 필요합니다.',
-      googleLoading: 'Google 로그인을 불러오는 중입니다...',
-      googleUnavailable: 'Google 로그인을 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.',
+      loginRequired: '빌드를 만들거나 저장하려면 먼저 로그인해 주세요.',
       owner: '작성자',
       preview: '미리보기'
     },
@@ -1324,7 +1317,7 @@ let uiText = {
       duplicated: '현재 초안을 복제했습니다.',
       loaded: '빌드를 편집기로 불러왔습니다.',
       editorClosed: '빌드 목록으로 돌아왔습니다.',
-      loggedIn: 'Google로 로그인했습니다.',
+      loggedIn: '로그인했습니다.',
       loggedOut: '로그아웃했습니다.'
     }
   }
@@ -1756,28 +1749,12 @@ function createSessionToken() {
   return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
 }
 
-function getGoogleClientId() {
-  let meta = document.querySelector('meta[name="google-signin-client_id"]');
-  return String(window.STS2_GOOGLE_CLIENT_ID || (meta && meta.content) || '').trim();
+function normalizeLoginId(value) {
+  return sanitizeTextInput(value, 24).trim().replace(/\s+/g, '');
 }
 
-function getGoogleAccountsId() {
-  return window.google && window.google.accounts && window.google.accounts.id ? window.google.accounts.id : null;
-}
-
-function decodeJwtPayload(token) {
-  try {
-    let part = String(token || '').split('.')[1] || '';
-    let normalized = part.replace(/-/g, '+').replace(/_/g, '/');
-    let padded = normalized + '='.repeat((4 - normalized.length % 4) % 4);
-    let binary = window.atob(padded);
-    let encoded = Array.prototype.map.call(binary, function (char) {
-      return '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2);
-    }).join('');
-    return JSON.parse(decodeURIComponent(encoded));
-  } catch (error) {
-    return null;
-  }
+function isValidLoginId(value) {
+  return /^[0-9A-Za-z가-힣._-]{2,24}$/.test(value);
 }
 
 function sanitizeProfileText(value, maxLength) {
@@ -1786,32 +1763,24 @@ function sanitizeProfileText(value, maxLength) {
 
 function getDisplayNickname(value) {
   let text = sanitizeProfileText(value, 80);
-  if (!text) { return 'Google User'; }
-  return sanitizeProfileText(text.split('@')[0] || text, 40) || 'Google User';
+  return sanitizeProfileText(text.split('@')[0] || text, 40);
 }
 
 function getAuthNickname(auth) {
   if (!auth) { return ''; }
-  return getDisplayNickname(auth.displayName || auth.email || 'Google User');
+  return getDisplayNickname(auth.displayName || auth.userId || '');
 }
 
 function getBuildNickname(build) {
   if (!build) { return ''; }
-  return getDisplayNickname(build.ownerName || build.author || 'Google User');
+  return getDisplayNickname(build.ownerName || build.author || '');
 }
 
-function buildAuthSessionFromGoogle(payload) {
-  if (!payload || !payload.sub) { return null; }
-  let email = sanitizeProfileText(payload.email, 120);
-  let name = sanitizeProfileText(payload.name, 80);
-  let displayName = getDisplayNickname(name || email || 'Google User');
+function buildAuthSession(loginId) {
+  let normalized = normalizeLoginId(loginId);
   return {
-    provider: 'google',
-    userId: 'google:' + sanitizeProfileText(payload.sub, 120),
-    googleSub: sanitizeProfileText(payload.sub, 120),
-    displayName: sanitizeProfileText(displayName, 80),
-    email: email,
-    picture: sanitizeProfileText(payload.picture, 300),
+    userId: normalized.toLowerCase(),
+    displayName: normalized,
     sessionId: createSessionToken(),
     createdAt: Date.now(),
     lastActiveAt: Date.now()
@@ -1822,16 +1791,12 @@ function loadAuthSession() {
   try {
     let raw = window.localStorage.getItem(AUTH_STORAGE_KEY);
     let parsed = raw ? JSON.parse(raw) : null;
-    if (!parsed || typeof parsed !== 'object' || parsed.provider !== 'google') { return null; }
-    let googleSub = sanitizeProfileText(parsed.googleSub || String(parsed.userId || '').replace(/^google:/, ''), 120);
-    if (!googleSub) { return null; }
+    if (!parsed || typeof parsed !== 'object') { return null; }
+    let displayName = normalizeLoginId(parsed.displayName || parsed.userId || '');
+    if (!isValidLoginId(displayName)) { return null; }
     return {
-      provider: 'google',
-      userId: 'google:' + googleSub,
-      googleSub: googleSub,
-      displayName: getDisplayNickname(parsed.displayName || parsed.email || 'Google User'),
-      email: sanitizeProfileText(parsed.email, 120),
-      picture: sanitizeProfileText(parsed.picture, 300),
+      userId: normalizeLoginId(parsed.userId || displayName).toLowerCase(),
+      displayName: displayName,
       sessionId: sanitizeTextInput(parsed.sessionId || createSessionToken(), 80),
       createdAt: Number.isFinite(Number(parsed.createdAt)) ? Number(parsed.createdAt) : Date.now(),
       lastActiveAt: Date.now()
@@ -1850,7 +1815,7 @@ function persistAuthSession(auth) {
 }
 
 function requireAuth() {
-  if (state.auth && state.auth.provider === 'google') { return true; }
+  if (state.auth) { return true; }
   showStatus(ui().labels.loginRequired);
   openLoginDialog();
   return false;
@@ -2148,9 +2113,9 @@ function sanitizeBuild(build) {
     id: sanitizeTextInput(build.id || createId(), 120),
     character: character,
     title: sanitizeTextInput(build.title, 80),
-    author: getDisplayNickname(build.ownerName || build.author || 'Google User'),
+    author: getDisplayNickname(build.ownerName || build.author || ''),
     ownerId: sanitizeTextInput(build.ownerId || '', 80).toLowerCase(),
-    ownerName: getDisplayNickname(build.ownerName || build.author || 'Google User'),
+    ownerName: getDisplayNickname(build.ownerName || build.author || ''),
     summary: sanitizeTextInput(build.summary, 220),
     notes: '',
     cards: Array.isArray(build.cards) ? build.cards.map(sanitizeBuildCardEntry).filter(Boolean) : [],
@@ -3007,37 +2972,34 @@ function closeLoginDialog() {
   if (modal) { modal.hidden = true; }
 }
 
-function loadGoogleIdentityScript(callback) {
-  if (getGoogleAccountsId()) {
-    callback(true);
-    return;
-  }
-  let existing = document.querySelector('script[data-google-identity="true"], script[src*="accounts.google.com/gsi/client"]');
-  if (existing) {
-    existing.addEventListener('load', function () { callback(true); }, { once: true });
-    existing.addEventListener('error', function () { callback(false); }, { once: true });
-    return;
-  }
-  let script = document.createElement('script');
-  script.src = GOOGLE_IDENTITY_SCRIPT_URL;
-  script.async = true;
-  script.defer = true;
-  script.dataset.googleIdentity = 'true';
-  script.addEventListener('load', function () { callback(true); });
-  script.addEventListener('error', function () { callback(false); });
-  document.head.appendChild(script);
+function openLoginDialog() {
+  let modal = document.getElementById('auth-modal');
+  if (!modal) { return; }
+  let title = document.getElementById('auth-modal-title');
+  let help = document.getElementById('auth-help');
+  let label = document.getElementById('auth-id-label');
+  let input = document.getElementById('auth-id-input');
+  let submit = document.getElementById('auth-submit-button');
+  let logoutButton = document.getElementById('auth-logout-button');
+  if (title) { title.textContent = ui().labels.loginTitle; }
+  if (help) { help.textContent = ui().labels.loginHelp; }
+  if (label) { label.textContent = ui().labels.loginId; }
+  if (submit) { submit.textContent = ui().buttons.login; }
+  if (logoutButton) { logoutButton.textContent = ui().buttons.logout; logoutButton.hidden = !state.auth; }
+  setAuthError('');
+  if (input) { input.value = state.auth ? getAuthNickname(state.auth) : ''; }
+  modal.hidden = false;
+  if (input) { input.focus(); input.select(); }
 }
 
-window.handleGoogleCredentialGlobal = handleGoogleCredential;
-
-function handleGoogleCredential(response) {
-  let payload = decodeJwtPayload(response && response.credential);
-  let auth = buildAuthSessionFromGoogle(payload);
-  if (!auth) {
+function submitLogin() {
+  let input = document.getElementById('auth-id-input');
+  let loginId = normalizeLoginId(input ? input.value : '');
+  if (!isValidLoginId(loginId)) {
     setAuthError(ui().labels.loginInvalid);
     return;
   }
-  state.auth = auth;
+  state.auth = buildAuthSession(loginId);
   persistAuthSession(state.auth);
   if (state.draft && !state.draft.source) {
     state.draft.author = getAuthNickname(state.auth);
@@ -3049,56 +3011,7 @@ function handleGoogleCredential(response) {
   render();
 }
 
-function renderGoogleLoginButton() {
-  let target = document.getElementById('google-signin-button');
-  if (!target) { return; }
-  target.innerHTML = '';
-  if (state.auth) {
-    target.innerHTML = '<div class="auth-account-summary"><strong>' + escapeHtml(getAuthNickname(state.auth)) + '</strong></div>';
-    return;
-  }
-  let clientId = getGoogleClientId();
-  if (!clientId) {
-    setAuthError(ui().labels.googleConfigMissing);
-    return;
-  }
-  target.textContent = ui().labels.googleLoading;
-  loadGoogleIdentityScript(function (loaded) {
-    let accounts = getGoogleAccountsId();
-    if (!loaded || !accounts) {
-      target.innerHTML = '';
-      setAuthError(ui().labels.googleUnavailable);
-      return;
-    }
-    target.innerHTML = '';
-    let onload = document.getElementById('g_id_onload');
-    if (onload) {
-      onload.dataset.client_id = clientId;
-      onload.dataset.callback = 'handleGoogleCredentialGlobal';
-      onload.dataset.auto_prompt = 'false';
-    }
-    accounts.initialize({ client_id: clientId, callback: handleGoogleCredential, auto_select: false, cancel_on_tap_outside: true });
-    accounts.renderButton(target, { theme: 'outline', size: 'large', type: 'standard', shape: 'rectangular', text: 'signin_with', width: Math.min(360, target.clientWidth || 320) });
-  });
-}
-
-function openLoginDialog() {
-  let modal = document.getElementById('auth-modal');
-  if (!modal) { return; }
-  let title = document.getElementById('auth-modal-title');
-  let help = document.getElementById('auth-help');
-  let logoutButton = document.getElementById('auth-logout-button');
-  if (title) { title.textContent = ui().labels.loginTitle; }
-  if (help) { help.textContent = ui().labels.loginHelp; }
-  if (logoutButton) { logoutButton.textContent = ui().buttons.logout; logoutButton.hidden = !state.auth; }
-  setAuthError('');
-  modal.hidden = false;
-  renderGoogleLoginButton();
-}
-
 function logout() {
-  let accounts = getGoogleAccountsId();
-  if (accounts && accounts.disableAutoSelect) { accounts.disableAutoSelect(); }
   state.auth = null;
   persistAuthSession(null);
   closeLoginDialog();
@@ -3112,8 +3025,12 @@ function ensureLoginDialog() {
   modal.className = 'auth-modal';
   modal.id = 'auth-modal';
   modal.hidden = true;
-  modal.innerHTML = '<button class="auth-modal-backdrop" id="auth-modal-backdrop" type="button" aria-label="Close"></button><section class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title"><button class="card-modal-close" id="auth-modal-close" type="button" aria-label="Close">×</button><p class="section-kicker" id="auth-modal-title"></p><div id="g_id_onload" data-client_id="" data-callback="handleGoogleCredentialGlobal" data-auto_prompt="false"></div><div class="g_id_signin google-signin-button" id="google-signin-button" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left"></div><p class="section-note auth-help" id="auth-help"></p><p class="status-text auth-error" id="auth-error" role="alert"></p><div class="auth-actions"><button class="action-button" id="auth-logout-button" type="button"></button></div></section>';
+  modal.innerHTML = '<button class="auth-modal-backdrop" id="auth-modal-backdrop" type="button" aria-label="Close"></button><form class="auth-modal-panel" id="auth-form"><button class="card-modal-close" id="auth-modal-close" type="button" aria-label="Close">×</button><p class="section-kicker" id="auth-modal-title"></p><label class="field-group" for="auth-id-input"><span class="field-label" id="auth-id-label"></span><input id="auth-id-input" class="text-input" type="text" maxlength="24" autocomplete="username" inputmode="text"></label><p class="section-note auth-help" id="auth-help"></p><p class="status-text auth-error" id="auth-error" role="alert"></p><div class="auth-actions"><button class="action-button action-button-primary" id="auth-submit-button" type="submit"></button><button class="action-button" id="auth-logout-button" type="button"></button></div></form>';
   document.body.appendChild(modal);
+  document.getElementById('auth-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    submitLogin();
+  });
   document.getElementById('auth-modal-close').addEventListener('click', closeLoginDialog);
   document.getElementById('auth-modal-backdrop').addEventListener('click', closeLoginDialog);
   document.getElementById('auth-logout-button').addEventListener('click', logout);
