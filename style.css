@@ -2376,3 +2376,91 @@ select {
     min-height: 108px;
   }
 }
+
+
+/* Borderless surfaces and editor popup */
+.panel,
+.detail-block,
+.build-card,
+.card-modal-panel,
+.auth-modal-panel,
+.build-modal-card-row,
+.editor-card-tile,
+.selected-card,
+.relic-card,
+.info-card,
+.static-panel,
+.editorial-panel {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.builder-panel:not([hidden]) {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  display: block;
+  margin: 0;
+  padding: clamp(16px, 4vw, 34px);
+  overflow: auto;
+  border: 0 !important;
+  border-radius: 0;
+  background: rgba(3, 6, 10, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.builder-panel:not([hidden]) > .workspace-head,
+.builder-panel:not([hidden]) > .builder-grid {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  margin-inline: auto;
+}
+
+.builder-panel:not([hidden]) > .workspace-head {
+  margin-bottom: 14px;
+  padding: 18px;
+  border-radius: 16px;
+  background: var(--panel-strong);
+}
+
+.builder-panel:not([hidden]) > .builder-grid {
+  padding-bottom: 24px;
+}
+
+.builder-panel:not([hidden]) .detail-block {
+  background: var(--panel-strong);
+}
+
+.google-signin-button {
+  min-height: 44px;
+  display: grid;
+  align-items: center;
+}
+
+.auth-account-summary {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--surface-strong);
+}
+
+.auth-account-summary strong {
+  color: var(--text-strong);
+}
+
+.auth-account-summary span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 760px) {
+  .builder-panel:not([hidden]) {
+    padding: 12px;
+  }
+
+  .builder-panel:not([hidden]) > .workspace-head {
+    padding: 14px;
+  }
+}
