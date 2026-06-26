@@ -638,6 +638,17 @@ window.STS2_RELICS_DATA = [
     "koName": "유리 눈"
   },
   {
+    "name": "Hefty Tablet",
+    "owner": "Event",
+    "tier": "Ancient",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/hefty_tablet.png",
+    "description": {
+      "en": "Upon pickup, choose 1 of 3 Rare cards to add to your Deck. Add 1 Injury to your Deck.",
+      "ko": "획득 시, 무작위 희귀 카드 3장 중 1장을 선택해 덱에 추가하고, 덱에 상처를 1장 추가합니다."
+    },
+    "koName": "묵직한 석판"
+  },
+  {
     "name": "Glitter",
     "owner": "Event",
     "tier": "Ancient",
@@ -880,6 +891,28 @@ window.STS2_RELICS_DATA = [
     "koName": "오르골"
   },
   {
+    "name": "Neow's Bones",
+    "owner": "Event",
+    "tier": "Ancient",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/neows_bones.png",
+    "description": {
+      "en": "Upon pickup, gain 2 random Neow Relics. Add 1 random Curse to your Deck.",
+      "ko": "획득 시, 무작위 니오우 유물 2개를 획득합니다. 덱에 무작위 저주를 1장 추가합니다."
+    },
+    "koName": "니오우의 뼈"
+  },
+  {
+    "name": "Neow's Talisman",
+    "owner": "Event",
+    "tier": "Ancient",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/neows_talisman.png",
+    "description": {
+      "en": "Upon pickup, Upgrade 1 of your Strikes and 1 of your Defends.",
+      "ko": "획득 시, 타격 1장과 수비 1장을 강화합니다."
+    },
+    "koName": "니오우의 호부"
+  },
+  {
     "name": "Neow's Torment",
     "owner": "Event",
     "tier": "Ancient",
@@ -1043,6 +1076,17 @@ window.STS2_RELICS_DATA = [
       "ko": "모든 타격과 수비를 변화시킵니다."
     },
     "koName": "판도라의 상자"
+  },
+  {
+    "name": "Phial Holster",
+    "owner": "Event",
+    "tier": "Ancient",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/phial_holster.png",
+    "description": {
+      "en": "Upon pickup, gain 1 potion slot and procure 2 random potions.",
+      "ko": "획득 시, 포션 슬롯을 1개 얻고 무작위 포션 2개를 생성합니다."
+    },
+    "koName": "약병 홀스터"
   },
   {
     "name": "Philosopher's Stone",
@@ -1505,6 +1549,17 @@ window.STS2_RELICS_DATA = [
       "ko": "매 턴 시작 시 에너지 1를 얻습니다. 바쿠가 당신의 첫 번째 턴을 대신 플레이합니다."
     },
     "koName": "속삭이는 귀걸이"
+  },
+  {
+    "name": "Winged Boots",
+    "owner": "Event",
+    "tier": "Ancient",
+    "imageUrl": "https://s-stats-platform-cdn.op.gg/slay-the-spire2/images/relics/winged_boots.png",
+    "description": {
+      "en": "You may ignore paths when choosing the next rooms to travel to 3 times.",
+      "ko": "다음 방을 선택할 때, 경로를 3번까지 무시할 수 있습니다."
+    },
+    "koName": "날개 달린 부츠"
   },
   {
     "name": "Wongo Customer Appreciation Badge",

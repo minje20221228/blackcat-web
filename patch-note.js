@@ -113,6 +113,14 @@
     return result;
   }
 
+  function getPatchContextSummary(note) {
+    let kind = getKindLabel(note);
+    if (language === 'ko') {
+      return kind + ' 공지입니다. 이 사이트는 공식 전문을 복제하지 않고, 변경 여부를 확인할 수 있는 출처 링크와 플레이 판단에 필요한 짧은 맥락만 제공합니다. 자세한 항목은 Steam 공식 원문에서 확인하세요.';
+    }
+    return 'This is an official ' + String(kind).toLowerCase() + ' update. This site does not republish the full Steam post; it keeps the source link and a short context note for deckbuilding reference. Read the official Steam post for the complete details.';
+  }
+
   function safeExternalUrl(value) {
     try {
       let url = new URL(String(value || ''), window.location.origin);
@@ -140,24 +148,17 @@
 
   document.getElementById('patch-note-kicker').textContent = language === 'ko' ? 'Steam 뉴스룸' : 'Steam Newsroom';
   document.getElementById('patch-note-title').textContent = language === 'ko' ? translatePatchTitleToKo(note.title) : decode(note.title);
-  document.getElementById('patch-note-source').textContent = language === 'ko' ? 'Steam 원문' : 'Steam Source';
+  document.getElementById('patch-note-source').textContent = language === 'ko' ? 'Steam에서 보기' : 'View on Steam';
   document.getElementById('patch-note-source').href = safeExternalUrl(note.link);
-  document.getElementById('patch-note-summary-heading').textContent = language === 'ko' ? '한국어 요약' : 'Summary';
-  document.getElementById('patch-note-body-heading').textContent = language === 'ko' ? 'Steam 원문 내용' : 'Steam Source Content';
+  document.getElementById('patch-note-summary-heading').textContent = language === 'ko' ? '사이트 요약' : 'Site Summary';
+  document.getElementById('patch-note-source-heading').textContent = language === 'ko' ? '공식 원문' : 'Official Source';
   document.getElementById('patch-note-meta').innerHTML =
     '<span class="patch-pill">' + escapeHtml(language === 'ko' ? '게시일' : 'Published') + ': ' + escapeHtml(formatDate(note.publishedAt || note.pubDate)) + '</span>' +
     '<span class="patch-pill">' + escapeHtml(getCategoryLabel(note)) + '</span>' +
     '<span class="patch-pill">' + escapeHtml(getKindLabel(note)) + '</span>' +
     '<span class="patch-pill">' + escapeHtml(decode(note.sourceLabel || 'Steam')) + '</span>';
-  let image = document.getElementById('patch-note-image');
-  if (image && note.image) {
-    image.src = note.image;
-    image.hidden = false;
-  }
-  document.getElementById('patch-note-summary').textContent = language === 'ko'
-    ? translatePatchTextToKo(note.summaryKo || note.summary || '')
-    : decode(note.summary || '');
-  document.getElementById('patch-note-body').textContent = language === 'ko'
-    ? translatePatchTextToKo(note.body || '')
-    : decode(note.body || '');
+  document.getElementById('patch-note-summary').textContent = getPatchContextSummary(note);
+  document.getElementById('patch-note-source-note').textContent = language === 'ko'
+    ? '전체 업데이트 전문과 공식 표현은 Steam 원문 링크에서 확인할 수 있습니다. 이 화면은 원문을 복사해 게시하지 않고, 출처와 업데이트 맥락만 안내합니다.'
+    : 'The full update text and official wording are available through the Steam source link. This page does not copy the source post; it provides attribution and update context only.';
 })();

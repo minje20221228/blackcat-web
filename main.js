@@ -1,5 +1,6 @@
 let PLAYABLE_CHARACTERS = ['Ironclad', 'Silent', 'Regent', 'Necrobinder', 'Defect'];
 let STORAGE_KEY = 'sts2-build-lab-builds-v2';
+let AUTH_STORAGE_KEY = 'sts2-build-lab-auth-v1';
 let languages = ['en', 'ko', 'ja', 'es'];
 let SITE_PAGE = document.body.dataset.page || 'home';
 
@@ -1084,7 +1085,7 @@ let POTIONS_DATA = window.STS2_POTIONS_DATA || FALLBACK_POTIONS_DATA;
 let uiText = {
   en: {
     heroTitle: 'Slay the Spire 2',
-    nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: '🌐', help: 'Help' },
+    nav: { character: 'Characters', cards: 'Cards', relics: 'Relics', potions: 'Potions', builds: 'Builds', language: '🌐', help: 'Help', login: 'Login', logout: 'Log out' },
     patchKicker: 'Steam Newsroom',
     patchHeading: 'Patch Notes & News',
     sortLabel: 'Sort',
@@ -1143,7 +1144,9 @@ let uiText = {
       pin: 'Pin',
       unpin: 'Unpin',
       source: 'Source',
-      close: 'Close'
+      close: 'Close',
+      login: 'Login',
+      logout: 'Log out'
     },
     labels: {
       hp: 'Health',
@@ -1163,8 +1166,16 @@ let uiText = {
       saved: 'Saved',
       energy: 'Energy',
       upgraded: 'Upgraded',
-      managePrompt: 'Enter the author name or admin key to manage this build.',
-      manageDenied: 'Only the author or an admin can edit or delete this build.'
+      managePrompt: 'Sign in with the build author ID to manage this build.',
+      manageDenied: 'Only the signed-in author can edit or delete this build.',
+      loginTitle: 'Sign in',
+      loginHelp: 'Use 2-24 letters, numbers, Korean characters, dots, hyphens, or underscores. This static site stores the session only in this browser.',
+      loginId: 'Login ID',
+      loginInvalid: 'Use 2-24 allowed characters for your login ID.',
+      loggedInAs: 'Signed in as',
+      loginRequired: 'Sign in before creating or saving builds.',
+      owner: 'Author',
+      preview: 'Preview'
     },
     links: {
       patchSource: 'Steam News',
@@ -1184,12 +1195,14 @@ let uiText = {
       needCards: 'Add at least one card before saving.',
       reset: 'Build editor opened with the starter deck.',
       duplicated: 'Draft duplicated.',
-      loaded: 'Build loaded into the editor.'
+      loaded: 'Build loaded into the editor.',
+      loggedIn: 'Signed in.',
+      loggedOut: 'Signed out.'
     }
   },
   ko: {
     heroTitle: 'Slay the Spire 2',
-    nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '🌐', help: '도움말' },
+    nav: { character: '캐릭터', cards: '카드', relics: '유물', potions: '포션', builds: '빌드', language: '🌐', help: '도움말', login: '로그인', logout: '로그아웃' },
     patchKicker: 'Steam 뉴스룸',
     patchHeading: '패치노트 & 뉴스',
     sortLabel: '정렬',
@@ -1248,7 +1261,9 @@ let uiText = {
       pin: '고정',
       unpin: '고정 해제',
       source: '출처',
-      close: '닫기'
+      close: '닫기',
+      login: '로그인',
+      logout: '로그아웃'
     },
     labels: {
       hp: '체력',
@@ -1268,8 +1283,16 @@ let uiText = {
       saved: '저장됨',
       energy: '에너지',
       upgraded: '강화',
-      managePrompt: '이 빌드를 수정/삭제하려면 작성자명 또는 관리자 키를 입력하세요.',
-      manageDenied: '작성자 또는 관리자만 이 빌드를 수정/삭제할 수 있습니다.'
+      managePrompt: '이 빌드를 수정/삭제하려면 빌드 작성자 아이디로 로그인하세요.',
+      manageDenied: '로그인한 작성자만 이 빌드를 수정/삭제할 수 있습니다.',
+      loginTitle: '로그인',
+      loginHelp: '아이디는 2-24자의 한글, 영문, 숫자, 점, 하이픈, 밑줄만 사용할 수 있습니다. 정적 사이트라 로그인 정보는 이 브라우저에만 저장됩니다.',
+      loginId: '로그인 아이디',
+      loginInvalid: '아이디는 허용된 문자 2-24자로 입력해 주세요.',
+      loggedInAs: '로그인됨',
+      loginRequired: '빌드를 만들거나 저장하려면 먼저 로그인해 주세요.',
+      owner: '작성자',
+      preview: '미리보기'
     },
     links: {
       patchSource: 'Steam 뉴스',
@@ -1289,7 +1312,9 @@ let uiText = {
       needCards: '카드를 1장 이상 넣은 뒤 저장해 주세요.',
       reset: '기본 덱이 들어간 빌드 편집기를 열었습니다.',
       duplicated: '현재 초안을 복제했습니다.',
-      loaded: '빌드를 편집기로 불러왔습니다.'
+      loaded: '빌드를 편집기로 불러왔습니다.',
+      loggedIn: '로그인했습니다.',
+      loggedOut: '로그아웃했습니다.'
     }
   }
 };
@@ -1314,6 +1339,7 @@ let refs = {
   navRelics: document.getElementById('nav-relics'),
   navPotions: document.getElementById('nav-potions'),
   navBuilds: document.getElementById('nav-builds'),
+  authButton: document.getElementById('auth-button'),
   siteMenuButton: document.getElementById('site-menu-button'),
   siteMenu: document.getElementById('site-menu'),
   languageButton: document.getElementById('language-button'),
@@ -1438,6 +1464,7 @@ let state = {
   currentTheme: detectPreferredTheme(),
   currentSort: 'latest',
   currentView: pageView() === 'home' ? 'home' : pageView(),
+  auth: loadAuthSession(),
   activeCharacter: PLAYABLE_CHARACTERS[0],
   activeBuildFilter: 'all',
   activeBuildId: null,
@@ -1692,7 +1719,82 @@ function clone(value) {
 }
 
 function createEmptyBuild(character) {
-  return { id: createId(), character: character, title: '', author: '', summary: '', notes: '', cards: getStarterDeckEntries(character), createdAt: Date.now(), updatedAt: Date.now() };
+  let auth = loadAuthSession();
+  return {
+    id: createId(),
+    character: character,
+    title: '',
+    author: auth ? auth.displayName : '',
+    ownerId: auth ? auth.userId : '',
+    ownerName: auth ? auth.displayName : '',
+    summary: '',
+    notes: '',
+    cards: getStarterDeckEntries(character),
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
+}
+
+function normalizeLoginId(value) {
+  return sanitizeTextInput(value, 24).trim().replace(/\s+/g, '');
+}
+
+function isValidLoginId(value) {
+  return /^[0-9A-Za-z가-힣._-]{2,24}$/.test(value);
+}
+
+function createSessionToken() {
+  let buffer = new Uint32Array(4);
+  if (window.crypto && window.crypto.getRandomValues) {
+    window.crypto.getRandomValues(buffer);
+    return Array.from(buffer).map(function (item) { return item.toString(36); }).join('-');
+  }
+  return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+}
+
+function buildAuthSession(loginId) {
+  let normalized = normalizeLoginId(loginId);
+  return {
+    userId: normalized.toLowerCase(),
+    displayName: normalized,
+    sessionId: createSessionToken(),
+    createdAt: Date.now(),
+    lastActiveAt: Date.now()
+  };
+}
+
+function loadAuthSession() {
+  try {
+    let raw = window.localStorage.getItem(AUTH_STORAGE_KEY);
+    let parsed = raw ? JSON.parse(raw) : null;
+    if (!parsed || typeof parsed !== 'object') { return null; }
+    let displayName = normalizeLoginId(parsed.displayName || parsed.userId || '');
+    if (!isValidLoginId(displayName)) { return null; }
+    return {
+      userId: normalizeLoginId(parsed.userId || displayName).toLowerCase(),
+      displayName: displayName,
+      sessionId: sanitizeTextInput(parsed.sessionId || createSessionToken(), 80),
+      createdAt: Number.isFinite(Number(parsed.createdAt)) ? Number(parsed.createdAt) : Date.now(),
+      lastActiveAt: Date.now()
+    };
+  } catch (error) {
+    return null;
+  }
+}
+
+function persistAuthSession(auth) {
+  if (!auth) {
+    window.localStorage.removeItem(AUTH_STORAGE_KEY);
+    return;
+  }
+  window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(auth));
+}
+
+function requireAuth() {
+  if (state.auth) { return true; }
+  showStatus(ui().labels.loginRequired);
+  openLoginDialog();
+  return false;
 }
 
 let RECOMMENDED_BUILD_UPDATED_AT = Date.UTC(2026, 4, 29, 0, 0, 0);
@@ -1988,6 +2090,8 @@ function sanitizeBuild(build) {
     character: character,
     title: sanitizeTextInput(build.title, 80),
     author: sanitizeTextInput(build.author, 40),
+    ownerId: sanitizeTextInput(build.ownerId || '', 80).toLowerCase(),
+    ownerName: sanitizeTextInput(build.ownerName || build.author || '', 40),
     summary: sanitizeTextInput(build.summary, 220),
     notes: sanitizeTextInput(build.notes, 420),
     cards: Array.isArray(build.cards) ? build.cards.map(sanitizeBuildCardEntry).filter(Boolean) : [],
@@ -2091,6 +2195,7 @@ function ensureActiveBuild() {
 }
 
 function openEditor(mode) {
+  if (!requireAuth()) { return; }
   state.currentView = 'builds';
   state.editorOpen = true;
   if (mode === 'new') {
@@ -2135,10 +2240,13 @@ function saveCurrentBuild() {
   let now = Date.now();
   let draft = clone(state.draft);
   delete draft.source;
+  if (!requireAuth()) { return; }
   draft.character = state.activeCharacter;
   draft.updatedAt = now;
+  draft.author = state.auth.displayName;
+  draft.ownerId = state.auth.userId;
+  draft.ownerName = state.auth.displayName;
   draft.title = draft.title.trim() || (getCharacterLabel(state.activeCharacter) + ' Build');
-  draft.author = draft.author.trim() || 'Local Player';
   draft.summary = draft.summary.trim() || getCharacterSummary(state.activeCharacter);
   draft.notes = draft.notes.trim();
 
@@ -2190,12 +2298,18 @@ function getAdminCredential() {
   }
 }
 
-function canManageBuild(build, credential) {
-  if (!build) { return false; }
-  let normalized = normalizeCredential(credential);
+function canManageBuild(build) {
+  if (!build || !state.auth) { return false; }
+  let ownerId = normalizeCredential(build.ownerId);
   let author = normalizeCredential(build.author);
+  let userId = normalizeCredential(state.auth.userId);
+  let displayName = normalizeCredential(state.auth.displayName);
   let adminKey = getAdminCredential();
-  return Boolean(normalized && (normalized === author || (adminKey && normalized === adminKey)));
+  return Boolean(
+    (userId && ownerId && userId === ownerId)
+    || (!ownerId && displayName && displayName === author)
+    || (adminKey && userId === adminKey)
+  );
 }
 
 function requestManagePermission(build) {
@@ -2203,8 +2317,12 @@ function requestManagePermission(build) {
     showStatus(ui().labels.manageDenied);
     return false;
   }
-  let credential = window.prompt(ui().labels.managePrompt || 'Enter author name or admin key.');
-  if (canManageBuild(build, credential)) {
+  if (!state.auth) {
+    showStatus(ui().labels.managePrompt || ui().labels.loginRequired);
+    openLoginDialog();
+    return false;
+  }
+  if (canManageBuild(build)) {
     return true;
   }
   showStatus(ui().labels.manageDenied);
@@ -2650,7 +2768,10 @@ function getPatchSourceLabel(note) {
 }
 
 function getPatchExcerpt(note, maxLength) {
-  let text = String((state.currentLanguage === 'ko' ? (note.summaryKo || translatePatchSummaryToKo(note.summary || '')) : (note.summary || '')) || '').trim();
+  let kind = getPatchKindLabel(note);
+  let text = state.currentLanguage === 'ko'
+    ? kind + ' 업데이트입니다. Build Lab은 공식 전문을 복제하지 않고, 변경 맥락과 Steam 출처 링크만 짧게 안내합니다.'
+    : 'Official ' + String(kind).toLowerCase() + ' update. Build Lab links to the Steam source and keeps only short context here instead of republishing the full post.';
   text = text.replace(/\s*\n\s*/g, ' ').replace(/\s{2,}/g, ' ');
   if (text.length <= maxLength) {
     return text;
@@ -2667,12 +2788,9 @@ function renderPatchCard(note, index) {
   let noteId = note.id || String(note.link || '').split('/').pop();
   let detailUrl = '/patch-note.html?id=' + encodeURIComponent(noteId);
   let title = getPatchTitle(note);
-  let image = String(note.image || '').trim();
   let isFeatured = index === 0;
   let classes = 'patch-card patch-card-link' + (isFeatured ? ' patch-card-feature' : '');
-  let media = image
-    ? '<div class="patch-card-media"><img src="' + escapeHtml(image) + '" alt="" loading="lazy"></div>'
-    : '<div class="patch-card-media patch-card-media-empty"><span>' + escapeHtml(getPatchKindLabel(note)) + '</span></div>';
+  let media = '<div class="patch-card-media patch-card-media-empty"><span>' + escapeHtml(getPatchKindLabel(note)) + '</span></div>';
   return '<a class="' + classes + '" href="' + escapeHtml(detailUrl) + '" data-patch-card="true">' +
     media +
     '<div class="patch-card-content">' +
@@ -2704,6 +2822,7 @@ function renderStaticText() {
   refs.navRelics.textContent = currentUi.nav.relics;
   refs.navPotions.textContent = currentUi.nav.potions;
   refs.navBuilds.textContent = currentUi.nav.builds;
+  renderAuthButton();
   refs.languageButton.textContent = currentUi.nav.language;
   refs.languageButton.setAttribute('title', state.currentLanguage === 'ko' ? '언어 선택' : 'Language');
   refs.languageButton.setAttribute('aria-label', state.currentLanguage === 'ko' ? '언어 선택' : 'Language');
@@ -2796,6 +2915,86 @@ function closeUtilityMenus() {
   refs.siteMenu.hidden = true;
   refs.languageButton.setAttribute('aria-expanded', 'false');
   refs.siteMenuButton.setAttribute('aria-expanded', 'false');
+}
+
+function renderAuthButton() {
+  if (!refs.authButton) { return; }
+  let label = state.auth ? state.auth.displayName : ui().nav.login;
+  refs.authButton.textContent = label;
+  refs.authButton.classList.toggle('is-active', Boolean(state.auth));
+  refs.authButton.setAttribute('aria-label', state.auth ? ((ui().labels.loggedInAs || 'Signed in as') + ' ' + state.auth.displayName) : ui().nav.login);
+  refs.authButton.setAttribute('title', state.auth ? ((ui().labels.loggedInAs || 'Signed in as') + ' ' + state.auth.displayName) : ui().nav.login);
+}
+
+function closeLoginDialog() {
+  let modal = document.getElementById('auth-modal');
+  if (modal) { modal.hidden = true; }
+}
+
+function openLoginDialog() {
+  let modal = document.getElementById('auth-modal');
+  if (!modal) { return; }
+  let title = document.getElementById('auth-modal-title');
+  let help = document.getElementById('auth-help');
+  let label = document.getElementById('auth-id-label');
+  let input = document.getElementById('auth-id-input');
+  let submit = document.getElementById('auth-submit-button');
+  let logout = document.getElementById('auth-logout-button');
+  let error = document.getElementById('auth-error');
+  if (title) { title.textContent = ui().labels.loginTitle; }
+  if (help) { help.textContent = ui().labels.loginHelp; }
+  if (label) { label.textContent = ui().labels.loginId; }
+  if (submit) { submit.textContent = ui().buttons.login; }
+  if (logout) { logout.textContent = ui().buttons.logout; logout.hidden = !state.auth; }
+  if (error) { error.textContent = ''; }
+  if (input) { input.value = state.auth ? state.auth.displayName : ''; }
+  modal.hidden = false;
+  if (input) { input.focus(); input.select(); }
+}
+
+function submitLogin() {
+  let input = document.getElementById('auth-id-input');
+  let error = document.getElementById('auth-error');
+  let loginId = normalizeLoginId(input ? input.value : '');
+  if (!isValidLoginId(loginId)) {
+    if (error) { error.textContent = ui().labels.loginInvalid; }
+    return;
+  }
+  state.auth = buildAuthSession(loginId);
+  persistAuthSession(state.auth);
+  if (state.draft && !state.draft.source) {
+    state.draft.author = state.auth.displayName;
+    state.draft.ownerId = state.auth.userId;
+    state.draft.ownerName = state.auth.displayName;
+  }
+  closeLoginDialog();
+  showStatus(ui().status.loggedIn);
+  render();
+}
+
+function logout() {
+  state.auth = null;
+  persistAuthSession(null);
+  closeLoginDialog();
+  showStatus(ui().status.loggedOut);
+  render();
+}
+
+function ensureLoginDialog() {
+  if (document.getElementById('auth-modal')) { return; }
+  let modal = document.createElement('div');
+  modal.className = 'auth-modal';
+  modal.id = 'auth-modal';
+  modal.hidden = true;
+  modal.innerHTML = '<button class="auth-modal-backdrop" id="auth-modal-backdrop" type="button" aria-label="Close"></button><form class="auth-modal-panel" id="auth-form"><button class="card-modal-close" id="auth-modal-close" type="button" aria-label="Close">×</button><p class="section-kicker" id="auth-modal-title"></p><label class="field-group" for="auth-id-input"><span class="field-label" id="auth-id-label"></span><input id="auth-id-input" class="text-input" type="text" maxlength="24" autocomplete="username" inputmode="text"></label><p class="section-note auth-help" id="auth-help"></p><p class="status-text auth-error" id="auth-error" role="alert"></p><div class="auth-actions"><button class="action-button action-button-primary" id="auth-submit-button" type="submit"></button><button class="action-button" id="auth-logout-button" type="button"></button></div></form>';
+  document.body.appendChild(modal);
+  document.getElementById('auth-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    submitLogin();
+  });
+  document.getElementById('auth-modal-close').addEventListener('click', closeLoginDialog);
+  document.getElementById('auth-modal-backdrop').addEventListener('click', closeLoginDialog);
+  document.getElementById('auth-logout-button').addEventListener('click', logout);
 }
 
 function jumpToSection(target) {
@@ -2902,6 +3101,23 @@ function renderViewState() {
   }
 }
 
+function getBuildPreviewItems(build, limit) {
+  return buildCards(build).filter(function (entry) {
+    return getCardImageUrl(entry.card);
+  }).slice(0, limit || 4);
+}
+
+function renderBuildPreview(build) {
+  let items = getBuildPreviewItems(build, 4);
+  if (!items.length) {
+    return '<div class="build-preview build-preview-empty"><span>' + escapeHtml(ui().labels.noImage) + '</span></div>';
+  }
+  return '<div class="build-preview" aria-label="' + escapeHtml(ui().labels.preview || 'Preview') + '">' + items.map(function (entry) {
+    let cardName = getCardName(entry.card, entry.upgraded);
+    return '<img class="build-preview-image" src="' + escapeHtml(getCardImageUrl(entry.card)) + '" alt="' + escapeHtml(cardName) + '" loading="lazy">';
+  }).join('') + '</div>';
+}
+
 function renderBuildList() {
   let builds = buildsForActiveCharacter();
   refs.buildList.innerHTML = '';
@@ -2919,20 +3135,26 @@ function renderBuildList() {
     let article = document.createElement('article');
     article.className = 'build-card';
     article.dataset.buildId = build.id;
+    article.tabIndex = 0;
+    article.setAttribute('role', 'button');
+    article.setAttribute('aria-label', build.title);
     if (build.id === state.activeBuildId) { article.classList.add('is-active'); }
     let label = build.id === state.activeBuildId ? ui().labels.draft : (build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved);
     let manageButtons = '<button class="pill-button pill-button-primary" type="button" data-view-build="' + build.id + '">' + ui().buttons.viewBuild + '</button>';
-    if (build.source !== 'recommended') {
+    if (build.source !== 'recommended' && canManageBuild(build)) {
       manageButtons += '<button class="pill-button" type="button" data-edit-build="' + build.id + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + build.id + '">' + ui().buttons.deleteSavedBuild + '</button>';
     }
-    article.innerHTML = '<div><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div></div><div><div class="build-card-actions">' + manageButtons + '</div></div>';
+    article.innerHTML = renderBuildPreview(build) + '<div class="build-card-body"><p class="section-kicker">' + escapeHtml(label) + '</p><h3 class="build-title">' + escapeHtml(build.title) + '</h3>' + (build.summary ? '<p class="build-desc">' + escapeHtml(build.summary) + '</p>' : '') + '<div class="card-meta"><span class="build-meta">' + escapeHtml(getCharacterLabel(build.character)) + '</span><span class="build-meta">' + escapeHtml(ui().labels.owner || ui().fields.author) + ': ' + escapeHtml(build.author || build.ownerName || '') + '</span><span class="build-meta">' + ui().labels.cardCount + ': ' + summary.cardCount + '</span><span class="build-meta">' + ui().labels.uniqueCards + ': ' + summary.uniqueCards + '</span><span class="build-meta">' + ui().labels.avgCost + ': ' + formatNumber(summary.avgCost) + '</span><span class="build-meta">' + ui().labels.updated + ': ' + escapeHtml(formatDate(build.updatedAt)) + '</span></div><div class="build-card-actions">' + manageButtons + '</div></div>';
     refs.buildList.appendChild(article);
   });
 }
 
 function renderEditorFields() {
   refs.buildTitleInput.value = state.draft.title;
+  state.draft.author = state.auth ? state.auth.displayName : state.draft.author;
   refs.buildAuthorInput.value = state.draft.author;
+  refs.buildAuthorInput.readOnly = true;
+  refs.buildAuthorInput.classList.toggle('is-readonly', true);
   refs.buildSummaryInput.value = state.draft.summary;
   refs.buildNotesInput.value = state.draft.notes;
   refs.buildCharacterSelect.innerHTML = PLAYABLE_CHARACTERS.map(function (character) { return '<option value="' + character + '">' + escapeHtml(getCharacterLabel(character)) + '</option>'; }).join('');
@@ -3099,7 +3321,7 @@ function renderBuildModal(build) {
   let label = build.source === 'recommended' ? ui().labels.recommended : ui().labels.saved;
   let notesBlock = build.notes ? '<section class="card-modal-section"><span class="upgrade-label">' + escapeHtml(ui().fields.notes) + '</span><p class="library-card-text">' + escapeHtml(build.notes) + '</p></section>' : '';
   let manageButtons = '';
-  if (build.source !== 'recommended') {
+  if (build.source !== 'recommended' && canManageBuild(build)) {
     manageButtons = '<button class="pill-button pill-button-primary" type="button" data-edit-build="' + escapeHtml(build.id) + '">' + ui().buttons.editBuild + '</button><button class="pill-button pill-button-danger" type="button" data-delete-build="' + escapeHtml(build.id) + '">' + ui().buttons.deleteSavedBuild + '</button>';
   }
   let cardList = cards.length ? cards.map(function (entry) {
@@ -3459,6 +3681,9 @@ function render() {
   bindImageFallbacks();
 }
 
+ensureLoginDialog();
+if (refs.authButton) { refs.authButton.addEventListener('click', openLoginDialog); }
+
 refs.siteMenuButton.addEventListener('click', function () {
   refs.languageMenu.hidden = true;
   refs.languageButton.setAttribute('aria-expanded', 'false');
@@ -3572,12 +3797,20 @@ refs.buildList.addEventListener('click', function (event) {
   openBuildModal(buildCard.dataset.buildId);
 });
 
+refs.buildList.addEventListener('keydown', function (event) {
+  if (event.key !== 'Enter' && event.key !== ' ') { return; }
+  let buildCard = event.target.closest('[data-build-id]');
+  if (!buildCard) { return; }
+  event.preventDefault();
+  openBuildModal(buildCard.dataset.buildId);
+});
+
 refs.newBuildButton.addEventListener('click', function () { openEditor('new'); });
 refs.duplicateBuildButton.addEventListener('click', function () { duplicateCurrentBuild(); });
 refs.saveBuildButton.addEventListener('click', function () { saveCurrentBuild(); });
 refs.deleteBuildButton.addEventListener('click', function () { deleteCurrentBuild(); });
 refs.buildTitleInput.addEventListener('input', function (event) { updateDraftField('title', event.target.value); });
-refs.buildAuthorInput.addEventListener('input', function (event) { updateDraftField('author', event.target.value); });
+refs.buildAuthorInput.addEventListener('input', function () { if (state.auth) { state.draft.author = state.auth.displayName; refs.buildAuthorInput.value = state.auth.displayName; } });
 refs.buildSummaryInput.addEventListener('input', function (event) { updateDraftField('summary', event.target.value); });
 refs.buildNotesInput.addEventListener('input', function (event) { updateDraftField('notes', event.target.value); });
 
@@ -3589,7 +3822,9 @@ refs.buildCharacterSelect.addEventListener('change', function (event) {
   state.activePickerCardId = null;
   state.draft = createEmptyBuild(event.target.value);
   state.draft.title = previousDraft.title;
-  state.draft.author = previousDraft.author;
+  state.draft.author = state.auth ? state.auth.displayName : previousDraft.author;
+  state.draft.ownerId = state.auth ? state.auth.userId : previousDraft.ownerId;
+  state.draft.ownerName = state.auth ? state.auth.displayName : previousDraft.ownerName;
   state.draft.summary = previousDraft.summary;
   state.draft.notes = previousDraft.notes;
   render();
