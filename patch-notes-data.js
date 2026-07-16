@@ -1,7 +1,7 @@
 window.STS2_PATCH_NOTES = {
   "source": "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=2868840&count=80&maxlength=0&format=json",
   "rssSource": "https://steamcommunity.com/games/2868840/rss",
-  "generatedAt": "2026-07-15T19:37:14.939Z",
+  "generatedAt": "2026-07-16T03:38:31.368Z",
   "items": [
     {
       "id": "1836506165569491",
