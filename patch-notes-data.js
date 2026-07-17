@@ -1,7 +1,7 @@
 window.STS2_PATCH_NOTES = {
   "source": "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=2868840&count=80&maxlength=0&format=json",
   "rssSource": "https://steamcommunity.com/games/2868840/rss",
-  "generatedAt": "2026-07-17T08:28:36.984Z",
+  "generatedAt": "2026-07-17T14:03:58.271Z",
   "items": [
     {
       "id": "1838407329258348",
@@ -444,23 +444,6 @@ window.STS2_PATCH_NOTES = {
       "summary": "Happy day-after-launch day, Slayers! We've got another hotfix for you all today which should resolve some more frequent issues that players have been reporting. Your feedback will continue to be invaluable throughout Early Access!\nWRITING:\n- Updated various translations\n- Fixed Russian and Turkish formatting errors\n- Fixed Spanish, Italian, Polish, Russian, and Chinese translation errors\nBUG FIXES:",
       "summaryKo": "긴급 수정과 소프트락, 충돌, 멀티플레이 문제 같은 안정성 개선을 빠르게 확인할 수 있습니다.",
       "body": "Happy day-after-launch day, Slayers! We've got another hotfix for you all today which should resolve some more frequent issues that players have been reporting. Your feedback will continue to be invaluable throughout Early Access!\nWRITING:\n- Updated various translations\n- Fixed Russian and Turkish formatting errors\n- Fixed Spanish, Italian, Polish, Russian, and Chinese translation errors\nBUG FIXES:\nGeneral:\n- Fixed blackscreen on launch caused by Sentry crash reporter mishandling log messages. Affected players no longer need to delete the Sentry folder to launch the game.\n- Fixed softlock from Whispering Earring relic trying to play ally-targeted cards on Osty\n- Fixed the Doormaker enemy's music not transitioning when the portal opens\nMultiplayer:\n- Fixed an issue where, after playing a multiplayer run, some players were unable to unlock Epochs in the Timeline or start new runs\n- Fixed two active Beacon of Hope powers infinitely proccing each other\n- Fixed a state divergence related to Pael's Wing relic timing"
-    },
-    {
-      "id": "1826362059922807",
-      "title": "Hotfix Patch Notes - v0.98.1",
-      "link": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1826362059922807",
-      "pubDate": "Fri, 06 Mar 2026 00:56:25 GMT",
-      "publishedAt": "2026-03-06T00:56:25.000Z",
-      "kind": "hotfix",
-      "category": "patch",
-      "sourceLabel": "Steam Community",
-      "author": "demileaf",
-      "official": true,
-      "external": false,
-      "image": "",
-      "summary": "Happy Slay the Spire 2 launch day everyone! We have a day 1 hotfix for various issues and softlocks that players have reported. Thank you all for your feedback! For those who don't know, you can submit feedback in-game by pressing F2 or through the settings menu.\nBUG FIXES:\n- Fixed an issue where, if you played your first run in multiplayer and disconnected after defeating the Act 1 boss, you would be unable to start a new run or enter the Timeline screen\n- Fixed crash from fast card play when card play is cancelled during targeting\n- Fixed crash when displaying untranslated text for languages with complex plural rules\n- Fixed intermittent crash with non-English languages",
-      "summaryKo": "긴급 수정과 소프트락, 충돌, 멀티플레이 문제 같은 안정성 개선을 빠르게 확인할 수 있습니다.",
-      "body": "Happy Slay the Spire 2 launch day everyone! We have a day 1 hotfix for various issues and softlocks that players have reported. Thank you all for your feedback! For those who don't know, you can submit feedback in-game by pressing F2 or through the settings menu.\nBUG FIXES:\n- Fixed an issue where, if you played your first run in multiplayer and disconnected after defeating the Act 1 boss, you would be unable to start a new run or enter the Timeline screen\n- Fixed crash from fast card play when card play is cancelled during targeting\n- Fixed crash when displaying untranslated text for languages with complex plural rules\n- Fixed intermittent crash with non-English languages\n- Fixed localization-related crash in Japanese Knife Trap translation referencing non-existent Damage variable\n- Fixed unsupported Steam languages showing all text as W's instead of falling back to English"
     }
   ]
 };
