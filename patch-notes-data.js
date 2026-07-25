@@ -1,8 +1,25 @@
 window.STS2_PATCH_NOTES = {
   "source": "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=2868840&count=80&maxlength=0&format=json",
   "rssSource": "https://steamcommunity.com/games/2868840/rss",
-  "generatedAt": "2026-07-25T14:02:59.744Z",
+  "generatedAt": "2026-07-25T19:35:17.746Z",
   "items": [
+    {
+      "id": "1839041357032587",
+      "title": "Beta Hotfix Patch Notes - v0.109.1",
+      "link": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1839041357032587",
+      "pubDate": "Sat, 25 Jul 2026 18:42:05 GMT",
+      "publishedAt": "2026-07-25T18:42:05.000Z",
+      "kind": "hotfix",
+      "category": "patch",
+      "sourceLabel": "Steam Community",
+      "author": "demileaf",
+      "official": true,
+      "external": false,
+      "image": "",
+      "summary": "Got a tiny patch today with one important hotfix for players playing in Traditional Chinese!\nBUG FIXES:\n-  Synced corrected Traditional Chinese translations to fix broken plural evaluation",
+      "summaryKo": "긴급 수정과 소프트락, 충돌, 멀티플레이 문제 같은 안정성 개선을 빠르게 확인할 수 있습니다.",
+      "body": "Got a tiny patch today with one important hotfix for players playing in Traditional Chinese!\nBUG FIXES:\n-  Synced corrected Traditional Chinese translations to fix broken plural evaluation"
+    },
     {
       "id": "1838407329260598",
       "title": "The Neowsletter - July 2026",
