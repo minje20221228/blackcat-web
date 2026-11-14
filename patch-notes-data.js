@@ -1,8 +1,25 @@
 window.STS2_PATCH_NOTES = {
   "source": "https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=2868840&count=80&maxlength=0&format=json",
   "rssSource": "https://steamcommunity.com/games/2868840/rss",
-  "generatedAt": "2026-11-14T18:06:44.497Z",
+  "generatedAt": "2026-11-14T22:27:18.915Z",
   "items": [
+    {
+      "id": "1849458702684653",
+      "title": "Beta Hotfix Patch Notes - v0.113.1",
+      "link": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1849458702684653",
+      "pubDate": "Sat, 14 Nov 2026 20:59:18 GMT",
+      "publishedAt": "2026-11-14T20:59:18.000Z",
+      "kind": "hotfix",
+      "category": "patch",
+      "sourceLabel": "Steam Community",
+      "author": "Dinosaurs",
+      "official": true,
+      "external": false,
+      "image": "",
+      "summary": "[p]Hi folks, weekend Casey here,[/p][p][/p][p]A small update for some quick fixes, some icons for Dread, and a translation update.[/p][p]No big changes, have a nice weekend.[/p][p][/p]ART:- [p]Added icons for the following Dread powers:[/p]- [p]Aeonglass Dominion[/p][/*]- [p]Explosive[/p][/*]- [p]Insatiable Dominion[/p][/*]- [p]Lagavulin Matriarch Dominion[/p][/*]- [p]You Are Mine[/p][/*][/*]- [p]Arrows now stick to the body of every enemy instead of its center[/p][/*]WRITING:- [p]Polished the text of some of the Fool's epochs[/p][/*]BUG FIXES:[p]General:[/p]- [p]Fixed the timeline getting stuck when opening some of the Fool's epochs in Turkish[/p][/*]- [p]Viewing a damaged run in Run History no longer adds duplicate copies of it[/p][/*]- [p]Card previews no longer cover a potion's text when hovering it on an epoch's potion unlock screen[/p][/*]- [p]Removed a duplicate tooltip from the Insatiable Dominion[/p][/*]- [p]Fixed a typo in one of the Fool's epoch descriptions[/p][/*]- [p]Fixed the Japanese Arrow tooltip showing broken text when you have no Arrows[/p][/*]- [p]Fixed Traditional Chinese text that always showed the plural wording[/p][/*]- [p]Updated translations and fixed broken formatting in several languages[/p][/*][p]The Fool:[/p]- [p]Stretch now adds to the Block from Adroit on cards that don't gain Block themselves, like Ki Hop[/p][/*]- [p]Show Off+'s upgrade preview no longer highlights its Aim in green, which the upgrade does not change[/p][/*]",
+      "summaryKo": "긴급 수정과 소프트락, 충돌, 멀티플레이 문제 같은 안정성 개선을 빠르게 확인할 수 있습니다.",
+      "body": "[p]Hi folks, weekend Casey here,[/p][p][/p][p]A small update for some quick fixes, some icons for Dread, and a translation update.[/p][p]No big changes, have a nice weekend.[/p][p][/p]ART:- [p]Added icons for the following Dread powers:[/p]- [p]Aeonglass Dominion[/p][/*]- [p]Explosive[/p][/*]- [p]Insatiable Dominion[/p][/*]- [p]Lagavulin Matriarch Dominion[/p][/*]- [p]You Are Mine[/p][/*][/*]- [p]Arrows now stick to the body of every enemy instead of its center[/p][/*]WRITING:- [p]Polished the text of some of the Fool's epochs[/p][/*]BUG FIXES:[p]General:[/p]- [p]Fixed the timeline getting stuck when opening some of the Fool's epochs in Turkish[/p][/*]- [p]Viewing a damaged run in Run History no longer adds duplicate copies of it[/p][/*]- [p]Card previews no longer cover a potion's text when hovering it on an epoch's potion unlock screen[/p][/*]- [p]Removed a duplicate tooltip from the Insatiable Dominion[/p][/*]- [p]Fixed a typo in one of the Fool's epoch descriptions[/p][/*]- [p]Fixed the Japanese Arrow tooltip showing broken text when you have no Arrows[/p][/*]- [p]Fixed Traditional Chinese text that always showed the plural wording[/p][/*]- [p]Updated translations and fixed broken formatting in several languages[/p][/*][p]The Fool:[/p]- [p]Stretch now adds to the Block from Adroit on cards that don't gain Block themselves, like Ki Hop[/p][/*]- [p]Show Off+'s upgrade preview no longer highlights its Aim in green, which the upgrade does not change[/p][/*]"
+    },
     {
       "id": "1849192144184507",
       "title": "Beta Patch Notes - v0.113.0",
